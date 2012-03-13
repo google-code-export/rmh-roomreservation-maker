@@ -1,4 +1,5 @@
 <?php
+// this represents one cat
 class Cat {
     private $name;
     private $color;
