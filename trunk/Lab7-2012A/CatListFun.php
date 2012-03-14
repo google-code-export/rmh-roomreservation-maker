@@ -7,7 +7,6 @@
           $cat1->setname("Zoe");
           $myCats[] = $cat1;
           $cat1->displayCat();
-          $cat1->count();
           
           $cat2 = new Cat;
           $cat2->setBreed("Toyger");
@@ -23,5 +22,16 @@
           $cat3->setname("Fluffy");
           $myCats[] = $cat3;
           $cat3->displayCat();
+          
+          function countColor($cats, $color){
+              $i=0;
+              
+              foreach ($cats as $cat)
+              {
+                  if($cat->getColor() == $color)
+                      $i++;
+              }
+              return $i;
+          }
 
 ?>
