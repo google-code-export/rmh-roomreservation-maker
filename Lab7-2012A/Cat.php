@@ -26,7 +26,7 @@ class Cat {
         return $this->color;
     }
     
-    function setBreed()
+    function setBreed($brd)
     {
         $this->breed = $brd;
     }
