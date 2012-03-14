@@ -37,5 +37,9 @@ class Cat {
     {
         return $name . " says Meow!";
     }
+     function count()
+    {
+        echo ;
+    }
 }
 ?>
