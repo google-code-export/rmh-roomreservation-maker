@@ -45,5 +45,14 @@ class Cat {
     {
         echo "My name is " . $this->name . " and my color is " . $this->color . " and my breed is " . $this->breed . "<br />";
     }
+       //count the number of cats of a particular color
+          function countColor()
+          {
+              
+              echo "Color: " . $this->getColor();
+              
+                         
+                                       
+          }
 }
 ?>

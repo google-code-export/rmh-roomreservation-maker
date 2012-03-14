@@ -7,6 +7,7 @@
           $cat1->setname("Zoe");
           $myCats[] = $cat1;
           $cat1->displayCat();
+          $cat1->count();
           
           $cat2 = new Cat;
           $cat2->setBreed("Toyger");
