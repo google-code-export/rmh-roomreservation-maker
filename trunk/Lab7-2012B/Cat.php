@@ -39,5 +39,22 @@ class Cat {
     {
         return $name . " says Meow!";
     }
+    
+        function count()
+    {
+        $col = $_POST['color'];
+        $count = 0;
+        
+        $query = "SELECT * FROM cats WHERE color='$col'";
+        $result = mysql_query ($query);
+        $theCats = array();
+        
+        while ($result_row = mysql_fetch_assoc($result))
+        {
+            $count++;
+        }
+        
+        
+    }
 }
 ?>
