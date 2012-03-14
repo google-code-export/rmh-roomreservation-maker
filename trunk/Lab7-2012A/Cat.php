@@ -43,7 +43,7 @@ class Cat {
     
     function displayCat()
     {
-        echo "My name is " . $this->name . " and my color is " . $this->color . "<br />";
+        echo "My name is " . $this->name . " and my color is " . $this->color . "and my breed is " . $this->breed . "<br />";
     }
 }
 ?>
