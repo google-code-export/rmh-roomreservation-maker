@@ -29,5 +29,10 @@ class Cat {
     {
         return $name . " says Meow!";
     }
+    
+    function displayCat()
+    {
+        echo "My name is " . $this->name . " and my color is " . $this->color . "<br />";
+    }
 }
 ?>
