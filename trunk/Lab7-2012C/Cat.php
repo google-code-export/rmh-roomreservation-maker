@@ -2,7 +2,16 @@
 class Cat {
     private $name;
     private $color;
+    private $breed; //Jeremiah P
 
+    function setBreed($bd) { //Jeremiah P
+        $this->breed = $bd;
+    }
+    
+    function getBreed()
+    {
+        return $this->breed;
+    }
     
     function setName($nm)
     {
