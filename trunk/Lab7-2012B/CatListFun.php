@@ -1,5 +1,8 @@
 <?php
-
+function display($myCats)
+{
+  print $myCats;
+}
           $cat1 = new Cat;
           $cat1->setColor("black");
           $cat1->setname("Zoe");
