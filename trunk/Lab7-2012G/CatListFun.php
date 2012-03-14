@@ -14,4 +14,15 @@
           $cat1->setColor("tabby");
           $cat1->setname("Fluffy");
           $myCats[] = $cat1;
+         
+function countCats($cats, $color)
+{
+    $count = 0;
+    foreach($cats as $cat)
+    {
+        if($cat->getColor() == $color)
+            $count++;
+    }
+    return $count;
+}
 ?>
