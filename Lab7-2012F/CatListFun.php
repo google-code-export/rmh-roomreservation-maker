@@ -4,12 +4,14 @@
           $cat1->setname("Zoe");
           $cat1->setBreed("Curl");
           $myCats[] = $cat1;
+          TheCat();
           
           $cat2 = new Cat;
           $cat2->setColor("orange");
           $cat2->setname("Garfield");
           $cat2->setBreed("Longhair");
           $myCats[] = $cat2;
+          TheCat($cat2);
           
           $cat3 = new Cat;
           $cat3->setColor("tabby");
@@ -29,4 +31,11 @@
               return count;
           }
 
+          TheCat($cat3);
+          
+Function TheCat()
+{
+                
+        echo "My cat's name is " . $cat1->getName() . " and " . $cat1->getName() . " is a " . $cat1->getBreed() . " whose fur is " . $cat1->getColor() . "<br/>";
+}
 ?>
