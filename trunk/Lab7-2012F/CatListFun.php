@@ -4,21 +4,18 @@
           $cat1->setname("Zoe");
           $cat1->setBreed("Curl");
           $myCats[] = $cat1;
-          TheCat($cat1);
           
           $cat2 = new Cat;
-          $cat1->setColor("orange");
-          $cat1->setname("Garfield");
-          $cat1->setBreed("Longhair");
+          $cat2->setColor("orange");
+          $cat2->setname("Garfield");
+          $cat2->setBreed("Longhair");
           $myCats[] = $cat2;
-          TheCat($cat2);
           
           $cat3 = new Cat;
-          $cat1->setColor("tabby");
-          $cat1->setname("Fluffy");
-          $cat1->setBreed("Shorthair");
+          $cat3->setColor("tabby");
+          $cat3->setname("Fluffy");
+          $cat3->setBreed("Shorthair");
           $myCats[] = $cat3;
-          TheCat($cat3);
           
          //In progress
          function colorCount($color){
