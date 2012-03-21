@@ -1,4 +1,6 @@
 <?php
+include_once(dirname(__FILE__).'\Cat.php');
+
           $cat1 = new Cat;
           $cat1->setColor("black");
           $cat1->setname("Zoe");
@@ -17,16 +19,15 @@
           $cat3->setBreed("Shorthair");
           $myCats[] = $cat3;
           
-         //In progress
-         function colorCount($color){
+         
+          function colorCount($color, $arr1){
               $count = 0;
-              foreach ($myCats as $i){
-            //foreach ($myCats as &$i){
-                  if ($i.getColor() == color):
+              foreach ($arr1 as $i){
+                  if ($i->getColor() == $color):
                     $count = $count + 1;
                   endif;
               }
-              return count;
+              return $count;
           }
 
           
