@@ -41,6 +41,11 @@ class Cat {
         return $name . " says Meow!";
     }
     
+    function purr()
+    {
+        return $name. "purrrrs";
+    }
+    
     function displayCat()
     {
         echo "My name is " . $this->name . " and my color is " . $this->color . " and my breed is " . $this->breed . "<br />";
