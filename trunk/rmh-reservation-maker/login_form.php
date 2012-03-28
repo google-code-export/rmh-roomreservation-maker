@@ -1,8 +1,8 @@
 <?php
 /**
- * sanitizeData function
- * @param data: the field that needs to be sanitized
- * @return the sanitized data 
+ * sanitize function
+ * @param string the field that needs to be sanitized
+ * @return string sanitized data 
  */
 function sanitize($data)
 {
@@ -46,9 +46,9 @@ function sanitize($data)
 
     $error = array(); //variable that stores all the errors that occur in the login process
     //if data is submitted then do the following:
+    
     //check for user and add session variables
     
-    //check if any data was posted.
     //This check should be replaced by the tokenValidator function
     if(array_key_exists('form_token', $_POST))
     {
@@ -59,6 +59,10 @@ function sanitize($data)
         
         if($db_pass=='test' && $db_id=='test')
         {
+            $_SESSION['logged_in'] = true;
+            $_SESSION['access_level'] = 3; //0-3
+            $_SESSION['id'] = $db_id;
+            
            echo "login successful";
         }
         else
