@@ -46,7 +46,7 @@
 						 		update_dbPersons($person);
 						 	}
 						 }
-						 echo('<br clear="all">');
+						
 					}*/
 
 			    //NOTES OUTPUT
@@ -59,7 +59,7 @@
 					echo("You are a family member");
 				}
 
-				//We have a manager authenticated	 
+				//We have a admin authenticated	 
 				if($_SESSION['access_level']==3) {
 					echo("Welcome admin");
 				    
