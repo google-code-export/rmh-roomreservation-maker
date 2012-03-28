@@ -63,7 +63,7 @@ function sanitize($data)
             $_SESSION['access_level'] = 3; //0-3
             $_SESSION['id'] = $db_id;
             
-           echo "login successful";
+           echo '<div style="color: green;">login successful</div>';
         }
         else
         {
