@@ -14,8 +14,7 @@ Class Requests  {
 }
 
 function __construct ($date_submitted, $date_in, $guest_id, $status, $room_no, $patient, 
-            $occupants, $loaners, $linked_room, $date_out, $referred_by, 
-            $hospital, $department, $health_questions, $payment, ) {
+            $occupants, $date_out) {
     	$this->id = $date_submitted . $guest_id;
     	$this->date_submitted = $date_submitted;
     	$this->date_in = $date_in;
@@ -24,8 +23,6 @@ function __construct ($date_submitted, $date_in, $guest_id, $status, $room_no, $
     	$this->room_no = $room_no;
     	$this->patient = $patient;
     	$this->occupants = $occupants;
-    	$this->loaners = $loaners;
-    	$this->linked_room = $linked_room;
     	$this->date_out = $date_out; 
     
     }
