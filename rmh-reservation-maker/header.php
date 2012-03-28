@@ -3,14 +3,15 @@
 
 </div>
 
-<div align="center" id="navigationLinks">
+<div id="navigationLinks">
 
 <?PHP
 	//Log-in security
 	//If they aren't logged in, display our log-in form.
 	if(!isset($_SESSION['logged_in'])){
-		include('login_form.php');
-		die();
+            echo( "Trying to load login_form.php! ");
+            include('login_form.php');            
+            die("Bye it didn't work!");
 	}
 	else if($_SESSION['logged_in']){
 
