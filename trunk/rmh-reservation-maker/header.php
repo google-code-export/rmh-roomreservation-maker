@@ -11,7 +11,7 @@
 	if(!isset($_SESSION['logged_in'])){
             echo( "Trying to load login_form.php! ");
             include('login_form.php');            
-            die("Bye it didn't work!");
+            die();
 	}
 	else if($_SESSION['logged_in']){
 
