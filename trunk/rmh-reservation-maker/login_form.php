@@ -1,3 +1,4 @@
+<div id="loginforms">
 <?php
 /**
  * sanitize function
@@ -12,39 +13,40 @@ function sanitize($data)
 }
 
 //content for the login form. This needs to be displayed even in case of error.
-            $loginContent = '<div align="left"><p>Access to <i>Homeroom</i> requires a Username and a Password. ';
+            $loginContent = '<div float="left"><p>Access to <i>Homeroom</i> requires a Username and a Password. ';
 
 
-            $loginContent .= '<ul>';
+            $loginContent .= '<ul class="hometext">';
             $loginContent .= '<li>You must be a Ronald McDonald House <i>staff member or social worker</i> to access this system.</li>';
             $loginContent .= '<li>If you do not remember your Password, [forgot password link should go here?]</li>';
             $loginContent .= '</ul>';
 
             //The actual login form:
-            $loginContent .= '<div>';//login form box
+            $loginContent .= '<div float="right">';//login form box
                 $loginContent .= '<form method="post">';
                 $loginContent .= '<input type="hidden" name="form_token" value="true">';//this should be replaced with the CSRF check function
 
                 //row div:
                 $loginContent .= '<div>';//will have "row" class once the stylesheet has been added
-                    $loginContent .= '<label for="username">Username</label>';
-                    $loginContent .= '<input type="text" name="username" id="username">';
+                   // $loginContent .= '<label for="username">Username</label>';
+                    $loginContent .= '<input class="formtop formt" type="text" name="username" id="username" onclick="this.value=\'\';" onfocus="this.select()" onblur="this.value=!this.value?username:this.value;" value="username">';
                 $loginContent .= '</div>';
 
                 //row div:
                 $loginContent .= '<div>';
-                    $loginContent .= '<label for="password">Password</label>';
-                    $loginContent .= '<input type="password" name="password" id="password">';
+                  //  $loginContent .= '<label for="password">Password</label>';
+                    $loginContent .= '<input class="formbottom formt" type="password" name="password" id="password"onclick="this.value=\'\';" onfocus="this.select()" onblur="this.value=!this.value?password:this.value;" value="password">';
                 $loginContent .= '</div>';
 
                 //row div:
                 $loginContent .= '<div>';
-                    $loginContent .= '<input type="submit" name="Login" value="Login">';
+                    $loginContent .= '<input class="formsubmit" type="submit" name="Login" value="Login">';
                 $loginContent .= '</div>';
 
             $loginContent .= '</div>';//end of login form box
+            
 
-    $error = array(); //variable that stores all the errors that occur in the login process
+    $error = array(); //variable that sstores all the errors that occur in the login process
     //if data is submitted then do the following:
     
     //check for user and add session variables
@@ -134,6 +136,7 @@ function sanitize($data)
 
     
 ?>
+
 <div id="content">
     <?PHP
            
@@ -146,6 +149,7 @@ function sanitize($data)
            echo $loginContent; 
     ?>
 <?PHP //include('footer.inc'); ?>
+</div>
 </div>
 </body>
 </html>
