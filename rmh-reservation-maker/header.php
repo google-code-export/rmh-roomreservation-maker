@@ -1,15 +1,29 @@
+<!-- the header file should have includes, link tags, scripts, and anything that would be included in 
+<head> normally. it should be placed in the very beginning and should hold everything from the opening
+html tag, to the closing head tag/opening body tag -->
+
+
+<html DOCTYPE="">
+    <head>
+        <title><?php echo $title . ' | RMH Room Reservation Maker'; ?> </title>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body class="<?php // $_ENV['/**browser **/'] ?>"
 <div id="header">
-<!--banner or whatever-->
-
+    <h1>Welcome to RMH Homeroom!</h1>
 </div>
+         
+<div id="container">
 
-<div id="navigationLinks">
-
-<?PHP
+<?php
 	//Log-in security
 	//If they aren't logged in, display our log-in form.
 	if(!isset($_SESSION['logged_in'])){
-            echo( "Trying to load login_form.php! ");
+           // echo( "Trying to load login_form.php! ");
             include('login_form.php');            
             die();
 	}

@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
+<?php include('header.php');?>
     
         <?PHP
 
@@ -15,7 +11,7 @@
 	
 	<body>
 		<div id="container">
-			<?PHP include('header.php');?>
+			
 			<div id="content">
 				Welcome to RMH Room Reservation Maker<br />
 				<p>When you are finished, please remember to <a href="logout.php">logout</a>.</p>
