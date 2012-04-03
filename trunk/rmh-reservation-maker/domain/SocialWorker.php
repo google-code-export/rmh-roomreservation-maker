@@ -21,7 +21,7 @@ class SocialWorker {
          * constructor for a SocialWorker
          */
     function __construct($socialWorkerProfileId, $userId, $title, $lastName, $firstName, $hospitalAffiliation,
-            $phone; $email; $emailNotification, $password){                
+            $phone, $email, $emailNotification, $password){                
         $this->userId = $userId; //is this first name + phone number or ??
         $this->socialWorkerProfileId = $socialWorkerProfileId; //order of profile in the database
         $this->title = $title; 
@@ -34,10 +34,9 @@ class SocialWorker {
         
         if ($password=="")
             $this->password = md5($this->id);
-        else $this->password = $password;       
+        else 
+            $this->password = $password;       
     }
-    
-    
     
     
     //getter functions
@@ -108,7 +107,7 @@ class SocialWorker {
     }
     
     function set_email_notification($eNot){
-        $this->emailNofitication = $eNot;
+        $this->emailNotification= $eNot;
     }
 
     function set_password ($pass) {

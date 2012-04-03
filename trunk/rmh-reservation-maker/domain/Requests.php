@@ -3,7 +3,7 @@
 // includes Social Worker file 
 include_once(dirname(__FILE__).'/../domain/SocialWorker.php');
 
-Class Requests  {
+class Requests  {
    
     private $roomReservationActivityID;
     private $roomReservationRequestID;
@@ -15,7 +15,7 @@ Class Requests  {
     private $endDate;
     private $note;
     
-    function __constuct($roomReservationActivityID, $roomReservationRequestID, $userLoginInfoID, $familyProfileID
+    function __constuct($roomReservationActivityID, $roomReservationRequestID, $userLoginInfoID, $familyProfileID,
             $status,$dateStatusSubmited, $beginDate, $endDate, $note){
             $this->roomReservationActivityID = $roomReservationActivityID;
             $this->roomReservationRequestID = $roomReservationRequestID;
@@ -75,21 +75,14 @@ Class Requests  {
                 //email function ? 
                 update_roomreservationactivity($this); //needs update_roomreservation function database group to log a record
                                                        //change status to "applied" 
+            }
             else 
                 return false;
-             
-            }
-            
+               
         }
+   
      
  } //close cancel_request
         
     }//close class Request
-
-
-
-
-
-
-
 ?>
