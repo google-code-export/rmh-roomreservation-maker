@@ -131,7 +131,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?php echo isset($title) ? $title : 'Welcome' . ' | RMH Room Reservation Maker'; ?> </title>
+        <title><?php echo (isset($title) ? $title : 'Welcome') . ' | RMH Room Reservation Maker'; ?> </title>
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="author" content="">
