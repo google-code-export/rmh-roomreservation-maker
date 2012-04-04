@@ -18,12 +18,11 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
 
     //sanitize all these data before they get to the database !! IMPORTANT
 
-    $db_pass = getHashValue($_POST['password']); //md5($_POST['password']); //instead of mdf we will use another function that will do the hashing probably sha1 or sha256 using a salt
+    $db_pass = getHashValue($_POST['password']);
     $db_id = sanitize($_POST['username']);
 
     if($db_pass == getHashValue('test') && $db_id == 'test')
     {
-        print_r($_POST);
         $_SESSION['logged_in'] = true;
         $_SESSION['access_level'] = 3; //0-3
         $_SESSION['id'] = $db_id;
