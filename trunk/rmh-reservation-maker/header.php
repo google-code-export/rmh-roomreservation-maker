@@ -26,7 +26,7 @@
       {
           if(isset($_SESSION['_token']) && ($_SESSION['_token'] == $postData['form_token']))
           {
-              unset($_SESSION['_token']);
+              unset($_SESSION['_token']); //remove the token once it's been used, making it invalid for reuse
               return true;
           }
           else
@@ -81,7 +81,7 @@
 		//Check if they're at a valid page for their access level.
 		$current_page = getCurrentPage();
 
-		if($permission_array[$current_page]>$_SESSION['access_level']){
+		if(!isset($permission_array[$current_page]) || $permission_array[$current_page]>$_SESSION['access_level']){
 			//in this case, the user doesn't have permission to view this page.
 			//we redirect them to the index page.
                         header('Location: index.php');
@@ -127,7 +127,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><?php echo $title . ' | RMH Room Reservation Maker'; ?> </title>
+        <title><?php echo isset($title) ? $title : 'Welcome' . ' | RMH Room Reservation Maker'; ?> </title>
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="author" content="">
