@@ -64,6 +64,7 @@
                 $permission_array['login.php']=0; //login page is viewable by everyone
               
 		//additional pages social workers can view
+                
 		$permission_array['referralForm.php']=1;
 		//more pages
                            
@@ -77,6 +78,9 @@
                 
                 //logout page
 		$permission_array['logout.php']=1;
+                
+                //reporting page
+                $permission_array['reportForm.php']=1;
 
 		//Check if they're at a valid page for their access level.
 		$current_page = getCurrentPage();
