@@ -21,12 +21,43 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
     $db_pass = getHashValue($_POST['password']);
     $db_id = sanitize($_POST['username']);
 
-    if($db_pass == getHashValue('test') && $db_id == 'test')
+    /* ADDED AS HARDCODED USERS DATABASE FOR TESTING PURPOSES : BEGIN */
+    function testLogin( $user, $pass )
     {
-        $_SESSION['logged_in'] = true;
-        $_SESSION['access_level'] = 3; //0-3
-        $_SESSION['id'] = $db_id;
+        if( $pass == getHashValue('test0') && $user == 'test0')
+        {
+            $_SESSION['logged_in'] = true;
+            $_SESSION['access_level'] = 0; //0-3
+            $_SESSION['id'] = $user;
 
+        }
+        else if( $pass == getHashValue('test1') && $user == 'test1' )
+        {
+            $_SESSION['logged_in'] = true;
+            $_SESSION['access_level'] = 1; //0-3
+            $_SESSION['id'] = $user;
+            
+        }
+        else if($pass == getHashValue('test2') && $user == 'test2')
+        {
+            $_SESSION['logged_in'] = true;
+            $_SESSION['access_level'] = 2; //0-3
+            $_SESSION['id'] = $user;
+            
+        }
+        else if($pass == getHashValue('test3') && $user == 'test3')
+        {
+            $_SESSION['logged_in'] = true;
+            $_SESSION['access_level'] = 3; //0-3
+            $_SESSION['id'] = $user;         
+            
+         }
+        else
+            return 0; //login failed to match a combination above
+    }//end function testLogin( )
+    
+    if( testLogin( $db_id, $db_pass ) )
+    {
         echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
         exit();
     }
@@ -34,6 +65,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
         $error['invalid_username'] = "The username or password provided does not match";
     }
+    /* ADDED AS HARDCODED USERS FOR TESTING PURPOSES : END */
 
     /*
       $person = retrieve_dbPersons($db_id);

@@ -4,8 +4,7 @@
  * 
  * @author Prayas Bhattarai 
  */
-?>
-<?
+
     session_start();
     session_cache_expire(30);
     session_unset();
