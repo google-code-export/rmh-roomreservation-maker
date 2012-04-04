@@ -3,7 +3,6 @@ session_start();
 session_cache_expire(30);
 $title = "Welcome";
 include('header.php');?>
-<body>
 		<div id="container">
 			
 			<div id="content">
@@ -61,5 +60,3 @@ include('header.php');?>
 			</div>
 		</div>
   <?php include ('footer.php');?>
-    </body>
-</html>
