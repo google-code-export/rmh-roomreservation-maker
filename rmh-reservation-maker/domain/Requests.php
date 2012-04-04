@@ -7,25 +7,27 @@ class Requests  {
    
     private $roomReservationActivityID;
     private $roomReservationRequestID;
-    private $userLoginInfoID;
-    private $familyProfileID;
+    private $userId;
+    private $familyProfileId;
     private $status;
     private $dateStatusSubmited;
     private $beginDate;
     private $endDate;
-    private $note;
+    private $patientDiagnosis;
+    private $roomnote;
     
-    function __constuct($roomReservationActivityID, $roomReservationRequestID, $userLoginInfoID, $familyProfileID,
-            $status,$dateStatusSubmited, $beginDate, $endDate, $note){
+    function __constuct($roomReservationActivityID, $roomReservationRequestID, $userId, $familyProfileId,
+            $status, $dateStatusSubmited, $beginDate, $endDate, $patientDiagnosis, $roomnote){
             $this->roomReservationActivityID = $roomReservationActivityID;
             $this->roomReservationRequestID = $roomReservationRequestID;
-            $this->userLoginInfoID = $userLoginInfoID;
-            $this->familyProfileID = $familyProfileID;
+            $this->userId = $userId;
+            $this->familyProfileId = $familyProfileId;
             $this->status = $status;
             $this->dateStatusSubmited = $dateStatusSubmited;
             $this->beginDate = $beginDate;
             $this->endDate = $endDate;
-            $this->note = $note;
+            $this->patientDiagnosis = $patientDiagnosis;
+            $this->roomnote = $roomnote;
     }
     
     //getters
@@ -35,11 +37,11 @@ class Requests  {
     function get_roomReservationRequestID(){
         return $this->roomReservationRequestID;
     }
-    function get_userLoginInfoID(){
-        return $this->userLoginInfoID;
+    function get_userId(){
+        return $this->userId;
     }
-    function get_familyProfileID(){
-        return $this->familyProfileID;
+    function get_familyProfileId(){
+        return $this->familyProfileId;
     }
     function get_status(){
         return $this->status;
@@ -53,10 +55,49 @@ class Requests  {
     function get_endDate(){
         return $this->endDate;
     }
-    function get_note(){
-        return $this->note;
+    function get_patientdiagnosis(){
+        return $this->patientDiagnosis;
+    }
+    function get_roomnote(){
+        return $this->roomnote;
     }
     
+    
+      //setters
+    function set_roomreservationActivityID($roomResId){
+         $this->roomReservationActivityID = $roomResId;
+    }
+    function set_roomReservationRequestID($roomRequestId){
+        $this->roomReservationRequestID = $roomRequestId;
+    }
+    function set_userId($uid){
+        $this->userId = $uid;
+    }
+    function set_familyProfileId($famId){
+        $this->familyProfileId = $famId;
+    }
+    function set_status($stat){
+        $this->status = $stat;
+    }
+    function set_dateStatusSubmited($dateSubm){
+        $this->dateStatusSubmited = $dateSubm;
+    }
+    function set_beginDate($dateBegin){
+        $this->beginDate = $dateBegin;
+    }
+    function set_endDate($dateEnd){
+        $this->endDate = $dateEnd;
+    }
+    function set_patientdiagnosis($patDiagnosis){
+        $this->patientDiagnosis = $patDiagnosis;
+    }
+    function set_roomnote($rnote){
+        $this->roomnote = $rnote;
+    }
+    
+    
+    
+    //is this cancel request supposed to be in the domain ? (question from Geri)
     function cancel_request($roomReservationRequestID){ 
     /* A room needs to be canceled. 
     * SW goes to look up the room request that was made for the family.
