@@ -7,7 +7,7 @@
 
 class SocialWorker {
     private $socialWorkerProfileId;      // not the user name!!
-    private $userId; // username
+    private $userId; // id number for specific social worker
     private $title; // title to the name
     private $lastName;        // last name - string
     private $firstName;       // first name - string
@@ -15,7 +15,7 @@ class SocialWorker {
     private $phone; //phone number
     private $email;            // email address
     private $emailNotification; //opting in or out of email notifications - boolean
-    private $userLoginInfoId;
+    private $userLoginInfoId; //username for specific social worker
     private $userCategory;
     private $password;         // password for database access: default = username ??
 
