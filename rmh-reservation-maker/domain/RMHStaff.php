@@ -5,34 +5,30 @@
  * and open the template in the editor.
  */
 
-class SocialWorker {
-    private $socialWorkerProfileId;      // not the user name!!
+class RMHStaff {
+    private $rmhStaffProfileId;      // not the user name!!
     private $userId; // username
     private $title; // title to the name
     private $lastName;        // last name - string
     private $firstName;       // first name - string
-    private $hospitalAffiliation; // what Hospital the Social Worker is from
     private $phone; //phone number
     private $email;            // email address
-    private $emailNotification; //opting in or out of email notifications - boolean
     private $userLoginInfoId;
     private $userCategory;
-    private $password;         // password for database access: default = username ??
+    private $password;         
 
-        /**
-         * constructor for a SocialWorker
+/**
+         * constructor for a RMHStaffMember
          */
-    function __construct($socialWorkerProfileId, $userId, $title, $lastName, $firstName, $hospitalAffiliation,
-            $phone, $email, $emailNotification,  $userLoginInfoId, $userCategory, $password){                
+    function __construct($socialWorkerProfileId, $userId, $title, $lastName, $firstName,
+            $phone, $email,  $userLoginInfoId, $userCategory, $password){                
         $this->userId = $userId; //is this first name + phone number or ??
-        $this->socialWorkerProfileId = $socialWorkerProfileId; //order of profile in the database
+        $this->rmhStaffProfileId = $socialWorkerProfileId; //order of profile in the database
         $this->title = $title; 
         $this->lastName = $lastName;
         $this->firstName = $firstName;
-        $this->hospitalAffiliation = $hospitalAffiliation;
         $this->phone = $phone;
         $this->email = $email;
-        $this->emailNotification = $emailNotification; //boolean
         $this->userLoginInfoId = $userLoginInfoId;
         $this->userCategory = $userCategory;
         
@@ -48,8 +44,8 @@ class SocialWorker {
         return $this->userId;
     }
     
-    function get_socialWorkerProfileId(){
-        return $this->socialWorkerProfileId;
+    function get_rmhStaffProfileId(){
+        return $this->rmhStaffProfileId;
     }
     
     function get_title(){
@@ -64,20 +60,12 @@ class SocialWorker {
         return $this->lastName;
     }
     
-    function get_hospitalAff(){
-        return $this->hospitalAffiliation;
-    }
-    
     function get_phone() {
         return $this->phone;
     }
     
     function get_email(){
         return $this->email;
-    }
-    
-    function get_email_notification(){
-        return $this->emailNofitication;
     }
     
     function get_userLoginInfoId(){
@@ -98,8 +86,8 @@ class SocialWorker {
         $this->userId = $id;
     }
     
-    function set_socialWorkerProfileId($profileNum){
-        $this->socialWorkerProfileId = $profileNum;
+    function set_rmhStaffProfileId($profileNum){
+        $this->rmhStaffProfileId = $profileNum;
     }
     
     function set_title($ttl){
@@ -114,20 +102,12 @@ class SocialWorker {
         $this->lastName = $ln;
     }
     
-    function set_hospitalAff($hospAff){
-        $this->hospitalAffiliation = $hospAff;
-    }
-    
     function set_phone($phNum) {
         $this->phone = $phNum;
     }
     
     function set_email($em){
         $this->email = $em;
-    }
-    
-    function set_email_notification($eNot){
-        $this->emailNotification = $eNot;
     }
     
     function set_userLoginInfoId($userLogin){
@@ -143,6 +123,5 @@ class SocialWorker {
     }
 }
     
-
-
+    
 ?>
