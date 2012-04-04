@@ -1,31 +1,15 @@
 <?php
-/*
- * Created on Mar 28, 2008
- * @author Oliver Radwan 
+/**
+ * Logout script
+ * 
+ * @author Prayas Bhattarai 
  */
 ?>
-<?PHP
-	session_start();
-	session_cache_expire(30);
+<?
+    session_start();
+    session_cache_expire(30);
+    session_unset();
+    session_destroy();
+    session_write_close();
+    header('Location:login.php');
 ?>
-<html>
-	<head>
-		<meta HTTP-EQUIV="REFRESH" content="2; url=index.php">
-		<title>
-			Logged out of RMH Homeroom
-                </title>
-	</head>
-	<body>
-		<div id="container">
-			<?PHP include('header.php');?>
-			<div id="content">
-				<?PHP
-					session_unset();
-					session_write_close();
-				?>
-				<p>You are now logged out of RMH Homeroom.</p>
-				<?PHP include('footer.inc');?>
-			</div>
-		</div>
-	</body>
-</html>
