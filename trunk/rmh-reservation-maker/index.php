@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<?php include('header.php');?>
-    
-        <?PHP
-
-	session_start();
-	session_cache_expire(30);
-        ?>
-
-		
-	
-	<body>
+<?php
+session_start();
+session_cache_expire(30);
+$title = "Welcome";
+include('header.php');?>
+<body>
 		<div id="container">
 			
 			<div id="content">
@@ -17,7 +11,7 @@
 				<p>When you are finished, please remember to <a href="logout.php">logout</a>.</p>
 
 				<?PHP
-				if ($person){ 
+				if (isset($person)){ 
 					/* if this is a person object
 					 * Check type of person, and display home page based on that.
 					 * level 0: Family Accounts
@@ -55,7 +49,7 @@
 					echo("You are a family member");
 				}
 
-				//We have a admin authenticated	 
+				//We have an admin authenticated	 
 				if($_SESSION['access_level']==3) {
 					echo("Welcome admin");
 				    
@@ -66,6 +60,6 @@
 				
 			</div>
 		</div>
-	
+  <?php include ('footer.php');?>
     </body>
 </html>
