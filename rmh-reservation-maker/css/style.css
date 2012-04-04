@@ -43,7 +43,7 @@ body, button, input, select, textarea { font-family: sans-serif; color: #222; }
  */
 
 ::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
-::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+::selection { background: yellow; color: red; text-shadow: none; }
 
 
 /* =============================================================================
@@ -331,11 +331,14 @@ rmh
 
 .formt {
     
-    font-family: Arial,Helvetica,sans-serif;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
     font-weight: bold;
     font-variant: small-caps;
     color: #cccccc;
     text-align: center;
+    height:2em;
+    width:100%;
+    font-size: 2em;
 }
 
 .formsubmit {
@@ -373,4 +376,30 @@ rmh
 
 .hometext {
     list-style:none;
+}
+
+#container {
+    padding-top:60px;
+}
+
+
+.not {display: none;}
+
+#loginforms p {
+    
+
+    font-family: Georgia,'Times New Roman',times,serif;
+    font-size: 1Sem;
+}
+
+#loginforms {
+    margin: 0 auto;
+}
+
+body {
+    margin: 0 auto;
+}
+
+img.rmdlogo {
+    width:90%%;
 }
