@@ -7,13 +7,13 @@
 
 class RMHStaff {
     private $rmhStaffProfileId;      // not the user name!!
-    private $userId; // username
+    private $userId; // id number for specific RMH Staff member
     private $title; // title to the name
     private $lastName;        // last name - string
     private $firstName;       // first name - string
     private $phone; //phone number
     private $email;            // email address
-    private $userLoginInfoId;
+    private $userLoginInfoId; //username of specific RMH Staff member
     private $userCategory;
     private $password;         
 
