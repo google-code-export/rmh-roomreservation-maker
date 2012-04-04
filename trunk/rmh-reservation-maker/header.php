@@ -57,6 +57,7 @@
                  * the system can view it. If someone logged into the system attempts to access a page above their
 		 * permission level, they will be sent back to the home page.
 		 */
+                $permission_array = array();
 		//pages families can view
 		$permission_array['index.php']=0;
                 
