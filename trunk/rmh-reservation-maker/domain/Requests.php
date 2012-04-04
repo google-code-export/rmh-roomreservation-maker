@@ -1,8 +1,7 @@
 <?php
 
-// includes Social Worker file 
-include_once(dirname(__FILE__).'/../domain/SocialWorker.php');
-
+include_once(dirname(__FILE__).'/../domain/UserProfile.php');
+include_once(dirname(__FILE__).'/../domain/Famiily.php');
 class Requests  {
    
     private $roomReservationActivityID;
@@ -96,9 +95,9 @@ class Requests  {
     }
     
     
-    
+  
     //is this cancel request supposed to be in the domain ? (question from Geri)
-    function cancel_request($roomReservationRequestID){ 
+   // function cancel_request($roomReservationRequestID){ 
     /* A room needs to be canceled. 
     * SW goes to look up the room request that was made for the family.
     * SW states the reason for cancellation in the note.
@@ -110,7 +109,7 @@ class Requests  {
         
         //1 - modify room request
         //2 - cancel room request
-        if (selection == 2){
+       /* if (selection == 2){
             $retrieve = retrieve_dbRoomRequest($roomReservationRequestID); // needs retrieve function from database group
             if ($retrieve->status == "apply-confirmed"){
                 //email function ? 
@@ -123,7 +122,9 @@ class Requests  {
         }
    
      
- } //close cancel_request
+ } //close cancel_request*/
+ //
+ 
         
     }//close class Request
 ?>
