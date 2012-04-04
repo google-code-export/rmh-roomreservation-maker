@@ -10,7 +10,9 @@ include('header.php');?>
 				<p>When you are finished, please remember to <a href="logout.php">logout</a>.</p>
 
 				<?PHP
-				if (isset($person)){ 
+                                //|| $_SESSION['logged_in'] is added for test purpose, can be removed later
+				if (isset($person) || $_SESSION['logged_in'])
+                                    { 
 					/* if this is a person object
 					 * Check type of person, and display home page based on that.
 					 * level 0: Family Accounts

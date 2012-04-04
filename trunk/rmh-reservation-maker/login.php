@@ -44,7 +44,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
             $_SESSION['logged_in'] = true;
             $_SESSION['access_level'] = 2; //0-3
             $_SESSION['id'] = $user;
-            
+            return true;
         }
         else if($pass == getHashValue('test3') && $user == 'test3')
         {
