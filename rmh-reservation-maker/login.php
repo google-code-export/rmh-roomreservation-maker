@@ -132,6 +132,7 @@ else
                                     <div>
                                             <input class="formsubmit" type="submit" name="Login" value="Login"/>
                                     </div>
+                            </form>
                     </div>
             </div>
 	</div>
