@@ -1,18 +1,108 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>
+
+<?php
+/**
+ * This is a template for people who would want to create an interface for user interaction. The sequence of code blocks is important
+ * because session handling requires proper sequence. Also the inclusion of header file is important. 
+ * 
+ * When you are creating a new file based on this template, make sure to add your page's permission requirement to the header.php file
+ * example: $permission_array['template.php']=3;
+ * where template.php is your file
+ *         3 is the permission level required to access your page. this can be 0 through 3, where 0 is all, and 3 is admin
+ * 
+ * Detail explanation for each code
+ * block has been provided for each section below:
+ */
+
+//start the session and set cache expiry
+session_start();
+session_cache_expire(30);
+
+$title = "Report Generation"; 
+
+include('../header.php'); //including this will further include (globalFunctions.php and config.php)
+
+/*
+ * If your page includes a form, please follow the instructions below.
+ * If not, this code block can be deleted
+ * 
+ * If the page checks for $_POST data then it is important to validate the token that is attached with the form.
+ * Attaching token to a form is described below in the HTML section.
+ * Include the following check:
+ */
+   
+$error = array(); //variable that sstores all the errors that occur in the login process
+//if data is submitted then do the following:
+//check for user and add session variables
+//This check should be replaced by the tokenValidator function
+if(isset($_POST['form_token']) && validateTokenField($_POST))
+{
+
+    //sanitize all these data before they get to the database !! IMPORTANT
+
+    $db_pass = getHashValue($_POST['password']);
+    $db_id = sanitize($_POST['username']);
+
+    if($db_pass == getHashValue('test') && $db_id == 'test')
+    {
+        $_SESSION['logged_in'] = true;
+        $_SESSION['access_level'] = 3; //0-3
+        $_SESSION['id'] = $db_id;
+
+        echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
+        exit();
+    }
+    else
+    {
+        $error['invalid_username'] = "The username or password provided does not match";
+    }
+
+    
+}
+else if(isset($_POST['form_token']) && !validateTokenField($_POST))
+{
+    //if data was posted but the token was invalid then add it to the error array
+    $error['csrf'] = 'The request could not be completed: security check failed!';
+}
+else
+{
+    //if no data was submitted then display the login form:
+
+    if(($_SERVER['PHP_SELF']) == "/logout.php")
+    {
+        //prevents infinite loop of logging in to the page which logs you out...
+        echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
+    }
+}
+?>
+
+<div id="container">
+    <div id="content">
+        <?PHP
+        if(!empty($error))
+        {
+            echo '<div style="color:#f00;">';
+            echo implode('<br />', $error);
+            echo '</div>';
+        }
+        ?>
+
+<div id="container">
+
+    <div id="content">
+        
+        <!-- REPORTING FORM -->
+        
+        <br><br>
         <form name="reportChoice" action="reportHandler.php" method="POST">
-            Report Type:
-		<select name="choices"">
+            <?php echo generateTokenField(); ?>
+            <label for="reportType">Report Type:</label>
+		<select name="reportType"">
                 <option value="30day">30 Day Report</option>
                 <option value="mkscc">MKSCC Report</option>
             </select>
             <br>
             <br>
-            Start Date: 
+            <label for="startDate">Start Date:</label>
             <select name="startMonth">
                 <option value="01">January</option>
                 <option value="02">February</option>
@@ -78,7 +168,7 @@
 	    </select>
 		
             <br><br>
-            End Date:  
+            <label for="endDate">End Date:</label> 
             <select name="endMonth">
                 <option value="01">January</option>
                 <option value="02">February</option>
@@ -146,5 +236,11 @@
             
             <input type="submit" value="Choose" name="choose" />
         </form>
-    </body>
-</html>
+       
+
+    </div>
+</div>
+<?php 
+include ('../footer.php'); // this contains the proper </body> and </html> ending tag.
+?>
+
