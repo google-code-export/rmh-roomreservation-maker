@@ -29,6 +29,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
             $_SESSION['logged_in'] = true;
             $_SESSION['access_level'] = 0; //0-3
             $_SESSION['id'] = $user;
+            return true;
 
         }
         else if( $pass == getHashValue('test1') && $user == 'test1' )
@@ -36,7 +37,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
             $_SESSION['logged_in'] = true;
             $_SESSION['access_level'] = 1; //0-3
             $_SESSION['id'] = $user;
-            
+            return true;
         }
         else if($pass == getHashValue('test2') && $user == 'test2')
         {
@@ -50,10 +51,10 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
             $_SESSION['logged_in'] = true;
             $_SESSION['access_level'] = 3; //0-3
             $_SESSION['id'] = $user;         
-            
+            return true;
          }
         else
-            return 0; //login failed to match a combination above
+            return false; //login failed to match a combination above
     }//end function testLogin( )
     
     if( testLogin( $db_id, $db_pass ) )
@@ -145,7 +146,7 @@ else
         <div id="loginforms">
             <div>
                     <p>
-                            Access to <i>Homeroom</i> requires a Username and a Password.
+                            Access to <i>Room reservation maker</i> requires a Username and a Password.
                     </p>
                     <ul class="hometext">
                             <li>You must be a Ronald McDonald House <i>staff member</i> or <i>social worker</i> to access this system.</li>

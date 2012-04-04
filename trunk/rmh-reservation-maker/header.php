@@ -140,6 +140,6 @@
     </head>
 <body class="<?php // $_ENV['/**browser **/'] ?>">
 <div id="header">
-    <h1>Welcome to RMH Homeroom!</h1>
+    <h1>Welcome to RMH Reservation Maker!</h1>
     <?php echo $header_content; ?>
 </div>
