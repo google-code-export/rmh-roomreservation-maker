@@ -15,13 +15,15 @@ class SocialWorker {
     private $phone; //phone number
     private $email;            // email address
     private $emailNotification; //opting in or out of email notifications - boolean
+    private $userLoginInfoId;
+    private $userCategory;
     private $password;         // password for database access: default = username ??
 
         /**
          * constructor for a SocialWorker
          */
     function __construct($socialWorkerProfileId, $userId, $title, $lastName, $firstName, $hospitalAffiliation,
-            $phone, $email, $emailNotification, $password){                
+            $phone, $email, $emailNotification,  $userLoginInfoId, $userCategory, $password){                
         $this->userId = $userId; //is this first name + phone number or ??
         $this->socialWorkerProfileId = $socialWorkerProfileId; //order of profile in the database
         $this->title = $title; 
@@ -31,6 +33,8 @@ class SocialWorker {
         $this->phone = $phone;
         $this->email = $email;
         $this->emailNotification = $emailNotification; //boolean
+        $this->userLoginInfoId = $userLoginInfoId;
+        $this->userCategory = $userCategory;
         
         if ($password=="")
             $this->password = md5($this->id);
@@ -72,6 +76,14 @@ class SocialWorker {
         return $this->emailNofitication;
     }
     
+    function get_userLoginInfoId(){
+        return $this->userLoginInfoId;
+    }
+    
+    function get_userCategory(){
+        return $this->userCategory;
+    }
+    
     function get_password () {
         return $this->password;
     }
@@ -107,10 +119,18 @@ class SocialWorker {
     }
     
     function set_email_notification($eNot){
-        $this->emailNotification= $eNot;
+        $this->emailNotification = $eNot;
+    }
+    
+    function set_userLoginInfoId($userLogin){
+        $this->userLoginInfoId = $userLogin;
+    }
+    
+    function set_userCategory($userCat){
+        $this->userCategory = $userCat;
     }
 
-    function set_password ($pass) {
+    function set_password ($pass){
         $this->password = $pass;
     }
 }
