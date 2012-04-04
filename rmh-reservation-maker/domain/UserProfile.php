@@ -29,7 +29,7 @@ class User {
     
     //getter functions
     function get_userProfileId() {
-        return $this->userProfileIdid;
+        return $this->userProfileId;
     }
     
     function get_userLoginInfoId() {
