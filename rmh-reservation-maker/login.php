@@ -150,7 +150,7 @@ else
                     </p>
                     <ul class="hometext">
                             <li>You must be a Ronald McDonald House <i>staff member</i> or <i>social worker</i> to access this system.</li>
-                            <li>If you do not remember your Password, [forgot password link should go here?]</li>
+                            <li>If you do not remember your Password, <a href="reset.php">click here to reset it.</a></li>
                     </ul>
                     <div>
                             <form method="post" action="login.php">
