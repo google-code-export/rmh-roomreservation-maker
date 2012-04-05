@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 05, 2012 at 12:45 AM
+-- Generation Time: Apr 05, 2012 at 12:49 PM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -19,6 +19,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `rmhreservationdb`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+DROP PROCEDURE IF EXISTS `GetRequestKeyNumber`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetRequestKeyNumber`(IN RequestType VARCHAR(255))
+BEGIN 
+        DECLARE ID int;
+ 
+        IF RequestType = "RoomReservationRequestID" THEN 
+            SELECT @ID := RoomReservationRequestID
+            FROM RequestKeyNumber;
+            UPDATE RequestKeyNumber SET RoomReservationRequestID = @ID + 1; 
+            
+            SELECT RoomReservationRequestID
+            FROM RequestKeyNumber;
+        ELSE    
+            SELECT @ID := ProfileActivityRequestID
+            FROM RequestKeyNumber;
+            UPDATE RequestKeyNumber SET ProfileActivityRequestID = @ID + 1;
+
+             SELECT ProfileActivityRequestID
+             FROM RequestKeyNumber;
+
+        END IF;
+        
+  END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -86,14 +116,14 @@ CREATE TABLE IF NOT EXISTS `profileactivity` (
   `ProfileActivityRequestID` int(11) NOT NULL,
   `UserProfileID` int(11) NOT NULL,
   `FamilyProfileID` int(11) NOT NULL,
-  `Status` enum('Unconfirmed','Confirmed') NOT NULL,
+  `Status` enum('Unconfirmed','Confirmed','Denied') NOT NULL,
   `ActivityType` enum('Create','Edit') NOT NULL,
   `DateStatusSubmitted` datetime NOT NULL,
   `Notes` text,
   PRIMARY KEY (`ProfileActivityID`),
   KEY `UserProfileID` (`UserProfileID`),
   KEY `FamilyProfileID` (`FamilyProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `profileactivity`
@@ -108,7 +138,9 @@ INSERT INTO `profileactivity` (`ProfileActivityID`, `ProfileActivityRequestID`, 
 (6, 3, 3, 2, 'Confirmed', 'Create', '2012-02-22 19:22:43', 'New Family Profile Added'),
 (7, 4, 2, 2, 'Unconfirmed', 'Edit', '2012-03-02 15:44:22', 'New Address Borgartun 34'),
 (8, 4, 3, 2, 'Confirmed', 'Edit', '2012-03-03 12:43:12', 'New Address Borgartun 34'),
-(9, 5, 2, 3, 'Unconfirmed', 'Create', '2012-04-01 10:22:43', 'New Family Profile');
+(9, 5, 2, 3, 'Unconfirmed', 'Create', '2012-04-01 10:22:43', 'New Family Profile'),
+(10, 6, 2, 3, 'Unconfirmed', 'Edit', '2012-04-02 10:22:43', 'New Address'),
+(11, 6, 3, 3, 'Denied', 'Edit', '2012-04-03 15:22:33', 'New Family Profile needs to be approved first');
 
 -- --------------------------------------------------------
 
@@ -123,7 +155,7 @@ CREATE TABLE IF NOT EXISTS `profileactivitychange` (
   `FieldName` varchar(25) NOT NULL,
   `FieldChanges` varchar(255) NOT NULL,
   UNIQUE KEY `ChangeIndex` (`ChangeIndex`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `profileactivitychange`
@@ -131,7 +163,8 @@ CREATE TABLE IF NOT EXISTS `profileactivitychange` (
 
 INSERT INTO `profileactivitychange` (`ChangeIndex`, `ProfileActivityID`, `FieldName`, `FieldChanges`) VALUES
 (1, 3, 'Address', '110-76 76th Avenue'),
-(2, 7, 'Address', 'Borgartun 34');
+(2, 7, 'Address', 'Borgartun 34'),
+(3, 10, 'Address', '4 avenue de la Soeur Rosalie');
 
 -- --------------------------------------------------------
 
@@ -144,6 +177,13 @@ CREATE TABLE IF NOT EXISTS `requestkeynumber` (
   `ProfileActivityRequestID` int(11) NOT NULL,
   `RoomReservationRequestID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `requestkeynumber`
+--
+
+INSERT INTO `requestkeynumber` (`ProfileActivityRequestID`, `RoomReservationRequestID`) VALUES
+(12, 24);
 
 -- --------------------------------------------------------
 
