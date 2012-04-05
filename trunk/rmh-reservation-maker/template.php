@@ -62,7 +62,7 @@ include('header.php'); //including this will further include (globalFunctions.ph
         
         EXAMPLE code block below (can be deleted if not using form) -->
         
-       <form method="post" action="login.php">
+       <form method="post" action="template.php">
             <?php echo generateTokenField(); ?>
                                     
             <label for="testname">Testname</label>
