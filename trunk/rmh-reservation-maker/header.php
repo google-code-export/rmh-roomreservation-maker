@@ -40,18 +40,7 @@
       }
   }
     
-    $header_content = ''; //This variable stores all the content that needs to be displayed on the browser.
-	//Log-in security
-	//If they aren't logged in, display our log-in form.
-	if(!isset($_SESSION['logged_in']) && getCurrentPage() != 'login.php'){
-           //Redirect to the login page only if the current page is NOT the login page AND the logged in session variable is not set
-            
-            header('Location: login.php'); 
-            exit();
-	}
-	else if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] && getCurrentPage() != 'login.php'){
-
-		/**
+  /**
 		 * Set our permission array for families, social workers, room reservation managers, and 
                  * administrators. If a page is not specified in the permission array, anyone logged into 
                  * the system can view it. If someone logged into the system attempts to access a page above their
@@ -76,6 +65,9 @@
 		$permission_array['log.php']=3;
 		//more pages
                 
+                //password reset page (available to everyone)
+                $permission_array['reset.php']=0;
+                
                 //logout page
 		$permission_array['logout.php']=1;
                 
@@ -84,7 +76,24 @@
 
 		//Check if they're at a valid page for their access level.
 		$current_page = getCurrentPage();
-
+  
+    $header_content = ''; //This variable stores all the content that needs to be displayed on the browser.
+	//Log-in security
+	//If they aren't logged in, display our log-in form.
+	if(!isset($_SESSION['logged_in']) && $permission_array[$current_page] != 0){
+           //Redirect to the login page only if the current page is NOT viewable by the world AND the logged in session variable is not set
+            
+            header('Location: login.php'); 
+            exit();
+	}
+        else if(isset($_SESSION['logged_in']) && ($current_page == 'login.php' || $current_page == 'reset.php'))
+        {
+            //if the current page is login.php || reset.php && the user is logged in, then redirect to the index.php page
+            header('Location: index.php');
+            exit();
+        }
+	else if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']){
+             //if user is logged in start the permission check
 		if(!isset($permission_array[$current_page]) || $permission_array[$current_page]>$_SESSION['access_level']){
 			//in this case, the user doesn't have permission to view this page.
 			//we redirect them to the index page.
@@ -120,12 +129,7 @@
 		}
 		$header_content .= ' | <a href="'.$path.'logout.php">logout</a> <br>';
 	}
-        else if(isset($_SESSION['logged_in']) && getCurrentPage() == 'login.php')
-        {
-            //if the current page is login.php && the user is logged in, then redirect to the index.php page
-            header('Location: index.php');
-            exit();
-        }
+        
 
 ?>
 <!DOCTYPE html>
