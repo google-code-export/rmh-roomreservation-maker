@@ -55,6 +55,8 @@
 		//additional pages social workers can view
                 
 		$permission_array['referralForm.php']=1;
+                $permission_array['profileChangeForm.php']=1;
+                $permission_array['ProfileChange.php']=1;
 		//more pages
                            
                 //additional pages room reservation managers can view
