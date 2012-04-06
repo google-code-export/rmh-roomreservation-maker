@@ -48,7 +48,7 @@
 		 */
                 $permission_array = array();
 		//pages families can view
-		$permission_array['index.php']=0;
+		$permission_array['index.php']=1;
                 
                 $permission_array['login.php']=0; //login page is viewable by everyone
               
