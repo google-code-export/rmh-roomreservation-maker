@@ -11,7 +11,7 @@ include('header.php');?>
 
 				<?PHP
                                 //|| $_SESSION['logged_in'] is added for test purpose, can be removed later
-				if (isset($person) || $_SESSION['logged_in'])
+				if (isset($person) || (isset($_SESSION['logged_in']) && $_SESSION['logged_in']))
                                     { 
 					/* if this is a person object
 					 * Check type of person, and display home page based on that.
@@ -45,10 +45,6 @@ include('header.php');?>
 				echo($person->get_mgr_notes().'</div></p>');*/
 
 				// we have a family authenticated
-				if($_SESSION['access_level']==0) {
-						 	//SHOW STATUS
-					echo("You are a family member");
-				}
 
 				//We have an admin authenticated	 
 				if($_SESSION['access_level']==3) {
