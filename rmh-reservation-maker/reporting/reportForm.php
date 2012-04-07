@@ -1,17 +1,5 @@
 
 <?php
-/**
- * This is a template for people who would want to create an interface for user interaction. The sequence of code blocks is important
- * because session handling requires proper sequence. Also the inclusion of header file is important. 
- * 
- * When you are creating a new file based on this template, make sure to add your page's permission requirement to the header.php file
- * example: $permission_array['template.php']=3;
- * where template.php is your file
- *         3 is the permission level required to access your page. this can be 0 through 3, where 0 is all, and 3 is admin
- * 
- * Detail explanation for each code
- * block has been provided for each section below:
- */
 
 //start the session and set cache expiry
 session_start();
@@ -48,7 +36,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
         $_SESSION['access_level'] = 3; //0-3
         $_SESSION['id'] = $db_id;
 
-        echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
+        echo "<script type=\"text/javascript\">window.location = \"reportForm.php\";</script>";
         exit();
     }
     else
@@ -96,9 +84,9 @@ else
         <form name="reportChoice" action="reportHandler.php" method="POST">
             <?php echo generateTokenField(); ?>
             <label for="reportType">Report Type:</label>
-		<select name="reportType"">
-                <option value="30day">30 Day Report</option>
-                <option value="mkscc">MKSCC Report</option>
+		<select name="reportType">
+                <option value="30 Day Report">30 Day Report</option>
+                <option value="MKSCC Report">MKSCC Report</option>
             </select>
             <br>
             <br>
@@ -234,7 +222,7 @@ else
 	    </select>
             
             
-            <input type="submit" value="Choose" name="choose" />
+            <input type="submit" value="Submit" name="submit" />
         </form>
        
 
