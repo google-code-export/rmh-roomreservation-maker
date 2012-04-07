@@ -8,6 +8,29 @@ session_cache_expire(30);
 $title = "Report"; //title for page
 
 include('../header.php'); //including the header file
+
+
+
+if(isset($_POST['form_token']) && validateTokenField($_POST))
+    {
+        $showReport = true;
+        $reportType = sanitize($_POST["reportType"]);
+        $dateStart = sanitize($_POST["startMonth"].":".$_POST["startDay"].":".$_POST["startYear"]);
+        $dateEnd = sanitize($_POST["endMonth"].":".$_POST["endDay"].":".$_POST["endYear"]);
+        
+    }
+    else if(isset($_POST['form_token']) && !validateTokenField($_POST))
+    {
+        $showReport = false;
+        echo "Security check failed: Go back to the form and resubmit your selections<br>";
+
+    }
+    else
+    {
+        //there was no POST DATA
+    }
+        
+
 ?>
 
 <div id="container">
@@ -15,13 +38,13 @@ include('../header.php'); //including the header file
     <div id="content">
         
 <?php
-        $reportType = $_POST["reportType"];
-        $dateStart = $_POST["startMonth"].":".$_POST["startDay"].":".$_POST["startYear"];
-        $dateEnd = $_POST["endMonth"].":".$_POST["endDay"].":".$_POST["endYear"];
-
+    if($showReport==true)
+    {
+        echo "<br>";
         echo "Report Type: ".$reportType."<br>";
         echo "Start Date: ".$dateStart."<br>";
         echo "End Date: ".$dateEnd."<br>";
+    }
 ?>
         <br>
         
