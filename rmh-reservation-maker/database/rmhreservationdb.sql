@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 05, 2012 at 12:49 PM
+-- Generation Time: Apr 07, 2012 at 03:37 AM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `familyprofile` (
   `FormPDF` varchar(255) DEFAULT NULL,
   `Notes` text,
   PRIMARY KEY (`FamilyProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
 
 --
 -- Dumping data for table `familyprofile`
@@ -114,33 +114,31 @@ DROP TABLE IF EXISTS `profileactivity`;
 CREATE TABLE IF NOT EXISTS `profileactivity` (
   `ProfileActivityID` int(11) NOT NULL AUTO_INCREMENT,
   `ProfileActivityRequestID` int(11) NOT NULL,
-  `UserProfileID` int(11) NOT NULL,
   `FamilyProfileID` int(11) NOT NULL,
-  `Status` enum('Unconfirmed','Confirmed','Denied') NOT NULL,
+  `SocialWorkerProfileID` int(11) NOT NULL,
+  `RMHStaffProfileID` int(11) DEFAULT NULL,
+  `SW_DateStatusSubmitted` datetime DEFAULT NULL,
+  `RMH_DateStatusSubmitted` datetime DEFAULT NULL,
   `ActivityType` enum('Create','Edit') NOT NULL,
-  `DateStatusSubmitted` datetime NOT NULL,
+  `Status` enum('Unconfirmed','Confirm','Deny') NOT NULL,
   `Notes` text,
   PRIMARY KEY (`ProfileActivityID`),
-  KEY `UserProfileID` (`UserProfileID`),
+  KEY `RMHStaffProfileID` (`RMHStaffProfileID`),
+  KEY `SocialWorkerProfileID` (`SocialWorkerProfileID`),
   KEY `FamilyProfileID` (`FamilyProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `profileactivity`
 --
 
-INSERT INTO `profileactivity` (`ProfileActivityID`, `ProfileActivityRequestID`, `UserProfileID`, `FamilyProfileID`, `Status`, `ActivityType`, `DateStatusSubmitted`, `Notes`) VALUES
-(1, 1, 2, 1, 'Unconfirmed', 'Create', '2012-01-10 18:22:43', 'New Family Profile'),
-(2, 1, 3, 1, 'Confirmed', 'Create', '2012-01-12 17:22:43', 'New Family Profile Added'),
-(3, 2, 2, 1, 'Unconfirmed', 'Edit', '2012-02-19 12:33:19', 'New Address 110-76 76th Avenue'),
-(4, 2, 3, 1, 'Confirmed', 'Edit', '2012-02-20 14:23:13', 'New Address 110-76 76th Avenue'),
-(5, 3, 2, 2, 'Unconfirmed', 'Create', '2012-02-21 15:22:43', 'New Family Profile'),
-(6, 3, 3, 2, 'Confirmed', 'Create', '2012-02-22 19:22:43', 'New Family Profile Added'),
-(7, 4, 2, 2, 'Unconfirmed', 'Edit', '2012-03-02 15:44:22', 'New Address Borgartun 34'),
-(8, 4, 3, 2, 'Confirmed', 'Edit', '2012-03-03 12:43:12', 'New Address Borgartun 34'),
-(9, 5, 2, 3, 'Unconfirmed', 'Create', '2012-04-01 10:22:43', 'New Family Profile'),
-(10, 6, 2, 3, 'Unconfirmed', 'Edit', '2012-04-02 10:22:43', 'New Address'),
-(11, 6, 3, 3, 'Denied', 'Edit', '2012-04-03 15:22:33', 'New Family Profile needs to be approved first');
+INSERT INTO `profileactivity` (`ProfileActivityID`, `ProfileActivityRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `Notes`) VALUES
+(1, 1, 1, 1, 1, '2012-01-10 18:22:43', '2012-01-12 17:22:43', 'Create', 'Confirm', 'New Family Profile'),
+(2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 14:23:13', 'Edit', 'Confirm', 'New Address 110-76 76th Avenue'),
+(3, 3, 2, 1, 1, '2012-02-21 15:22:43', '2012-02-22 19:22:43', 'Create', 'Confirm', 'New Family Profile'),
+(4, 4, 2, 1, 1, '2012-03-02 15:44:22', '2012-03-03 12:43:12', 'Edit', 'Confirm', 'New Address Borgartun 34'),
+(5, 5, 3, 1, 1, '2012-04-01 10:22:43', NULL, 'Create', 'Unconfirmed', 'New Family Profile'),
+(6, 6, 3, 1, 1, '2012-04-02 10:22:43', '2012-04-03 15:22:33', 'Edit', 'Deny', 'New Family Profile needs to be approved first');
 
 -- --------------------------------------------------------
 
@@ -183,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `requestkeynumber` (
 --
 
 INSERT INTO `requestkeynumber` (`ProfileActivityRequestID`, `RoomReservationRequestID`) VALUES
-(12, 24);
+(7, 6);
 
 -- --------------------------------------------------------
 
@@ -222,35 +220,33 @@ DROP TABLE IF EXISTS `roomreservationactivity`;
 CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
   `RoomReservationActivityID` int(11) NOT NULL AUTO_INCREMENT,
   `RoomReservationRequestID` int(11) NOT NULL,
-  `UserProfileID` int(11) NOT NULL,
   `FamilyProfileID` int(11) NOT NULL,
-  `ActivityType` enum('Applied','Modified','Cancelled') NOT NULL,
-  `Status` enum('Unconfirmed','Confirmed','Denied') NOT NULL,
-  `DateStatusSubmitted` datetime NOT NULL,
+  `SocialWorkerProfileID` int(11) NOT NULL,
+  `RMHStaffProfileID` int(11) DEFAULT NULL,
+  `SW_DateStatusSubmitted` datetime DEFAULT NULL,
+  `RMH_DateStatusSubmitted` datetime DEFAULT NULL,
+  `ActivityType` enum('Apply','Modify','Cancel') NOT NULL,
+  `Status` enum('Unconfirmed','Confirm','Deny') NOT NULL,
   `BeginDate` datetime NOT NULL,
   `EndDate` datetime NOT NULL,
   `PatientDiagnosis` text,
   `Notes` text,
   PRIMARY KEY (`RoomReservationActivityID`),
-  KEY `UserProfileID` (`UserProfileID`),
+  KEY `SocialWorkerProfileID` (`SocialWorkerProfileID`),
+  KEY `RMHStaffProfileID` (`RMHStaffProfileID`),
   KEY `FamilyProfileID` (`FamilyProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 
 --
 -- Dumping data for table `roomreservationactivity`
 --
 
-INSERT INTO `roomreservationactivity` (`RoomReservationActivityID`, `RoomReservationRequestID`, `UserProfileID`, `FamilyProfileID`, `ActivityType`, `Status`, `DateStatusSubmitted`, `BeginDate`, `EndDate`, `PatientDiagnosis`, `Notes`) VALUES
-(1, 1, 2, 1, 'Applied', 'Unconfirmed', '2012-02-17 10:33:28', '2012-03-01 00:00:00', '2012-04-01 00:00:00', 'Pediatric Sarcomas', ''),
-(2, 1, 3, 1, 'Applied', 'Confirmed', '2012-02-18 13:22:20', '2012-03-01 00:00:00', '2012-04-01 00:00:00', 'Pediatric Sarcomas', ''),
-(3, 2, 2, 1, 'Modified', 'Unconfirmed', '2012-02-19 12:33:19', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(4, 2, 3, 1, 'Modified', 'Confirmed', '2012-02-20 20:24:22', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(5, 3, 2, 1, 'Cancelled', 'Unconfirmed', '2012-02-21 21:33:11', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(6, 3, 3, 1, 'Cancelled', 'Confirmed', '2012-02-21 23:44:18', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(7, 4, 2, 2, 'Applied', 'Unconfirmed', '2012-03-01 23:44:22', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', ''),
-(8, 4, 3, 2, 'Applied', 'Denied', '2012-03-01 23:44:44', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
-(9, 5, 2, 2, 'Applied', 'Unconfirmed', '2012-03-02 15:44:22', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', ''),
-(10, 5, 1, 2, 'Applied', 'Confirmed', '2012-03-03 17:42:12', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', '');
+INSERT INTO `roomreservationactivity` (`RoomReservationActivityID`, `RoomReservationRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `BeginDate`, `EndDate`, `PatientDiagnosis`, `Notes`) VALUES
+(1, 1, 1, 1, 1, '2012-02-17 10:33:28', '2012-02-18 13:22:20', 'Apply', 'Confirm', '2012-03-01 00:00:00', '2012-04-01 00:00:00', 'Pediatric Sarcomas', ''),
+(2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
+(3, 3, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
+(4, 4, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
+(5, 5, 2, 1, 2, '2012-03-02 15:44:22', NULL, '', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', '');
 
 -- --------------------------------------------------------
 
@@ -318,24 +314,10 @@ ALTER TABLE `activation`
   ADD CONSTRAINT `activation_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`);
 
 --
--- Constraints for table `profileactivity`
---
-ALTER TABLE `profileactivity`
-  ADD CONSTRAINT `profileactivity_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`),
-  ADD CONSTRAINT `profileactivity_ibfk_2` FOREIGN KEY (`FamilyProfileID`) REFERENCES `familyprofile` (`FamilyProfileID`);
-
---
 -- Constraints for table `rmhstaffprofile`
 --
 ALTER TABLE `rmhstaffprofile`
   ADD CONSTRAINT `rmhstaffprofile_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`);
-
---
--- Constraints for table `roomreservationactivity`
---
-ALTER TABLE `roomreservationactivity`
-  ADD CONSTRAINT `roomreservationactivity_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`),
-  ADD CONSTRAINT `roomreservationactivity_ibfk_2` FOREIGN KEY (`FamilyProfileID`) REFERENCES `familyprofile` (`FamilyProfileID`);
 
 --
 -- Constraints for table `socialworkerprofile`
