@@ -6,23 +6,30 @@ class Requests  {
    
     private $roomReservationActivityID;
     private $roomReservationRequestID;
-    private $userId;
+    private $socialWorkerProfileId;
+    private $rmhStaffProfileId;
     private $familyProfileId;
+    private $activityType;
     private $status;
-    private $dateStatusSubmited;
+    private $swDateStatusSubmitted;
+    private $rmhDateStatusSubmitted;
     private $beginDate;
     private $endDate;
     private $patientDiagnosis;
     private $roomnote;
     
-    function __constuct($roomReservationActivityID, $roomReservationRequestID, $userId, $familyProfileId,
-            $status, $dateStatusSubmited, $beginDate, $endDate, $patientDiagnosis, $roomnote){
+    function __constuct($roomReservationActivityID, $roomReservationRequestID, $socialWorkerProfileId, $rmhStaffProfileId,
+            $familyProfileId,$activityType, $status, $swDateStatusSubmitted, $rmhDateStatusSubmitted, $beginDate, $endDate, 
+            $patientDiagnosis, $roomnote){
             $this->roomReservationActivityID = $roomReservationActivityID;
             $this->roomReservationRequestID = $roomReservationRequestID;
-            $this->userId = $userId;
+            $this->socialWorkerProfileId = $socialWorkerProfileId;
+            $this->rmhStaffProfileId = $rmhStaffProfileId;
             $this->familyProfileId = $familyProfileId;
+            $this->activityType = $activityType;
             $this->status = $status;
-            $this->dateStatusSubmited = $dateStatusSubmited;
+            $this->swDateStatusSubmitted = $swDateStatusSubmitted;
+            $this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
             $this->beginDate = $beginDate;
             $this->endDate = $endDate;
             $this->patientDiagnosis = $patientDiagnosis;
@@ -30,23 +37,32 @@ class Requests  {
     }
     
     //getters
-    function get_roomreservationActivityID(){
+    function get_roomReservationActivityID(){
          return $this->roomReservationActivityID;
     }
     function get_roomReservationRequestID(){
         return $this->roomReservationRequestID;
     }
-    function get_userId(){
-        return $this->userId;
+    function get_socialWorkerProfileId(){
+        return $this->socialWorkerProfileId;
+    }
+    function get_rmhStaffProfileId(){
+        return $this->rmhStaffProfileId;
     }
     function get_familyProfileId(){
         return $this->familyProfileId;
     }
+    function get_activityType(){
+        return $this->activityType;
+    }
     function get_status(){
         return $this->status;
     }
-    function get_dateStatusSubmited(){
-        return $this->dateStatusSubmited;
+    function get_swDateStatusSubmitted(){
+        return $this->swDateStatusSubmitted;
+    }
+     function get_rmhDateStatusSubmitted(){
+        return $this->swdateStatusSubmitted;
     }
     function get_beginDate(){
         return $this->beginDate;
@@ -63,23 +79,32 @@ class Requests  {
     
     
       //setters
-    function set_roomreservationActivityID($roomResId){
+    function set_roomReservationActivityID($roomResId){
          $this->roomReservationActivityID = $roomResId;
     }
     function set_roomReservationRequestID($roomRequestId){
         $this->roomReservationRequestID = $roomRequestId;
     }
-    function set_userId($uid){
-        $this->userId = $uid;
+    function set_socialWorkerProfileId($sid){
+        $this->socialWorkerProfileId = $sid;
+    }
+    function set_rmhStaffProfileId($rid){
+        $this->rmhStaffProfileId = $rid;
     }
     function set_familyProfileId($famId){
         $this->familyProfileId = $famId;
     }
+    function set_activityType($actTy){
+        $this->activityType = $actTy;
+    }
     function set_status($stat){
         $this->status = $stat;
     }
-    function set_dateStatusSubmited($dateSubm){
-        $this->dateStatusSubmited = $dateSubm;
+    function set_swDateStatusSubmitted($swDateSubm){
+        $this->swDateStatusSubmitted = $swDateSubm;
+    }
+    function set_rmhDateStatusSubmitted($rmhDateSubm){
+        $this->rmhDateStatusSubmitted = $rmhDateSubm;
     }
     function set_beginDate($dateBegin){
         $this->beginDate = $dateBegin;
