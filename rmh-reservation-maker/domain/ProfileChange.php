@@ -1,82 +1,59 @@
 <?php
-
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * ProfileChange class for RMH Reservation Maker
+ * @version April 09, 2012
+ * @author Linda Shek
  */
-include_once(dirname(__FILE__).'/../domain/Family.php');
-include_once(dirname(__FILE__).'/../domain/UserProfile.php');
+
+include_once(dirname(__FILE__).'/ProfileActivity.php');
+include_once(dirname(__FILE__).'/database/dbProfileChange.php');
+
 class ProfileChange {
-    private $profileChangeId;
-    private $profileChangeRequestId;
-    private $userId;      //user id for the user who is making the change
-    private $familyProfileId; //family id for the family whose profile is being changed
-    private $profileChangeStatus; //string
-    private $dateStatusSubm; //date of profile change request
-    private $profileChangeNotes;
+    private $profileChangeIndex; //unique key for the profile activity change table
+    private $profileActivityId; // id of the profile activity 
+    private $profileChangeFieldName; //any field name from the FamilyProfile table (ex. ParentLastName, Address, Email, etc.)     
+    private $profileChangeFieldChanges;//change information corresponding to the field name selected. 
+                                     //(ex. if field name = email, then field change might have "example@email.com")    
         /**
-         * constructor for a Family Profile Change
+         * constructor for profile change
          */
-    function __construct($profileChangeId, $profileChangeRequestId, $userId, $familyProfileId,
-            $profileChangeStatus, $dateStatusSubm, $profileChangeNotes){                
+    function __construct($profileChangeIndex, $profileActivityId, $profileChangeFieldName, $profileChangeFieldChanges)
+        {                
         
-        $this->profileChangeId= $profileChangeId;
-    $this->profileChangeRequestId = $profileChangeRequestId;
-    $this->userId=$userId;      
-    $this->familyProfileId= $familyProfileId;
-    $this->profileChangeStatus=$profileChangeStatus; 
-    $this->dateStatusSubm=$dateStatusSubm; 
-    $this->profileChangeNotes=$profileChangeNotes;
-    
+        $this->profileChangeIndex = $profileChangeIndex;
+        $this->profileActivityId = $profileActivityId;
+        $this->profileChangeFieldName = $profileChangeFieldName;
+        $this->profileChangeFieldChanges = $profileChangeFieldChanges;  
     
     //getter functions
        
-    function get_profileChangeId(){
-    return $this->profileChangeId;}
+    function get_profileChangeIndex(){
+    return $this->profileChangeIndex;}
     
-    function get_profileChangeRequestId(){
-    return $this->profileChangeRequestId;}
+    function get_profileActivityId(){
+    return $this->profileActivityId;}
     
-    function get_userId(){
-    return $this->userId;}
+    function get_profileChangeFieldName(){
+    return $this->profileChangeFieldName;}
     
-    function get_familyProfileId(){
-    return $this->familyProfileId;}
-    
-    function get_profileChangeStatus(){
-    return $this->profileChangeStatus;}
-    
-    function get_dateStatusSubm(){
-    return $this->dateStatusSubm;}
-    
-    function get_profileChangeNotes(){
-    return $this->profileChangeNotes;}
-    
+    function get_profileChangeFieldChanges(){
+    return $this->profileChangeFieldChanges;}
    
-    //setter functions
+    //setter functions   
     
+    function set_profileChangeIndex($profChangeIdx){
+    $this->profileChangeIdx = $profChangeIdx;}
     
-    function set_profileChangeId($profChangeId){
-    $this->profileChangeId = $profChangeId;}
+    function set_profileActivityId($profActId){
+    $this->profileActivityId = $profActId;}
     
-    function set_profileChangeRequestId($profChangeReqId){
-    $this->profileChangeRequestId = $profChangeReqId;}
+    function set_profileChangeFieldName($profChangeFldNm){
+    $this->profileChangeFieldName = $profChangeFldNm;}
     
-    function set_userId($usId){
-    return $this->$usId;}
-    
-    function set_familyProfileId($famId){
-    $this->familyProfileId = $famId;}
-    
-    function set_profileChangeStatus($profChangeStat){
-    $this->profileChangeStatus = $profChangeStat;}
-    
-    function set_dateStatusSubm($dateStatSubm){
-    $this->dateStatusSubm = $dateStatSubm;}
-    
-    function set_profileChangeNotes($profChangeNotes){
-    $this->profileChangeNotes = $profChangeNotes;}
+    function set_profileChangeFieldChanges($profChangeFldChng){
+    return $this->profileChangeFieldChanges = $profChangeFldChng;}
 }
 }
 
 ?>
+
