@@ -162,7 +162,7 @@ function insert_RoomReservationActivity ($requests)
  */
     
     function retrieve_Confirm_RoomReservationActivity(){
-        connet();
+        connect();
         
         $query = "SELECT RR.RoomReservationRequestID,F.`ParentLastName`,F.`ParentFirstName`,S. LastName AS SW_LastName, 
         S.`FirstName`AS SW_FirstName,R.`LastName` AS RMH_Staff_LastName,R.`FirstName` AS RMH_Staff_FirstName,
@@ -243,8 +243,8 @@ function insert_RoomReservationActivity ($requests)
     
 /**
  * Retrieves Room Reservation from the RoomReservationActivity table by Social Worker's Last Name
- * @param $roomReservationRequestId 
- * @return the Room Reservation corresponding to roomReservationRequestId, or false if not in the table.
+ * @param $socialWorkerLastName
+ * @return the Room Reservation corresponding to Social Worker's Last Name, or false if not in the table.
  */
 
    function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName){
