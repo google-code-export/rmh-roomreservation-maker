@@ -136,7 +136,7 @@ class Family{
     $this->parentState = $parState;}
     
     function set_parentzip($parZip){
-    $this->parentZIP = parZip;}
+    $this->parentZIP = $parZip;}
     
     function set_parentcountry($parCountry){
     $this->parentCountry = $parCountry;}
