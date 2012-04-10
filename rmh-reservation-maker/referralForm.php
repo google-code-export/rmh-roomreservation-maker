@@ -69,10 +69,10 @@ include_once (ROOT_DIR . '/database/ProfileChange.php');
         
         EXAMPLE code block below (can be deleted if not using form) -->
          
-        <form name ="NewReservationForm" method="post" action="NewRequestHandler.php">
+        <form name ="referralForm" method="post" action="referralForm.php">
             <?php echo generateTokenField(); ?>
             
-           <h1> New Reservation Form </h1> <br><br>
+           <h1> New Referral Form </h1> <br><br>
            <h3> fill in the all the fields for a New Referral Form </h3><br><br>
            
            Begin Date:  <input type="text" name="BeginDate" value="" size="6" /><br>
@@ -91,12 +91,25 @@ include_once (ROOT_DIR . '/database/ProfileChange.php');
 </div>      
 
   <?php
-        //test the submission of profile change form
+        //test the submission of a room Referral
     if(($_POST['submit'] == "submit")){
         
    
-    //logs the new profile activity AND the profile activity change
+   $new_referral = new RoomReservationActivity();
+  
+        
+        
+        
+    $new_referral->roomReservationActivityID = 
+    $new_referral->roomReservationRequestID =
+    $new_referral->patientDiagnosis = 
+    $new_referral->endDate = 
+    $new_referral->beginDate = 
+        
+    //create a new room reservation activity
     create_RoomReservationActivity();
+    
+    insert_RoomReservationActivity($new_referral);
     
    
 
@@ -134,12 +147,13 @@ include_once (ROOT_DIR . '/database/ProfileChange.php');
         $r++;
   
     }
-    else
+    if(empty($Referral)){
+        echo("You did not enter all required fields. ");
     {
-
+   
     }
     }
-    
+    }
 ?>
   
          
