@@ -58,6 +58,7 @@
 		$permission_array['referralForm.php']=1;
                 $permission_array['profileChangeForm.php']=1;
                 $permission_array['ProfileChange.php']=1;
+                $permission_array['SearchReservations.php']=1;
 		//more pages
                            
                 //additional pages room reservation managers can view
@@ -118,7 +119,7 @@
 		
 		if($_SESSION['access_level']>=1) // social workers and managers 
 		{	
-		    $header_content .= '| <strong>bookings and referrals:</strong> <a href="'.$path.'viewBookings.php?id=pending">view,</a> <a href="'.$path.'searchBookings.php">search</a>' . 
+		    $header_content .= '| <strong>bookings and referrals:</strong> <a href="'.$path.'viewBookings.php?id=pending">view,</a> <a href="'.BASE_DIR.'/SearchReservations.php">search</a>' . 
 			                                    '<a href="referralForm.php?id=new'.'">, new referral</a>';
 		    $header_content .= '<br> <strong>people :</strong> <a href="'.$path.'view.php">view,</a> <a href="'.$path.'searchPeople.php">search</a>';
                     $header_content .= '<a href="personEdit.php?id='.'new'.'">, add</a> ';
@@ -143,9 +144,10 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="<?php echo CSS_DIR;?>/style.css">
     </head>
 <body class="<?php // $_ENV['/**browser **/'] ?>">
+
 <div id="header">
     <h1>Welcome to RMH Reservation Maker!</h1>
     <?php echo $header_content; ?>
