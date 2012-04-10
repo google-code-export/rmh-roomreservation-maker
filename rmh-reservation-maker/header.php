@@ -1,6 +1,7 @@
 <?php
     include('core/config.php');
     include('core/globalFunctions.php');
+    include('core/sessionManagement.php');
 
  /**
   * generateTokenField function that generates a token field for the form and stores it in the session for validating it later
