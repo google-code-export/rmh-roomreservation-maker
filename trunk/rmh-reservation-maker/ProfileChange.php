@@ -17,10 +17,11 @@ $title = "Family Profile Modification";
 
 include('header.php');
 
-//includes the database and domain scripts 
-include_once('domain/ProfileChange.php');
 include_once('domain/UserProfile.php');
-include_once('database/dbinfo.php');
+include_once('domain/ProfileChange.php');
+include_once('database/dbProfileActivity.php');
+include_once('database/dbProfileChange.php');
+include_once('database/dbUserProfile.php');
 
 
 /*
@@ -31,19 +32,42 @@ include_once('database/dbinfo.php');
    
         //checks if the profile is valid 
         if ($currentFamily instanceof familyProfile){ 
-            
-*/  
-    /*
-     * Until the room reservation is done. 
+*/ 
+    //test the submission of profile change form
+    if(($_POST['Modify'] == "submit")){
+        
+        //default types and status
+    $activityType = "Modify";
+    $profileActitivityStatus = "Unconfirmed";
+        
+    //getting the sw id and the name
     $sw = $_SESSION['id'];
-    $name = (get_firstName()." ". get_lastName());
-    */
+    $sw_name = $sw->get_firstName()." ". $sw->get_lastName();
+    
+    //new objects
+    $current_activity = new ProfileActivity();
+    $current_change = new ProfileChange();
+  
+    //logs the new profile activity AND the profile activity change
+    create_ProfileActivity();
+    
+    //setting some of the private profile activity members
+    $current_activity->socialWorkerProfileID = $sw;
+    $current_activity->swDateStatusSubm = date("Y-m-d");
+    // $current_activity->familyProfileId = unknown....
+    $current_activity->activityType = $activityType;
+    $current_activity->profileActivityStatus = $profileActitivityStatus;
+    $current_activity->profileActityNotes = sanitize($_POST["swNote"]) ;
+    create_ProfileActivityChange();
+    
+    insert_ProfileActivity($current_activity);
 
     $need_change = array();
     $n = 0;
     
     if(isset($_POST["ParentFirstName"])){
         $newParentFirstName = $sanitize($_POST['ParentFirstName']);
+        $newParentFirstName = $current_change->
         $need_change[n] = $newParentFirstName; 
         $n++;
     }
@@ -113,7 +137,7 @@ include_once('database/dbinfo.php');
         $need_change[n] = $newPatientDiagnosis; 
         $n++;
     }
-    
+
   
     //message display if user made no changes
     if(empty($need_change)){
@@ -130,12 +154,12 @@ include_once('database/dbinfo.php');
         }
     }
 
-    //connect(); 
-    //function to add activity
+    //log the profile change activity
+    insert_ProfileActivity($new_profilechange);
     //function to add temp infomation
     
-    print_r($need_change);
-        
+    //print_r($need_change);
+    }
 
 ?>
 
