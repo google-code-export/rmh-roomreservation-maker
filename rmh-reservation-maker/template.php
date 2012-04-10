@@ -62,7 +62,7 @@ include('header.php'); //including this will further include (globalFunctions.ph
         
         EXAMPLE code block below (can be deleted if not using form) -->
         
-       <form method="post" action="template.php">
+       <form method="post" action="<?php echo BASE_DIR;?>/template.php">
             <?php echo generateTokenField(); ?>
                                     
             <label for="testname">Testname</label>
@@ -74,6 +74,6 @@ include('header.php'); //including this will further include (globalFunctions.ph
     </div>
 </div>
 <?php 
-include ('footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
+include (ROOT_DIR.'footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
 ?>
 
