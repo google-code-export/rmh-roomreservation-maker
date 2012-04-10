@@ -20,6 +20,11 @@ session_cache_expire(30);
 $title = "New Referral Form"; //This should be the title for the page, included in the <title></title>
 
 include('header.php'); //including this will further include (globalFunctions.php and config.php)
+include_once (ROOT_DIR . '/domain/Requests.php');
+include_once (ROOT_DIR . '/domain/ProfileChange.php');
+include_once (ROOT_DIR . '/domain/Family.php');
+include_once (ROOT_DIR . '/database/dbReservation.php');
+include_once (ROOT_DIR . '/database/ProfileChange.php');
 
 
 /*
@@ -79,19 +84,67 @@ include('header.php'); //including this will further include (globalFunctions.ph
            
           <input type="submit" name="submit" value="Submit"/>
            
-           
-        
-        
-        
-        </form>
+          </form>
             
             
       </div>
 </div>      
+
+  <?php
+        //test the submission of profile change form
+    if(($_POST['submit'] == "submit")){
+        
+   
+    //logs the new profile activity AND the profile activity change
+    create_RoomReservationActivity();
+    
+   
+
+       $Referral = array();
+       $r = 0;
+        
+       if(isset($_POST["BeginDate"])){
+        $newBeginDate = $sanitize($_POST['BeginDate']);
+        $Referral[r] = $newBeginDate; 
+        $r++;
+    }
+        if(isset($_POST["EndDate"])){
+        $newEndDate = $sanitize($_POST["EndDate"]);
+        $Referral[r] = $newEndDate; 
+        $r++;
+    }
+        if(isset($_POST["PatientDiagnosis"])){
+        $newPatientDiagnosis = $sanitize($_POST["PatientDiagnosis"]);
+        $Referral[r] = $newPatientDiagnosis; 
+        $r++;
+    }
+     if(isset($_POST["Notes"])){
+        $newNotes = $sanitize($_POST["Notes"]);
+        $Referral[r] = $newNotes; 
+        $r++;
+     }
+      if(isset($_POST["ParentLastName"])){
+        $newParentLastName = $sanitize($_POST["ParentLastName"]);
+        $Referral[r] = $newParentLastName; 
+        $r++;
+      }
+      if(isset($_POST["ParentFirstName"])){
+        $newParentFirstName = $sanitize($_POST["ParentFirstName"]);
+        $Referral[r] = $newParentFirstName; 
+        $r++;
+  
+    }
+    else
+    {
+
+    }
+    }
+    
+?>
   
          
        
 <?php     
-include ('footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
+include (ROOT_DIR.'/footer.php');  //include the footer file, this contains the proper </body> and </html> ending tag.
 ?>
 
