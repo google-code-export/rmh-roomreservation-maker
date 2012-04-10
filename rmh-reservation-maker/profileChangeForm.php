@@ -1,16 +1,10 @@
 <?php
-/**
- * This is a template for people who would want to create an interface for user interaction. The sequence of code blocks is important
- * because session handling requires proper sequence. Also the inclusion of header file is important. 
- * 
- * When you are creating a new file based on this template, make sure to add your page's permission requirement to the header.php file
- * example: $permission_array['template.php']=3;
- * where template.php is your file
- *         3 is the permission level required to access your page. this can be 0 through 3, where 0 is all, and 3 is admin
- * 
- * Detail explanation for each code
- * block has been provided for each section below:
- */
+
+ /*
+  * This the form that a SW would fill out to make any modification to the family profile
+  * @author Jessica Cheong
+  */
+    
 
 //start the session and set cache expiry
 session_start();
@@ -81,7 +75,9 @@ include('header.php'); //including this will further include (globalFunctions.ph
            Patient Last Name:   <input type="text" name="PatientLastName" value="" size="15" /><br>
            Patient Relation:    <input type="text" name="PatientRelation" value="" size="15" /><br>
            Patient Day Of Birth: <input type="text" name="PatientBirthDate" value="" size="15" /><br>
-           Patient Diagnosis:   <input type="text" name="PatientDiagnosis" value="" size="15" /><br><br>
+           Patient Diagnosis:   <input type="text" name="PatientDiagnosis" value="" size="15" /><br>
+           Notes from Social Worker:   <input type="text" name="swNote" value="" size="15"/><br>
+           
                         
             <input type="submit" name="submit" value="Modify"/>
             
