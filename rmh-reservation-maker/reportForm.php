@@ -1,78 +1,17 @@
 
 <?php
-
+/**
+ * This file contains the form to select the type of report and dates
+ */
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);
 
 $title = "Report Generation"; 
 
-include('../header.php'); //including this will further include (globalFunctions.php and config.php)
-
-/*
- * If your page includes a form, please follow the instructions below.
- * If not, this code block can be deleted
- * 
- * If the page checks for $_POST data then it is important to validate the token that is attached with the form.
- * Attaching token to a form is described below in the HTML section.
- * Include the following check:
- */
+include_once('header.php'); //including this will further include (globalFunctions.php and config.php)
    
-$error = array(); //variable that sstores all the errors that occur in the login process
-//if data is submitted then do the following:
-//check for user and add session variables
-//This check should be replaced by the tokenValidator function
-if(isset($_POST['form_token']) && validateTokenField($_POST))
-{
-
-    //sanitize all these data before they get to the database !! IMPORTANT
-
-    $db_pass = getHashValue($_POST['password']);
-    $db_id = sanitize($_POST['username']);
-
-    if($db_pass == getHashValue('test') && $db_id == 'test')
-    {
-        $_SESSION['logged_in'] = true;
-        $_SESSION['access_level'] = 3; //0-3
-        $_SESSION['id'] = $db_id;
-
-        echo "<script type=\"text/javascript\">window.location = \"reportForm.php\";</script>";
-        exit();
-    }
-    else
-    {
-        $error['invalid_username'] = "The username or password provided does not match";
-    }
-
-    
-}
-else if(isset($_POST['form_token']) && !validateTokenField($_POST))
-{
-    //if data was posted but the token was invalid then add it to the error array
-    $error['csrf'] = 'The request could not be completed: security check failed!';
-}
-else
-{
-    //if no data was submitted then display the login form:
-
-    if(($_SERVER['PHP_SELF']) == "/logout.php")
-    {
-        //prevents infinite loop of logging in to the page which logs you out...
-        echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
-    }
-}
 ?>
-
-<div id="container">
-    <div id="content">
-        <?PHP
-        if(!empty($error))
-        {
-            echo '<div style="color:#f00;">';
-            echo implode('<br />', $error);
-            echo '</div>';
-        }
-        ?>
 
 <div id="container">
 
@@ -83,13 +22,8 @@ else
         <br><br>
         <form name="reportChoice" action="reportHandler.php" method="POST">
             <?php echo generateTokenField(); ?>
-            <label for="reportType">Report Type:</label>
-		<select name="reportType">
-                <option value="30 Day Report">30 Day Report</option>
-                <option value="MKSCC Report">MKSCC Report</option>
-            </select>
-            <br>
-            <br>
+          
+
             <label for="startDate">Start Date:</label>
             <select name="startMonth">
                 <option value="01">January</option>
@@ -220,6 +154,9 @@ else
 		<option value="2012">2012</option>
                 <option value="2013">2013</option>
 	    </select>
+            <br><br>
+            <label for="startDate">Hospital (optional):</label>
+            <input type="text" name="hospital" value="" />
             
             
             <input type="submit" value="Submit" name="submit" />
@@ -229,6 +166,6 @@ else
     </div>
 </div>
 <?php 
-include ('../footer.php'); // this contains the proper </body> and </html> ending tag.
+include ('footer.php'); // this contains the proper </body> and </html> ending tag.
 ?>
 
