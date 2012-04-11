@@ -5,11 +5,11 @@
 
 There are few things that you will have to follow in order for the whole Session Management flow to function properly. This page is about important things that you need to keep in mind while creating a new page. This guideline also includes creating and validating forms.
 
-Please refer to the _template.php_ file in the repository for an example page. You can save it as your new page and continue there forward.
+Please refer to the `template.php` file in the repository for an example page. You can save it as your new page and continue there forward.
 
 
 = Details =
- * After you have saved the _template.php_ file as your new page, you will need to modify the _header.php_ file to include the required access level. 
+ * When you are done saving the `template.php` file as your new page, you will need to modify the `header.php` file to include the required access level. 
   Example: 
 {{{
 $permission_array['template.php'] = 3;
@@ -22,25 +22,25 @@ and 3 is admin
 */
 }}}
  * After permission has been added, you can switch to your newly created file and start working from there. There are detailed comments available in the file to help you through the process.
- * Overall *structure* of _template.php_
+ * Overall *structure* of `template.php`
   # begins by starting the session and session cache expiry
   # sets the title of the page (this is something that you might want to modify)
   # includes the header file
-  # output the HTML
+  # output the `HTML`
   # includes the footer file
  * *Include files*: It is important to include the following two files if you are providing a user accessible page.
-  # *header.php* includes all our session management codes and permission level requirement for all pages. Further, includes global function files discussed later. Also includes the _`<html>`_, _`<head></head>`_, _`<body>`_ tag and some header divs
-  $ *footer.php* includes the closing tag _`</body>`_ and _`</html>`_
+  # *`header.php`* includes all our session management codes and permission level requirement for all pages. Further, includes global function files discussed later. Also includes the `<html>`, `<head></head>`, `<body>` tag and some header divs
+  # *`footer.php`* includes the closing tag `</body>` and `</html>`
 
    Therefore, it is important to include these two files for a complete html formatted page.
  * *(Partially) Secure Form*
-   anti-CSRF protection has been implemented in forms. So there is a requirement that each form you create have a token field and in every _POST_ data handling - you check for a valid token. This can simply be done by following the information in the template file. Anyway, the basic idea is:
-   # once you have a _`<form>`_ setup, just add the php code snippet after your _`<form>`_ tag: 
+   anti-CSRF protection has been implemented in forms. So there is a requirement that each form you create have a token field and in every `POST` data handler - you check for a valid token. This can simply be done by following the information in the template file. Anyway, the basic idea is:
+   # once you have a `<form>` setup, just add the php code snippet after your `<form>` tag: 
    {{{
 <?php echo generateTokenField(); ?>
    }}}
-  # _generateTokenField()_ is responsible for creating a hidden field with randomly generated token. Refer to the template for an example.
-  # check for the validity of the token: this should be done when you handle the _{{{$_POST}}}_ data. Just validate the data using: 
+  # *`generateTokenField()`* is responsible for creating a hidden field with randomly generated token. Refer to the template for an example.
+  # check for the validity of the token: this should be done when you handle the `$_POST` data with the *`validateTokenField($postData)`* function. Just validate the data using: 
    {{{
 if(isset($_POST['form_token']) && validateTokenField($_POST))
 {
