@@ -92,43 +92,41 @@ include_once (ROOT_DIR . '/database/ProfileChange.php');
 
   <?php
         //test the submission of a room Referral
-    if(($_POST['submit'] == "submit")){
+ 
+  if(($_POST['submit'] == "submit")){
         
    
    $new_referral = new RoomReservationActivity();
+   
+   $request = new Requests($roomReservationActivityID,$roomReservationRequestID,$socialWorkerProfileId,
+           $rmhStaffProfileId,$familyProfileId,$activityType,$status,$swDateStatusSubmitted,$rmhDateStatusSubmitted,
+           $beginDate,$endDate,$patientDiagnosis,$roomnote);
   
         
         
-        
-    $new_referral->roomReservationActivityID = 
-    $new_referral->roomReservationRequestID =
-    $new_referral->patientDiagnosis = 
-    $new_referral->endDate = 
-    $new_referral->beginDate = 
-        
-    //create a new room reservation activity
-    create_RoomReservationActivity();
-    
-    insert_RoomReservationActivity($new_referral);
-    
+    $new_referral->roomReservationActivityID = $roomReservationActivityID;
+    $new_referral->roomReservationRequestID = $roomReservationRequestID;
    
-
-       $Referral = array();
+    
+     $Referral = array();
        $r = 0;
         
        if(isset($_POST["BeginDate"])){
         $newBeginDate = $sanitize($_POST['BeginDate']);
         $Referral[r] = $newBeginDate; 
+        $new_referral->beginDate = $newBeginDate;
         $r++;
     }
         if(isset($_POST["EndDate"])){
         $newEndDate = $sanitize($_POST["EndDate"]);
         $Referral[r] = $newEndDate; 
+        $new_referral->endDate = $newEndDate;
         $r++;
     }
         if(isset($_POST["PatientDiagnosis"])){
         $newPatientDiagnosis = $sanitize($_POST["PatientDiagnosis"]);
         $Referral[r] = $newPatientDiagnosis; 
+        $new_referral->patientDiagnosis = $newPatientDiagnosis;
         $r++;
     }
      if(isset($_POST["Notes"])){
@@ -154,6 +152,11 @@ include_once (ROOT_DIR . '/database/ProfileChange.php');
     }
     }
     }
+    
+    
+    insert_RoomReservationActivity($new_referral);
+    
+    
 ?>
   
          
