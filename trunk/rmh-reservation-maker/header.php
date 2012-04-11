@@ -75,8 +75,9 @@
                 //logout page
 		$permission_array['logout.php']=1;
                 
-                //reporting page
+                //reporting
                 $permission_array['reportForm.php']=1;
+                $permission_array['reportHandler.php']=1;
 
 		//Check if they're at a valid page for their access level.
 		$current_page = getCurrentPage();
@@ -129,6 +130,7 @@
 	    }
 		if($_SESSION['access_level']>=1) { // volunteers, social workers, and managers
 		    $header_content .= '<br><a href="roomLog.php?date=today">room logs</a>';
+                    $header_content .=' | <a href="'.$path.'reporting/reportForm.php">reports</a>';
                     $header_content .=' | <a href="'.$path.'help.php?helpPage='.$current_page.'" target="_BLANK">help</a>';
 		}
 		$header_content .= ' | <a href="'.$path.'logout.php">logout</a> <br>';
