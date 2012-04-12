@@ -1,7 +1,7 @@
 <?php
 
 include_once(ROOT_DIR .'/domain/UserProfile.php');
-include_once(ROOT_DIR .'/domain/Famiily.php');
+include_once(ROOT_DIR .'/domain/Family.php');
 class Reservation  {
    
     private $roomReservationActivityID;
@@ -18,7 +18,7 @@ class Reservation  {
     private $patientDiagnosis;
     private $roomnote;
     
-    function __constuct($roomReservationActivityID, $roomReservationRequestID, $socialWorkerProfileId, $rmhStaffProfileId,
+    function __construct($roomReservationActivityID, $roomReservationRequestID, $socialWorkerProfileId, $rmhStaffProfileId,
             $familyProfileId,$activityType, $status, $swDateStatusSubmitted, $rmhDateStatusSubmitted, $beginDate, $endDate, 
             $patientDiagnosis, $roomnote){
             $this->roomReservationActivityID = $roomReservationActivityID;
