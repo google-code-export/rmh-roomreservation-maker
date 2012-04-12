@@ -5,9 +5,9 @@
  * @author Gergana Stoykova and Linda Shek
  */
 
-include_once(dirname(__FILE__).'/Family.php');
-include_once(dirname(__FILE__).'/UserProfile.php');
-include_once(dirname(__FILE__).'/database/dbProfileActivity.php');
+include_once(ROOT_DIR .'/domain/Family.php');
+include_once(ROOT_DIR .'/domain/UserProfile.php');
+include_once(ROOT_DIR .'/database/dbProfileActivity.php');
 
 
 class ProfileActivity {
