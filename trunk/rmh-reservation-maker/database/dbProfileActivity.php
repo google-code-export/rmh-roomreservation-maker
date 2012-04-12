@@ -7,8 +7,8 @@
  * @author Linda Shek and Gergana Stoykova
  */
 
-include_once(dirname(__FILE__).'/domain/ProfileActivity.php');
-include_once(dirname(__FILE__).'/dbinfo.php');
+include_once(ROOT_DIR .'/domain/ProfileActivity.php');
+include_once(ROOT_DIR .'/database/dbinfo.php');
 
 /**
  * Creates a ProfileActivity table with the following fields:
@@ -24,7 +24,8 @@ include_once(dirname(__FILE__).'/dbinfo.php');
  * Notes: (optional) notes from the rmh staff/social worker
  */
 
-function create_ProfileActivity(){
+//DO NOT CALL THE FUNCTION Create_ProfileActivity() if TABLE ALREADY EXISTS. 
+/*function create_ProfileActivity(){
 	//Connect to the server
 	connect();
 	// Check if the table exists already
@@ -54,7 +55,7 @@ function create_ProfileActivity(){
 	}
 	mysql_close();
 	return true;
-}
+}*/
 
 /**
  * Inserts a new Profile Activity Request into the ProfileActivity table. This function
