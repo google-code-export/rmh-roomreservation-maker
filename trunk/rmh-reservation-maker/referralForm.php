@@ -9,7 +9,7 @@ session_cache_expire(30);
 $title = "Referral Form"; 
 
 include('header.php');
-include_once (ROOT_DIR . '/domain/Requests.php');
+include_once (ROOT_DIR . '/domain/Reservation.php');
 include_once (ROOT_DIR . '/domain/ProfileChange.php');
 include_once (ROOT_DIR . '/domain/Family.php');
 include_once (ROOT_DIR . '/database/dbReservation.php');
