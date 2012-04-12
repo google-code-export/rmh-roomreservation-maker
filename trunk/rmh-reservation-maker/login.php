@@ -153,13 +153,13 @@ else
                             <li>If you do not remember your Password, <a href="reset.php">click here to reset it.</a></li>
                     </ul>
                     <div>
-                            <form method="post" action="login.php">
+                            <form class="loginForm"method="post" action="login.php">
                                     <?php echo generateTokenField(); ?>
                                     <div>
-                                            <label for="username">Username</label><input class="formtop formt" type="text" name="username" id="username" onfocus="if(this.value == 'username') { this.value = ''; }" value="username"/>
+                                            <label class="noShow not" for="username">Username</label><input class="formtop formt" type="text" name="username" id="username" onfocus="if(this.value == 'username') { this.value = ''; }" value="username"/>
                                     </div>
                                     <div>
-                                            <label for="password">Password</label><input class="formbottom formt" type="password" name="password" id="password" onfocus="if(this.value == 'password') { this.value = ''; }" value="password"/>
+                                            <label class="noShow not"for="password">Password</label><input class="formbottom formt" type="password" name="password" id="password" onfocus="if(this.value == 'password') { this.value = ''; }" value="password"/>
                                     </div>
                                     <div>
                                             <input class="formsubmit" type="submit" name="Login" value="Login"/>

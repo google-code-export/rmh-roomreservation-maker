@@ -197,15 +197,15 @@ $testData = array('test0'=>'', 'test1'=>'activation');
             <form method="post" action="reset.php">
                     <?php echo generateTokenField(); ?>
 
-                    <label for="username">Username</label>
-                    <input type="text" name="username" id="username"/>
+                    <label class="not noShow" for="username">Username</label>
+                    <input class="formt formSingle" type="text" name="username" id="username"/>
 
                     <input type="submit" name="resetPassword" id="resetPassword" value="Reset"/>
             </form>
         <?php
         }
         ?>
-        <a href="login.php">Back to login</a>
+                <div id="back"><a href="login.php">Back</a></div>
     </div>
 </div>
 <?php 
