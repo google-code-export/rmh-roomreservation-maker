@@ -6,7 +6,7 @@
  * @author Linda Shek and Gergana Stoykova
  */
 
-include_once (ROOT_DIR . '/domain/Reservation.php');
+include_once (ROOT_DIR.'/domain/Reservation.php');
 include_once(ROOT_DIR.'/database/dbinfo.php');
 
 /**
