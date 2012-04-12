@@ -6,8 +6,8 @@
  * @author Linda Shek and Gergana Stoykova
  */
 
-include_once(dirname(__FILE__).'/domain/Requests.php');
-include_once(dirname(__FILE__).'/dbinfo.php');
+include_once (ROOT_DIR . '/domain/Reservation.php');
+include_once(ROOT_DIR.'/database/dbinfo.php');
 
 /**
  * Creates a RoomReservationActivity table with the following fields:
@@ -26,7 +26,8 @@ include_once(dirname(__FILE__).'/dbinfo.php');
  * Notes: (optional) notes from the rmh staff/social worker
  */
 
-function create_RoomReservationActivity() {
+//DO NOT CALL THE FUNCTION Create_RoomReservationActivity() if TABLE ALREADY EXISTS. 
+/*function create_RoomReservationActivity() {
     connect();
     mysql_query("DROP TABLE IF EXISTS RoomReservationActivity");
     $result=mysql_query("CREATE TABLE RoomReservationActivity (
@@ -53,7 +54,7 @@ function create_RoomReservationActivity() {
 	    return false;
     }
     return true;
-}
+}*/
 
 /**
  * Inserts a new Room Reservation Request into the RoomReservationActivity table. This function
