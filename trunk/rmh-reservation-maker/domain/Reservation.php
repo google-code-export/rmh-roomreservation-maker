@@ -1,8 +1,8 @@
 <?php
 
-include_once(dirname(__FILE__).'/../domain/UserProfile.php');
-include_once(dirname(__FILE__).'/../domain/Famiily.php');
-class Requests  {
+include_once(ROOT_DIR .'/domain/UserProfile.php');
+include_once(ROOT_DIR .'/domain/Famiily.php');
+class Reservation  {
    
     private $roomReservationActivityID;
     private $roomReservationRequestID;
