@@ -7,8 +7,8 @@
  * @author Linda Shek and Gergana Stoykova
  */
 
-include_once(ROOT_DIR .'/domain/ProfileActivity.php');
-include_once(ROOT_DIR .'/database/dbinfo.php');
+include_once(ROOT_DIR.'/domain/ProfileActivity.php');
+include_once(ROOT_DIR.'/database/dbinfo.php');
 
 /**
  * Creates a ProfileActivity table with the following fields:
