@@ -1,8 +1,8 @@
-
 <?php
 /**
  * This file contains the form to select the type of report and dates
  */
+
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);
