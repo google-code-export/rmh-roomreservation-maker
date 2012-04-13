@@ -7,7 +7,7 @@
 
 function ConfirmCancel($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 {
-    $SW = retrieve_UserProfile_SW($SWId);
+    $SW = retrieve_UserProfile_SW($SWID);
     $to = $SW['UserEmail'];
     
     $subject = "Confirmation of Cancelled Request";
@@ -19,7 +19,7 @@ function ConfirmCancel($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 
 function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note)
 {
-    $SW = retrieve_UserProfile_SW($SWId);
+    $SW = retrieve_UserProfile_SW($SWID);
     $to = $SW['UserEmail'];
     
     $subject = "Cannot Accommodate Modified Request";
@@ -35,7 +35,7 @@ function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note)
 
 function ModifyAccept($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 {
-    $SW = retrieve_UserProfile_SW($SWId);
+    $SW = retrieve_UserProfile_SW($SWID);
     $to = $SW['UserEmail'];
     
     $subject = "Modified Request has been Accepted";
