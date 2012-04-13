@@ -17,7 +17,7 @@ function ConfirmCancel($RequestKey, $SWID, $familyLname, $DateToAndFrom)
     mail($to, $subject, $message);
 }
 
-function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note)
+function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note = "")
 {
     $SW = retrieve_UserProfile_SW($SWID);
     $to = $SW['UserEmail'];
