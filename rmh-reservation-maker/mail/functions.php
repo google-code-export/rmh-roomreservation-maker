@@ -7,7 +7,9 @@
 
 function ConfirmCancel($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 {
-    $to = "admin@example.net";//dbFunction to find SW's email address
+    $SW = retrieve_UserProfile_SW($SWId);
+    $to = $SW['UserEmail'];
+    
     $subject = "Confirmation of Cancelled Request";
     
     $message = "The cancellation for the $familyLname for dates $DateToAndFrom has been processed.\n\nThe request can be viewed at (URL)/$RequestKey";
@@ -17,7 +19,9 @@ function ConfirmCancel($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 
 function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note)
 {
-    $to = "admin@example.net";//dbFunction to find SW's email address
+    $SW = retrieve_UserProfile_SW($SWId);
+    $to = $SW['UserEmail'];
+    
     $subject = "Cannot Accommodate Modified Request";
     
     if ($note != ""):
@@ -31,7 +35,9 @@ function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note)
 
 function ModifyAccept($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 {
-    $to = "admin@example.net";//dbFunction to find SW's email address
+    $SW = retrieve_UserProfile_SW($SWId);
+    $to = $SW['UserEmail'];
+    
     $subject = "Modified Request has been Accepted";
     
     $message = "The request for the $familyLname for dates $DateToAndFrom has been accepted.\n\nThe request can be viewed at (URL)/$RequestKey";
