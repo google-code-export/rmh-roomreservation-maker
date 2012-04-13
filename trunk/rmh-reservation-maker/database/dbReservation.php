@@ -75,15 +75,16 @@ function insert_RoomReservationActivity ($requests)
         if (mysql_num_rows($result)!=0) {
             
 		$result_row = mysql_fetch_assoc($result); //gets the first row
-		$requests->get_roomReservationRequestId() = $result_row['@ID := RoomReservationRequestID'];
+                $requests->set_roomReservationRequestID($result_row['@ID := RoomReservationRequestID']);
+		
     }	
         
      mysql_close();  
      
-     $query="INSERT INTO RoomReservationActivity ('".
-                $requests->get_roomReservationRequestId()."','".
-                $requests->get_familyProfileId()."','".     
-                $requests->get_socialWorkerProfileId()."','". 
+     $query="INSERT INTO RoomReservationActivity (".
+                $requests->get_roomReservationRequestID().",".
+                $requests->get_familyProfileId().",".     
+                $requests->get_socialWorkerProfileId().",'".
                 $requests->get_swDateStatusSubmitted()."','".
                 $requests->get_beginDate()."','".
                 $requests->get_endDate()."','".
