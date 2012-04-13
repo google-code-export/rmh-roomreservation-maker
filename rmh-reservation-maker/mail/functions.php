@@ -32,9 +32,9 @@ function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note)
 function ModifyAccept($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 {
     $to = "admin@example.net";//dbFunction to find SW's email address
-    $subject = "Cannot Accommodate Modified Request";
+    $subject = "Modified Request has been Accepted";
     
-    $message = "The request for the $familyLname for dates $DateToAndFrom cannot be accommodated.\n\nThe request can be viewed at (URL)/$RequestKey";
+    $message = "The request for the $familyLname for dates $DateToAndFrom has been accepted.\n\nThe request can be viewed at (URL)/$RequestKey";
     
     
     mail($to, $subject, $message);
