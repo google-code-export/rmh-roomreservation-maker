@@ -130,7 +130,7 @@
 	    }
 		if($_SESSION['access_level']>=1) { // volunteers, social workers, and managers
 		    $header_content .= '<br><a href="roomLog.php?date=today">room logs</a>';
-                    $header_content .=' | <a href="'.$path.'reporting/reportForm.php">reports</a>';
+                    $header_content .=' | <a href="'.$path.'reportForm.php">reports</a>';
                     $header_content .=' | <a href="'.$path.'help.php?helpPage='.$current_page.'" target="_BLANK">help</a>';
 		}
 		$header_content .= ' | <a href="'.$path.'logout.php">logout</a> <br>';
