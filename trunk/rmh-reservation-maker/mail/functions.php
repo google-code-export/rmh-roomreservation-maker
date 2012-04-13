@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-include_once (ROOT_DIR.'/domain/UserProfile.php');
+include_once (ROOT_DIR.'/database/dbUserProfile.php');
 
 
 function ConfirmCancel($RequestKey, $SWID, $familyLname, $DateToAndFrom)
