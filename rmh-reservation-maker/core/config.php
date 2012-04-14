@@ -20,6 +20,9 @@ date_default_timezone_set('America/New_York');
  */
 define('SECURITY_SALT', '991050965e004b58104e933c70ab86babd47d34b');
 
+//directory separator
+define('DS', '/');
+
 //define the root directory of our application
 define('ROOT_DIR', dirname(dirname(__FILE__)));
 
