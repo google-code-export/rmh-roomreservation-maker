@@ -1,16 +1,17 @@
 <?php
 
  /*
-  * This the form that a SW would fill out to make any modification to the family profile
   * @author Jessica Cheong
+  * 
+  * New family profile form
+  * 
   */
     
-
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);
 
-$title = "Profile Change Form"; //This should be the title for the page, included in the <title></title>
+$title = "New Family Profile"; //This should be the title for the page, included in the <title></title>
 
 include('header.php'); //including this will further include (globalFunctions.php and config.php)
 
@@ -56,11 +57,10 @@ include('header.php'); //including this will further include (globalFunctions.ph
         
         EXAMPLE code block below (can be deleted if not using form) -->
         
-       <form name ="profileChangeForm" method="post" action="ProfileChange.php">
+       <form name ="newProfileForm" method="post" action="newProfile.php">
             <?php echo generateTokenField(); ?>
                                     
-           <h1> Profile Change Request Form </h1> <br><br>
-           <h3> Only fill in the field(s) that needs modification: </h3><br><br>
+           <h1> New Family Profile Form </h1> <br><br>
            
            Parent First Name:   <input type="text" name="ParentFirstName" value="" size="15" /><br>
            Parent Last Name:    <input type="text" name="ParentLastName" value="" size="15" /><br>
@@ -76,7 +76,7 @@ include('header.php'); //including this will further include (globalFunctions.ph
            Patient Relation:    <input type="text" name="PatientRelation" value="" size="15" /><br>
            Patient Day Of Birth: <input type="text" name="PatientBirthDate" value="" size="15" /><br>
            Patient Diagnosis:   <input type="text" name="PatientDiagnosis" value="" size="15" /><br>
-           Notes from Social Worker:   <input type="text" name="swNote" value="" size="15"/><br>
+           Notes from Social Worker:   <input type="text" name="swNote" value="" size="15"/><br><br>
            
                         
             <input type="submit" name="submit" value="Modify"/>
