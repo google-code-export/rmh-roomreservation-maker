@@ -1,51 +1,39 @@
 <?php
 /**
- * Author:Gregorie Sylvester
+ * This is a template for people who would want to create an interface for user interaction. The sequence of code blocks is important
+ * because session handling requires proper sequence. Also the inclusion of header file is important. 
+ * 
+ * When you are creating a new file based on this template, make sure to add your page's permission requirement to the header.php file
+ * example: $permission_array['template.php']=3;
+ * where template.php is your file
+ *         3 is the permission level required to access your page. this can be 0 through 3, where 0 is all, and 3 is admin
+ * 
+ * Detail explanation for each code
+ * block has been provided for each section below:
  */
 
+//start the session and set cache expiry
 session_start();
 session_cache_expire(30);
 
-$title = "Referral Form"; 
+$title = "Referral Form"; //This should be the title for the page, included in the <title></title>
 
-include('header.php');
-include_once (ROOT_DIR . '/domain/Reservation.php');
-include_once (ROOT_DIR . '/domain/ProfileChange.php');
-include_once (ROOT_DIR . '/domain/Family.php');
-include_once (ROOT_DIR . '/database/dbReservation.php');
-include_once (ROOT_DIR . '/database/ProfileChange.php');
+include('header.php'); //including this will further include (globalFunctions.php and config.php)
 
 
 /*
- * Submitted Form Actions if a token is set, and $_POST['submit'] == "submit"
+ * If your page includes a form, please follow the instructions below.
+ * If not, this code block can be deleted
+ * 
+ * If the page checks for $_POST data then it is important to validate the token that is attached with the form.
+ * Attaching token to a form is described below in the HTML section.
+ * Include the following check:
  */
-    if( isset( $_POST['form_token'] ) && validateTokenField( $_POST ) )
+    if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
-        if( $_POST['submit'] == "submit" )//test the submission of a room Referral
-        {
-            if( isset( $_POST["BeginDate"] ) )
-                $newBeginDate = $sanitize( $_POST['BeginDate'] );
-            
-            if( isset( $_POST["EndDate"] ) )
-                $newEndDate = $sanitize( $_POST["EndDate"] );            
-            
-            if( isset( $_POST["PatientDiagnosis"] ) )
-                $newPatientDiagnosis = $sanitize( $_POST["PatientDiagnosis"] );
-            
-            if( isset( $_POST["Notes"] ) )
-                $newNotes = $sanitize( $_POST["Notes"] );
-            
-            if( isset( $_POST["ParentLastName"] ) )
-                $newParentLastName = $sanitize( $_POST["ParentLastName"] );
-            
-            if( isset( $_POST["ParentFirstName"] ) )
-                $newParentFirstName = $sanitize( $_POST["ParentFirstName"] );
-            
-            $new_referral = new Requests( );
-            insert_RoomReservationActivity( $new_referral );
-            
-        } //end if( $_POST['submit'] == "submit" )
-       
+        //the security validation was successful, perform required operation here below.
+        //*** NOTE *** The validateTokenField DOES NOT filter/sanitize/clean the data fields.
+        //A separate function sanitize() should be called to clean the data so that it is html/db safe
     }
     else if(isset($_POST['form_token']) && !validateTokenField($_POST))
     {
@@ -75,27 +63,36 @@ include_once (ROOT_DIR . '/database/ProfileChange.php');
         
         EXAMPLE code block below (can be deleted if not using form) -->
          
-        <form name ="referralForm" method="post" action="referralForm.php">
+        <form name ="NewReservationForm" method="post" action="NewRequestHandler.php">
             <?php echo generateTokenField(); ?>
             
-           <h1> New Referral Form </h1> <br><br>
-           <h3> fill in the all the fields for a New Referral Form </h3><br /><br />
+           <h1> New Reservation Form </h1> <br><br>
+           <h3> fill in the fields for a New Request Form </h3><br><br>
            
-           Begin Date:  <input type="text" name="BeginDate" value="" size="6" /><br />
-           End Date:    <input type="text" name="EndDate"   value="" size="6" /><br />
-           Patient Diagnosis: <input type="text" name="PatientDiagnosis" value="" size="11" /><br />
-           Notes: <input type="text" name="Notes" value="" size="30" /><br />
-           Parent Last Name:   <input type="text" name="ParentLastName" value="" size="11" /><br />
-           Parent First Name: <input type="text" name="ParentFirstName" value="" size="11" /><br />
+           Begin Date:  <input type="text" name="BeginDate" value="" size="15" /><br>
+           End Date:    <input type="text" name="EndDate"   value="" size="15" /><br>
+           Patient Diagnosis: <input type="text" name="PatientDiagnosis" value="" size="15" /><br>
+           Notes: <input type="text" name="Notes" value="" size="15" /><br>
+           Parent Last Name:   <input type="text" name="ParentLastName" value="" size="15" /><br>
+           Parent First Name: <input type="text" name="ParentFirstName" value="" size="15" /><br>
            
-          <input type="submit" name="submit" value="Submit" />
+          <input type="submit" name="submit" value="submit"/>
            
-          </form>
+           
+        
+        
+        
+        </form>
             
             
       </div>
-</div>               
+</div>      
+
+
+  
+         
        
 <?php     
 include (ROOT_DIR.'/footer.php');
 ?>
+
