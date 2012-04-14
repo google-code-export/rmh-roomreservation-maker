@@ -67,7 +67,7 @@ function insert_dbFamilyProfile ($family)
     mysql_close();
     return true;
 }
-                
+          
 function retrieve_dbFamilyProfile ($familyProfileId) 
 {
     connect();
@@ -90,6 +90,46 @@ function retrieve_dbFamilyProfile ($familyProfileId)
     mysql_close(); 
     return $theFamily;
 }
+
+/*  Return an array of family profiles  from the FamilyProfile table
+ * The first name and last name of the parent is used as the search key
+* $fname = parent first name (String)
+ * $lname = parent last name (String)
+   *@return an array of Family objects
+ */
+function retrieve_dbFamilyProfileByName($fname, $lname) 
+{
+    connect();
+    $query = "SELECT * FROM FamilyProfile WHERE ParentFirstName = '".$fname. "' AND ParentLastName='".$lname."'";
+    
+        // this can be useful for debugging, but turn it off before you commit!!
+    //echo "query is " . $query;
+    
+
+    $result = mysql_query ($query);
+    
+    if (mysql_num_rows($result) <1)
+    {
+       mysql_close();
+        return false;
+    }
+    
+    $families = array();
+    while ($result_row = mysql_fetch_assoc($result)) {
+        $family = new Family($result_row['FamilyProfileID'], $result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'],
+                        $result_row['Phone1'], $result_row['Phone2'], $result_row['Address'], $result_row['City'],
+                        $result_row['State'], $result_row['ZipCode'], $result_row['Country'], $result_row['PatientFirstName'],
+                        $result_row['PatientLastName'], $result_row['PatientRelation'], $result_row['PatientBirthDate'],
+                        $result_row['FormPDF'], $result_row['Notes']);
+
+
+        $families[] = $family;
+    }
+    mysql_close();
+    return $families;
+}
+
+
 function getall_family () 
 {
     connect();
