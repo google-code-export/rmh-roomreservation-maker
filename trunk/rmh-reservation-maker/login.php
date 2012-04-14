@@ -20,14 +20,22 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
 
     $db_pass = getHashValue($_POST['password']);
     $db_id = sanitize($_POST['username']);
+    
+    include_once(ROOT_DIR.'/database/dbUserProfile.php');
 
+    $user = retrieve_UserProfile($db_id);
+    if($user)
+    {
+    echo $user->get_password();
+    
+    }
     /* ADDED AS HARDCODED USERS DATABASE FOR TESTING PURPOSES : BEGIN */
     function testLogin( $user, $pass )
     {
         if( $pass == getHashValue('test0') && $user == 'test0')
         {
             $_SESSION['logged_in'] = true;
-            $_SESSION['access_level'] = 1; //0-3
+            $_SESSION['access_level'] = 0; //0-3
             $_SESSION['id'] = $user;
             return true;
 
