@@ -47,11 +47,18 @@
                  * the system can view it. If someone logged into the system attempts to access a page above their
 		 * permission level, they will be sent back to the home page.
 		 */
+  
+                 //Everyone = -1
+                 //Family member = 0
+                 //Social Worker = 1
+                 //Room Reservation Manager = 2
+                 //Admin = 3
+  
                 $permission_array = array();
 		//pages families can view
-		$permission_array['index.php']=1;
+		$permission_array['index.php']=0;
                 
-                $permission_array['login.php']=0; //login page is viewable by everyone
+                $permission_array['login.php']=-1; //login page is viewable by everyone
               
 		//additional pages social workers can view
                 
@@ -70,10 +77,10 @@
 		//more pages
                 
                 //password reset page (available to everyone)
-                $permission_array['reset.php']=0;
+                $permission_array['reset.php']=-1;
                 
                 //logout page
-		$permission_array['logout.php']=1;
+		$permission_array['logout.php']=-1;
                 
                 //reporting
                 $permission_array['reportForm.php']=1;
@@ -85,7 +92,7 @@
     $header_content = ''; //This variable stores all the content that needs to be displayed on the browser.
 	//Log-in security
 	//If they aren't logged in, display our log-in form.
-	if(!isset($_SESSION['logged_in']) && $permission_array[$current_page] != 0){
+	if(!isset($_SESSION['logged_in']) && $permission_array[$current_page] != -1){
            //Redirect to the login page only if the current page is NOT viewable by the world AND the logged in session variable is not set
             
             header('Location: login.php'); 
@@ -108,32 +115,6 @@
 			//so we die().
 			die();
 		}
-
-		//This line gives us the path to the html pages in question, useful if the server isn't installed @ root.
-		$path = strrev(substr(strrev($_SERVER['SCRIPT_NAME']),strpos(strrev($_SERVER['SCRIPT_NAME']),'/')));
-
-		//they're logged in and session variables are set.
-		$header_content = '<a href="'.$path.'index.php">home</a> | ';
-		$header_content .= '<a href="'.$path.'about.php">about</a>';
-		if ($_SESSION['access_level']==0) // clients
-		    $header_content .= '<a href="referralForm.php?id=new'.'"> | room request</a>';
-		
-		if($_SESSION['access_level']>=1) // social workers and managers 
-		{	
-		    $header_content .= '| <strong>bookings and referrals:</strong> <a href="'.$path.'viewBookings.php?id=pending">view,</a> <a href="'.BASE_DIR.'/SearchReservations.php">search</a>' . 
-			                                    '<a href="referralForm.php?id=new'.'">, new referral</a>';
-		    $header_content .= '<br> <strong>people :</strong> <a href="'.$path.'view.php">view,</a> <a href="'.$path.'searchPeople.php">search</a>';
-                    $header_content .= '<a href="personEdit.php?id='.'new'.'">, add</a> ';
-		}
-	    if($_SESSION['access_level']==3) { // managers
-	        $header_content .= '| <a href="'.$path.'log.php">log</a> | <a href="'.$path.'data.php?date=11-01-01&enddate='.date('y-m-d').'">data</a>';
-	    }
-		if($_SESSION['access_level']>=1) { // volunteers, social workers, and managers
-		    $header_content .= '<br><a href="roomLog.php?date=today">room logs</a>';
-                    $header_content .=' | <a href="'.$path.'reportForm.php">reports</a>';
-                    $header_content .=' | <a href="'.$path.'help.php?helpPage='.$current_page.'" target="_BLANK">help</a>';
-		}
-		$header_content .= ' | <a href="'.$path.'logout.php">logout</a> <br>';
 	}
         
 
@@ -153,5 +134,4 @@
 
 <div id="header">
     <h1>Welcome to RMH Reservation Maker!</h1>
-    <?php echo $header_content; ?>
 </div>

@@ -4,8 +4,8 @@ session_cache_expire(30);
 $title = "Welcome";
 include('header.php');?>
 		<div id="container">
-			
-			<div id="content">
+			<?php include(ROOT_DIR.'/navigation.php');?>
+			<div id="content" style="margin-left: 250px; margin-top: 23px;">
 				Welcome to RMH Room Reservation Maker<br />
 				<p>When you are finished, please remember to <a href="logout.php">logout</a>.</p>
 

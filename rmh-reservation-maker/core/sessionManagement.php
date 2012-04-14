@@ -16,7 +16,12 @@
  */
 function getCurrentUser()
 {
-    return $_SESSION['_id'];
+    return isset($_SESSION['_id']) ? ($_SESSION['_id']) : false;
+}
+
+function getUserAccessLevel()
+{
+    return isset($_SESSION['access_level']) ? ($_SESSION['access_level']) : false;;
 }
 
 ?>
