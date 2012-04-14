@@ -50,6 +50,8 @@ include('header.php'); //including this will further include (globalFunctions.ph
 
 <div id="container">
 
+    <?php include(ROOT_DIR.'/navigation.php');?>
+
     <div id="content">
         
         <!-- ALL YOUR HTML CONTENT GOES HERE -->
