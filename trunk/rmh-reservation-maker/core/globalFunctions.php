@@ -9,6 +9,8 @@
  * Also, feel free to modify any of the existing functions if you think you could make it more efficient
  */
 
+include_once('config.php');
+
 /**
  * sanitize function that filters out harmful characters from being processed.
  * 
@@ -67,5 +69,16 @@ function getHashValue($value, $salt=true)
     }
 
     return sha1($value);
+}
+
+/**
+ * includeFile function that includes file based on different Directory Separator
+ * 
+ * @param string $path the path to the include file starting from the root directory ('/core/config.php')
+ */
+function includeFile($path)
+{
+  $path = str_replace('/', DS, $path);
+  include_once(ROOT_DIR.$path);
 }
 ?>
