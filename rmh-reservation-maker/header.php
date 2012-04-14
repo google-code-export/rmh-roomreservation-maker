@@ -95,7 +95,7 @@
 	if(!isset($_SESSION['logged_in']) && $permission_array[$current_page] != -1){
            //Redirect to the login page only if the current page is NOT viewable by the world AND the logged in session variable is not set
             
-            header('Location: login.php'); 
+            header('Location: '.ROOT_DIR.'/login.php'); 
             exit();
 	}
         else if(isset($_SESSION['logged_in']) && ($current_page == 'login.php' || $current_page == 'reset.php'))
@@ -109,7 +109,7 @@
 		if(!isset($permission_array[$current_page]) || $permission_array[$current_page]>$_SESSION['access_level']){
 			//in this case, the user doesn't have permission to view this page.
 			//we redirect them to the index page.
-                        header('Location: index.php');
+                        header('Location: '.ROOT_DIR.'/index.php');
 			//echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
 			//note: if javascript is disabled for a user's browser, it would still show the page.
 			//so we die().
