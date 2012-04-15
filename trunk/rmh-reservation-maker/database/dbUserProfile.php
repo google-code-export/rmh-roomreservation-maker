@@ -10,8 +10,30 @@
 include_once (ROOT_DIR.'/domain/UserProfile.php');
 include_once(ROOT_DIR.'/database/dbinfo.php');
 
+/**
+ * function that looks for the user profile based on the username and password provided.
+ * 
+ * @param string $username the username entered by the user
+ * @param string $password the hashed password entered by the user
+ * @return boolean false if no profile is found, OR user category if profile was found
+ * @author Prayas Bhattarai
+ */
+function retrieve_UserByAuth($username, $password)
+{
+    connect();
+    $query = "SELECT UserCategory FROM userprofile WHERE UsernameID = '".$username."' AND Password = '".$password."' LIMIT 1";
+    $result = mysql_query($query) or die(mysql_error());
+    if(mysql_num_rows($result) !== 1)
+    {
+        mysql_close();
+        return false;
+    }
+    $result_row = mysql_fetch_assoc($result);
 
-/*
+    return $result_row['UserCategory'];
+    }
+    
+    /*
  * Inserts a new User Profile into the UserProfile table
  *  $user = the user being inserted
  */
@@ -52,52 +74,6 @@ function insert_UserProfile ($user){
     return true;
 }
 
-/* View a User Profile from the UserProfile table
-    *$UserLoginInfoID is the user login id
-   *@return the user Profile corresponding to user login id, or false if not in the table.
- */
-
-function retrieve_UserProfile ($UsernameID) {
-	connect();
-    $query = "SELECT * FROM userprofile WHERE UsernameID = '".$UsernameID."'";
-    $result = mysql_query ($query);
-    if (mysql_num_rows($result) !== 1){
-    	mysql_close();
-        return false;
-    }
-    $result_row = mysql_fetch_assoc($result);
-    $theUserProfile = new UserProfile($result_row['UsernameID'], $result_row['UserEmail'], $result_row['password'] 
-    , $result_row['UserCategory']);
-    
-//    mysql_close(); 
-    return $theUserProfile;   
-}
-
-/**
- * function that looks for the user profile based on the username and password provided.
- * 
- * @param string $username the username entered by the user
- * @param string $password the hashed password entered by the user
- * @return boolean false if no profile is found, OR user category if profile was found
- * @author Prayas Bhattarai
- */
-function retrieve_UserByAuth($username, $password)
-{
-    connect();
-    $query = "SELECT UserCategory FROM userprofile WHERE UsernameID = '".$username."' AND Password = '".$password."' LIMIT 1";
-    $result = mysql_query($query) or die(mysql_error());
-    if(mysql_num_rows($result) !== 1)
-    {
-        mysql_close();
-        return false;
-    }
-    $result_row = mysql_fetch_assoc($result);
-
-    return $result_row['UserCategory'];
-    
-}
-
-
 /*
   * Updates a User Profile in the UserProfile table by deleting it and re-inserting it
     *$user the user to update
@@ -121,13 +97,13 @@ if (! $user instanceof user) {
     *$UserLoginInfoID is the User Profile being deleted
  */
 
-function delete_UserProfile($UsernameID) {
+function delete_UserProfile($profileId) {
 	connect();
-    $query="DELETE FROM userProfile WHERE UsernameID=\"".$UsernameID."\"";
+    $query="DELETE FROM userProfile WHERE UsernameID=\"".$profileId."\"";
 	$result=mysql_query($query);
 	mysql_close();
 	if (!$result) {
-		echo (mysql_error()." unable to delete from UserProfile: ".$UsernameID);
+		echo (mysql_error()." unable to delete from UserProfile: ".$profileId);
 		return false;
 	}
     return true;
@@ -136,92 +112,96 @@ function delete_UserProfile($UsernameID) {
 /*
    *Retrieves a User Profile in the UserProfile table by RMH Staff Approver by profileID
     *$profileid is the User Profile being retrieved for the RMH Staff Approver
+   * null used to keep order of constructor when unused column in constructor
  */
 function retrieve_UserProfile_RMHStaffApprover($profileId)
 {
-    $query="SELECT U.UserProfileID, R.UserProfileID, U.UserCategory, R.Title,R.FirstName, R.LastName,U.UsernameID, U.Password, U.UserEmail, R.Phone
+    connect();
+    $query="SELECT U.UserProfileID,  U.UserCategory, R.Title,R.FirstName, R.LastName,U.UsernameID, U.Password, U.UserEmail, R.Phone
         FROM userprofile U JOIN rmhstaffprofile R
         ON U.UserProfileID= R.UserProfileID
-        WHERE U.UserCategory='RMH Staff Approver' AND U.UsernameID=\"".$profileId."\"";     
+        WHERE U.UserCategory='RMH Staff Approver' AND U.UserProfileID=\"".$profileId."\"";     
         
-        $result = mysql_query ($query);
-        if (mysql_num_rows($result)!==1) {
-	    mysql_close();
-		return false;
-	}
-	$result_row = mysql_fetch_assoc($result);
-	$RMHStaffProfile = get_rowRMHStaffProfile($result_row);
+       $result = mysql_query ($query);
+    
+    if (mysql_num_rows($result) <1)
+    {
+       mysql_close();
+        return false;
+    }
+    $users=array();
+    while ($result_row = mysql_fetch_assoc($result)) {
+    $user = new User($result_row['UserProfileID'], $result_row['Title'], $result_row['FirstName'] 
+    , $result_row['LastName'], 'null', $result_row['Phone'], $result_row['UserEmail'], 'null', $result_row['UsernameID'], $result_row['UserCategory'],
+    $result_row['Password']);
+	
+        $users[] = $user;
+     }
 	mysql_close();
-	return $RMHStaffProfile;  
+	return $users;  
 
 }
 
 /*
    *Retrieves a User Profile in the UserProfile table for SocialWorker by profileID
     *$profileid is the User Profile being retrieved for the SocialWorker
- */
+*/
 function retrieve_UserProfile_SW($profileId)
 {
-	$query="SELECT U.UserProfileID, S.UserProfileID, U.UserCategory, S.Title,S.FirstName, S.LastName,U.UsernameID, U.Password, U.UserEmail, S.Phone,S.EmailNotification
+        connect();
+	$query="SELECT U.UserProfileID, U.UserCategory, S.Title,S.FirstName, S.LastName,U.UsernameID, U.Password, U.UserEmail, S.Phone,S.HospitalAffiliation,S.EmailNotification
             FROM userprofile U JOIN socialworkerprofile S
             ON U.UserProfileID= S.UserProfileID
-            WHERE U.UserCategory='Social Worker' AND U.UsernameID=\"".$profileId."\"";
+            WHERE U.UserCategory='Social Worker' AND U.UserProfileID=\"".$profileId."\"";
         
-        $result = mysql_query ($query);
-        if (mysql_num_rows($result)!==1) {
-	    mysql_close();
-		return false;
-	}
-	$result_row = mysql_fetch_assoc($result);
-	$theSocialWorker = get_rowSocialWorker($result_row);
+       $result = mysql_query ($query);
+    
+    if (mysql_num_rows($result) <1)
+    {
+       mysql_close();
+        return false;
+    }
+    $users=array();
+    while ($result_row = mysql_fetch_assoc($result)) {
+    $user = new User($result_row['UserProfileID'], $result_row['Title'], $result_row['FirstName'] 
+    , $result_row['LastName'], $result_row['HospitalAffiliation'], $result_row['Phone'], $result_row['UserEmail'], $result_row['EmailNotification'], $result_row['UsernameID'], $result_row['UserCategory'],
+    $result_row['Password']);
+	
+        $users[] = $user;
+     }
 	mysql_close();
-	return $theSocialWorker;  
+	return $users;  
 
 }
-
-
 /*
    *Retrieves a User Profile in the UserProfile table for RMH Administrator by profileID
     *$profileid is the User Profile being retrieved for the RMH Administrator
+     * null used to keep order of constructor when unused column in constructor
  */
 function retrieve_UserProfile_RMHAdmin($profileId) 
 {
-	$query="SELECT U.UserProfileID, R.UserProfileID, U.UserCategory, R.Title,R.FirstName, R.LastName,U.UsernameID, U.Password, U.UserEmail, R.Phone
+        connect();
+	$query="SELECT U.UserProfileID, U.UserCategory, R.Title,R.FirstName, R.LastName,U.UsernameID, U.Password, U.UserEmail, R.Phone
             FROM userprofile U JOIN rmhstaffprofile R
             ON U.UserProfileID= R.UserProfileID
-            WHERE U.UserCategory='RMH Administrator' AND U.UsernameID=\"".$profileId."\"";
+            WHERE U.UserCategory='RMH Administrator' AND U.UserProfileID=\"".$profileId."\"";
         
         $result = mysql_query ($query);
-        if (mysql_num_rows($result)!==1) {
-	    mysql_close();
-		return false;
-	}
-	$result_row = mysql_fetch_assoc($result);
-	$RMHStaffProfile = get_rowRMHStaffProfile($result_row);
+    
+    if (mysql_num_rows($result) <1)
+    {
+       mysql_close();
+        return false;
+    }
+    $users=array();
+    while ($result_row = mysql_fetch_assoc($result)) {
+    $user = new User($result_row['UserProfileID'], $result_row['Title'], $result_row['FirstName'] 
+    , $result_row['LastName'], 'null', $result_row['Phone'], $result_row['UserEmail'], 'null', $result_row['UsernameID'], 
+    $result_row['UserCategory'],$result_row['Password']);
+	
+        $users[] = $user;
+     }
 	mysql_close();
-	return $RMHStaffProfile;  
+	return $users;  
 }
-
-/*
-   *Functions that takes in the return results from query and returns an array of results
-    *$profileid is the User Profile being retrieved for the RMH Administrator
- */
-function get_rowSocialWorker($result_row) {
-    $theSocialWorker = new Requests($result_row['UserProfileID'], $result_row['UserCategory'],
-        $result_row['Title'], $result_row['FirstName'], $result_row['Lastname'], 
-	    $result_row['UsernameID'], $result_row['Password'],
-	    $result_row['UserEmail'], $result_row['Phone'],$result_row['EmailNotification']);
-   
-	return $theSocialWorker;
-}
-
-function get_rowRMHStaffProfile($result_row) {
-    $theRMHStaffProfile = new Requests($result_row['UserProfileID'], $result_row['UserCategory'],
-        $result_row['Title'], $result_row['FirstName'], $result_row['Lastname'], 
-	    $result_row['UsernameID'], $result_row['Password'],
-	    $result_row['UserEmail'], $result_row['Phone']);
-   
-	return $theRMHStaffProfile;
-}
-
 ?>
