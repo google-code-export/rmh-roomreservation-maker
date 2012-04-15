@@ -49,7 +49,9 @@ include(ROOT_DIR .'/database/dbFamilyProfile.php');
         $content .= '<li>'.$familyProfile->get_patientdob().'</li>';
         $content .= '<li>'.$familyProfile->get_patientformpdf().'</li>';
         $content .= '<li>'.$familyProfile->get_patientnotes().'</li>';
-                  
+        
+        $content .= '<a href="'.BASE_DIR.'/family/profileChange.php?family='.$familyID.'">Modify Profile</a>';
+        $content .= '<a href="'.BASE_DIR.'/referralForm.php?family='.$familyID.'">Create Room Reservation</a>';
       }
       else 
       {
@@ -71,10 +73,6 @@ include(ROOT_DIR .'/database/dbFamilyProfile.php');
 
     <div id="content">
             <?php echo $content;?>
-        <a href="<?php echo BASE_DIR ?>/family/profileChange.php?family=<?php echo $familyID?>">Modify Profile</a>
-        <a href="<?php echo BASE_DIR ?>/referralForm.php?family=<?php echo $familyID ?>">Create Room Reservation</a>
-        
-       
     </div>
 </div>
 <?php 

@@ -10,5 +10,5 @@ include_once('core/config.php');
     session_unset();
     session_destroy();
     session_write_close();
-    header('Location: '.DS.BASE_DIR.DS.'login.php');
+    header('Location: '.BASE_DIR.DS.'login.php');
 ?>
