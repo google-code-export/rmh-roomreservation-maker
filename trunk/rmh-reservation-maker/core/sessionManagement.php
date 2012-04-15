@@ -10,6 +10,29 @@
  */
 
 /**
+ * checkSession function checks if the session has timed out or not due to inactivity. and logs out the user based on the condition
+ *  
+ */
+function checkSession()
+{
+    $timeOut = 30; //session times out after this minute. this should be within the limit set by php.ini (session.gc_maxlifetime)
+    if (!isset($_SESSION['_created_time'])) {
+        $_SESSION['_created_time'] = time();
+    }
+    if(isset($_SESSION['_last_activity']) && (time() - $_SESSION['_last_activity'] > ($timeOut*60)))
+    {
+        session_destroy();
+        session_unset();
+    }
+    if(isset($_SESSION['_created_time']) && time() - $_SESSION['_created_time'] > (($timeOut/2)*60))
+    {
+        session_regenerate_id(true);
+        $_SESSION['_created_time'] = time();
+    }
+    $_SESSION['_last_activity'] = time();
+}
+
+/**
  * getCurrentUser function returns the currently logged in user
  * 
  * @return string the unique username for the current logged in user 

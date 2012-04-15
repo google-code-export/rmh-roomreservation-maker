@@ -2,6 +2,8 @@
     include('core/config.php');
     include('core/globalFunctions.php');
     include('core/sessionManagement.php');
+    
+    checkSession();
  /**
   * generateTokenField function that generates a token field for the form and stores it in the session for validating it later
   * 
@@ -134,7 +136,7 @@
         <meta name="author" content="">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="stylesheet" href="<?php echo CSS_DIR;?>/style.css"/>
-        <link rel="javascript" href="js/form.js"/>
+        <link rel="javascript" href="<?php echo JS_DIR;?>/form.js"/>
     </head>
 <body class="<?php // $_ENV['/**browser **/'] ?>">
 
