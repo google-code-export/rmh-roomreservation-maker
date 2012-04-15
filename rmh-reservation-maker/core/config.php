@@ -27,11 +27,20 @@ define('DS', '/');
 define('ROOT_DIR', str_replace('\\','/',dirname(dirname(__FILE__))));
 
 //define the document root, excluding the full path
-define('BASE_DIR', str_replace($_SERVER['DOCUMENT_ROOT'],'', ROOT_DIR));
+$basePath = str_replace($_SERVER['DOCUMENT_ROOT'],'', ROOT_DIR);
+if(strpos($basePath, '/') !== 0)
+{
+    //make sure the base path starts with / (For windows/*nix consistency)
+    define('BASE_DIR', DS.$basePath);
+}
+else
+{
+   define('BASE_DIR', $basePath); 
+}
 
 //define the CSS path
-define('CSS_DIR', DS.BASE_DIR.'/css');
+define('CSS_DIR', BASE_DIR.'/css');
 
 //define the JS folder
-define('JS_DIR', DS.BASE_DIR.'/js');
+define('JS_DIR', BASE_DIR.'/js');
 ?>
