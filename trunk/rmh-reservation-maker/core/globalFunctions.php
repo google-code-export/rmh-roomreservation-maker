@@ -70,15 +70,4 @@ function getHashValue($value, $salt=true)
 
     return sha1($value);
 }
-
-/**
- * includeFile function that includes file based on different Directory Separator
- * 
- * @param string $path the path to the include file starting from the root directory ('/core/config.php')
- */
-function includeFile($path)
-{
-  $path = str_replace('/', DS, $path);
-  include_once(ROOT_DIR.$path);
-}
 ?>
