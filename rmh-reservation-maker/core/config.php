@@ -24,14 +24,14 @@ define('SECURITY_SALT', '991050965e004b58104e933c70ab86babd47d34b');
 define('DS', '/');
 
 //define the root directory of our application
-define('ROOT_DIR', dirname(dirname(__FILE__)));
+define('ROOT_DIR', str_replace('\\','/',dirname(dirname(__FILE__))));
 
 //define the document root, excluding the full path
 define('BASE_DIR', str_replace($_SERVER['DOCUMENT_ROOT'],'', ROOT_DIR));
 
 //define the CSS path
-define('CSS_DIR', BASE_DIR.'/css');
+define('CSS_DIR', DS.BASE_DIR.'/css');
 
 //define the JS folder
-define('JS_DIR', BASE_DIR.'/js');
+define('JS_DIR', DS.BASE_DIR.'/js');
 ?>
