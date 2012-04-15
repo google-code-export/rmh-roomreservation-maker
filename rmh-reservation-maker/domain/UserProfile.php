@@ -7,7 +7,7 @@
  */
 
 
-class User {
+class UserProfile {
     private $profileId;      //user id for the unique profile - number
     private $title; // title to the name
     private $lastName;        // last name - string
