@@ -52,6 +52,14 @@
                  //Social Worker = 1
                  //Room Reservation Manager = 2
                  //Admin = 3
+                 
+                 //Access Level (Should match UserCategory in DB):
+                   $accessLevel = array(
+                                        'Family'=>0,
+                                        'Social Worker'=>1,
+                                        'RMH Staff Approver'=>2,
+                                        'RMH Administrator'=>3
+                                        );
   
                 $permission_array = array();
 		//pages families can view

@@ -73,6 +73,30 @@ function retrieve_UserProfile ($UsernameID) {
     return $theUserProfile;   
 }
 
+/**
+ * function that looks for the user profile based on the username and password provided.
+ * 
+ * @param string $username the username entered by the user
+ * @param string $password the hashed password entered by the user
+ * @return boolean false if no profile is found, OR user category if profile was found
+ * @author Prayas Bhattarai
+ */
+function retrieve_UserByAuth($username, $password)
+{
+    connect();
+    $query = "SELECT UserCategory FROM userprofile WHERE UsernameID = '".$username."' AND Password = '".$password."' LIMIT 1";
+    $result = mysql_query($query) or die(mysql_error());
+    if(mysql_num_rows($result) !== 1)
+    {
+        mysql_close();
+        return false;
+    }
+    $result_row = mysql_fetch_assoc($result);
+
+    return $result_row['UserCategory'];
+    
+}
+
 
 /*
   * Updates a User Profile in the UserProfile table by deleting it and re-inserting it
