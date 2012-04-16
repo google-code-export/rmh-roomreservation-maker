@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 07, 2012 at 03:37 AM
+-- Generation Time: Apr 16, 2012 at 02:33 AM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `familyprofile` (
   `PatientFirstName` varchar(50) NOT NULL,
   `PatientLastName` varchar(50) NOT NULL,
   `PatientRelation` varchar(50) DEFAULT NULL,
-  `PatientBirthDate` datetime DEFAULT NULL,
+  `PatientDateOfBirth` datetime DEFAULT NULL,
   `FormPDF` varchar(255) DEFAULT NULL,
   `Notes` text,
   PRIMARY KEY (`FamilyProfileID`)
@@ -99,9 +99,9 @@ CREATE TABLE IF NOT EXISTS `familyprofile` (
 -- Dumping data for table `familyprofile`
 --
 
-INSERT INTO `familyprofile` (`FamilyProfileID`, `ParentFirstName`, `ParentLastName`, `Email`, `Phone1`, `Phone2`, `Address`, `City`, `State`, `ZipCode`, `Country`, `PatientFirstName`, `PatientLastName`, `PatientRelation`, `PatientBirthDate`, `FormPDF`, `Notes`) VALUES
+INSERT INTO `familyprofile` (`FamilyProfileID`, `ParentFirstName`, `ParentLastName`, `Email`, `Phone1`, `Phone2`, `Address`, `City`, `State`, `ZipCode`, `Country`, `PatientFirstName`, `PatientLastName`, `PatientRelation`, `PatientDateOfBirth`, `FormPDF`, `Notes`) VALUES
 (1, 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '110-76 76th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches'),
-(2, 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 34', 'REYKJAV?K', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats'),
+(2, 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 34', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats'),
 (3, 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@unilim.fr', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights');
 
 -- --------------------------------------------------------
@@ -121,7 +121,23 @@ CREATE TABLE IF NOT EXISTS `profileactivity` (
   `RMH_DateStatusSubmitted` datetime DEFAULT NULL,
   `ActivityType` enum('Create','Edit') NOT NULL,
   `Status` enum('Unconfirmed','Confirm','Deny') NOT NULL,
-  `Notes` text,
+  `ParentFirstName` varchar(50) NOT NULL,
+  `ParentLastName` varchar(50) NOT NULL,
+  `Email` varchar(255) DEFAULT NULL,
+  `Phone1` varchar(20) NOT NULL,
+  `Phone2` varchar(20) DEFAULT NULL,
+  `Address` varchar(100) DEFAULT NULL,
+  `City` varchar(50) DEFAULT NULL,
+  `State` varchar(10) DEFAULT NULL,
+  `ZipCode` varchar(12) DEFAULT NULL,
+  `Country` varchar(50) DEFAULT NULL,
+  `PatientFirstName` varchar(50) NOT NULL,
+  `PatientLastName` varchar(50) NOT NULL,
+  `PatientRelation` varchar(50) DEFAULT NULL,
+  `PatientDateOfBirth` datetime DEFAULT NULL,
+  `FormPDF` varchar(255) DEFAULT NULL,
+  `FamilyNotes` text,
+  `ProfileActivityNotes` text,
   PRIMARY KEY (`ProfileActivityID`),
   KEY `RMHStaffProfileID` (`RMHStaffProfileID`),
   KEY `SocialWorkerProfileID` (`SocialWorkerProfileID`),
@@ -132,37 +148,13 @@ CREATE TABLE IF NOT EXISTS `profileactivity` (
 -- Dumping data for table `profileactivity`
 --
 
-INSERT INTO `profileactivity` (`ProfileActivityID`, `ProfileActivityRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `Notes`) VALUES
-(1, 1, 1, 1, 1, '2012-01-10 18:22:43', '2012-01-12 17:22:43', 'Create', 'Confirm', 'New Family Profile'),
-(2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 14:23:13', 'Edit', 'Confirm', 'New Address 110-76 76th Avenue'),
-(3, 3, 2, 1, 1, '2012-02-21 15:22:43', '2012-02-22 19:22:43', 'Create', 'Confirm', 'New Family Profile'),
-(4, 4, 2, 1, 1, '2012-03-02 15:44:22', '2012-03-03 12:43:12', 'Edit', 'Confirm', 'New Address Borgartun 34'),
-(5, 5, 3, 1, 1, '2012-04-01 10:22:43', NULL, 'Create', 'Unconfirmed', 'New Family Profile'),
-(6, 6, 3, 1, 1, '2012-04-02 10:22:43', '2012-04-03 15:22:33', 'Edit', 'Deny', 'New Family Profile needs to be approved first');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `profileactivitychange`
---
-
-DROP TABLE IF EXISTS `profileactivitychange`;
-CREATE TABLE IF NOT EXISTS `profileactivitychange` (
-  `ChangeIndex` int(11) NOT NULL AUTO_INCREMENT,
-  `ProfileActivityID` int(11) NOT NULL,
-  `FieldName` varchar(25) NOT NULL,
-  `FieldChanges` varchar(255) NOT NULL,
-  UNIQUE KEY `ChangeIndex` (`ChangeIndex`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Dumping data for table `profileactivitychange`
---
-
-INSERT INTO `profileactivitychange` (`ChangeIndex`, `ProfileActivityID`, `FieldName`, `FieldChanges`) VALUES
-(1, 3, 'Address', '110-76 76th Avenue'),
-(2, 7, 'Address', 'Borgartun 34'),
-(3, 10, 'Address', '4 avenue de la Soeur Rosalie');
+INSERT INTO `profileactivity` (`ProfileActivityID`, `ProfileActivityRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `ParentFirstName`, `ParentLastName`, `Email`, `Phone1`, `Phone2`, `Address`, `City`, `State`, `ZipCode`, `Country`, `PatientFirstName`, `PatientLastName`, `PatientRelation`, `PatientDateOfBirth`, `FormPDF`, `FamilyNotes`, `ProfileActivityNotes`) VALUES
+(1, 1, 1, 1, 1, '2012-01-10 18:22:43', '2012-01-12 17:22:43', 'Create', 'Confirm', 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '100-70 40th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches', 'New Family Profile'),
+(2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 14:23:13', 'Edit', 'Confirm', 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '110-76 76th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches', 'New Address 110-76 76th Avenue'),
+(3, 3, 2, 1, 1, '2012-02-21 15:22:43', '2012-02-22 19:22:43', 'Create', 'Confirm', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 29', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Family Profile'),
+(4, 4, 2, 1, 1, '2012-03-02 15:44:22', '2012-03-03 12:43:12', 'Edit', 'Confirm', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 34', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Address Borgartun 34'),
+(5, 5, 3, 1, NULL, '2012-04-01 10:22:43', NULL, 'Create', 'Unconfirmed', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@unilim.fr', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights', 'New Family Profile'),
+(6, 6, 3, 1, 1, '2012-04-02 10:22:43', '2012-04-03 15:22:33', 'Edit', 'Deny', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@gmail.com', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights', 'New Family Profile needs to be approved first');
 
 -- --------------------------------------------------------
 
@@ -246,7 +238,7 @@ INSERT INTO `roomreservationactivity` (`RoomReservationActivityID`, `RoomReserva
 (2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
 (3, 3, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
 (4, 4, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
-(5, 5, 2, 1, 2, '2012-03-02 15:44:22', NULL, '', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', '');
+(5, 5, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Apply', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', '');
 
 -- --------------------------------------------------------
 
@@ -297,11 +289,11 @@ CREATE TABLE IF NOT EXISTS `userprofile` (
 --
 
 INSERT INTO `userprofile` (`UserProfileID`, `UsernameID`, `UserEmail`, `Password`, `UserCategory`) VALUES
-(1, 'Frank2126565511', 'frank1@gmail.com', 'password3', 'RMH Staff Approver'),
-(2, 'Mary789', 'mary1@gmail.com', 'password1', 'Social Worker'),
-(3, 'Tom7186562398', 'tom1@gmail.com', 'password2', 'RMH Staff Approver'),
-(4, 'Lauren653', 'lauren1@gmail.com', 'password4', 'Social Worker'),
-(5, 'Admin', 'housemngr@rmhnewyork.org', 'Admin123', 'RMH Administrator');
+(1, 'Frank2126565511', 'frank1@gmail.com', '1bf57729257d42dd5ac2cc2214b6d5984e736b4a', 'RMH Staff Approver'),
+(2, 'Mary789', 'mary1@gmail.com', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'Social Worker'),
+(3, 'Tom718', 'tom1@gmail.com', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver'),
+(4, 'Lauren653', 'lauren1@gmail.com', '91b06a9f87b7efe1be3d56f46bc739fae897bcc5', 'Social Worker'),
+(5, 'Admin', 'housemngr@rmhnewyork.org', '1be4d1253535f4e0ba0895e6e6918be38531823c', 'RMH Administrator');
 
 --
 -- Constraints for dumped tables
