@@ -74,22 +74,7 @@ include_once (ROOT_DIR . '/database/dbFamilyProfile.php');
 
     <div id="content">
         
-        <?php
-    if($showReport==true)
-    {
-        echo "<br>";
-        echo "Report Requested By: ".$userId."<br>";
-        echo "Start Date: ".$beginDate."<br>";
-        echo "End Date: ".$endDate."<br>";
-        echo "Hospital: ".$hospital."<br>";
-        
-        if($hospital == '')
-        {
-           
-        }
-        
-        else 
-        {
+   
             
         }
     }
