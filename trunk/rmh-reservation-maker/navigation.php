@@ -1,11 +1,17 @@
 <?php
-
 /**
  * @author Prayas Bhattarai
  * This file includes the navigation based on user permission level
  * This file should only be included on a page whose permission level is greater 
  * than that for the world.
  */
+
+//avoid direct access to the page:
+if(!defined('PARENT'))
+{
+    die('Restricted access');
+}
+
 $userAccess = getUserAccessLevel();
 ?>
 <ul style="position: absolute; left: 10px; background:none rgba(255,255,255,0.8); list-style: none; padding: 10px; width: 150px; min-height: 200px;">
