@@ -1,4 +1,11 @@
 <?php
+ 
+/*  Direct access of include files needs to prevented. In order to do that, the following constant defines PARENT.
+    Any include page that has header included before, will have this constant defined. If the page is directly accessed,
+    PARENT will not be defined. So we can perform this check on the include pages.
+ */
+    define('PARENT','rmhresmaker');
+
     include('core/config.php');
     include('core/globalFunctions.php');
     include('core/sessionManagement.php');
