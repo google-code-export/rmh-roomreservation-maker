@@ -13,11 +13,11 @@
 session_start();
 session_cache_expire(30);
 
-$title = "Family Detail"; //This should be the title for the page, included in the <title></title>
+$title = "Family Profile in detail"; //This should be the title for the page, included in the <title></title>
 
 include('../header.php'); //including this will further include (globalFunctions.php and config.php)
 include(ROOT_DIR .'/domain/Family.php');
-include(ROOT_DIR .'/database/dbFamilyProfile.php');
+include(ROOT_DIR . '/database/dbFamilyProfile.php');
 
 /*
  * If your page includes a form, please follow the instructions below.
