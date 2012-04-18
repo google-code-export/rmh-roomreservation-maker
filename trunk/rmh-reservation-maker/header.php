@@ -80,7 +80,7 @@
                 
 		$permission_array['referralForm.php']=1;
                 $permission_array['profileChangeForm.php']=1;
-                $permission_array['ProfileChange.php']=1;
+                $permission_array['profileChange.php']=1;
                 $permission_array['SearchReservations.php']=1;
                 $permission_array['profileDetail.php']=1;
 		//more pages
