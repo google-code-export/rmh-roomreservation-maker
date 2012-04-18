@@ -102,6 +102,8 @@
                 //reporting
                 $permission_array['reportForm.php']=1;
                 $permission_array['reportHandler.php']=1;
+                
+                $permission_array['SearchReservations.php']=1;
 
 		//Check if they're at a valid page for their access level.
 		$current_page = getCurrentPage();
