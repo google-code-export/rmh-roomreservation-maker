@@ -32,7 +32,9 @@ audio:not([controls]) { display: none; }
 
 html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
-body { margin: 0; font-size: 13px; line-height: 1.231; background:url('../images/groupTableViewBackgroundColor.jpg'); }
+body { margin: 0; font-size: 13px; line-height: 1.231; background:#e1e4e9;
+	-webkit-box-align: center;	
+	-webkit-box-pack: center;}
 
 body, button, input, select, textarea { font-family: sans-serif; color: #222; }
 
@@ -298,20 +300,20 @@ td { vertical-align: top; }
 rmh
 
 */
-#header{height:57px; 
+#header{height:42px;; 
             width:100%; 
             position:absolute; 
             display:block; 
             background: url('../images/top-bk.png')repeat-x ;
-    font-family: Arial,Helvetica,sans-serif;
-    font-size: 24px;
+    font-size: 14px;
     text-align: center;
     margin-right: auto;
     margin-left: auto;
     margin-bottom: 0px;
     margin-top: 0px;
-    
-  
+    border-bottom: #797f90 thin solid;
+    font-weight: bold;
+    font-family: Helvetica,sans-serif;
 }
 
 .formtop {
@@ -322,6 +324,15 @@ rmh
     border-bottom: 0px;
 }
 
+.formsingle{
+    border-radius: 15px; 
+    -moz-border-radius: 15px; 
+    -webkit-border-radius: 15px;
+    border: 1px solid #000000;
+}
+
+
+
 .formbottom {
     border-radius: 0px 0px 15px 15px; 
     -moz-border-radius: 0px 0px 15px 15px; 
@@ -331,14 +342,15 @@ rmh
 
 .formt {
     
-    font-family: Verdana,Arial,Helvetica,sans-serif;
+    font-family: Helvetica;
     font-weight: bold;
-    font-variant: small-caps;
-    color: #cccccc;
+    color: #bbb;
     text-align: center;
     height:2em;
     width:100%;
     font-size: 2em;
+    border-left: thin solid black;
+    border-right: thin solid black;
 }
 
 .formsubmit {
@@ -366,13 +378,15 @@ rmh
 }
 
 #header h1 {
-    color:white;
-    font-size:20px;
-    text-shadow: 1px 1px white, -1px -1px #444;
+    color:#717880;
+    font-size:16px;
+    text-shadow: 1px 1px #CCC, -1px -1px #000;
     padding-bottom: 0px;
 }
-#container {margin:0 auto; padding: .5em 1em;
-            background:url('../images/groupTableViewBackgroundColor.jpg');}
+#container {margin:0 auto; padding: .5em 1em; width: 100%;}
+
+h1, h2, h3, h4, h5, h6 {color: #4c566c;  	text-shadow: rgba(255,255,255,0.5) 0 5px 6px, rgba(255,255,255,0.2) 1px 3px 3px;
+}
 
 .hometext {
     list-style:none;
@@ -383,7 +397,7 @@ rmh
 }
 
 
-.not {display: none;}
+.non {display: none;}
 
 #loginforms p {
     
@@ -401,5 +415,12 @@ body {
 }
 
 img.rmdlogo {
-    width:90%%;
+    width:90%;
 }
+
+.goback {background:url('../images/back.png')no-repeat; width:60px; height:29px;
+}
+.topLeftButton{position: absolute;
+top: 6px;
+left:10px;
+z-index: 100;}

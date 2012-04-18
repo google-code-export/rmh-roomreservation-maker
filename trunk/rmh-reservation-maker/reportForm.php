@@ -155,14 +155,14 @@ include_once('header.php'); //including this will further include (globalFunctio
                 <option value="2013">2013</option>
 	    </select>
             <br><br>
-            <label for="startDate">Hospital (optional):</label>
-            <input type="text" name="hospital" value="" />
+            <label for="startDate" class="noShow non">Hospital (optional):</label>
+            <input class="formt formsingle" type="text" name="hospital" value="Hospital" onfocus="if(this.value == 'Hospital') { this.value = ''; }" />
             
             
-            <input type="submit" value="Submit" name="submit" />
+            <input class="formsubmit"type="submit" value="Submit" name="submit" />
         </form>
        
-
+<?php include (ROOT_DIR. '/inc/back.php'); ?>
     </div>
 </div>
 <?php 

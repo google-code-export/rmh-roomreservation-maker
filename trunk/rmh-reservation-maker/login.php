@@ -72,10 +72,10 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
                             <form class="loginForm"method="post" action="login.php">
                                     <?php echo generateTokenField(); ?>
                                     <div>
-                                            <label class="noShow not" for="username">Username</label><input class="formtop formt" type="text" name="username" id="username" onfocus="if(this.value == 'username') { this.value = ''; }" value="username"/>
+                                            <label class="noShow non" for="username">Username</label><input class="formtop formt" type="text" name="username" id="username" onfocus="if(this.value == 'username') { this.value = ''; }" value="username"/>
                                     </div>
                                     <div>
-                                            <label class="noShow not"for="password">Password</label><input class="formbottom formt" type="password" name="password" id="password" onfocus="if(this.value == 'password') { this.value = ''; }" value="password"/>
+                                            <label class="noShow non"for="password">Password</label><input class="formbottom formt" type="password" name="password" id="password" onfocus="if(this.value == 'password') { this.value = ''; }" value="password"/>
                                     </div>
                                     <div>
                                             <input class="formsubmit" type="submit" name="Login" value="Login"/>
