@@ -1,6 +1,6 @@
 <?php
 
-include_once(dirname(__FILE__).'/../domain/Family.php');
+include_once(dirname(__FILE__).'/domain/Family.php');
 include_once(dirname(__FILE__).'/dbinfo.php');
 
 function create_dbFamilyProfile() 
