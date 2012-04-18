@@ -131,8 +131,8 @@ function retrieve_UserProfile_RMHStaffApprover($profileId)
     }
     $users=array();
     while ($result_row = mysql_fetch_assoc($result)) {
-    $user = new User($result_row['UserProfileID'], $result_row['Title'], $result_row['FirstName'] 
-    , $result_row['LastName'], 'null', $result_row['Phone'], $result_row['UserEmail'], 'null', $result_row['UsernameID'], $result_row['UserCategory'],
+    $user = new UserProfile($result_row['UserProfileID'], $result_row['Title'], $result_row['LastName'] 
+    , $result_row['FirstName'], 'null', $result_row['Phone'], $result_row['UserEmail'], 'null', $result_row['UsernameID'], $result_row['UserCategory'],
     $result_row['Password']);
 	
         $users[] = $user;
@@ -163,8 +163,8 @@ function retrieve_UserProfile_SW($profileId)
     }
     $users=array();
     while ($result_row = mysql_fetch_assoc($result)) {
-    $user = new User($result_row['UserProfileID'], $result_row['Title'], $result_row['FirstName'] 
-    , $result_row['LastName'], $result_row['HospitalAffiliation'], $result_row['Phone'], $result_row['UserEmail'], $result_row['EmailNotification'], $result_row['UsernameID'], $result_row['UserCategory'],
+    $user = new UserProfile($result_row['UserProfileID'], $result_row['Title'], $result_row['LastName'] 
+    , $result_row['FirstName'], $result_row['HospitalAffiliation'], $result_row['Phone'], $result_row['UserEmail'], $result_row['EmailNotification'], $result_row['UsernameID'], $result_row['UserCategory'],
     $result_row['Password']);
 	
         $users[] = $user;
@@ -195,8 +195,8 @@ function retrieve_UserProfile_RMHAdmin($profileId)
     }
     $users=array();
     while ($result_row = mysql_fetch_assoc($result)) {
-    $user = new User($result_row['UserProfileID'], $result_row['Title'], $result_row['FirstName'] 
-    , $result_row['LastName'], 'null', $result_row['Phone'], $result_row['UserEmail'], 'null', $result_row['UsernameID'], 
+    $user = new UserProfile($result_row['UserProfileID'], $result_row['Title'], $result_row['LastName'] 
+    , $result_row['FirstName'], 'null', $result_row['Phone'], $result_row['UserEmail'], 'null', $result_row['UsernameID'], 
     $result_row['UserCategory'],$result_row['Password']);
 	
         $users[] = $user;
