@@ -86,7 +86,7 @@ include('navigation.php');
 
     <div id="content">
         
-       <form name="searchBookings" method="post" action="searchBookings.php">
+       <form name="SearchReservations" method="post" action="SearchReservations.php">
             <?php echo generateTokenField(); ?>
            
            <select name="searchType">
@@ -97,7 +97,7 @@ include('navigation.php');
                <option>Status</option>
            </select>
            
-           <input type="text" name="searchParam" value="Enter Search If Needed" size="10" />
+           <input type="text" name="searchParam" value="" size="10" />
           
        </form>
 
