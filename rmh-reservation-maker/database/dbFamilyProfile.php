@@ -1,13 +1,14 @@
 <?php
 
-include_once(dirname(__FILE__).'/domain/Family.php');
-include_once(dirname(__FILE__).'/dbinfo.php');
+include_once(ROOT_DIR.'/domain/Family.php');
+include_once(ROOT_DIR.'/dbinfo.php');
 
+/**DON'T CALL THIS FUNCTION BECAUSE THE TABLE ALREADY EXISTED
 function create_dbFamilyProfile() 
 {
     connect();
-    mysql_query("DROP TABLE IF EXISTS dbFamilyProfile");
-    $result = mysql_query("CREATE TABLE dbFamilyProfile (familyProfileId int NOT NULL, parentFirstName varchar(50),
+    mysql_query("DROP TABLE IF EXISTS FamilyProfile");
+    $result = mysql_query("CREATE TABLE FamilyProfile (familyProfileId int NOT NULL, parentFirstName varchar(50),
         parentLastName varchar(50) NOT NULL, parentEmail varchar(255), parentPhone1 varchar(20), parentPhone2 varchar(20),
         parentAddress varchar(100), parentCity varchar(50), parentState varchar(10), parentZIP varchar(12), 
         parentCountry(50), patientFirstName varchar(50) NOT NULL, patientLastNameemail varchar(50) NOT NULL,
@@ -16,11 +17,13 @@ function create_dbFamilyProfile()
     
     if (!$result) 
     {
-        echo mysql_error() . "Error creating dbFamilyProfile table. <br>";
+        echo mysql_error() . "Error creating FamilyProfile table. <br>";
         return false;
     }
     return true;
 }
+**/
+
 
 function insert_dbFamilyProfile ($family)
 {
@@ -30,7 +33,7 @@ function insert_dbFamilyProfile ($family)
     }
     connect();
 
-    $query = "SELECT * FROM dbFamilyProfile WHERE id = '" . $family->get_familyProfileId() . "'";
+    $query = "SELECT * FROM FamilyProfile WHERE id = '" . $family->get_familyProfileId() . "'";
     $result = mysql_query($query);
     if (mysql_num_rows($result) != 0) 
     {
@@ -38,7 +41,7 @@ function insert_dbFamilyProfile ($family)
         connect();
     }
 
-    $query = "INSERT INTO dbFamilyProfile VALUES ('".
+    $query = "INSERT INTO FamilyProfile VALUES ('".
                 $family->get_familyProfileId()."','" . 
                 $family->get_parentfname()."','".
                 $family->get_parentlname()."','".
@@ -60,7 +63,7 @@ function insert_dbFamilyProfile ($family)
     $result = mysql_query($query);
     if (!$result) 
     {
-        echo (mysql_error(). " unable to insert into dbFamilyProfile: " . $family->get_familyProfileId(). "\n");
+        echo (mysql_error(). " unable to insert into FamilyProfile: " . $family->get_familyProfileId(). "\n");
         mysql_close();
         return false;
     }
@@ -71,7 +74,7 @@ function insert_dbFamilyProfile ($family)
 function retrieve_dbFamilyProfile ($familyProfileId) 
 {
     connect();
-    $query = "SELECT * FROM dbFamilyProfile WHERE id = '".$familyProfileId."'";
+    $query = "SELECT * FROM FamilyProfile WHERE id = '".$familyProfileId."'";
     $result = mysql_query ($query);
     
     if (mysql_num_rows($result) !== 1)
@@ -133,7 +136,7 @@ function retrieve_dbFamilyProfileByName($fname, $lname)
 function getall_family () 
 {
     connect();
-    $query = "SELECT * FROM dbFamilyProfile ORDER BY last_name";
+    $query = "SELECT * FROM FamilyProfile ORDER BY last_name";
     $result = mysql_query ($query);
     $theFamily = array();
     while ($result_row = mysql_fetch_assoc($result)) 
@@ -160,7 +163,7 @@ function update_dbFamilyProfile ($family)
         return insert_dbFamilyProfile($family);
     else 
         {
-            echo (mysql_error()."unable to update dbFamilyProfile table: ".$family->get_familyProfileId());
+            echo (mysql_error()."unable to update FamilyProfile table: ".$family->get_familyProfileId());
 	    return false;
 	}
 }
@@ -168,12 +171,12 @@ function update_dbFamilyProfile ($family)
 function delete_dbFamilyProfile($familyProfileId) 
 {
     connect();
-    $query="DELETE FROM dbFamilyProfile WHERE id=\"".$familyProfileId."\"";
+    $query="DELETE FROM FamilyProfile WHERE id=\"".$familyProfileId."\"";
 	$result=mysql_query($query);
 	mysql_close();
 	if (!$result) 
         {
-            echo (mysql_error()." unable to delete from dbFamilyProfile: ".$familyProfileId);
+            echo (mysql_error()." unable to delete from FamilyProfile: ".$familyProfileId);
             return false;
 	}
     return true;
