@@ -1,8 +1,8 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Family Activity
+ * @ author Gergana Stoykova
  */
 
 class Family{
