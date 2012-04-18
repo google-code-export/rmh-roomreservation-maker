@@ -92,4 +92,44 @@ function ModifyAccept($RequestKey, $SWID, $familyLname, $DateToAndFrom)
     
 }
 
+//Sends email to approvers about a new reservation request
+function newRequest($RequestKey, $SWID, $DateSubmitted, $DateToAndFrom)
+{
+    $SW = retrieve_UserProfile_SW($SWID);
+    $to = $SW[0]->get_email();
+    $subject = "Reservation Request made on $DateSubmitted";
+    $message = "A new room reservation request has been made for the $familyLname family for the timeframe of $DateToAndFrom.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+    email($to, $subject, $message);
+}
+
+//Sends email to approvers about a modification to an existing room reservation request
+function newReservationMod($RequestKey, $SWID, $DateSubmitted)
+{
+    $SW = retrieve_UserProfile_SW($SWID);
+    $to = $SW[0]->get_email();
+    $subject = "Modification Request made on $DateSubmitted";
+    $message = "A modification request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+    email($to, $subject, $message);
+}
+
+//Sends email to approvers about the cancellation of an existing room reservation request
+function newCancel($RequestKey, $SWID, $DateSubmitted)
+{
+    $SW = retrieve_UserProfile_SW($SWID);
+    $to = $SW[0]->get_email();
+    $subject = "Cancellation Request made on $DateSubmitted";
+    $message = "A cancellation request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+    email($to, $subject, $message);
+}
+
+//Sends email to approvers requesting permission to modify a family profile
+function newFamilyMod($RequestKey, $SWID, $DateSubmitted)
+{
+    $SW = retrieve_UserProfile_SW($SWID);
+    $to = $SW[0]->get_email();
+    $subject = "Family Profile Modification Request made on $DateSubmitted";
+    $message = "A family profile modification request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+    email($to, $subject, $message);
+}
+
 ?>
