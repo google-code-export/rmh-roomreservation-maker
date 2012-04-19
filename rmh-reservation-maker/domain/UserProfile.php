@@ -76,7 +76,7 @@ class UserProfile {
     }
     
     function get_email_notification(){
-        return $this->emailNofitication;
+        return $this->emailNotification;
     }
     
     function get_userLoginInfoId(){
