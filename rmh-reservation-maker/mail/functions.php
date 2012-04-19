@@ -119,7 +119,7 @@ function Confirm($RequestKeyNumber, $BeginDate, $EndDate,$SWID)
 }
 
 //This email is sent to the SW to inform them that their request for a reservation has been accepted         
-function RequestAccept($RequestKeyNumber, $BeginDate, $EndDate, $FamilyLName,$SWID)
+function RequestAccept($RequestKeyNumber, $BeginDate, $EndDate, $familyProfileId,$SWID)
 {
     $SW = retrieve_UserProfile_SW($SWID);
     
@@ -127,7 +127,7 @@ function RequestAccept($RequestKeyNumber, $BeginDate, $EndDate, $FamilyLName,$SW
     
     $subject = "Reservation Request $RequestKeyNumber";
     
-    $message = "Your reservation request, $RequestKeyNumber for $BeginDate to $EndDate for the $FamilyLName family has been accepted. \r\n Please click on the link [URL] to confirm.\r\n\r\nThank You.";
+    $message = "Your reservation request, $RequestKeyNumber for $BeginDate to $EndDate for user $familyProfileId has been accepted. \r\n Please click on the link [URL] to confirm.\r\n\r\nThank You.";
   
     mail($to, $subject, $message);
 }
@@ -141,13 +141,13 @@ function RequestDeny($RequestKeyNumber, $BeginDate, $EndDate, $familyProfileId, 
     
     $subject = "Reservation Request $RequestKeyNumber";
     
-    $message = "Your reservation request, $RequestKeyNumber for $BeginDate to $EndDate for the $familyProfileId family has been denied.\r\n\r\nThank You.";
+    $message = "Your reservation request, $RequestKeyNumber for $BeginDate to $EndDate for user $familyProfileId has been denied.\r\n\r\nThank You.";
   
     mail($to, $subject, $message);   
 }
 
 //This email is sent to the SW to inform them that the request to Modify the family profile has been accepted
-function FamilyModAccept($FamilyID, $FamilyLName, $SWID)
+function FamilyModAccept($familyProfileId, $SWID)
 {
   $SW = retrieve_UserProfile_SW($SWID);
     
@@ -155,7 +155,7 @@ function FamilyModAccept($FamilyID, $FamilyLName, $SWID)
     
     $subject = "Family Profile Modification Request";
     
-    $message = "The request to update the $FamilyLName family profile, userID: $FamilyID, has been accepted.\r\n\r\nThank you.";
+    $message = "The request to update the Family user,$familyProfileId, has been accepted.\r\n\r\nThank you.";
   
     mail($to, $subject, $message);    
 }
