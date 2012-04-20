@@ -17,7 +17,7 @@ session_start();
 session_cache_expire(30);
 
 $title = "Referral Form"; //This should be the title for the page, included in the <title></title>
-if ($_GET['id'] = "new") $title = "New Reservation Form"; 
+
 include('header.php'); //including this will further include (globalFunctions.php and config.php)
 
 
@@ -63,10 +63,10 @@ include('header.php'); //including this will further include (globalFunctions.ph
         
         EXAMPLE code block below (can be deleted if not using form) -->
          
-        <form name ="NewReservationForm" method="post" action="NewRequestHandler.php">
+        <form name ="NewReferralForm" method="POST" action="referralFormHandler.php" id="new">
             <?php echo generateTokenField(); ?>
             
-       
+           <h1> New Reservation Form </h1> <br><br>
            <h3> fill in the fields for a New Request Form </h3><br><br>
            
           <label for="BeginDate">Start Date:</label>
@@ -198,19 +198,16 @@ include('header.php'); //including this will further include (globalFunctions.ph
 		<option value="2012">2012</option>
                 <option value="2013">2013</option>
 	    </select>
-           <label class="noShow non" for="PatientDiagnosis"></label><input type="text" class="formtop formt" name="PatientDiagnosis" value="Patient Diagnosis" onfocus="if(this.value == 'Patient Diagnosis') { this.value = ''; }" size="15" /><br>
-          <label class="noShow non" for="Notes"></label><input type="text" name="Notes" class="formt" value="Notes" size="15" onfocus="if(this.value == 'Notes') { this.value = ''; }" /><br>
-              <label class="noShow non" for="ParentLastName"></label><input type="text" class="formt" name="ParentLastName" value="First Name" onfocus="if(this.value == 'First Name') { this.value = ''; }"size="15" /><br>
-          <label class="noShow non" for="ParentLastName"> Parent First Name:</label> <input type="text" class="formbottom formt" name="ParentFirstName" onfocus="if(this.value == 'Last Name') { this.value = ''; }" value="Last Name" size="15" /><br>
+           Patient Diagnosis: <input type="text" name="PatientDiagnosis" value="" size="15" /><br>
+           Notes: <input type="text" name="Notes" value="" size="15" /><br>
+           Parent Last Name:   <input type="text" name="ParentLastName" value="" size="15" /><br>
+           Parent First Name: <input type="text" name="ParentFirstName" value="" size="15" /><br>
            
-          <input class="formsubmit" type="submit" name="submit" value="submit"/>
+          <input type="submit" name="submit" value="submit"/>
            
-           
-        
-        
-        
-        </form>
-            <?php include (ROOT_DIR. '/inc/back.php'); ?>
+       </form>            
+            
+      </div>
 </div>      
 
 
