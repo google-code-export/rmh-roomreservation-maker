@@ -100,8 +100,7 @@
 		$permission_array['logout.php']=-1;
                 
                 //reporting
-                $permission_array['reportForm.php']=1;
-                $permission_array['reportHandler.php']=1;
+                $permission_array['report.php']=1;
                 
                 $permission_array['SearchReservations.php']=1;
 
