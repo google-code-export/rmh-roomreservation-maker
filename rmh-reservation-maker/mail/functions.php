@@ -114,7 +114,7 @@ function Confirm($RequestKeyNumber, $BeginDate, $EndDate,$SWID)
        $message = "We received your request for a reservation for $BeginDate to $EndDate. \r\nYour confirmation number is $RequestKeyNumber. Please keep in your records for future use.\r\n\r\n Thank you.";
     
       
-        mail($to, $subject, $message);
+        email($to, $subject, $message);
            
 }
 
@@ -129,7 +129,7 @@ function RequestAccept($RequestKeyNumber, $BeginDate, $EndDate, $familyProfileId
     
     $message = "Your reservation request, $RequestKeyNumber for $BeginDate to $EndDate for user $familyProfileId has been accepted. \r\n Please click on the link [URL] to confirm.\r\n\r\nThank You.";
   
-    mail($to, $subject, $message);
+    email($to, $subject, $message);
 }
 
 //This email is sent to the SW to inform them that their request for a reservation has been denied
@@ -143,7 +143,7 @@ function RequestDeny($RequestKeyNumber, $BeginDate, $EndDate, $familyProfileId, 
     
     $message = "Your reservation request, $RequestKeyNumber for $BeginDate to $EndDate for user $familyProfileId has been denied.\r\n\r\nThank You.";
   
-    mail($to, $subject, $message);   
+    email($to, $subject, $message);   
 }
 
 //This email is sent to the SW to inform them that the request to Modify the family profile has been accepted
@@ -157,7 +157,7 @@ function FamilyModAccept($familyProfileId, $SWID)
     
     $message = "The request to update the Family user,$familyProfileId, has been accepted.\r\n\r\nThank you.";
   
-    mail($to, $subject, $message);    
+    email($to, $subject, $message);    
 }
 
 //This email is sent to the SW to inform them that the request to Modify the family profile has been denied.
@@ -171,7 +171,7 @@ function FamilyModDeny($familyProfileId, $SWID)
     
     $message = "The request to update the Family user, $familyProfileId profile, has been denied.\r\n\r\nThank you.";
   
-    mail($to, $subject, $message);  
+    email($to, $subject, $message);  
 }
 
 
