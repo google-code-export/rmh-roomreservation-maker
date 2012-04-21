@@ -329,11 +329,11 @@ function retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffilia
       }
 
 /*
- * Retrieves all Room Reservations that were made between $begindate and $enddate, inclusive
+ * Retrieves all Room Reservations by $status that were made between $begindate and $enddate, inclusive
  * 
  */
 
-function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
+function retrieve_all_RoomReservationActivity_byStatusDate ($status, $beginDate, $endDate) {
     
 	connect();
     
@@ -343,7 +343,7 @@ function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM RMHStaffProfile R RIGHT OUTER JOIN 
             RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN SocialWorkerProfile S 
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID 
-            WHERE RR.BeginDate >= '".$beginDate."'AND RR.EndDate <= '".$endDate."' 
+            WHERE RR.Status = '".$status."' AND RR.BeginDate >= '".$beginDate."'AND RR.EndDate <= '".$endDate."' 
             ORDER BY RR.SW_DateStatusSubmitted";
         
         $result = mysql_query ($query);
