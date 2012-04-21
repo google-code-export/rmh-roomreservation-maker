@@ -4,20 +4,17 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  * 
- * TO DO
- * Test to see if an email can be sent to multiple addresses using mail()
- * can be done using PEAR Mail
  * 
- * Authors: Alisa Modeste <alisa.modeste08@stjohns.edu>
+ * Authors: Alisa Modeste
  */
 
 include_once ('../core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
-include_once ('..\domain\Family.php');
+include_once (ROOT_DIR.'\domain\Family.php');
 
 
 //email allows you to modify settings and check if mail was sent
-//@param array $to one or more recipients for the email
+//@param array $to - one or more email recipients
 
 function email($add, $subject, $message)
 {
