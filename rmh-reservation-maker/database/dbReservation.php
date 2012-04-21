@@ -333,7 +333,7 @@ function retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffilia
  * 
  */
 
-function retrieve_all_RoomReservationActivity_byStatusDate ($status, $beginDate, $endDate) {
+function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
     
 	connect();
     
@@ -343,7 +343,7 @@ function retrieve_all_RoomReservationActivity_byStatusDate ($status, $beginDate,
             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM RMHStaffProfile R RIGHT OUTER JOIN 
             RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN SocialWorkerProfile S 
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID 
-            WHERE RR.Status = '".$status."' AND RR.BeginDate >= '".$beginDate."'AND RR.EndDate <= '".$endDate."' 
+            WHERE RR.BeginDate >= '".$beginDate."'AND RR.EndDate <= '".$endDate."' 
             ORDER BY RR.SW_DateStatusSubmitted";
         
         $result = mysql_query ($query);
@@ -380,8 +380,8 @@ function update_status_RoomReservationActivity($roomReservationRequestId){
  connect();
  
  $query="UPDATE RoomReservationActivity SET RMHStaffProfileID = ".$reservation->get_rmhStaffProfileId().",". 
-         "RMH_DateStatusSubmitted =".",".$reservation->get_rmhDateStatusSubmitted().",".  
-         "Status ="."'$reservation->get_status()'"."WHERE RoomReservationRequestID =\"".$reservation->$roomReservationRequestId."\"";
+         "RMH_DateStatusSubmitted ='".$reservation->get_rmhDateStatusSubmitted()."',  
+         Status ='".$reservation->get_status()."' WHERE RoomReservationRequestID =".$reservation->$roomReservationRequestId;
  mysql_close();
  $result=mysql_query($query);
    	
