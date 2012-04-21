@@ -120,9 +120,9 @@ function insert_ProfileActivity($profileActivity){
 	$query="INSERT INTO ProfileActivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID,
                 SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
                Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, 
-               PatientLastName, PatientRelation, PatientDateOfBirth, FormPDF, FamilyNotes, ProfileActivityNotes) VALUES('".
+               PatientLastName, PatientRelation, PatientDateOfBirth, FormPDF, FamilyNotes, ProfileActivityNotes) VALUES(".
 			$profileActivity->get_profileActivityRequestId().",".
-                        $profileActivity->get_familyProfileId().",".
+                        $profileActivity->get_familyProfileId().",". 
                         $profileActivity->get_socialWorkerProfileId().",'".  
                         $profileActivity->get_swDateStatusSubm()."','".                           
                         $profileActivity->get_activityType()."','".
@@ -168,17 +168,16 @@ function retrieve_ProfileActivity($profileActivityRequestId){
     
     connect();
     
-    $query = "SELECT P.ProfileActivityRequestID,F.`ParentLastName`,F.`ParentFirstName`,S. LastName AS SW_LastName, 
-       S.`FirstName`AS SW_FirstName,R.`LastName` AS RMH_Staff_LastName,R.`FirstName` AS RMH_Staff_FirstName,
-       P.SW_DateStatusSubmitted, P.`RMH_DateStatusSubmitted`, P.ActivityType, P.Status, 
-       P.ParentFirstName, P.ParentLastName, P.Email, P.Phone1, P.Phone2, P.Address, P.City, 
-       P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, P.PatientRelation, P.PatientDateOfBirth, 
-       P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
+    $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
+       S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
+       P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
+       P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
+       P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
        FROM RMHStaffProfile R RIGHT OUTER JOIN 
-       ProfileActivity P ON R.`RMHStaffProfileID`= P.RMHStaffProfileID
-       INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.`SocialWorkerProfileID`
-       INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.`FamilyProfileID` 
-       WHERE P.ProfileActivityRequestID = \"".$profileActivityRequestId."\"";
+       ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+       INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+       INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID
+       WHERE P.ProfileActivityRequestID =".$profileActivityRequestId;
      
         $result = mysql_query ($query);
         if (mysql_num_rows($result)!==1) {
@@ -201,16 +200,15 @@ function retrieve_ProfileActivity($profileActivityRequestId){
 function retrieve_UnConfirmed_ProfileActivity(){
     connect();
 
-    $query = "SELECT P.ProfileActivityRequestID,F.`ParentLastName`,F.`ParentFirstName`,S. LastName AS SW_LastName, 
-        S.`FirstName`AS SW_FirstName,R.`LastName` AS RMH_Staff_LastName,R.`FirstName` AS RMH_Staff_FirstName,
-        P.SW_DateStatusSubmitted, P.`RMH_DateStatusSubmitted`, P.ActivityType, P.Status, 
-        P.ParentFirstName, P.ParentLastName, P.Email, P.Phone1, P.Phone2, P.Address, P.City, 
-        P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, P.PatientRelation, P.PatientDateOfBirth, 
-        P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
+    $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
+        S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
+        P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
+        P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName, P.PatientLastName, 
+        P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
         FROM RMHStaffProfile R RIGHT OUTER JOIN 
-        ProfileActivity P ON R.`RMHStaffProfileID`= P.RMHStaffProfileID
-        INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.`SocialWorkerProfileID`
-        INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.`FamilyProfileID` 
+        ProfileActivity P ON R.`RMHStaffProfileID = P.RMHStaffProfileID
+        INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+        INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID
         WHERE P.Status = 'UnConfirmed'";
     
     $result = mysql_query ($query);
@@ -233,16 +231,16 @@ function retrieve_UnConfirmed_ProfileActivity(){
 function retrieve_Confirm_ProfileActivity(){
     connect();
     
-  $query = "SELECT P.ProfileActivityRequestID,F.`ParentLastName`,F.`ParentFirstName`,S. LastName AS SW_LastName, 
-        S.`FirstName`AS SW_FirstName,R.`LastName` AS RMH_Staff_LastName,R.`FirstName` AS RMH_Staff_FirstName,
-        P.SW_DateStatusSubmitted, P.`RMH_DateStatusSubmitted`, P.ActivityType, P.Status, 
+  $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
+        S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
+        P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, 
         P.ParentFirstName, P.ParentLastName, P.Email, P.Phone1, P.Phone2, P.Address, P.City, 
         P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, P.PatientRelation, P.PatientDateOfBirth, 
         P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
         FROM RMHStaffProfile R RIGHT OUTER JOIN 
-        ProfileActivity P ON R.`RMHStaffProfileID`= P.RMHStaffProfileID
-        INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.`SocialWorkerProfileID`
-        INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.`FamilyProfileID` 
+        ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+        INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+        INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID 
         WHERE P.Status = 'Confirm'";      
     
     $result = mysql_query ($query);
@@ -265,16 +263,15 @@ function retrieve_Confirm_ProfileActivity(){
 function retrieve_Deny_ProfileActivity(){
     connect(); 
     
-  $query = "SELECT P.ProfileActivityRequestID,F.`ParentLastName`,F.`ParentFirstName`,S. LastName AS SW_LastName, 
-        S.`FirstName`AS SW_FirstName,R.`LastName` AS RMH_Staff_LastName,R.`FirstName` AS RMH_Staff_FirstName,
-        P.SW_DateStatusSubmitted, P.`RMH_DateStatusSubmitted`, P.ActivityType, P.Status, 
-        P.ParentFirstName, P.ParentLastName, P.Email, P.Phone1, P.Phone2, P.Address, P.City, 
-        P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, P.PatientRelation, P.PatientDateOfBirth, 
-        P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
+  $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
+        S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
+        P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
+        P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName, P.PatientLastName, 
+        P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
         FROM RMHStaffProfile R RIGHT OUTER JOIN 
-        ProfileActivity P ON R.`RMHStaffProfileID`= P.RMHStaffProfileID
-        INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.`SocialWorkerProfileID`
-        INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.`FamilyProfileID` 
+        ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+        INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+        INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID 
         WHERE P.Status = 'Deny'"; 
     
         $result = mysql_query ($query);
@@ -297,17 +294,16 @@ function retrieve_Deny_ProfileActivity(){
 function retrieve_FamilyLastName_ProfileActivity($parentLastName){
        connect();
           
-  $query = "SELECT P.ProfileActivityRequestID,F.`ParentLastName`,F.`ParentFirstName`,S. LastName AS SW_LastName, 
-    S.`FirstName`AS SW_FirstName,R.`LastName` AS RMH_Staff_LastName,R.`FirstName` AS RMH_Staff_FirstName,
-    P.SW_DateStatusSubmitted, P.`RMH_DateStatusSubmitted`, P.ActivityType, P.Status, 
-    P.ParentFirstName, P.ParentLastName, P.Email, P.Phone1, P.Phone2, P.Address, P.City, 
-    P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, P.PatientRelation, P.PatientDateOfBirth, 
-    P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
+  $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
+    S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
+    P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
+    P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
+    P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
     FROM RMHStaffProfile R RIGHT OUTER JOIN 
-    ProfileActivity P ON R.`RMHStaffProfileID`= P.RMHStaffProfileID
-    INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.`SocialWorkerProfileID`
-    INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.`FamilyProfileID` 
-    WHERE F.ParentLastName = \"".$parentLastName."\""; 
+    ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+    INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+    INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID 
+    WHERE F.ParentLastName =".$parentLastName; 
         
         $result = mysql_query ($query);
         if(mysql_num_rows($result)!==1){
@@ -330,17 +326,16 @@ function retrieve_FamilyLastName_ProfileActivity($parentLastName){
    function retrieve_SocialWorkerLastName_ProfileActivity($socialWorkerLastName){
        connect();
        
-  $query = "SELECT P.ProfileActivityRequestID,F.`ParentLastName`,F.`ParentFirstName`,S. LastName AS SW_LastName, 
-    S.`FirstName`AS SW_FirstName,R.`LastName` AS RMH_Staff_LastName,R.`FirstName` AS RMH_Staff_FirstName,
-    P.SW_DateStatusSubmitted, P.`RMH_DateStatusSubmitted`, P.ActivityType, P.Status, 
-    P.ParentFirstName, P.ParentLastName, P.Email, P.Phone1, P.Phone2, P.Address, P.City, 
-    P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, P.PatientRelation, P.PatientDateOfBirth, 
-    P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
+  $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
+    S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
+    P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
+    P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
+    P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
     FROM RMHStaffProfile R RIGHT OUTER JOIN 
-    ProfileActivity P ON R.`RMHStaffProfileID`= P.RMHStaffProfileID
-    INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.`SocialWorkerProfileID`
-    INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.`FamilyProfileID` 
-    WHERE S.LastName = \"".$socialWorkerLastName."\"";
+    ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+    INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+    INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID
+    WHERE S.LastName =".$socialWorkerLastName;
   
         $result = mysql_query ($query);
         if(mysql_num_rows($result)!==1){
@@ -364,17 +359,16 @@ function retrieve_FamilyLastName_ProfileActivity($parentLastName){
     function retrieve_RMHStaffLastName_ProfileActivity($rmhStaffLastName){
        connect();
        
-      $query = "SELECT P.ProfileActivityRequestID,F.`ParentLastName`,F.`ParentFirstName`,S. LastName AS SW_LastName, 
-    S.`FirstName`AS SW_FirstName,R.`LastName` AS RMH_Staff_LastName,R.`FirstName` AS RMH_Staff_FirstName,
-    P.SW_DateStatusSubmitted, P.`RMH_DateStatusSubmitted`, P.ActivityType, P.Status, 
-    P.ParentFirstName, P.ParentLastName, P.Email, P.Phone1, P.Phone2, P.Address, P.City, 
-    P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, P.PatientRelation, P.PatientDateOfBirth, 
-    P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
-    FROM RMHStaffProfile R RIGHT OUTER JOIN 
-    ProfileActivity P ON R.`RMHStaffProfileID`= P.RMHStaffProfileID
-    INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.`SocialWorkerProfileID`
-    INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.`FamilyProfileID` 
-    WHERE R.LastName = \"".$rmhStaffLastName."\"";
+      $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
+        S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
+        P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
+        P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
+        P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
+        FROM RMHStaffProfile R RIGHT OUTER JOIN 
+        ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+        INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+        INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID
+        WHERE R.LastName =".$rmhStaffLastName;
      
         $result = mysql_query ($query);
         if(mysql_num_rows($result)!==1){
@@ -393,9 +387,9 @@ function retrieve_FamilyLastName_ProfileActivity($parentLastName){
  */
     
 function build_profileActivity($result_row) {
-    $theProfileActivity = new ProfileActivity($result_row['ProfileActivityRequestID'], $result_row['ParentLastName'],
-        $result_row['ParentFirstName'], $result_row['SW_LastName'], $result_row['SW_FirstName'], 
-	$result_row['RMH_Staff_LastName'], $result_row['RMH_Staff_FirstName'],
+    $theProfileActivity = new ProfileActivity($result_row['ProfileActivityID'], $result_row['ProfileActivityRequestID'],
+        $result_row['FamilyProfileID'], $result_row['SocialWorkerProfileID'], $result_row['SW_LastName'], $result_row['SW_FirstName'], 
+	$result_row['RMHStaffProfileID'], $result_row['RMH_Staff_LastName'], $result_row['RMH_Staff_FirstName'],
 	$result_row['SW_DateStatusSubmitted'], $result_row['RMH_DateStatusSubmitted'], $result_row['ActivityType'],
 	$result_row['Status'], $result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'], 
         $result_row['Phone1'], $result_row['Phone2'], $result_row['Address'],$result_row['City'], 
@@ -415,8 +409,8 @@ function build_profileActivity($result_row) {
 function update_status_ProfileActivity($profileActivityRequestId){
  connect();
  $query="UPDATE ProfileActivity SET RMHStaffProfileID = ".$profileActivity->get_rmhStaffProfileId().",". 
-         "RMH_DateStatusSubmitted =".",".$profileActivity->get_rmhDateStatusSubmitted().",".  
-         "Status ="."'$profileActivity->get_profileActivityStatus()'"."WHERE ProfileActivityRequestID =\"".$profileActivity->$profileActivityRequestId."\"";
+         "RMH_DateStatusSubmitted ='".$profileActivity->get_rmhDateStatusSubmitted()."',  
+         Status ='".$profileActivity->get_profileActivityStatus()."' WHERE ProfileActivityRequestID =".$profileActivity->$profileActivityRequestId;
  mysql_close();
  $result=mysql_query($query);
    	
