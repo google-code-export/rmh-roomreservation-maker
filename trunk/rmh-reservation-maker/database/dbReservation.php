@@ -107,7 +107,7 @@ function insert_RoomReservationActivity ($reservation){
  * @return the Room Reservation corresponding to roomReservationRequestId, or false if not in the table.
  */
 
-function retrieve_RoomReservationActivity($roomReservationRequestId){
+function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId){
     
         connect();
    
@@ -118,7 +118,7 @@ function retrieve_RoomReservationActivity($roomReservationRequestId){
             RR.Notes FROM RMHStaffProfile R RIGHT OUTER JOIN RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID
             INNER JOIN SocialWorkerProfile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE RR.RoomReservationRequestID = \"".$roomReservationRequestId."\"";
+            WHERE RR.RoomReservationRequestID =".$roomReservationRequestId;
    
         $result = mysql_query ($query);
         if (mysql_num_rows($result)!==1) {
@@ -132,10 +132,10 @@ function retrieve_RoomReservationActivity($roomReservationRequestId){
 }
 
 /**
- * Retrieves Room Reservation from the RoomReservationActivity table for all Unconfirmed Statuses 
+ * Retrieves Room Reservation from the RoomReservationActivity table by Status ('Unconfirmed', 'Confirm', 'Deny')
  */
 
-function retrieve_Unconfirmed_RoomReservationActivity(){
+function retrieve_RoomReservationActivity_byStatus($status){
     
         connect();
         
@@ -146,60 +146,7 @@ function retrieve_Unconfirmed_RoomReservationActivity(){
             RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID 
             INNER JOIN SocialWorkerProfile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID 
-            WHERE RR.Status = 'Unconfirmed'";
-        
-        $result = mysql_query ($query);
-        if(mysql_num_rows($result)!==1){
-            mysql_close();
-                return false;
-        }
-        $result_row = mysql_fetch_assoc($result);
-        $theReservations = build_reservation($result_row);
-        mysql_close();
-        return $theReservations;
-    }
-    
-/**
- * Retrieves Room Reservation from the RoomReservationActivity table for all Confirmed Statuses
- */
-    
-function retrieve_Confirm_RoomReservationActivity(){
-    
-        connect();
-        
-        $query = "SELECT RR.RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName, 
-            F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, 
-            R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, 
-            RR.RMH_DateStatusSubmitted, RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, 
-            RR.Notes FROM RMHStaffProfile R RIGHT OUTER JOIN RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID
-            INNER JOIN SocialWorkerProfile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
-            INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID WHERE RR.Status = 'Confirm'";
-          
-        $result = mysql_query ($query);
-        if(mysql_num_rows($result)!==1){
-            mysql_close();
-                return false;
-        }
-        $result_row = mysql_fetch_assoc($result);
-        $theReservations = build_reservation($result_row);
-        mysql_close();
-        return $theReservations;
-    }
-    
-/**
- * Retrieves Room Reservation from the RoomReservationActivity table for all Denied Statuses
- */
-    
-function retrieve_Deny_RoomReservationActivity(){
-    
-        connect();
-        
-        $query = "SELECT RR.RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName, F.ParentFirstName, 
-            S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, 
-            R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, RR.RMH_DateStatusSubmitted, RR.ActivityType, RR.Status, RR.BeginDate,
-            RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM RMHStaffProfile R RIGHT OUTER JOIN RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID
-            INNER JOIN SocialWorkerProfile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
-            INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID WHERE RR.Status = 'Deny'";
+            WHERE RR.Status ='".$status."'";
         
         $result = mysql_query ($query);
         if(mysql_num_rows($result)!==1){
@@ -227,7 +174,7 @@ function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM RMHStaffProfile R RIGHT OUTER JOIN 
             RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN SocialWorkerProfile S 
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE F.ParentLastName = \"".$parentLastName."\"";
+            WHERE F.ParentLastName = '".$parentLastName."'";
         
         $result = mysql_query ($query);
         if(mysql_num_rows($result)!==1){
@@ -257,7 +204,7 @@ function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLast
             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM RMHStaffProfile R RIGHT OUTER JOIN 
             RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN SocialWorkerProfile S 
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE S.LastName = \"".$socialWorkerLastName."\"";
+            WHERE S.LastName = '".$socialWorkerLastName."'";
         
         $result = mysql_query ($query);
         if(mysql_num_rows($result)!==1){
@@ -287,7 +234,7 @@ function retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM RMHStaffProfile R RIGHT OUTER JOIN 
             RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN SocialWorkerProfile S 
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE R.LastName = \"".$rmhStaffLastName."\"";
+            WHERE R.LastName = '".$rmhStaffLastName."'";
         
         $result = mysql_query ($query);
         if(mysql_num_rows($result)!==1){
@@ -343,7 +290,7 @@ function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM RMHStaffProfile R RIGHT OUTER JOIN 
             RoomReservationActivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN SocialWorkerProfile S 
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID 
-            WHERE RR.BeginDate >= '".$beginDate."'AND RR.EndDate <= '".$endDate."' 
+            WHERE RR.BeginDate >= '".$beginDate."' AND RR.EndDate <= '".$endDate."' 
             ORDER BY RR.SW_DateStatusSubmitted";
         
         $result = mysql_query ($query);
