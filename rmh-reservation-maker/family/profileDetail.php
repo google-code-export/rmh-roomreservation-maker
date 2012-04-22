@@ -24,20 +24,22 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
     {
         $fn = sanitize( $_POST['firstName']);
         $ln = sanitize( $_POST['lastName']);
-        //echo "Post has been returned\n"; //THIS HAS BEEN REACHED
-        $families = retrieve_FamilyProfileByName($fn, $ln);//currently my code dies here
-        //an error on dbFamilyProfile.php line 165 unrecognized function connect();
+        $families = retrieve_FamilyProfileByName($fn, $ln);
         
-        //check if famililes is an array
-        //start table
+        if( is_array( $families ) )
+        {
+        //TODO: start table with tags
         foreach( $families as $family )
         {
-          //create a row with a td for lname, fname, town, dob
-          echo "A family must have been returned";//TEST POINT HAS NOT BEEN REACHED 
+          //TODO: create a row with a td for lname, fname, town, dob
+          echo "<script type=\"text/javascript\">document.getElementById(\"searchResults\").innerHTML = \"A family has been returned\";</script>"; 
+          //echo "<script type=\"text/javascript\">$(\"#searchResults\").html(\"A family is returned!\");</script>";
+          //echo "<script type=\"text/javascript\">alert(\"OMG\");</script>";//This works
         }
-        //end table
+        //TODO: end table tags
+        }//end if is_array
     }
-    else if(isset($_POST['form_token']) && !validateTokenField($_POST))
+    else if(isset($_POST["form_token"]) && !validateTokenField($_POST))
     {
         //if the security validation failed. display/store the error:
         //'The request could not be completed: security check failed!'
@@ -106,8 +108,9 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
         </div>
     
         <div id="searchResults"><!--this div will receive content after a search is performed-->
+            search results go here
         </div>
-            <?php echo $content;?>
+            <?php if( isset( $content ) ){ echo $content;} ?>
     </div>
 </div>
 <?php 
