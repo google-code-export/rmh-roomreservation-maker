@@ -2,7 +2,7 @@
 
 /*
  * Family class for RMH Reservation Maker
- * @version April 20, 2012
+ * @version April 22, 2012
  * @author Gergana Stoykova and Linda Shek
  */
 
@@ -111,7 +111,7 @@ class Family{
     }
     
     function get_patientdob(){
-        return $this->patientBirthDate;
+        return $this->patientDateOfBirth;
     }
     
     function get_patientformpdf(){
