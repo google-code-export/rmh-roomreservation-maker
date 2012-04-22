@@ -2,12 +2,12 @@
 /**
  * Functions to create, retrieve, update, and delete information from the
  * FamilyProfile table in the database. This table is used with the family class.  
- * @version April 20, 2012
- * @author Weiyu Shang and Linda Shek
+ * @version April 22, 2012
+ * @author Weiyu Shang
  */
 
 include_once(ROOT_DIR.'/domain/Family.php');
-include_once(ROOT_DIR.'/dbinfo.php');
+include_once(ROOT_DIR.'/database/dbinfo.php');
 
 /**
  * Creates a FamilyProfile table with the following fields:
@@ -63,12 +63,35 @@ function create_FamilyProfile(){
 **/
 
 /**
- *Inserts a new Family Profile into the FamilyProfile table. This function will be utilized by the social worker. 
- * @param Family $family
- * @return boolean 
+ * function that inserts a Family Profile based on the FamilyProfileID, ParentFirstName, ParentLastName, Email
+ * Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, PatientLastName, PatientRelation
+ * PatientDateOfBirth, FormPDF, and Notes provided. 
+ * Note: if calling function insert_FamilyProfileDetail make -1 as a placeholder for familyProfileId. 
+ *
+ * @author Linda Shek 
+ */
+ 
+function insert_FamilyProfileDetail($familyProfileId, $parentFirstName, $parentLastName, $parentEmail,
+            $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZIP,
+            $parentCountry, $patientFirstName, $patientLastName, $patientRelation,
+            $patientDateOfBirth, $patientFormPdf, $patientNotes){
+    
+    $family = new Family ($familyProfileId, $parentFirstName, $parentLastName, $parentEmail,
+            $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZIP,
+            $parentCountry, $patientFirstName, $patientLastName, $patientRelation,
+            $patientDateOfBirth, $patientFormPdf, $patientNotes);
+   return insert_FamilyProfile ($family);
+}
+
+/**
+ * function to insert family profile using class object Family.
+ * @return boolean false if no family profile was inserted, OR true if family profile was inserted. 
+ * 
+ * @author Linda Shek
  */
 
 function insert_FamilyProfile ($family){
+    
     if (! $family instanceof Family) {
         echo("Invaild argument for insert_FamilyProfile function call");
         return false;
@@ -103,9 +126,11 @@ function insert_FamilyProfile ($family){
                 $family->get_patientformpdf()."','".
                 $family->get_patientnotes()."')";
     
-    $result = mysql_query($query);
-    if (!$result) {
-        echo (mysql_error()."unable to insert into FamilyProfile: ".$family->get_familyProfileId(). "\n");
+        echo "<br>";
+        $result = mysql_query($query);
+   
+       if (!$result) {
+        echo (mysql_error()."<br>". "Unable to insert into FamilyProfile.");
         mysql_close();
         return false;
     }
@@ -122,8 +147,8 @@ function insert_FamilyProfile ($family){
 function retrieve_FamilyProfile ($familyProfileId) 
 {
     connect();
-    $query = "SELECT * FROM FamilyProfile WHERE id = ".$familyProfileId;
-    $result = mysql_query ($query);
+    $query = "SELECT * FROM FamilyProfile WHERE FamilyProfileID = ".$familyProfileId;
+    $result = mysql_query($query) or die(mysql_error());
     
     if (mysql_num_rows($result) !== 1){
     	mysql_close();
@@ -135,10 +160,6 @@ function retrieve_FamilyProfile ($familyProfileId)
     mysql_close();
     return $theFamily;
 }
-
-/*function retrieve_allFamilyProfile_byLname($lname){
-    
-}*/
 
 /* 
  * auxiliary function to build a Family Profile from a row in the FamilyProfile table
@@ -169,7 +190,7 @@ function retrieve_FamilyProfileByName($fname, $lname)
     //echo "query is " . $query;
     
 
-    $result = mysql_query ($query);
+    $result = mysql_query($query) or die(mysql_error());
     
     if (mysql_num_rows($result) <1)
     {
@@ -212,11 +233,42 @@ function retrieve_FamilyProfileByName($fname, $lname)
     return $theFamily; 
 }*/
 
-function update_FamilyProfile ($familyProfileId) 
+/**
+ * function that updates a Family Profile based on the FamilyProfileID, ParentFirstName, ParentLastName, Email
+ * Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, PatientLastName, PatientRelation
+ * PatientDateOfBirth, FormPDF, and Notes provided. 
+ * 
+ * @author Linda Shek 
+ */
+
+function update_FamilyProfileDetail($familyProfileId, $parentFirstName, $parentLastName, $parentEmail,
+            $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZIP,
+            $parentCountry, $patientFirstName, $patientLastName, $patientRelation,
+            $patientDateOfBirth, $patientFormPdf, $patientNotes){
+    
+    $family = new Family ($familyProfileId, $parentFirstName, $parentLastName, $parentEmail,
+            $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZIP,
+            $parentCountry, $patientFirstName, $patientLastName, $patientRelation,
+            $patientDateOfBirth, $patientFormPdf, $patientNotes);
+   return update_FamilyProfile($family);
+}
+
+/**
+ * function to update family profile using class object Family.
+ * @return boolean false if no family profile was updated, OR true if family profile was updated. 
+ * 
+ * @author Linda Shek
+ */
+
+function update_FamilyProfile($family) 
 {
+    if (! $family instanceof Family) {
+    echo("Invaild argument for update_FamilyProfile function call");
+    return false;
+    }
     connect();
     
-    $query= "UPDATE FamilyProfile SET ParentFirstName = '".$family->get_parentfname()."', 
+    $query= "UPDATE rmhreservationdb.FamilyProfile SET ParentFirstName = '".$family->get_parentfname()."', 
             ParentLastName ='".$family->get_parentlname()."', 
             Email = '".$family->get_parentemail()."',
             Phone1 = '".$family->get_parentphone1()."',
@@ -232,17 +284,17 @@ function update_FamilyProfile ($familyProfileId)
             PatientDateOfBirth = '".$family->get_patientdob()."',
             FormPDF = '".$family->get_patientformpdf()."', 
             Notes = '".$family->get_patientnotes()."'
-            WHERE FamilyProfileID = ".$family->$familyProfileId;
+            WHERE FamilyProfileID = ".$family->get_familyProfileId();
     
     mysql_close();
  $result=mysql_query($query);
    	
     if(!$result) {
-		echo mysql_error() . ">>>Error updating FamilyProfile table. <br>";
+		echo mysql_error() . "Error updating FamilyProfile table. <br>";
 	    return false;
     }  
     return true;
-
+}
 
     /*if (! $family instanceof Family) 
         {
@@ -256,7 +308,7 @@ function update_FamilyProfile ($familyProfileId)
             echo (mysql_error()."unable to update FamilyProfile table: ".$family->get_familyProfileId());
 	    return false;
 	}*/
-}
+
 
 /**
  * Deletes a Family Profile from the FamilyProfile table.
@@ -266,7 +318,7 @@ function update_FamilyProfile ($familyProfileId)
 function delete_FamilyProfile($familyProfileId) 
 {
     connect();
-    $query="DELETE FROM FamilyProfile WHERE FamilyProfileID=".$familyProfileId;
+    $query="DELETE FROM rmhreservationdb.FamilyProfile WHERE FamilyProfileID=".$familyProfileId;
 	$result=mysql_query($query);
 	mysql_close();
 	if (!$result) 
