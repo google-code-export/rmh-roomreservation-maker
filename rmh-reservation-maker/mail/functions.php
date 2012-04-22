@@ -213,4 +213,14 @@ function newFamilyMod($RequestKey, $DateSubmitted)
     email($to, $subject, $message);
 }
 
+function PasswordReset($activation, $username, $userEmail)
+{
+    $to[] = $userEmail;
+    
+    $subject = "Request for Password Reset";
+    $message = "Please follow the link to reset your password: (URL)?user=$username&activation=$activation";
+    
+    email($to, $subject, $message);
+}
+
 ?>
