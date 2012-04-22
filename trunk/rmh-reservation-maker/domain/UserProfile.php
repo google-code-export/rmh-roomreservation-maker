@@ -2,142 +2,196 @@
 
 /*
  * UserProfile class for RMH Reservation Maker
- * @author Linda Shek, Gergana Stoykova
- * @version April 04, 2012
+ * @author Linda Shek and Gergana Stoykova
+ * @version April 22, 2012
  */
 
 
 class UserProfile {
-    private $profileId;      //user id for the unique profile - number
-    private $title; // title to the name
-    private $lastName;        // last name - string
-    private $firstName;       // first name - string
-    private $hospitalAffiliation; // what Hospital the Social Worker is from; N/A for RMH staff
-    private $phone; //phone number
-    private $email;            // email address
-    private $emailNotification; //opting in or out of email notifications for social worker ONLY
-    private $userLoginInfoId; //username for specific social worker
+    private $userProfileId;       //primary key for the user profile table - number
+    private $usernameId;          //username for specific user
+    private $userEmail;           //email address
+    private $password;            //password
     private $userCategory;
-    private $password;         // password for database access: default = username ??
-
-        /**
-         * constructor for a User (social worker and RMH staff member)
-         */
-    function __construct($profileId, $title, $lastName, $firstName, $hospitalAffiliation,
-            $phone, $email, $emailNotification,  $userLoginInfoId, $userCategory, $password){                
-        
-        $this->profileId = $profileId; //order of profile in the database
-        $this->title = $title; 
-        $this->lastName = $lastName;
-        $this->firstName = $firstName;
-        $this->hospitalAffiliation = $hospitalAffiliation;
-        $this->phone = $phone;
-        $this->email = $email;
-        $this->emailNotification = $emailNotification; //boolean
-        $this->userLoginInfoId = $userLoginInfoId;
-        $this->userCategory = $userCategory;
-        
-        if ($password=="")
+    private $swProfileId;
+    private $swTitle;             //title to the name (Mr., Ms., Mrs., etc.)
+    private $swLastName;          //last name - string
+    private $swFirstName;         //first name - string
+    private $hospitalAffiliation; //what Hospital the Social Worker is from; N/A for RMH staff
+    private $swPhone;             //phone number
+    private $emailNotification;   //opting in or out of email notifications for social worker ONLY
+    private $rmhStaffProfileId;
+    private $rmhStaffTitle;
+    private $rmhStaffLastName;
+    private $rmhStaffFirstName;
+    private $rmhStaffPhone;
+    
+    
+   function __construct($userCategory, $userProfileId, $usernameId, $userEmail, $password, $rmhStaffProfileId,  $rmhStaffTitle, 
+            $rmhStaffFirstName, $rmhStaffLastName, $rmhStaffPhone, $swProfileId, $swTitle, $swFirstName,
+            $swLastName, $hospitalAffiliation, $swPhone, $emailNotification){
+       
+       $this->userCategory = $userCategory; 
+       $this->userProfileId = $userProfileId; //order of profile in the database
+       $this->usernameId = $usernameId;
+       $this->userEmail = $userEmail;
+       if ($password=="")
             $this->password = md5($this->id);
         else 
-            $this->password = $password;       
-    }
-    
+            $this->password = $password; 
+       $this->rmhStaffProfileId = $rmhStaffProfileId;
+       $this->rmhStaffTitle = $rmhStaffTitle;
+       $this->rmhStaffFirstName= $rmhStaffFirstName;
+       $this->rmhStaffLastName= $rmhStaffLastName;
+       $this->rmhStaffPhone= $rmhStaffPhone;
+       $this->swProfileId= $swProfileId;
+       $this->swTitle= $swTitle;
+       $this->swFirstName= $swFirstName;
+       $this->swLastName= $swLastName;
+       $this->hospitalAffiliation= $hospitalAffiliation;
+       $this->swPhone= $swPhone;
+       $this->emailNotification= $emailNotification;       
+   }
     
     //getter functions
    
-    
-    function get_profileId(){
-        return $this->profileId;
-    }
-    
-    function get_title(){
-        return $this->title;
-    }
-    
-    function get_firstName() {
-        return $this->firstName;
-    }
-    
-    function get_lastName() {
-        return $this->lastName;
-    }
-    
-    function get_hospitalAff(){
-        return $this->hospitalAffiliation;
-    }
-    
-    function get_phone() {
-        return $this->phone;
-    }
-    
-    function get_email(){
-        return $this->email;
-    }
-    
-    function get_email_notification(){
-        return $this->emailNotification;
-    }
-    
-    function get_userLoginInfoId(){
-        return $this->userLoginInfoId;
+    function get_userProfileId(){
+        return $this->userProfileId;
     }
     
     function get_userCategory(){
         return $this->userCategory;
     }
     
-    function get_password () {
+    function get_usernameId(){
+        return $this->usernameId;
+    }
+        
+    function get_userEmail(){
+        return $this->userEmail;
+    }
+    
+    function get_password(){
         return $this->password;
     }
     
+    function get_rmhStaffProfileId(){
+        return $this->rmhStaffProfileId;
+    }
+    
+    function get_rmhStaffTitle(){
+        return $this->rmhStaffTitle;
+    }
+    
+    function get_rmhStaffFirstName(){
+        return $this->rmhStaffFirstName;
+    }
+    
+    function get_rmhStaffLastName(){
+       return $this->rmhStaffLastName; 
+    }
+    
+    function get_rmhStaffPhone(){
+        return $this->rmhStaffPhone;
+    }
+  
+    function get_swProfileId(){
+        return $this->swProfileId;
+    }
+    
+    function get_swTitle(){
+        return $this->swTitle;
+    }
+    
+    function get_swFirstName() {
+        return $this->swFirstName;
+    }
+    
+    function get_swLastName() {
+        return $this->swLastName;
+    }
+    
+    function get_hospitalAff(){
+        return $this->hospitalAffiliation;
+    }
+    
+    function get_swphone() {
+        return $this->swPhone;
+    }
    
+     function get_email_notification(){
+        return $this->emailNotification;
+    }
+    
     //setter functions
     
-    
-    function set_profileId($profileNum){
+    function set_userProfileId($profileNum){
         $this->profileId = $profileNum;
     }
     
-    function set_title($ttl){
-        $this->title = $ttl;
+    function set_userCategory($userCat){
+        $this->userCategory = $userCat;
     }
     
-    function set_firstName($fn) {
-        $this->firstName = $fn;
+    function set_usernameId($userLogin){
+        $this->userLoginInfoId = $userLogin;
+    }
+ 
+    function set_userEmail($uEm){
+        $this->userEmail = $uEm;
     }
     
-    function set_lastName($ln) {
-        $this->lastName = $ln;
+    function set_password ($pass){
+        $this->password = $pass;
+    }
+    
+    function set_rmhStaffProfileId($rmhPrfId){
+        $this->rmhStaffProfileId = $rmhPrfId;
+    }
+    
+    function set_rmhStaffTitle($rmhttl){
+        $this->rmhStaffTitle = $rmhttl;
+    }
+    
+    function set_rmhStaffFirstName($rmhFn){
+        $this->rmhStaffFirstName = $rmhFn;
+    }
+    
+    function set_rmhStaffLastName($rmhLn){
+       $this->rmhStaffLastName = $rmhLn; 
+    }
+    
+    function set_rmhStaffPhone($rmhPhNum){
+        $this->rmhStaffPhone = $rmhPhNum;
+    }
+  
+    function set_swProfileId($swPrfId){
+        $this->swProfileId = $swPrfId;
+    }
+    
+    function set_swTitle($swttl){
+        $this->swtitle = $swttl;
+    }
+    
+    function set_swFirstName($swFn) {
+        $this->swFirstName = $swFn;
+    }
+    
+    function set_swLastName($swLn) {
+        $this->swLastName = $swLn;
     }
     
     function set_hospitalAff($hospAff){
         $this->hospitalAffiliation = $hospAff;
     }
     
-    function set_phone($phNum) {
-        $this->phone = $phNum;
-    }
-    
-    function set_email($em){
-        $this->email = $em;
+    function set_swPhone($swPhNum) {
+        $this->swPhone = $swPhNum;
     }
     
     function set_email_notification($eNot){
         $this->emailNotification = $eNot;
     }
-    
-    function set_userLoginInfoId($userLogin){
-        $this->userLoginInfoId = $userLogin;
-    }
-    
-    function set_userCategory($userCat){
-        $this->userCategory = $userCat;
-    }
-
-    function set_password ($pass){
-        $this->password = $pass;
-    }
 }
-    
+
 ?>
