@@ -33,6 +33,7 @@ else if($userAccess === 1)
     //Navigation for social workers
  ?>
     <li><a href="<?php echo BASE_DIR.'/referralForm.php?id=new';?>">New Referral</a></li>
+    <li><a href="<?php echo BASE_DIR.'/family/profileDetail.php';?>">Request Room</a></li>
     <li><a href="<?php echo BASE_DIR.'/report.php';?>">Report</a></li> 
     <li><a href="<?php echo BASE_DIR.'/SearchReservations.php';?>">Search Reservations</a></li>
 <?php  
