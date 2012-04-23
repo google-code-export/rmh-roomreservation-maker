@@ -32,10 +32,8 @@ function retrieve_UserByAuth($username, $password)
      $result_row = mysql_fetch_assoc($result);
 
      return $result_row['UserCategory'];
- 
-    }
+ }
       
-
 /*
  * Inserts a new User Profile into the UserProfile table
  * $userprofile = the user being inserted
@@ -305,18 +303,22 @@ function retrieve_all_UserProfile_byRole($userCategory){
         FROM UserProfile U LEFT OUTER JOIN SocialWorkerProfile S ON S.UserProfileID = U.UserProfileID 
         LEFT OUTER JOIN RMHStaffProfile R ON R.UserProfileID = U.UserProfileID 
         Where U.UserCategory = '".$userCategory."'";
-    
+  
    $result = mysql_query($query) or die(mysql_error());
         if(mysql_num_rows($result)!==1){
             mysql_close();
                 return false;
         }
-        $result_row = mysql_fetch_assoc($result);
-        $theUserProfiles = build_userprofile($result_row);
-        mysql_close();
-        return $theUserProfiles;
-    }
-    
+   
+         $theUserProfiles = array();
+         while ($result_row = mysql_fetch_assoc($result)) {
+         $theUserProfile = build_userprofile($result_row);
+         $theUserProfiles[] =  $theUserProfile;
+         }
+   
+         mysql_close();
+         return $theUserProfiles;
+      }
       
  /* 
  * auxiliary function to build a User Profile, Social Worker Profile, and RMH Staff Profile from a row in the UserProfile table, SocialWorkerProfile table, 
