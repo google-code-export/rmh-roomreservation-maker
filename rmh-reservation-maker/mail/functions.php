@@ -14,15 +14,19 @@ include_once (ROOT_DIR.'\domain\Family.php');
 
 
 //email allows you to modify settings and check if mail was sent
-//@param array $to - one or more email recipients
+//@param array $add - one or more email recipients
 
 function email($add, $subject, $message)
 {
-    $from = 'alisa.modeste08@stjohns.edu'; //this SHOULD be a VALID email address
+    /*
+     * Not needed on Go Daddy
+     * $from = 'alisa.modeste08@stjohns.edu'; //this SHOULD be a VALID email address
 
     ini_set("SMTP","mailhubout.stjohns.edu");
     ini_set('sendmail_from', $from);
     ini_set("smtp_port","25");
+     * 
+     */
     
      foreach ($add as $to):
         $mailed = mail($to, $subject, $message);
@@ -218,7 +222,7 @@ function PasswordReset($activation, $username, $userEmail)
     $to[] = $userEmail;
     
     $subject = "Request for Password Reset";
-    $message = "Please follow the link to reset your password: (URL)?user=$username&activation=$activation";
+    $message = "Please click the link to reset your password: (URL)?user=$username&activation=$activation";
     
     email($to, $subject, $message);
 }
