@@ -29,14 +29,38 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
         if( is_array( $families ) )
         {
         //TODO: start table with tags
+            $table = "\n<table style=\"margin-left: 250px; margin-top: 23px;\">\n<thead>\n<tr>\n";
+            $table .= "<th>Name</th><th>City</th><th>DOB</th>\n</tr></thead>";
+            $numFamilies = 1;
+            
         foreach( $families as $family )
         {
-          //TODO: create a row with a td for lname, fname, town, dob
-          echo "<script type=\"text/javascript\">document.getElementById(\"searchResults\").innerHTML = \"A family has been returned\";</script>"; 
+          
+          //echo "<script type=\"text/javascript\">document.getElementById(\"searchResults\").innerHTML = \"A family has been returned\";</script>"; 
           //echo "<script type=\"text/javascript\">$(\"#searchResults\").html(\"A family is returned!\");</script>";
           //echo "<script type=\"text/javascript\">alert(\"OMG\");</script>";//This works
+          //
+          //create a row with a td for lname, fname, town, dob
+           $table .= "<tr>\n\t<td><a href=\"javascript:void(0);\"id=\"";
+           $table .= $family->get_familyProfileId();
+           $table .= "\">";//what do these links point to?  how can I have a link calling a function that has to pass an object?
+           $table .= $family->get_parentlname();
+           $table .= ", ";
+           $table .= $family->get_parentfname();
+           $table .= "</a></td>";
+           $table .= "<td>";
+           $table .= $family->get_parentcity();
+           $table .= "</td>";
+           $table .= "<td>";
+           $table .= $family->get_patientdob();
+           $table .= "</td>\n</tr>";
+            
+            //var_dump($family);
+            
+           $numFamilies++;
         }
-        //TODO: end table tags
+        $table .= "</table>";
+        echo $table;
         }//end if is_array
     }
     else if(isset($_POST["form_token"]) && !validateTokenField($_POST))
@@ -48,11 +72,14 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
     else
     {
         //there was no POST DATA  
-        if(isset($_GET['family']) )
-        {
-            $familyID = sanitize($_GET['family']);
+    }
+    
+    //if(isset($_GET['family']) )
+    function displayProfile( $familyProfile )//should this be pass by ref and set as const?
+    {   //gets the familyid passed down by the family profile search and when the profile is selected(clicked)
+            $familyID = $familyProfile->get_familyProfileId();
       
-            $familyProfile = retrieve_dbFamilyProfile ($familyID);
+            //$familyProfile = retrieve_dbFamilyProfile ($familyID);
             if($familyProfile){
                 $content = '<li>'.$familyProfile->get_parentfname().'</li>';
                 $content .= '<li>'.$familyProfile->get_parentlname().'</li>';
@@ -78,14 +105,9 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
                 $content = "not found";
             }
                     
-        }
-        else
-        {
-            //$content = "bad request";
-        }
-    }
+        }//end function
+        
 
-    //gets the familyid passed down by the family profile search and when the profile is selected(clicked)
 ?>
 
 <div id="container">
@@ -100,8 +122,9 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
         
         <form name="searchForm" method="POST" action="<?php echo BASE_DIR;?>/family/profileDetail.php">
             <?php echo generateTokenField(); ?>
-            <input type="text" name="firstName" value="first name" size="50" />
-            <input type="text" name="lastName" value="last name" size="60" /><br />
+            Lookup family by parent first and last name:<br />
+            <input type="text" name="firstName" size="20" onfocus="if(this.value == 'first') { this.value = ''; }" value="first"/>
+            <input type="text" name="lastName" size="30" onfocus="if(this.value == 'last') { this.value = ''; }" value="last"/><br />
             <input type="submit" value="Lookup" />
         </form>
         
