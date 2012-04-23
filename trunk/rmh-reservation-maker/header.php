@@ -147,7 +147,8 @@
         <meta name="author" content="">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <link rel="stylesheet" href="<?php echo CSS_DIR;?>/style.css"/>
-        <link rel="javascript" href="<?php echo JS_DIR;?>/form.js"/>
+        <script src="<?php echo JS_DIR;?>/libs/jquery-1.7.2.min.js"></script>
+        <script src="<?php echo JS_DIR;?>/form.js"></script>
     </head>
 <body class="<?php // $_ENV['/**browser **/'] ?>">
 
