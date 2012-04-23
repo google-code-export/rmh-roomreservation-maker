@@ -19,18 +19,20 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
     //sanitize all these data before they get to the database !! IMPORTANT
 
     $db_pass = getHashValue($_POST['password']);
-    $db_id = sanitize($_POST['username']);
+    $db_username = sanitize($_POST['username']);
     
     include_once(ROOT_DIR.'/database/dbUserProfile.php');
 
     //Retrieve the user category using the username and password
-    $userCategory = retrieve_UserByAuth($db_id, $db_pass);
-    if($userCategory)
+    $currentUser = retrieve_UserByAuth($db_username, $db_pass);
+    
+    if($currentUser)
     {
         //if the usercategory is returned, log the user in and assign session variables
         $_SESSION['logged_in'] = true;
-        $_SESSION['access_level'] = $accessLevel[$userCategory];
-        $_SESSION['_id'] = $db_id;        
+        $_SESSION['access_level'] = $accessLevel[$currentUser['UserCategory']];
+        $_SESSION['_username'] = $db_username;
+        $_SESSION['_id'] = $currentUser['UserProfileID'];
         echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
         exit();
     }

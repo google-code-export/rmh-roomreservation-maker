@@ -39,6 +39,11 @@ function checkSession()
  */
 function getCurrentUser()
 {
+    return isset($_SESSION['_username']) ? ($_SESSION['_username']) : false;
+}
+
+function getUserProfileID()
+{
     return isset($_SESSION['_id']) ? ($_SESSION['_id']) : false;
 }
 
