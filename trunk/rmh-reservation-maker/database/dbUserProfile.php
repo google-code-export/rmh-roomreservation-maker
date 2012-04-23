@@ -22,7 +22,7 @@ include_once(ROOT_DIR.'/database/dbinfo.php');
 function retrieve_UserByAuth($username, $password)
 {
     connect();
-    $query = "SELECT UserCategory FROM userprofile WHERE UsernameID = '".$username."' AND Password = '".$password."' LIMIT 1";
+    $query = "SELECT UserCategory, UserProfileID FROM userprofile WHERE UsernameID = '".$username."' AND Password = '".$password."' LIMIT 1";
     $result = mysql_query($query) or die(mysql_error());
     if(mysql_num_rows($result) !== 1)
     {
@@ -31,7 +31,7 @@ function retrieve_UserByAuth($username, $password)
     }
      $result_row = mysql_fetch_assoc($result);
 
-     return $result_row['UserCategory'];
+     return $result_row;
  }
       
 /*
@@ -305,7 +305,7 @@ function retrieve_all_UserProfile_byRole($userCategory){
         Where U.UserCategory = '".$userCategory."'";
   
    $result = mysql_query($query) or die(mysql_error());
-        if(mysql_num_rows($result)!==1){
+        if(mysql_num_rows($result)===0){
             mysql_close();
                 return false;
         }

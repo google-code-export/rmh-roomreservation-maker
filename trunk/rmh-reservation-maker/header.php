@@ -84,6 +84,9 @@
                 $permission_array['SearchReservations.php']=1;
                 $permission_array['profileDetail.php']=1;
 		//more pages
+                
+                //admin pages
+                $permission_array['listUsers.php'] = 3;
                            
                 //additional pages room reservation managers can view
 		$permission_array['roomLog.php']=2;
