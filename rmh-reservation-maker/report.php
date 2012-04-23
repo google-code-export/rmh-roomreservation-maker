@@ -8,7 +8,7 @@ session_cache_expire(30);
 $title = "Report Generation";
 
 include ('header.php');
-include_once (ROOT_DIR.'/domain/Family.php');
+//include_once (ROOT_DIR.'/domain/Family.php');
 include_once (ROOT_DIR.'/domain/Reservation.php');
 include_once (ROOT_DIR.'/domain/UserProfile.php');
 //include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
@@ -246,7 +246,7 @@ else if($showReport == true)
     $userId = sanitize(getCurrentUser());
     $beginDate = sanitize($_POST['beginYear']."-".$_POST['beginMonth']."-".$_POST['beginDay']);
     $endDate = sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
-    $numRequests = 0;
+    $numReservations = 0;
     
 //if hospital is default, set to ""
     if($_POST['hospital']=="Hospital")
@@ -267,66 +267,55 @@ else if($showReport == true)
     if(empty($hospital))
     {
         //Retrieve array of data
-        $theRequests = retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate);
+        $theReservations = retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate);
         
-        //TABLE
-        echo '<br><br><table border = "2" cellspacing = "10" cellpadding = "10">';       
-        echo '<thead>
-            <tr>
-            <th>Begin Date</th>
-            <th>End Date</th>
-            <th>Status</th>
-            </thead>
-            <tbody>';
-        
-        foreach ($theRequests as $request)
-        {
-            $beginDate = $request->get_beginDate();
-            $endDate = $request->get_endDate();
-            $status = $request->get_status();
-            $numRequests++;
-            
-            echo '<tr>';
-            echo '<td align="center">'.$beginDate.'</td>
-                <td align="center">'.$endDate. '</td>
-                    <td align="center">'.$status.'</td>';
-            echo '</tr>';
-        }
-        
-        echo '</table>';
-        
-        echo "<br><br>Total Requests: ".$numRequests;
-    }
     //report for selected hospital, $hospital
+    }
     else
     {
         echo "Hospital: ".$hospital."<br>";
         
         //Retrieve array of data
-        $theRequests = retrieve_all_RoomReservationActivity_byHospitalAndDate($hospital, $beginDate, $endDate);
-        
+        $theReservations = retrieve_all_RoomReservationActivity_byHospitalAndDate($hospital, $beginDate, $endDate);
+    }
+    
         //TABLE
-        echo '<br><br><table border = "2" cellspacing = "10" cellpadding = "10">';       
-        echo '<thead><tr><th>Begin Date</th><th>End Date</th><th>Status</th></thead><tbody>';
+        echo '<br><br>
+            <table border = "2" cellspacing = "10" cellpadding = "10">';       
+        echo '<thead>
+            <tr>
+            <th>Begin Date</th>
+            <th>End Date</th>
+            <th>Parent Name</th>
+            <th>Social Worker</th>
+            <th>Status</th>
+            </thead>
+            <tbody>';
 
-        foreach ($theRequests as $request)
+        foreach ($theReservations as $reservation)
         {
-            $beginDate = $request->get_beginDate();
-            $endDate = $request->get_endDate();
-            $status = $request->get_status();
-            $numRequests++;
+            $beginDate = $reservation->get_beginDate();
+            $endDate = $reservation->get_endDate();
+            $parentName = $reservation->get_parentLastName().", ".$reservation->get_parentFirstName();
+            $swName = $reservation->get_swLastName().", ".$reservation->get_swFirstName();
+            $status = $reservation->get_status();
+            //$socialWorkerID = $reservation->get_socialWorkerProfileId();
+            //$socialWorker = retrieve_UserProfile_SW($socialWorkerID);
+            //$hospitalAff = $socialWorker->get_hospitalAff();
+            $numReservations++;
             
             echo '<tr>';
             echo '<td align="center">'.$beginDate.'</td>
-                <td align="center">'.$endDate. '</td>
-                    <td align="center">'.$status.'</td>';
+                  <td align="center">'.$endDate. '</td>
+                  <td align="center">'.$parentName. '</td>
+                  <td align="center">'.$swName. '</td>
+                  <td align="center">'.$status.'</td>';
             echo '</tr>';
         }
         
         echo '</table>';
         
-        echo "<br><br>Total Requests: ".$numRequests;
-    }
+        echo "<br><br>Total Requests: ".$numReservations;
 }
 
 include (ROOT_DIR. '/inc/back.php');
