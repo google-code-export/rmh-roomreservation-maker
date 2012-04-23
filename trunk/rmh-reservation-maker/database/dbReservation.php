@@ -365,7 +365,6 @@ function build_reservation($result_row) {
 /**
  * Updates the status, rmhStaffProfileId, and RMH_DateStatusSubmitted of a Reservation in the RoomReservationActivity table.
  * This function is utilized by the RMH Staff who confirms or denies a room request that is made by the social worker. 
- * @param $roomReservationRequestId the RoomReservationActivity to update
  */
 //tested
 
