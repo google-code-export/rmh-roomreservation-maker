@@ -70,4 +70,14 @@ function getHashValue($value, $salt=true)
 
     return sha1($value);
 }
+
+/**
+ * isAjax function that checks if the request is an AJAX request
+ * 
+ * @return boolean value based on the check 
+ */
+function isAjax()
+{
+    return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+}
 ?>
