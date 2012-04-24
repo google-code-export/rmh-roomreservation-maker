@@ -345,13 +345,13 @@ function retrieve_all_UserProfile_byRole($userCategory){
    *@author: Alain Brutus
  */
 
-function retrieve_UserProfile_RMHStaffApprover($profileId)
+function retrieve_UserProfile_RMHStaffApprover($userProfileId)
 {
     connect();
-    $query="SELECT U.UserProfileID, U.UserCategory, R.Title,R.FirstName, R.LastName,U.UsernameID, U.Password, U.UserEmail, R.Phone
+    $query="SELECT U.UserProfileID, U.UserCategory,R.RMHStaffProfileID ,R.Title,R.FirstName, R.LastName,U.UsernameID, U.Password, U.UserEmail, R.Phone
         FROM userprofile U JOIN rmhstaffprofile R
         ON U.UserProfileID= R.UserProfileID
-        WHERE U.UserCategory='RMH Staff Approver' AND U.UserProfileID=\"".$profileId."\"";     
+        WHERE U.UserCategory='RMH Staff Approver' AND U.UserProfileID=\"".$userProfileId."\"";     
         
        $result = mysql_query ($query);
     
@@ -360,16 +360,17 @@ function retrieve_UserProfile_RMHStaffApprover($profileId)
        mysql_close();
         return false;
     }
-    $users=array();
+    $user=array();
     while ($result_row = mysql_fetch_assoc($result)) {
-    $userprofile = new UserProfile($result_row['UserProfileID'], $result_row['Title'], $result_row['LastName'] 
-    , $result_row['FirstName'], 'null', $result_row['Phone'], $result_row['UserEmail'], 'null', $result_row['UsernameID'], $result_row['UserCategory'],
-    $result_row['Password']);
+    $userprofile = new UserProfile($result_row['UserCategory'], $result_row['UserProfileID'], $result_row['UsernameID'],$result_row['UserEmail'],
+    $result_row['Password'], $result_row['RMHStaffProfileID'],$result_row['Title'], $result_row['FirstName'],
+    $result_row['LastName'], $result_row['Phone'],'null', 'null',
+    'null', 'null', 'null', 'null', 'null');
 	
-        $users[] = $userprofile;
+        $user[] = $userprofile;
      }
 	mysql_close();
-	return $users;  
+	return $user;  
 
 }
 
@@ -379,13 +380,13 @@ function retrieve_UserProfile_RMHStaffApprover($profileId)
     *@author: Alain Brutus
 */
 
-function retrieve_UserProfile_SW($profileId)
+function retrieve_UserProfile_SW($userProfileId)
 {
         connect();
-	$query="SELECT U.UserProfileID, U.UserCategory, S.Title,S.FirstName, S.LastName,U.UsernameID, U.Password, U.UserEmail, S.Phone,S.HospitalAffiliation,S.EmailNotification
+	$query="SELECT U.UserProfileID, U.UserCategory, S.SocialWorkerProfileID,S.Title,S.FirstName, S.LastName,U.UsernameID, U.Password, U.UserEmail, S.Phone,S.HospitalAffiliation,S.EmailNotification
             FROM userprofile U JOIN socialworkerprofile S
             ON U.UserProfileID= S.UserProfileID
-            WHERE U.UserCategory='Social Worker' AND U.UserProfileID=\"".$profileId."\"";
+            WHERE U.UserCategory='Social Worker' AND U.UserProfileID=\"".$userProfileId."\"";
         
        $result = mysql_query ($query);
     
@@ -394,16 +395,18 @@ function retrieve_UserProfile_SW($profileId)
        mysql_close();
         return false;
     }
-    $users=array();
+    $user=array();
     while ($result_row = mysql_fetch_assoc($result)) {
-    $userprofile = new UserProfile($result_row['UserProfileID'], $result_row['Title'], $result_row['LastName'] 
-    , $result_row['FirstName'], $result_row['HospitalAffiliation'], $result_row['Phone'], $result_row['UserEmail'], $result_row['EmailNotification'], $result_row['UsernameID'], $result_row['UserCategory'],
-    $result_row['Password']);
+    $userprofile = new UserProfile($result_row['UserCategory'], $result_row['UserProfileID'], $result_row['UsernameID'],$result_row['UserEmail'],
+    $result_row['Password'],'null','null', 'null',
+    'null', 'null', $result_row['SocialWorkerProfileID'], $result_row['Title'],
+    $result_row['FirstName'], $result_row['LastName'], $result_row['HospitalAffiliation'], $result_row['Phone'], 
+    $result_row['EmailNotification']);
 	
-        $users[] = $userprofile;
+        $user[] = $userprofile;
      }
 	mysql_close();
-	return $users;  
+	return $user;  
 
 }
 
@@ -415,13 +418,13 @@ function retrieve_UserProfile_SW($profileId)
 *@author: Alain Brutus
  */
 
-function retrieve_UserProfile_RMHAdmin($profileId) 
+function retrieve_UserProfile_RMHAdmin($userProfileId) 
 {
         connect();
-	$query="SELECT U.UserProfileID, U.UserCategory, R.Title,R.FirstName, R.LastName,U.UsernameID, U.Password, U.UserEmail, R.Phone
+	$query="SELECT U.UserProfileID, U.UserCategory, R.RMHStaffProfileID, R.Title,R.FirstName, R.LastName,U.UsernameID, U.Password, U.UserEmail, R.Phone
             FROM userprofile U JOIN rmhstaffprofile R
             ON U.UserProfileID= R.UserProfileID
-            WHERE U.UserCategory='RMH Administrator' AND U.UserProfileID=\"".$profileId."\"";
+            WHERE U.UserCategory='RMH Administrator' AND U.UserProfileID=\"".$userProfileId."\"";
         
         $result = mysql_query ($query);
     
@@ -430,18 +433,18 @@ function retrieve_UserProfile_RMHAdmin($profileId)
        mysql_close();
         return false;
     }
-    $users=array();
+    $user=array();
     while ($result_row = mysql_fetch_assoc($result)) {
-    $userprofile = new UserProfile($result_row['UserProfileID'], $result_row['Title'], $result_row['LastName'] 
-    , $result_row['FirstName'], 'null', $result_row['Phone'], $result_row['UserEmail'], 'null', $result_row['UsernameID'], 
-    $result_row['UserCategory'],$result_row['Password']);
+    $userprofile = new UserProfile($result_row['UserCategory'], $result_row['UserProfileID'], $result_row['UsernameID'],$result_row['UserEmail'],
+    $result_row['Password'], $result_row['RMHStaffProfileID'],$result_row['Title'], $result_row['FirstName'],
+    $result_row['LastName'], $result_row['Phone'],'null', 'null',
+    'null', 'null', 'null', 'null', 'null');
 	
-        $users[] = $userprofile;
+        $user[] = $userprofile;
      }
 	mysql_close();
-	return $users;  
+	return $user;  
 }
-
 
 /**
  * Deletes a User Profile in the User Profile table by UserProfileID. 
