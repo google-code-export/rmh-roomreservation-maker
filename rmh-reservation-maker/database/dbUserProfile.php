@@ -453,7 +453,7 @@ function retrieve_UserProfile_RMHAdmin($profileId)
 function delete_UserProfile($userProfileId) 
 {
     connect();
-    $query="DELETE FROM rmhreservationdb.UserProfile WHERE UserProfileID=".$userProfileId;
+    $query="DELETE FROM UserProfile WHERE UserProfileID=".$userProfileId;
     
 	$result=mysql_query($query);
 	mysql_close();
@@ -475,7 +475,7 @@ function delete_UserProfile($userProfileId)
 function delete_SocialWorkerProfile($swProfileId) 
 {
     connect();
-    $query="DELETE FROM rmhreservationdb.SocialWorkerProfile WHERE SocialWorkerProfileID=".$swProfileId;
+    $query="DELETE FROM SocialWorkerProfile WHERE SocialWorkerProfileID=".$swProfileId;
       
 	$result=mysql_query($query);
 	mysql_close();
@@ -497,7 +497,7 @@ function delete_SocialWorkerProfile($swProfileId)
 function delete_RMHStaffProfile($rmhStaffProfileId) 
 {
     connect();
-    $query="DELETE FROM rmhreservationdb.RMHStaffProfile WHERE RMHStaffProfileID=".$rmhStaffProfileId;
+    $query="DELETE FROM RMHStaffProfile WHERE RMHStaffProfileID=".$rmhStaffProfileId;
 
 	$result=mysql_query($query);
 	mysql_close();
