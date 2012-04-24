@@ -23,6 +23,8 @@ function checkSession()
     {
         session_destroy();
         session_unset();
+        header('Location: '.BASE_DIR.DS.'login.php');
+        exit();
     }
     if(isset($_SESSION['_created_time']) && time() - $_SESSION['_created_time'] > (($timeOut/2)*60))
     {
