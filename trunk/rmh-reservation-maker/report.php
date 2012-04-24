@@ -279,6 +279,12 @@ else if($showReport == true)
         $theReservations = retrieve_all_RoomReservationActivity_byHospitalAndDate($hospital, $beginDate, $endDate);
     }
     
+    if(empty($theReservations))
+    {
+        echo "<br>No data matches your selections.";
+    }
+    else
+    {
         //TABLE
         echo '<br><br>
             <table border = "2" cellspacing = "10" cellpadding = "10">';       
@@ -316,6 +322,7 @@ else if($showReport == true)
         echo '</table>';
         
         echo "<br><br>Total Requests: ".$numReservations;
+}
 }
 
 include (ROOT_DIR. '/inc/back.php');
