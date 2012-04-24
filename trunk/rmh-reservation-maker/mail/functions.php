@@ -5,7 +5,11 @@
  * and open the template in the editor.
  * 
  * 
- * Authors: Alisa Modeste
+ * To do:
+ * Convert $to[] to $to for single recipients
+ * Change the date parameters
+ * Change email message
+ * 
  */
 
 include_once ('../core/config.php');
@@ -14,8 +18,8 @@ include_once (ROOT_DIR.'\domain\Family.php');
 
 
 //email allows you to modify settings and check if mail was sent
-//@param array $add - one or more email recipients
-
+//@param array/string $add - one or more email recipients
+//@author Alisa Modeste
 function email($add, $subject, $message)
 {
     /*
@@ -28,7 +32,18 @@ function email($add, $subject, $message)
      * 
      */
     
-     foreach ($add as $to):
+    if (is_array($add)):
+        foreach ($add as $to):
+            $mailed = mail($to, $subject, $message);
+
+            if($mailed):
+                echo 'The email was sent';
+            else:
+                echo 'The email could not be sent, please try again';
+            endif;
+        endforeach;
+    else:
+        $to = $add;
         $mailed = mail($to, $subject, $message);
 
         if($mailed):
@@ -36,13 +51,14 @@ function email($add, $subject, $message)
         else:
             echo 'The email could not be sent, please try again';
         endif;
-    endforeach;
+    endif;
 
    
 }
 
 
 //ConfirmCancel notifies the SW that the request has been cancelled.
+//@author Alisa Modeste
 function ConfirmCancel($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 {
     $SW = retrieve_UserProfile_SW($SWID);
@@ -62,6 +78,7 @@ function ConfirmCancel($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 
 
 //ModifyDeny notifies the SW that the modified request couldn't be accommodated.
+//@author Alisa Modeste
 function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note = "")
 {
     $SW = retrieve_UserProfile_SW($SWID);
@@ -84,6 +101,7 @@ function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note = ""
 }
 
 //ModifyAccept notifies the SW that the modified request has been accepted.
+//@author Alisa Modeste
 function ModifyAccept($RequestKey, $SWID, $familyLname, $DateToAndFrom)
 {
     $SW = retrieve_UserProfile_SW($SWID);
@@ -217,6 +235,8 @@ function newFamilyMod($RequestKey, $DateSubmitted)
     email($to, $subject, $message);
 }
 
+//PasswordReset sends an email to the user with a link to reset their password
+//@author Alisa Modeste
 function PasswordReset($activation, $username, $userEmail)
 {
     $to[] = $userEmail;
