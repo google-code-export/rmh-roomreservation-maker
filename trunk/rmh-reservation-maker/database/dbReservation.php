@@ -372,7 +372,7 @@ function update_status_RoomReservationActivity($reservation){
     
  connect();
  
- $query="UPDATE rmhreservationdb.RoomReservationActivity SET RMHStaffProfileID = ".$reservation->get_rmhStaffProfileId().",". 
+ $query="UPDATE RoomReservationActivity SET RMHStaffProfileID = ".$reservation->get_rmhStaffProfileId().",". 
          "RMH_DateStatusSubmitted ='".$reservation->get_rmhDateStatusSubmitted()."',  
          Status ='".$reservation->get_status()."' WHERE RoomReservationRequestID =".$reservation->get_roomReservationRequestId();
 
