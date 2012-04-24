@@ -268,7 +268,7 @@ function update_FamilyProfile($family)
     }
     connect();
     
-    $query= "UPDATE rmhreservationdb.FamilyProfile SET ParentFirstName = '".$family->get_parentfname()."', 
+    $query= "UPDATE FamilyProfile SET ParentFirstName = '".$family->get_parentfname()."', 
             ParentLastName ='".$family->get_parentlname()."', 
             Email = '".$family->get_parentemail()."',
             Phone1 = '".$family->get_parentphone1()."',
@@ -318,7 +318,7 @@ function update_FamilyProfile($family)
 function delete_FamilyProfile($familyProfileId) 
 {
     connect();
-    $query="DELETE FROM rmhreservationdb.FamilyProfile WHERE FamilyProfileID=".$familyProfileId;
+    $query="DELETE FROM FamilyProfile WHERE FamilyProfileID=".$familyProfileId;
 	$result=mysql_query($query);
 	mysql_close();
 	if (!$result) 
