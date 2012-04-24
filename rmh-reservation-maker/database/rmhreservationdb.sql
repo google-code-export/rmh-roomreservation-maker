@@ -25,7 +25,7 @@ DELIMITER $$
 -- Procedures
 --
 DROP PROCEDURE IF EXISTS `GetRequestKeyNumber`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `GetRequestKeyNumber`(IN RequestType VARCHAR(255))
+CREATE DEFINER= CURRENT_USER PROCEDURE `GetRequestKeyNumber`(IN RequestType VARCHAR(255))
 BEGIN 
         DECLARE ID int;
  
