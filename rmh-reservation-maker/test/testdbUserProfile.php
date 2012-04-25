@@ -1,4 +1,6 @@
 <?php
+
+include('../core/config.php');
 include_once(ROOT_DIR.'/database/dbUserProfile.php');
 
 
