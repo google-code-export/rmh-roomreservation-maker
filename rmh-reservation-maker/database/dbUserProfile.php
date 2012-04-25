@@ -48,7 +48,7 @@ function insert_UserProfile ($userprofile){
     connect();
     
         //Check if the user profile already exists
-        $query = "SELECT * FROM UserProfile WHERE UserProfileID =".$userprofile->get_userProfileId();
+        $query = "SELECT * FROM userprofile WHERE UserProfileID =".$userprofile->get_userProfileId();
          
          $result = mysql_query($query) or die(mysql_error());
         
@@ -65,7 +65,7 @@ function insert_UserProfile ($userprofile){
         connect();
     }*/
 
-    $query = "INSERT INTO UserProfile (UsernameID, UserEmail, Password, UserCategory) VALUES ('".
+    $query = "INSERT INTO userprofile (UsernameID, UserEmail, Password, UserCategory) VALUES ('".
                 $userprofile->get_usernameId()."','".
                 $userprofile->get_userEmail()."','".
                 $userprofile->get_password()."','".
@@ -97,7 +97,7 @@ function insert_SocialWorkerProfile($userprofile){
     connect();
     
         //Check if the social worker profile already exists
-        $query = "SELECT * FROM SocialWorkerProfile WHERE SocialWorkerProfileID =".$userprofile->get_swProfileId()." 
+        $query = "SELECT * FROM socialworkerprofile WHERE SocialWorkerProfileID =".$userprofile->get_swProfileId()." 
             AND UserProfileID =".$userprofile->get_userProfileId();
                 
          $result = mysql_query($query) or die(mysql_error());
@@ -107,7 +107,7 @@ function insert_SocialWorkerProfile($userprofile){
             return update_SocialWorkerProfile($userprofile);
         }
         
-    $query = "INSERT INTO SocialWorkerProfile (UserProfileID, Title, FirstName, LastName, HospitalAffiliation, Phone,
+    $query = "INSERT INTO socialworkerprofile (UserProfileID, Title, FirstName, LastName, HospitalAffiliation, Phone,
               EmailNotification) VALUES (".
                 $userprofile->get_userProfileId().",'" . 
                 $userprofile->get_swTitle()."','".
@@ -141,7 +141,7 @@ function insert_RmhStaffProfile($userprofile){
     connect();
     
         //Check if the rmh staff profile already exists
-        $query = "SELECT * FROM RMHStaffProfile WHERE RMHStaffProfileID =".$userprofile->get_rmhStaffProfileId();
+        $query = "SELECT * FROM rmhstaffprofile WHERE RMHStaffProfileID =".$userprofile->get_rmhStaffProfileId();
          $result = mysql_query($query) or die(mysql_error());
         
         if(mysql_num_rows($result)>0){
@@ -149,7 +149,7 @@ function insert_RmhStaffProfile($userprofile){
             return update_RMHStaffProfile($userprofile);
         }
     
-    $query = "INSERT INTO RMHStaffProfile (UserProfileID, Title, FirstName, LastName, Phone) VALUES (".
+    $query = "INSERT INTO rmhstaffprofile (UserProfileID, Title, FirstName, LastName, Phone) VALUES (".
                 $userprofile->get_userProfileId().",'" . 
                 $userprofile->get_rmhStaffTitle()."','".
                 $userprofile->get_rmhStaffFirstName()."','".
@@ -176,7 +176,7 @@ function insert_RmhStaffProfile($userprofile){
 function update_UserProfile($userprofile){
     connect();
     
-    $query = "UPDATE UserProfile SET UsernameID ='".$userprofile->get_usernameId()."',". 
+    $query = "UPDATE userprofile SET UsernameID ='".$userprofile->get_usernameId()."',". 
             "UserEmail = '".$userprofile->get_userEmail()."',"."Password ='".$userprofile->get_password()."',". 
             "UserCategory ='".$userprofile->get_userCategory()."' WHERE UserProfileID =".$userprofile->get_userProfileId();
 
@@ -202,7 +202,7 @@ function update_UserProfile($userprofile){
 function update_SocialWorkerProfile($userprofile){
     connect();
     
-    $query = "UPDATE SocialWorkerProfile SET Title ='".$userprofile->get_swTitle()."',". 
+    $query = "UPDATE socialworkerprofile SET Title ='".$userprofile->get_swTitle()."',". 
              "FirstName = '".$userprofile->get_swFirstName()."',"."LastName ='".$userprofile->get_swLastName()."',". 
              "HospitalAffiliation ='".$userprofile->get_hospitalAff()."',".
              "Phone='".$userprofile->get_swphone()."',". 
@@ -230,7 +230,7 @@ function update_SocialWorkerProfile($userprofile){
 function update_RMHStaffProfile($userprofile){
         connect();
     
-    $query = "UPDATE RMHStaffProfile SET Title ='".$userprofile->get_rmhStaffTitle()."',". 
+    $query = "UPDATE rmhstaffprofile SET Title ='".$userprofile->get_rmhStaffTitle()."',". 
             "FirstName = '".$userprofile->get_rmhStaffFirstName()."',"."LastName ='".$userprofile->get_rmhStaffLastName()."',". 
             "Phone ='".$userprofile->get_rmhStaffPhone()."' WHERE UserProfileID =".$userprofile->get_userProfileId()
             ." AND RMHStaffProfileID = ".$userprofile->get_rmhStaffProfileId();
@@ -300,8 +300,8 @@ function retrieve_all_UserProfile_byRole($userCategory){
         R.LastName AS RMH_Staff_LastName, R.Phone AS RMH_Staff_Phone, S.SocialWorkerProfileID, 
         S.Title AS SW_Title, S.FirstName AS SW_FirstName, S.LastName AS SW_LastName, 
         S.HospitalAffiliation, S.Phone AS SW_Phone, S.EmailNotification
-        FROM UserProfile U LEFT OUTER JOIN SocialWorkerProfile S ON S.UserProfileID = U.UserProfileID 
-        LEFT OUTER JOIN RMHStaffProfile R ON R.UserProfileID = U.UserProfileID 
+        FROM userprofile U LEFT OUTER JOIN socialworkerprofile S ON S.UserProfileID = U.UserProfileID 
+        LEFT OUTER JOIN rmhstaffprofile R ON R.UserProfileID = U.UserProfileID 
         Where U.UserCategory = '".$userCategory."'";
   
    $result = mysql_query($query) or die(mysql_error());
@@ -456,7 +456,7 @@ function retrieve_UserProfile_RMHAdmin($userProfileId)
 function delete_UserProfile($userProfileId) 
 {
     connect();
-    $query="DELETE FROM UserProfile WHERE UserProfileID=".$userProfileId;
+    $query="DELETE FROM userprofile WHERE UserProfileID=".$userProfileId;
     
 	$result=mysql_query($query);
 	mysql_close();
@@ -478,7 +478,7 @@ function delete_UserProfile($userProfileId)
 function delete_SocialWorkerProfile($swProfileId) 
 {
     connect();
-    $query="DELETE FROM SocialWorkerProfile WHERE SocialWorkerProfileID=".$swProfileId;
+    $query="DELETE FROM socialworkerprofile WHERE SocialWorkerProfileID=".$swProfileId;
       
 	$result=mysql_query($query);
 	mysql_close();
@@ -500,7 +500,7 @@ function delete_SocialWorkerProfile($swProfileId)
 function delete_RMHStaffProfile($rmhStaffProfileId) 
 {
     connect();
-    $query="DELETE FROM RMHStaffProfile WHERE RMHStaffProfileID=".$rmhStaffProfileId;
+    $query="DELETE FROM rmhstaffprofile WHERE RMHStaffProfileID=".$rmhStaffProfileId;
 
 	$result=mysql_query($query);
 	mysql_close();
