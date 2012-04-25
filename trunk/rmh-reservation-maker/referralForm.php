@@ -246,10 +246,10 @@ if($showForm == true)
             <option value="2013" <?php if($_POST['endYear']=='2013') echo "selected='selected'";?> >2013</option>
 	</select>
     <br><br>
-           Patient Diagnosis: <input type="text" name="PatientDiagnosis" value="" size="15" <?php if(isset($newPatientDiagnosis)){print stripslashes($newPatientDiagnosis);}else{print "";} ?> /><br>
-           Notes(optional): <input type="text" name="Notes" value="" size="15" <?php if(isset($newBeginDate)){print stripslashes($newBeginDate);}else{print "";} ?> /><br>
-           Parent Last Name:   <input type="text" name="ParentLastName" value="" size="15" <?php if(isset($newParentLastName)){print stripslashes($newParentLastName);}else{print "";} ?> /><br>
-           Parent First Name: <input type="text" name="ParentFirstName" value="" size="15" <?php if(isset($newParentFirstName)){print stripslashes($newParentFirstName);}else{print "";} ?> /><br>
+            <input class="formt formtop" type="text" name="PatientDiagnosis" value="Patient Diagnosis"  onfocus="if(this.value == 'Patient Diagnosis') { this.value = ''; }"size="15" <?php if(isset($newPatientDiagnosis)){print stripslashes($newPatientDiagnosis);}else{print "";} ?> /><br>
+           <input class="formt"type="text" name="Notes" value="Notes"  onfocus="if(this.value == 'Notes') { this.value = ''; }"size="15" <?php if(isset($newBeginDate)){print stripslashes($newBeginDate);}else{print "";} ?> /><br>
+            <input class="formt" type="text" name="ParentLastName" value="Last Name"  onfocus="if(this.value == 'Last Name') { this.value = ''; }"size="15" <?php if(isset($newParentLastName)){print stripslashes($newParentLastName);}else{print "";} ?> /><br>
+           <input class="formt formbottom" type="text" name="ParentFirstName" value="First Name"  onfocus="if(this.value == 'First Name') { this.value = ''; }"size="15" <?php if(isset($newParentFirstName)){print stripslashes($newParentFirstName);}else{print "";} ?> /><br>
            
            <input class="formsubmit"type="submit" value="Submit" name="submit" />
            
