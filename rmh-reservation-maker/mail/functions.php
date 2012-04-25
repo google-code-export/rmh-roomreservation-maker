@@ -6,9 +6,7 @@
  * 
  * 
  * To do:
- * Convert $to[] to $to for single recipients
- * Change the date parameters
- * Change email message
+ * URL
  * 
  */
 
@@ -16,6 +14,7 @@ include_once ('../core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 include_once (ROOT_DIR.'/domain/Family.php');
+include_once (ROOT_DIR.'\database\dbFamilyProfile.php');
 
 
 //email allows you to modify settings and check if mail was sent
@@ -25,13 +24,25 @@ function email($add, $subject, $message)
 {
     /*
      * Not needed on Go Daddy
-     * $from = 'alisa.modeste08@stjohns.edu'; //this SHOULD be a VALID email address
+     */ $from = 'alisa.modeste08@stjohns.edu'; //this SHOULD be a VALID email address
 
     ini_set("SMTP","mailhubout.stjohns.edu");
     ini_set('sendmail_from', $from);
     ini_set("smtp_port","25");
-     * 
-     */
+     
+    //For testing purposes
+    if (is_array($add)):
+        foreach ($add as $to):
+            echo "This is what was passed in an array: $to <p>";
+        endforeach;
+        
+        $add = array("alisa.modeste08@stjohns.edu");
+        
+    else:
+        echo "This is what was passed in a string: $add";
+        $add = "alisa.modeste08@stjohns.edu";
+    endif; 
+    //Until here
     
     if (is_array($add)):
         foreach ($add as $to):
@@ -60,63 +71,75 @@ function email($add, $subject, $message)
 
 //ConfirmCancel notifies the SW that the request has been cancelled.
 //@author Alisa Modeste
-function ConfirmCancel($RequestKey, $SWID, $familyLname, $DateToAndFrom)
+function ConfirmCancel($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 {
     $SW = retrieve_UserProfile_SW($SWID);
+    
+    $family = retrieve_FamilyProfile($familyID);
+    
+    $name = $family->get_patientfname() . " " . $family->get_patientlname();
    
- //   if ($SW[0]->get_email_notification() == 'yes'):
-        $to[] = $SW[0]->get_email();
+    if ($SW[0]->get_email_notification() == 'Yes'):
+        $to = $SW[0]->get_userEmail();
         
-        $subject = "Confirmation of Cancelled Request";
+        $subject = "Confirmation of Canceled Request";
 
-        $message = "The cancellation for the $familyLname family for dates $DateToAndFrom has been processed.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+        $message = "The cancellation for $name's family for dates $StartDate - $EndDate has been processed.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
 
         email($to, $subject, $message);
     
-  //  endif;
+    endif;
     
 }
 
 
 //ModifyDeny notifies the SW that the modified request couldn't be accommodated.
 //@author Alisa Modeste
-function ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note = "")
+function ModifyDeny($RequestKey, $SWID, $familyID, $StartDate, $EndDate, $note = "")
 {
     $SW = retrieve_UserProfile_SW($SWID);
+    
+    $family = retrieve_FamilyProfile($familyID);
+    
+    $name = $family->get_patientfname() . " " . $family->get_patientlname();
    
-   // if ($SW[0]->get_email_notification() == 'yes'):
-        $to[] = $SW[0]->get_email();
+    if ($SW[0]->get_email_notification() == 'Yes'):
+        $to = $SW[0]->get_userEmail();
     
         $subject = "Cannot Accommodate Modified Request";
         
         if ($note != ""):
-            $message = "The request for the $familyLname family for dates $DateToAndFrom cannot be accommodated.\r\nNote: $note\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+            $message = "The request for $name's family for dates $StartDate - $EndDate cannot be accommodated.\r\nNote: $note\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
         else:
-            $message = "The request for the $familyLname family for dates $DateToAndFrom cannot be accommodated.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+            $message = "The request for $name's family for dates $StartDate - $EndDate cannot be accommodated.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
         endif;
 
         email($to, $subject, $message);
-   // endif;
+    endif;
     
     
 }
 
 //ModifyAccept notifies the SW that the modified request has been accepted.
 //@author Alisa Modeste
-function ModifyAccept($RequestKey, $SWID, $familyLname, $DateToAndFrom)
+function ModifyAccept($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 {
     $SW = retrieve_UserProfile_SW($SWID);
+    
+    $family = retrieve_FamilyProfile($familyID);
+    
+    $name = $family->get_patientfname() . " " . $family->get_patientlname();
    
- //  if ($SW[0]->get_email_notification() == 'Yes'):
-        $to[] = $SW[0]->get_email();
+    if ($SW[0]->get_email_notification() == 'Yes'):
+        $to = $SW[0]->get_userEmail();
         
         $subject = "Modified Request has been Accepted";
 
-        $message = "The request for the $familyLname family for dates $DateToAndFrom has been accepted.\r\nThe request can be viewed at (URL)/$RequestKey";
+        $message = "The request for $name's family for dates $StartDate - $EndDate has been accepted.\r\nThe request can be viewed at (URL)/$RequestKey";
 
 
         email($to, $subject, $message);
- // endif;
+    endif;
     
 }
 
@@ -266,7 +289,7 @@ function newFamilyMod($FamilyProfileID, $DateSubmitted)
 //@author Alisa Modeste
 function PasswordReset($activation, $username, $userEmail)
 {
-    $to[] = $userEmail;
+    $to = $userEmail;
     
     $subject = "Request for Password Reset";
     $message = "Please click the link to reset your password: (URL)?user=$username&activation=$activation";
