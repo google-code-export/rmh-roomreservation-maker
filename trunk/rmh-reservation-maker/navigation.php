@@ -58,5 +58,5 @@ else if($userAccess === 3)
 <?php  
 }
 ?>
-   <li style="position:absolute; bottom: 10px;"><a href="<?php echo BASE_DIR.'/logout.php';?>">Logout</a></li> 
-</ul>
+    
+</ul><div class="topRightButton"><div id="ios-arrow-left"><a href="<?php echo BASE_DIR.'/logout.php';?>">Logout</a></div></div>
