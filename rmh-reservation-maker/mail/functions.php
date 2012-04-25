@@ -14,6 +14,7 @@
 
 include_once ('../core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
+include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 include_once (ROOT_DIR.'/domain/Family.php');
 
 
@@ -194,12 +195,14 @@ function FamilyModDeny($familyProfileId, $SWID)
 }
 
 
-//Sends email to approvers about a new reservation request
+//Sends email to approvers about a new reservation request.
 //@author Stefan Pavon
-function newRequest($RequestKey, $DateSubmitted, $DateToAndFrom)
+function newRequest($RequestKey, $DateSubmitted, $BeginDate, $EndDate)
 {
     $subject = "Reservation Request made on $DateSubmitted";
-    $message = "A new room reservation request has been made for the timeframe of $DateToAndFrom.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+    $message = "A new room reservation request has been made for the timeframe 
+                from $BeginDate to $EndDate.\r\n\r\nThe request can be viewed 
+                at (URL)/$RequestKey";
     $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     for($i = 0; $i < count($Approver); $i++)
     {
@@ -208,12 +211,15 @@ function newRequest($RequestKey, $DateSubmitted, $DateToAndFrom)
     };
 }
 
-//Sends email to approvers about a modification to an existing room reservation request
+//Sends email to approvers about a modification to an existing room reservation 
+//request.
 //@author Stefan Pavon
-function newReservationMod($RequestKey, $DateSubmitted)
+function newReservationMod($RequestKey, $DateSubmitted, $FamilyProfileID)
 {
+    $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
     $subject = "Modification Request made on $DateSubmitted";
-    $message = "A modification request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+    $message = "A modification request has been made for the $familyLname 
+                family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
     $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     for($i = 0; $i < count($Approver); $i++)
     {
@@ -222,12 +228,15 @@ function newReservationMod($RequestKey, $DateSubmitted)
     };
 }
 
-//Sends email to approvers about the cancellation of an existing room reservation request
+//Sends email to approvers about the cancellation of an existing room
+//reservation request.
 //@author Stefan Pavon
-function newCancel($RequestKey, $DateSubmitted)
+function newCancel($RequestKey, $DateSubmitted, $FamilyProfileID)
 {
+    $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
     $subject = "Cancellation Request made on $DateSubmitted";
-    $message = "A cancellation request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+    $message = "A cancellation request has been made for the $familyLname 
+                family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
     $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     for($i = 0; $i < count($Approver); $i++)
     {
@@ -236,12 +245,15 @@ function newCancel($RequestKey, $DateSubmitted)
     };
 }
 
-//Sends email to approvers requesting permission to modify a family profile
+//Sends email to approvers requesting permission to modify a family profile.
 //@author Stefan Pavon
 function newFamilyMod($FamilyProfileID, $DateSubmitted)
 {
+    $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
     $subject = "Family Profile Modification Request made on $DateSubmitted";
-    $message = "A family profile modification request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$FamilyProfileID";
+    $message = "A family profile modification request has been made for the 
+                $familyLname family.\r\n\r\nThe request can be viewed at (URL)/
+                $FamilyProfileID";
     $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     for($i = 0; $i < count($Approver); $i++)
     {
