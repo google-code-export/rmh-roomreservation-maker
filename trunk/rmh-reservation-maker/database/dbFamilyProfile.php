@@ -106,7 +106,7 @@ function insert_FamilyProfile ($family){
         connect();
     }*/
 
-    $query = "INSERT INTO FamilyProfile (ParentFirstName, ParentLastName, Email, Phone1, 
+    $query = "INSERT INTO familyprofile (ParentFirstName, ParentLastName, Email, Phone1, 
                 Phone2, Address, City, State, ZipCode, Country, PatientFirstName, PatientLastName,
                 PatientRelation, PatientDateOfBirth, FormPDF, Notes) VALUES ('". 
                 $family->get_parentfname()."','".
@@ -147,7 +147,7 @@ function insert_FamilyProfile ($family){
 function retrieve_FamilyProfile ($familyProfileId) 
 {
     connect();
-    $query = "SELECT * FROM FamilyProfile WHERE FamilyProfileID = ".$familyProfileId;
+    $query = "SELECT * FROM familyprofile WHERE FamilyProfileID = ".$familyProfileId;
     $result = mysql_query($query) or die(mysql_error());
     
     if (mysql_num_rows($result) !== 1){
@@ -184,7 +184,7 @@ function build_family($result_row){
 function retrieve_FamilyProfileByName($fname, $lname) 
 {
     connect();
-    $query = "SELECT * FROM FamilyProfile WHERE ParentFirstName = '".$fname. "' AND ParentLastName='".$lname."'";
+    $query = "SELECT * FROM familyprofile WHERE ParentFirstName = '".$fname. "' AND ParentLastName='".$lname."'";
     
         // this can be useful for debugging, but turn it off before you commit!!
     //echo "query is " . $query;
@@ -268,7 +268,7 @@ function update_FamilyProfile($family)
     }
     connect();
     
-    $query= "UPDATE FamilyProfile SET ParentFirstName = '".$family->get_parentfname()."', 
+    $query= "UPDATE familyprofile SET ParentFirstName = '".$family->get_parentfname()."', 
             ParentLastName ='".$family->get_parentlname()."', 
             Email = '".$family->get_parentemail()."',
             Phone1 = '".$family->get_parentphone1()."',
@@ -318,7 +318,7 @@ function update_FamilyProfile($family)
 function delete_FamilyProfile($familyProfileId) 
 {
     connect();
-    $query="DELETE FROM FamilyProfile WHERE FamilyProfileID=".$familyProfileId;
+    $query="DELETE FROM familyprofile WHERE FamilyProfileID=".$familyProfileId;
 	$result=mysql_query($query);
 	mysql_close();
 	if (!$result) 
