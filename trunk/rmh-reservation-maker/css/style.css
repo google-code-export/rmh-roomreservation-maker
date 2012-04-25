@@ -567,14 +567,18 @@ img.rmdlogo {
 #ios-arrow-left,
 #ios-arrow-left:after,
 #ios-arrow-left:before {
-    background-color: rgba(74,108,155,1);/*originalcolor*/
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#42aaff), to(#2c66a1));
+  background: -moz-linear-gradient(top, #42aaff, #2c66a1);
+text-shadow: 1px 1px 3px #666666;
 
 }
 
 #ios-arrow-left:hover,
 #ios-arrow-left:hover:after,
 #ios-arrow-left:hover:before {
-    background-color: rgba(54,88,135,1);/*hovercolor*/
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#42aaff), to(#2c66a1));
+  background: -moz-linear-gradient(top, #42aaff, #2c66a1);
+text-shadow: 1px 1px 3px #666666;
 
 }
 
