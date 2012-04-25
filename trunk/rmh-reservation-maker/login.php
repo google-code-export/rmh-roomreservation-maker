@@ -50,7 +50,7 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
     $error['csrf'] = 'The request could not be completed: security check failed!';
 }
 ?>
-
+<div id="pad"></div>
 <div id="container">
     <div id="<?php echo $classAdd; ?>">
         <?PHP
@@ -64,9 +64,12 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
 
 
         <div id="loginforms">
-            <div>
-                    <p><embed src="images/rmdh.svg" type="image/svg+xml" />
-                            Access to <i>Room reservation maker</i> requires a Username and a Password.
+            <div><center>
+                    <p><img src="images/rmdh.gif" alt="Ronald McDonald House New York" width="70%" />
+                              <br />  <br />
+                    </p>
+                    <p STYLE="COLOR:RED;">Access to <i>Room reservation maker</i> requires a Username and a Password.
+                      
                     </p>
                     <ul class="hometext">
                             <li>You must be a Ronald McDonald House <i>staff member</i> or <i>social worker</i> to access this system.</li>
@@ -87,6 +90,6 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
                             </form>
                     </div>
             </div>
-	</div>
+	</div></center>
     </div>
     <?php include('footer.php'); ?>
