@@ -15,5 +15,5 @@ set_status($stat);
 //Generate Key ID
 //->rmhStaffProfileId = $rmhStaffProfileId;
 //$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
-RequestDeny($RequestKey, $SWName, $familyLname, $DateToAndFrom);
+RequestDeny($RequestKeyNumber, $BeginDate, $EndDate, $familyProfileId, $SWID);
 ?>

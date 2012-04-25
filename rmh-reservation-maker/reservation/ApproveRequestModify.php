@@ -15,5 +15,5 @@ set_status($stat);
 //Generate Key ID
 //->rmhStaffProfileId = $rmhStaffProfileId;
 //$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
-ModifyAccept($RequestKey, $SWName, $familyLname, $DateToAndFrom);
+ModifyAccept($RequestKey, $SWID, $familyLname, $DateToAndFrom);
 ?>
