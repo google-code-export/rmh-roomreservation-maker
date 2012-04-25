@@ -15,11 +15,12 @@ include_once (ROOT_DIR.'/domain/UserProfile.php');
 include_once (ROOT_DIR.'/database/dbReservation.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 
+
 $showForm = false;
 $showReport = false;
 
 /**
- *Determines whether to dispay form or report 
+ *Determines whether to display form or report 
  */
 //Token is good
 if(isset($_POST['form_token']) && validateTokenField($_POST))
@@ -81,7 +82,6 @@ else
 }
 
 echo '<div id="container">';
-    include (ROOT_DIR.'/navigation.php');
         echo '<div id="content" style="margin-left: 250px; margin-top: 23px;">';
 
 //if $showForm = true, display form to enter data

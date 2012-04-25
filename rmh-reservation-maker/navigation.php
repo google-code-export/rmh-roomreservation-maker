@@ -14,6 +14,7 @@ if(!defined('PARENT'))
 
 $userAccess = getUserAccessLevel();
 ?>
+<div id="pad"></div>
 <ul id="nav">
    
 <!--navigation links available to all members -->
@@ -59,4 +60,5 @@ else if($userAccess === 3)
 }
 ?>
     
-</ul><div class="topRightButton"><div id="ios-arrow-left"><a href="<?php echo BASE_DIR.'/logout.php';?>">Logout</a></div></div>
+</ul><div class="topRightButton"><div id=" id="ios-arrow-left"><a href="<?php echo BASE_DIR.'/logout.php';?>">Logout</a></div></div>
+<?php include (ROOT_DIR. '/inc/back.php'); ?>

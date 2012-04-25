@@ -157,3 +157,4 @@
 <div id="header">
     <h1><?php echo $title; ?></h1>
 </div>
+<?php if(isset($_SESSION['logged_in'])) include_once (ROOT_DIR.'/navigation.php'); ?>
