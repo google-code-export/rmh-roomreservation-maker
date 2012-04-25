@@ -17,5 +17,10 @@ set_status($stat);
 //$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
 
 //Send automatic email to SW
+$RequestKeyNumber=$reservation->get_roomReservationRequestID();
+$DateToAndFrom= $reservation->get_beginDate()."-".$reservation->get_endDate(); 
+$familyLname=$family->get_parentlname(); 
+$SWID=$reservation->get_socialWorkerProfileId(); 
+
 ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note = "");
 ?>
