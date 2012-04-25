@@ -15,5 +15,11 @@ set_status($stat);
 //Generate Key ID
 //->rmhStaffProfileId = $rmhStaffProfileId;
 //$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
+$RequestKeyNumber=$reservation->get_roomReservationRequestID();
+$BeginDate= $reservation->get_beginDate(); 
+$EndDate=$reservation->get_endDate();
+$familyProfileId=$reservation->get_familyProfileId(); 
+$SWID=$reservation->get_socialWorkerProfileId();
+
 RequestDeny($RequestKeyNumber, $BeginDate, $EndDate, $familyProfileId, $SWID);
 ?>

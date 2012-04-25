@@ -13,7 +13,11 @@ session_cache_expire(30);
 $title = "Approve Modified Room Request"; //This should be the title for the page, included in the <title></title>
 
 include('..\header.php'); //including this will further include (globalFunctions.php and config.php)
-
+include_once(ROOT_DIR .'domain/UserProfile.php');
+include_once(ROOT_DIR .'domain/ProfileChange.php');
+include_once("../domain/Reservation.php");
+include_once(ROOT_DIR .'database/dbProfileActivity.php');
+include_once(ROOT_DIR .'database/dbUserProfile.php');
 /*
  * If your page includes a form, please follow the instructions below.
  * If not, this code block can be deleted
@@ -62,11 +66,6 @@ include('..\header.php'); //including this will further include (globalFunctions
            <h1> Approve Room Requested Modification Form </h1> <br><br>
            <?php
            '<title>$title</title>';
-            include_once(ROOT_DIR .'domain/UserProfile.php');
-            include_once(ROOT_DIR .'domain/ProfileChange.php');
-            include_once("../domain/Reservation.php");
-            include_once(ROOT_DIR .'database/dbProfileActivity.php');
-            include_once(ROOT_DIR .'database/dbUserProfile.php');
 
                 //gets the family profileID and retrieves the fields into an array to validate the input changes
                 //and to display in the html form

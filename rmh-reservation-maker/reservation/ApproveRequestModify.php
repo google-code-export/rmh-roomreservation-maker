@@ -15,5 +15,10 @@ set_status($stat);
 //Generate Key ID
 //->rmhStaffProfileId = $rmhStaffProfileId;
 //$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
+$RequestKey=$reservation->get_roomReservationRequestID();
+$DateToAndFrom= $reservation->get_beginDate()."-".$reservation->get_endDate();
+$familyLname=$family->get_parentlname(); 
+$SWID=$reservation->get_socialWorkerProfileId();
+
 ModifyAccept($RequestKey, $SWID, $familyLname, $DateToAndFrom);
 ?>
