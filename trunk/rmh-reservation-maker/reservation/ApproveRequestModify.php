@@ -5,6 +5,7 @@
   * Approve Request Modify
   * 
   */
+include_once("..\mail\functions.php");
 //Append "-confirmed" to status
 get_status()+='-confirmed';
 //Submit Changes to database

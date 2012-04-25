@@ -5,6 +5,7 @@
   * Deny Request New
   * 
   */
+include_once("..\mail\functions.php");
 //Append "-denied" to status
 get_status()+='-denied';
 //Submit Changes to database
