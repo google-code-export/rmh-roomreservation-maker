@@ -106,7 +106,7 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
     //Check if successful
         if (!$result) {
                 //print the error
-		echo (mysql_error()." Sorry unable to insert into RoomReservationActivity. <br>");
+		echo mysql_error()." >>>Unable to insert into Room Reservation Activity table. <br>";
 		mysql_close();   
                 return false;
     }
@@ -135,9 +135,10 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
             INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID
             WHERE RR.RoomReservationRequestID =".$roomReservationRequestId;
    
-        $result = mysql_query($query) or die(mysql_error());
+        $result = mysql_query($query);
         if (mysql_num_rows($result)!==1) {
-            mysql_close();
+            echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
+                mysql_close();
                 return false;
         }
         $result_row = mysql_fetch_assoc($result);
@@ -164,9 +165,10 @@ function retrieve_RoomReservationActivity_byStatus($status){
             INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID 
             WHERE RR.Status ='".$status."'";
         
-         $result = mysql_query($query) or die(mysql_error());
+         $result = mysql_query($query);
                 if(mysql_num_rows($result)< 1)
                 {
+                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -197,9 +199,10 @@ function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID
             WHERE F.ParentLastName = '".$parentLastName."'";
         
-        $result = mysql_query($query) or die(mysql_error());
+        $result = mysql_query($query);
                 if(mysql_num_rows($result)< 1)
                 {
+                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -231,9 +234,10 @@ function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLast
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID
             WHERE S.LastName = '".$socialWorkerLastName."'";
         
-        $result = mysql_query($query) or die(mysql_error());
+        $result = mysql_query($query);
                 if(mysql_num_rows($result)< 1)
                 {
+                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -265,9 +269,10 @@ function retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN FamilyProfile F ON RR.FamilyProfileID = F.FamilyProfileID
             WHERE R.LastName = '".$rmhStaffLastName."'";
         
-        $result = mysql_query($query) or die(mysql_error());
+        $result = mysql_query($query);
                 if(mysql_num_rows($result)< 1)
                 {
+                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -299,9 +304,10 @@ function retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffilia
              WHERE S.HospitalAffiliation = '".$hospitalAffiliation."' AND RR.BeginDate >= '".$beginDate."' AND RR.EndDate <= '".$endDate."' 
              ORDER BY RR.SW_DateStatusSubmitted";
       
-        $result = mysql_query($query) or die(mysql_error());
+        $result = mysql_query($query);
                 if(mysql_num_rows($result)< 1)
                 {
+                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -334,9 +340,10 @@ function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
             ORDER BY RR.SW_DateStatusSubmitted";
         //echo $query;
  
-      $result = mysql_query($query) or die(mysql_error());
+      $result = mysql_query($query);
           if(mysql_num_rows($result)< 1)
           {
+           echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
            mysql_close();
            return false;
           }  
@@ -379,7 +386,7 @@ function update_status_RoomReservationActivity($reservation){
  $result = mysql_query($query);
    	
     if(!$result) {
-		echo mysql_error() . ">>>Error updating RoomReservationActivity table. <br>";
+		echo mysql_error()." >>>Unable to update from Room Reservation Activity table. <br>";
             mysql_close();
 	    return false;
     } 
@@ -401,7 +408,7 @@ function delete_RoomReservationActivity($roomReservationRequestId) {
 	 $result = mysql_query($query);
 	
 	if (!$result) {
-		echo (mysql_error()."unable to delete from RoomReservationActivity: ".$roomReservationRequestId);
+		echo mysql_error()." >>>Unable to delete from Room Reservation Activity table: ".$roomReservationRequestId;
                 mysql_close();
 		return false;
 	}
