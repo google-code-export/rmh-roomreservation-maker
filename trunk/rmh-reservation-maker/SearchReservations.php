@@ -12,6 +12,24 @@ include(ROOT_DIR.'/database/dbReservation.php');
 
     if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
+        $reservations = searchForReservations();
+        
+    }
+    
+    else if(isset($_POST['form_token']) && !validateTokenField($_POST))
+    {
+      
+        echo('The request could not be completed: security check failed!');
+
+    }
+    else
+    {
+       
+    }
+     
+    
+    function searchForReservations()
+    {
         $type = ($_POST['searchType']);
         
         if ($type=="Request ID")
@@ -50,18 +68,6 @@ include(ROOT_DIR.'/database/dbReservation.php');
         }
         
     }
-    
-    else if(isset($_POST['form_token']) && !validateTokenField($_POST))
-    {
-      
-        echo('The request could not be completed: security check failed!');
-
-    }
-    else
-    {
-       
-    }
-        
 
 ?>
 
