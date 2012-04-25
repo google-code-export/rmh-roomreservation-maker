@@ -99,7 +99,6 @@ else
    // mail("approvers email address goes here", $RoomReservationRequestID, "This is a pending request")//email the approver the request key, not sure if it should look like this though.
     
    echo '<div id="container">';
-   include (ROOT_DIR.'/navigation.php');
    echo '<div id="content" style="margin-left: 250px; margin-top: 23px;">';
    
    //if $showForm = true, display form to enter data
