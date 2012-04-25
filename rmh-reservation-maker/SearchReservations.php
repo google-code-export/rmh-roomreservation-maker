@@ -12,7 +12,7 @@ include(ROOT_DIR.'/database/dbReservation.php');
 
     if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
-        $reservations = searchForReservations();
+        $Reservations = searchForReservations();
         
     }
     
@@ -36,35 +36,55 @@ include(ROOT_DIR.'/database/dbReservation.php');
         {                       
             $roomReservationRequestId = ($_POST["searchParam"]);
             $Reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);  
-            print_r($Reservations);
+            
+            if (!$Reservations)
+            {
+                echo ("No reservations found! Try entering your search again.");
+            }
         }
         
         else if ($type=="Social Worker (Last Name)")
         {
             $socialWorkerLastName = ($_POST["searchParam"]);
             $Reservations = (retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName));
-            print_r($Reservations);
+            
+            if (!$Reservations)
+            {
+                echo ("No reservations found! Try entering your search again.");
+            }
         }
         
         else if ($type=="Staff Approver (Last Name)")
         {
             $rmhStaffLastName = ($_POST["searchParam"]);
             $Reservations = (retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName));
-            print_r($Reservations);
+            
+            if (!$Reservations)
+            {
+                echo ("No reservations found! Try entering your search again.");
+            }
         }
         
         else if ($type=="Family (Last Name)")
         {
             $parentLastName = ($_POST["searchParam"]);
             $Reservations = (retrieve_FamilyLastName_RoomReservationActivity($parentLastName));
-            print_r($Reservations);
+            
+            if (!$Reservations)
+            {
+                echo ("No reservations found! Try entering your search again.");
+            }
         }
         
         else if ($type=="Status")
         {
             $status = ($_POST["searchParam"]);
             $Reservations = (retrieve_RoomReservationActivity_byStatus($status));
-            print_r($Reservations);       
+            
+            if (!$Reservations)
+            {
+                echo ("No reservations found! Try entering your search again.");
+            }
         }
         
     }
