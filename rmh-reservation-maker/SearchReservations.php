@@ -30,7 +30,12 @@ include(ROOT_DIR.'/database/dbReservation.php');
     {
         $type = ($_POST['searchType']);
         
-        if ($type=="Request ID")
+        if ($type=="Select Search Type")
+        {
+            echo ("Please choose what you're searching for from the drop down menu below.");
+        }
+        
+        else if ($type=="Request ID")
         {                       
             $roomReservationRequestId = ($_POST["searchParam"]);
             $Reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);
@@ -102,7 +107,7 @@ include(ROOT_DIR.'/database/dbReservation.php');
             <?php echo generateTokenField(); ?>
            
            <select name="searchType">
-               <option value = " ">Select Search Type</option>
+               <option value = "Select Search Type">Select Search Type</option>
                <option value = "Request ID">Request ID</option>
                <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
                <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
