@@ -102,6 +102,7 @@ include(ROOT_DIR.'/database/dbReservation.php');
             <?php echo generateTokenField(); ?>
            
            <select name="searchType">
+               <option value = " ">Select Search Type</option>
                <option value = "Request ID">Request ID</option>
                <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
                <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
