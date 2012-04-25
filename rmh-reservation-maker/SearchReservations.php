@@ -17,36 +17,36 @@ include(ROOT_DIR.'/database/dbReservation.php');
         if ($type="Request ID")
         {                       
             $roomReservationRequestId = ($_POST["searchParam"]);
-            echo (retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId));  
-            
+            $Reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);  
+            print_r($Reservations);
         }
         
         else if ($type=="Social Worker (Last Name)")
         {
             $socialWorkerLastName = ($_POST["searchParam"]);
-            echo (retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName));
-            
+            $Reservations = (retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName));
+            print_r($Reservations);
         }
         
         else if ($type=="Staff Approver (Last Name)")
         {
             $rmhStaffLastName = ($_POST["searchParam"]);
-            echo (retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName));
-            
+            $Reservations = (retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName));
+            print_r($Reservations);
         }
         
         else if ($type=="Family (Last Name)")
         {
             $parentLastName = ($_POST["searchParam"]);
-            echo (retrieve_FamilyLastName_RoomReservationActivity($parentLastName));
-            
+            $Reservations = (retrieve_FamilyLastName_RoomReservationActivity($parentLastName));
+            print_r($Reservations);
         }
         
         else if ($type=="Status")
         {
             $status = ($_POST["searchParam"]);
-            echo (retrieve_RoomReservationActivity_byStatus($status));
-                   
+            $Reservations = (retrieve_RoomReservationActivity_byStatus($status));
+            print_r($Reservations);       
         }
         
     }
