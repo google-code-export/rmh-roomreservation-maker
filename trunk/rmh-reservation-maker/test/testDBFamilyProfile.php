@@ -3,6 +3,7 @@
  include('../core/config.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 
+echo ROOT_DIR.'/database/dbFamilyProfile.php';
 echo "testing retrieve_dbFamilyProfileByName, expect one family to be found";
 test_retrieve_dbFamilyProfileByName("Scott", "Miller");
 
@@ -11,7 +12,7 @@ test_retrieve_dbFamilyProfileByName("Joe", "Miller");
 
 function test_retrieve_dbFamilyProfileByName($fname, $lname)
 {
-    $families = retrieve_dbFamilyProfileByName($fname, $lname);
+    $families = retrieve_FamilyProfileByName($fname, $lname);
 
 if ($families == false)
     echo "</br>". "No families were  found";
