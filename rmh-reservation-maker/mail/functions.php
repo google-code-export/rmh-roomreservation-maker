@@ -14,7 +14,7 @@
 
 include_once ('../core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
-include_once (ROOT_DIR.'\domain\Family.php');
+include_once (ROOT_DIR.'/domain/Family.php');
 
 
 //email allows you to modify settings and check if mail was sent
@@ -195,44 +195,59 @@ function FamilyModDeny($familyProfileId, $SWID)
 
 
 //Sends email to approvers about a new reservation request
+//@author Stefan Pavon
 function newRequest($RequestKey, $DateSubmitted, $DateToAndFrom)
 {
-    $Approver = retrieve_UserProfile_RMHStaffApprover();
-    $to = $Approver[0]->get_email();
     $subject = "Reservation Request made on $DateSubmitted";
     $message = "A new room reservation request has been made for the timeframe of $DateToAndFrom.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
-echo $to, $subject, $message;
-//    email($to, $subject, $message);
+    $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
+    for($i = 0; $i < count($Approver); $i++)
+    {
+        $to = $Approver[$i]->get_userEmail();
+        email($to, $subject, $message);
+    };
 }
 
 //Sends email to approvers about a modification to an existing room reservation request
+//@author Stefan Pavon
 function newReservationMod($RequestKey, $DateSubmitted)
 {
-    $Approver = retrieve_UserProfile_RMHStaffApprover();
-    $to = $Approver[0]->get_email();
     $subject = "Modification Request made on $DateSubmitted";
     $message = "A modification request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
-    email($to, $subject, $message);
+    $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
+    for($i = 0; $i < count($Approver); $i++)
+    {
+        $to = $Approver[$i]->get_userEmail();
+        email($to, $subject, $message);
+    };
 }
 
 //Sends email to approvers about the cancellation of an existing room reservation request
+//@author Stefan Pavon
 function newCancel($RequestKey, $DateSubmitted)
 {
-    $Approver = retrieve_UserProfile_RMHStaffApprover();
-    $to = $Approver[0]->get_email();
     $subject = "Cancellation Request made on $DateSubmitted";
     $message = "A cancellation request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
-    email($to, $subject, $message);
+    $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
+    for($i = 0; $i < count($Approver); $i++)
+    {
+        $to = $Approver[$i]->get_userEmail();
+        email($to, $subject, $message);
+    };
 }
 
 //Sends email to approvers requesting permission to modify a family profile
-function newFamilyMod($RequestKey, $DateSubmitted)
+//@author Stefan Pavon
+function newFamilyMod($FamilyProfileID, $DateSubmitted)
 {
-    $Approver = retrieve_UserProfile_RMHStaffApprover();
-    $to = $Approver[0]->get_email();
     $subject = "Family Profile Modification Request made on $DateSubmitted";
-    $message = "A family profile modification request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
-    email($to, $subject, $message);
+    $message = "A family profile modification request has been made for the $familyLname family.\r\n\r\nThe request can be viewed at (URL)/$FamilyProfileID";
+    $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
+    for($i = 0; $i < count($Approver); $i++)
+    {
+        $to = $Approver[$i]->get_userEmail();
+        email($to, $subject, $message);
+    };
 }
 
 //PasswordReset sends an email to the user with a link to reset their password
