@@ -149,9 +149,11 @@
         <link rel="stylesheet" href="<?php echo CSS_DIR;?>/style.css"/>
         <script src="<?php echo JS_DIR;?>/libs/jquery-1.7.2.min.js"></script>
         <script src="<?php echo JS_DIR;?>/form.js"></script>
+        <link rel="javascript" href="<?php echo JS_DIR;?>/libs/jquery.simplemodal.1.4.2.min.js"/>
+        <link rel="javascript" href="<?php echo JS_DIR;?>/libs/jquery-1.6.2.min.js"/>
     </head>
 <body class="<?php // $_ENV['/**browser **/'] ?>">
 
 <div id="header">
-    <h1>Welcome to RMH Reservation Maker!</h1>
+    <h1><?php echo $title; ?></h1>
 </div>

@@ -14,7 +14,7 @@ if(!defined('PARENT'))
 
 $userAccess = getUserAccessLevel();
 ?>
-<ul style="position: absolute; left: 10px; background:none rgba(255,255,255,0.8); list-style: none; padding: 10px; width: 150px; min-height: 200px;">
+<ul id="nav">
    
 <!--navigation links available to all members -->
 <li><a href="<?php echo BASE_DIR.'/index.php';?>">Home</a></li>
