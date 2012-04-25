@@ -65,7 +65,7 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
 
         <div id="loginforms">
             <div>
-                    <p>
+                    <p><embed src="images/rmdh.svg" type="image/svg+xml" />
                             Access to <i>Room reservation maker</i> requires a Username and a Password.
                     </p>
                     <ul class="hometext">
