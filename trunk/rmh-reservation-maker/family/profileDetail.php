@@ -110,11 +110,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
 
 ?>
 
-<div id="container">
-
-    <?php include(ROOT_DIR.'/navigation.php');?>
-
-    
+<div id="container">    
     
     <div id="content" style="margin-left: 250px; margin-top: 23px;">
         
