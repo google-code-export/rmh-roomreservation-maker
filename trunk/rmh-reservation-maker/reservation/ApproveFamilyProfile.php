@@ -15,7 +15,7 @@ set_status($stat);
 //Generate Key ID
 //->rmhStaffProfileId = $rmhStaffProfileId;
 //$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
-
+FamilyModAccept($familyProfileId, $SWID);
 
 
 ?>

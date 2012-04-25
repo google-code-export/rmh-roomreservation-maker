@@ -17,5 +17,5 @@ set_status($stat);
 //$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
 
 //Send automatic email to SW
-ModifyDeny($RequestKey, $SWName, $familyLname, $DateToAndFrom);
+ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note = "");
 ?>
