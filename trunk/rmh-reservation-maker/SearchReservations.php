@@ -4,66 +4,49 @@
 session_start();
 session_cache_expire(30);
 
-$title = "Search Bookings"; //This should be the title for the page, included in the <title></title>
+$title = "Search Reservations"; //This should be the title for the page, included in the <title></title>
 
 include('header.php'); //including this will further include (globalFunctions.php and config.php)
-include('database/dbReservation.php');
-include('navigation.php');
+include(ROOT_DIR.'/database/dbReservation.php');
+//include(ROOT_DIR.'/navigation.php');
 
     if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
-        $type = $_GET("searchType");
-        $search = $_GET("searchParam");
+        $type = ($_POST['searchType']);
         
-        if ($type=="Request ID")
+        if ($type="Request ID")
         {                       
-            retrieve_RoomReservationActivity($search);  
-            return $theRequests;
+            $roomReservationRequestId = ($_POST["searchParam"]);
+            echo (retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId));  
+            
         }
         
         else if ($type=="Social Worker (Last Name)")
         {
-            retrieve_SocialWorkerLastName_RoomReservationActivity(search);
-            return $theRequests;
+            $socialWorkerLastName = ($_POST["searchParam"]);
+            echo (retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName));
+            
         }
         
         else if ($type=="Staff Approver (Last Name)")
         {
-            retrieve_RMHStaffLastName_RoomReservationActivity($search);
-            return $theRequests;
+            $rmhStaffLastName = ($_POST["searchParam"]);
+            echo (retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName));
+            
         }
         
         else if ($type=="Family (Last Name)")
         {
-            retrieve_FamilyLastName_RoomReservationActivity($search);
-            return $theRequests;
+            $parentLastName = ($_POST["searchParam"]);
+            echo (retrieve_FamilyLastName_RoomReservationActivity($parentLastName));
+            
         }
         
         else if ($type=="Status")
         {
-            if($search=="unconfirmed")
-            {
-                retrieve_Unconfirmed_RoomReservationActivity;
-                return $theRequests;
-            }
-            
-            else if ($search=="confirmed")
-            {
-                retrieve_Confirm_RoomReservationActivity;
-                return $theRequests;
-            }
-            
-            else if ($search=="denied")
-            {
-                retrieve_Deny_RoomReservationActivity;
-                return $theRequests;
-            }
-            
-            else
-            {
-                echo("Please enter valid status. (unconfirmed, confirmed, or denied)");
-            }
-            
+            $status = ($_POST["searchParam"]);
+            echo (retrieve_RoomReservationActivity_byStatus($status));
+                   
         }
         
     }
@@ -90,15 +73,20 @@ include('navigation.php');
             <?php echo generateTokenField(); ?>
            
            <select name="searchType">
-               <option>Request ID</option>
-               <option>Social Worker (Last Name)</option>
-               <option>Staff Approver (Last Name)</option>
-               <option>Family (Last Name)</option>
-               <option>Status</option>
+               <option value = "Request ID">Request ID</option>
+               <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
+               <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
+               <option value = "Family (Last Name)">Family (Last Name)</option>
+               <option value = "Status">Status</option>
            </select>
            
            <input type="text" name="searchParam" value="" size="10" />
-          
+           
+           <br>
+           <br>
+           
+           <input type="submit" value="Search" name="enterSearch" />
+           
        </form>
 
     </div>
