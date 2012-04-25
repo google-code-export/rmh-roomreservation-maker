@@ -73,6 +73,7 @@ include('..\header.php'); //including this will further include (globalFunctions
                 $familyID = sanitize($_GET['family']);
                 $Request = array();
                 $modifyRequest = retrieve_dbFamilyProfile($familyID);
+                $roomReservationActivityID = $roomReservationActivityID;
                 $Request['RequestID']=$reservation->get_roomReservationRequestID();
                 $Request['FProfileID']=$reservation->get_familyProfileId();
                 $Request['SWProfileID']=$reservation->get_socialWorkerProfileId();
