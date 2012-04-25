@@ -7,7 +7,9 @@ session_cache_expire(30);
 $title = 'Login';
 include('header.php');
 
-
+if(isset($_SESSION['logged_in']))
+    $classAdd = 'content' ; 
+else $classAdd = 'contentLogin';
 
 $error = array(); //variable that sstores all the errors that occur in the login process
 //if data is submitted then do the following:
@@ -50,7 +52,7 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
 ?>
 
 <div id="container">
-    <div id="content">
+    <div id="<?php echo $classAdd; ?>">
         <?PHP
         if(!empty($error))
         {
