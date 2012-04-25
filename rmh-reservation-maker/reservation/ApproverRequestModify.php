@@ -64,6 +64,7 @@ include('..\header.php'); //including this will further include (globalFunctions
            '<title>$title</title>';
             include_once(ROOT_DIR .'domain/UserProfile.php');
             include_once(ROOT_DIR .'domain/ProfileChange.php');
+            include_once("../domain/Reservation.php");
             include_once(ROOT_DIR .'database/dbProfileActivity.php');
             include_once(ROOT_DIR .'database/dbUserProfile.php');
 
