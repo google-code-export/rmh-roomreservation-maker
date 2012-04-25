@@ -1,19 +1,17 @@
 <?php
 
-//start the session and set cache expiry
 session_start();
 session_cache_expire(30);
 
-$title = "Search Reservations"; //This should be the title for the page, included in the <title></title>
+$title = "Search Reservations";
 
-include('header.php'); //including this will further include (globalFunctions.php and config.php)
+include('header.php');
 include(ROOT_DIR.'/database/dbReservation.php');
 //include(ROOT_DIR.'/navigation.php');
 
     if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
-        $Reservations = searchForReservations();
-        
+        $foundReservations = searchForReservations();       
     }
     
     else if(isset($_POST['form_token']) && !validateTokenField($_POST))
@@ -35,7 +33,8 @@ include(ROOT_DIR.'/database/dbReservation.php');
         if ($type=="Request ID")
         {                       
             $roomReservationRequestId = ($_POST["searchParam"]);
-            $Reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);  
+            $Reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);
+            return $Reservations;
             
             if (!$Reservations)
             {
@@ -47,6 +46,7 @@ include(ROOT_DIR.'/database/dbReservation.php');
         {
             $socialWorkerLastName = ($_POST["searchParam"]);
             $Reservations = (retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName));
+            return $Reservations;
             
             if (!$Reservations)
             {
@@ -58,6 +58,7 @@ include(ROOT_DIR.'/database/dbReservation.php');
         {
             $rmhStaffLastName = ($_POST["searchParam"]);
             $Reservations = (retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName));
+            return $Reservations;
             
             if (!$Reservations)
             {
@@ -69,6 +70,7 @@ include(ROOT_DIR.'/database/dbReservation.php');
         {
             $parentLastName = ($_POST["searchParam"]);
             $Reservations = (retrieve_FamilyLastName_RoomReservationActivity($parentLastName));
+            return $Reservations;
             
             if (!$Reservations)
             {
@@ -80,6 +82,7 @@ include(ROOT_DIR.'/database/dbReservation.php');
         {
             $status = ($_POST["searchParam"]);
             $Reservations = (retrieve_RoomReservationActivity_byStatus($status));
+            return $Reservations;
             
             if (!$Reservations)
             {
@@ -118,6 +121,6 @@ include(ROOT_DIR.'/database/dbReservation.php');
     </div>
 </div>
 <?php 
-include ('footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
+include ('footer.php');
 ?>
 
