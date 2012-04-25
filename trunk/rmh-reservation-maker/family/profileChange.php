@@ -2,7 +2,7 @@
 /**
  * @author Jessica Cheong
  * 
- * Profile Change Request handler page
+ * Profile Change Request Form and the Handling
  * 
  * This page deals with the profile change function. When the SW creates a room reservation, and there is
  * a need to modify an existing family profile. This is the page that would direct the SW to make the
@@ -17,144 +17,184 @@ $title = "Family Profile Change Request";
 
 include('../header.php');
 
-include_once(ROOT_DIR .'domain/UserProfile.php');
-include_once(ROOT_DIR .'domain/ProfileChange.php');
-include_once(ROOT_DIR .'database/dbProfileActivity.php');
-include_once(ROOT_DIR .'database/dbUserProfile.php');
-include_once(ROOT_DIR .'mail/functions.php');
+include_once(ROOT_DIR .'/domain/UserProfile.php');
+include_once(ROOT_DIR .'/domain/ProfileActivity.php');
+include_once(ROOT_DIR .'/database/dbProfileActivity.php');
+include_once(ROOT_DIR .'/database/dbUserProfile.php');
+include_once(ROOT_DIR .'/database/dbFamilyProfile.php');
+include_once(ROOT_DIR .'/mail/functions.php');
+
+$errors = array(); //error variable that stores any error occured
 
        //gets the family profileID and retrieves the fields into an array to validate the input changes
-       //and to display in the html form
+       //and also to prefill existing family profile data in the html form
         if(isset($_GET['family']) ){
-            $familyID = sanitize($_GET['family']);
             
-            $Profile = array();
-            $familyProfile = retrieve_dbFamilyProfile($familyID);
-            $Profile['parentfname']=$familyProfile->get_parentfname();
-            $Profile['parentlname']=$familyProfile->get_parentlname();
-            $Profile['parentemail']=$familyProfile->get_parentemail();
-            $Profile['parentphone1']=$familyProfile->get_parentphone1();
-            $Profile['parentphone2']=$familyProfile->get_parentphone2();
-            $Profile['parentAddr']=$familyProfile->get_parentaddress();
-            $Profile['parentcity']=$familyProfile->get_parentcity();
-            $Profile['parentstate']=$familyProfile->get_parentstate();
-            $Profile['parentzip']=$familyProfile->get_parentzip();
-            $Profile['parentcountry']=$familyProfile->get_parentcountry();
-            $Profile['patientfname']=$familyProfile->get_patientfname();
-            $Profile['patientlname']=$familyProfile->get_patientlname();
-            $Profile['patientrelation']=$familyProfile->get_patientrelation();
-            $Profile['patientdob']=$familyProfile->get_patientdob();
-            $Profile['patientformpdf']=$familyProfile->get_patientformpdf();
-            $Profile['patientnotes']=$familyProfile->get_patientnotes();
+           $familyID = sanitize($_GET['family']);
+            
+          $Profile = familyProfileVar($familyID);
+            
         }
 
- if(isset($_POST['form_token']) && validateTokenField($_POST))
+ else if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
-        $current_activity = new ProfileActivity();
-     
+         
         //default types and status of the profileactivity object
         $activityType = "Modify";
         $profileActitivityStatus = "Unconfirmed";
 
-        //gets the sw id and the name
-        $sw = $_SESSION['id'];
-        $sw_name = $sw->get_firstName()." ". $sw->get_lastName();
+        //retrieves the sw, and gets id, firstname and lastname
+        $currentUser = $_SESSION['_id'];
+        $sw = retrieve_UserProfile_SW($currentUser);
+        //print_r($sw);
+        $sw_id = $sw->get_userProfileId();
+        $sw_fname = $sw->get_swFirstName();
+        $sw_lname = $sw->get_swLastName();
         $dateSubmit = date("Y-m-d");
-        
-        $current_activity->socialWorkerProfileID = $sw;
-        $current_activity->swDateStatusSubm = $dateSubmit;
-        $current_activity->familyProfileId = $familyID;
-        $current_activity->activityType = $activityType;
-        $current_activity->profileActivityStatus = $profileActitivityStatus;
-        $current_activity->profileActityNotes = sanitize($_POST["swNote"]) ;
-     
+             
         //comparing old family profile record with new data
         //if nothing is changed, then $change remains false and the request would not be inserted
         $change = false;
+        if(isset($_POST['familyProfileID'])){
+            $familyID = sanitize($_POST['familyProfileID']);
+           $Profile = familyProfileVar($familyID);
+        }
             
             if($_POST['text_parentfname']!= $Profile['parentfname']){
-                $newParentFirstName = $sanitize($_POST['text_parentfname']);
-                $current_activity->parentFirstName = $newParentFirstName;
+                $parentfname = sanitize($_POST['text_parentfname']);
+                //$current_activity->parentFirstName = $newParentFirstName;
                 $change = true;
             }
+           else{
+               $parentfname = $Profile['parentfname'];
+           }
             if($_POST['text_parentlname']!= $Profile['parentlname']){
-                $newParentLastName = $sanitize($_POST['text_parentlname']);
-                $current_activity->parentLastName = $newParentLastName;
+                $parentlname = sanitize($_POST['text_parentlname']);
+               // $current_activity->parentLastName = $newParentLastName;
                  $change = true;
+            }
+            else{
+                $parentlname = $Profile['parentlname'];
             }
             if($_POST['text_parentemail']!= $Profile['parentemail']){
-                 $newEmail = $sanitize($_POST['text_parentemail']);
-                 $current_activity->parentEmail = $newEmail; 
+                 $parentemail = sanitize($_POST['text_parentemail']);
                   $change = true;
             }
+            else{
+                $parentemail = $Profile['parentemail'];
+            }                
             if($_POST['text_parentphone1']!= $Profile['parentphone1']){
-                $newPhone1 = $sanitize($_POST['text_parentphone1']);
-                $current_activity->parentPhone1 = $newPhone1; 
+                $parentphone1 = sanitize($_POST['text_parentphone1']);
                  $change = true;
+            }
+            else{
+                $parentphone1 = $Profile['parentphone1'];
             }
             if($_POST['text_parentphone2']!= $Profile['parentphone2']){
-                $newPhone2 = $sanitize($_POST['text_parentphone2']);
-                 $current_activity->parentPhone2 = $newPhone2; 
+                $parentphone2 = sanitize($_POST['text_parentphone2']);
                   $change = true;
             }
+            else{
+                $parentphone2 = $Profile['parentphone2'];
+            }
             if($_POST['text_parentAddr']!= $Profile['parentAddr']){
-                $newAddress = $sanitize($_POST['text_parentAddr']);
-                $current_activity->parentAddress = $newAddress; 
+                $parentAddr = sanitize($_POST['text_parentAddr']);
                  $change = true;
+            }
+            else{
+                $parentAddr = $Profile['parentAddr'];
             }
             if($_POST['text_parentcity']!= $Profile['parentcity']){
-                $newCity = $sanitize($_POST['text_parentcity']);
-                $current_activity->parentCity = $newCity; 
+                $parentcity = sanitize($_POST['text_parentcity']);
                  $change = true;
+            }
+            else{
+                $parentcity = $Profile['parentcity'];
             }
             if($_POST['text_parentstate']!= $Profile['parentstate']){
-                $newState = $sanitize($_POST['text_parentstate']);
-                $current_activity->parentState = $newState; 
+                $parentstate = sanitize($_POST['text_parentstate']);
                  $change = true;
+            }
+            else{
+                $parentstate = $Profile['parentstate'];
             }
             if($_POST['text_parentzip']!= $Profile['parentzip']){
-                $newZipCode = $sanitize($_POST['text_parentzip']);
-                $current_activity->parentZip = $newZipCode; 
+                $parentzip = sanitize($_POST['text_parentzip']);
                  $change = true;
+            }
+            else{
+                 $parentzip = $Profile['parentzip'];
             }
             if($_POST['text_parentcountry']!= $Profile['parentcountry']){
-                $newCountry = $sanitize($_POST['text_parentcountry']);
-                $current_activity->parentCountry = $newCountry;
+                $parentcountry = sanitize($_POST['text_parentcountry']);
                  $change = true;
+            }
+            else{
+                $parentcountry = $Profile['parentcountry'];
             }
              if($_POST['text_patientfname']!= $Profile['patientfname']){
-                $newPatientFirstName = $sanitize($_POST['text_patientfname']);
-                $current_activity->patientFirstName = $newPatientFirstName;
+                $patientfname = sanitize($_POST['text_patientfname']);
                  $change = true;
+            }
+            else{
+                $patientfname = $Profile['patientfname'];
             }
              if($_POST['text_patientlname']!= $Profile['patientlname']){
-                $newPatientLastName = $sanitize($_POST['text_patientlname']);
-                $current_activity->patientLastName = $newPatientLastName;
+                $patientlname = sanitize($_POST['text_patientlname']);
                  $change = true;
+            }
+            else{
+                $patientlname = $Profile['patientlname'];
             }
              if($_POST['text_patientrelation']!= $Profile['patientrelation']){
-                $newPatientRelation = $sanitize($_POST['text_patientrelation']);
-                  $current_activity->patientRelation = $newPatientRelation;
+                $patientrelation = sanitize($_POST['text_patientrelation']);
                    $change = true;
             }
+            else{
+                $patientrelation = $Profile['patientrelation'];
+            }
              if($_POST['text_patientdob']!= $Profile['patientdob']){
-                $newPatientBirthDate = $sanitize($_POST['text_patientdob']);
-                $current_activity->patientDOB = $newPatientBirthDate;
+                $patientdob = sanitize($_POST['text_patientdob']);
                  $change = true;
+            }
+            else{
+                $patientdob = $Profile['patientdob'];
             }
              if($_POST['text_patientformpdf']!= $Profile['patientformpdf']){
-                $newPatientDiagnosise = $sanitize($_POST['text_patientformpdf']);
-                $current_activity->formPdf = $newPatientDiagnosise;
+                $patientformpdf = sanitize($_POST['text_patientformpdf']);
                  $change = true;
+            }
+            else{
+                $patientformpdf = $Profile['patientformpdf'];
             }
             if($_POST['text_patientnotes']!= $Profile['patientnotes']){
-                $newPatientNotes = $sanitize($_POST['text_patientnotes']);
-                $current_activity->familyNotes = $newPatientNotes;
+                $patientnotes = sanitize($_POST['text_patientnotes']);
                  $change = true;
             }
+            else{
+               $patientnotes = $Profile['patientnotes'];
+            }
+             if(isset($_POST['swNote'])){
+                 $profileActityNotes = sanitize($_POST["swNote"]) ;
+             }
+             else{
+                 $profileActityNotes = "";
+             }
             
-           if ($change == true){
-            insert_ProfileActivity($current_activity);
+ $current_activity = new ProfileActivity(0, 0, $familyID, $sw_id, $sw_lname, $sw_fname, 
+    0, "", "", $dateSubmit, 0, $activityType, $profileActitivityStatus, 
+    $parentfname, $parentlname, $parentemail, $parentphone1, $parentphone2, $parentAddr, $parentcity, $parentstate, $parentzip, 
+     $parentcountry, $patientfname, $patientlname, $patientrelation, $patientdob, $patientformpdf, $patientnotes, $profileActityNotes);
+            
+           if ($change){
+               
+               if(insert_ProfileActivity($current_activity)){
+                       echo "Successfully inserted a profile activity request";
+                    }
+           insert_ProfileActivity($current_activity);
+           }
+           else{
+               echo "no changes detected";
            }
         /*
         EMAIL
@@ -163,8 +203,8 @@ include_once(ROOT_DIR .'mail/functions.php');
         what should the requestkey be??
         */
            
-        $RequestKey = $current_activity.get_profileActivityRequestId();
-         
+        $RequestKey = $current_activity->get_profileActivityRequestId();
+        
         newFamilyMod($RequestKey, $dateSubmit);
          
     } //end of success token validation
@@ -177,9 +217,31 @@ include_once(ROOT_DIR .'mail/functions.php');
     }
     else
     {
-        echo "Unexpected Error";
+        $errors['invalid_request'] = "An unknown error has occured.";
     }
 
+    function familyProfileVar($familyID){
+        $Profile = array();
+            
+            $familyProfile = retrieve_FamilyProfile($familyID);
+            $Profile['parentfname']=$familyProfile->get_parentfname();
+            $Profile['parentlname']=$familyProfile->get_parentlname();
+            $Profile['parentemail']=$familyProfile->get_parentemail();
+            $Profile['parentphone1']=$familyProfile->get_parentphone1();
+            $Profile['parentphone2']=$familyProfile->get_parentphone2();
+            $Profile['parentAddr']=$familyProfile->get_parentaddress();
+            $Profile['parentcity']=$familyProfile->get_parentcity();
+            $Profile['parentstate']=$familyProfile->get_parentstate();
+            $Profile['parentzip']=$familyProfile->get_parentzip();
+            $Profile['parentcountry']=$familyProfile->get_parentcountry();
+            $Profile['patientfname']=$familyProfile->get_patientfname();
+            $Profile['patientlname']=$familyProfile->get_patientlname();
+            $Profile['patientrelation']=$familyProfile->get_patientRelation();
+            $Profile['patientdob']=$familyProfile->get_patientdob();
+            $Profile['patientformpdf']=$familyProfile->get_patientformpdf();
+            $Profile['patientnotes']=$familyProfile->get_patientnotes();
+            return $Profile;
+    }
     ?>
 
     <div id="container">
@@ -187,62 +249,69 @@ include_once(ROOT_DIR .'mail/functions.php');
     <?php include(ROOT_DIR.'/navigation.php');?>
 
     <div id="content">
-                    
-       <form name ="profileChangeForm" method="post" action="profileChange.php">
-            <?php echo generateTokenField(); ?>    
-           
-            <label for="parentFname">Parent First Name: </label>
-            <input type ="text" name ="text_parentfname" value="<?php echo $Profile['parentfname'] ?>" size="20" /><br>
+       
+       <?php
+        if(!empty($errors))
+        {
+            foreach($errors as $error)
+            {
+                echo $error;
+            }
+         }
+       ?>
+       <form name ="profileChangeForm" method="post" action=" <?php echo BASE_DIR; ?>/family/profileChange.php">
+            <?php echo generateTokenField(); ?>   
           
+            <input type ="hidden" name ="familyProfileID" value="<?php echo $familyID; ?>" />          
+            <label for="parentFname">Parent First Name: </label>
+            <input type ="text" name ="text_parentfname" value="<?php echo $Profile['parentfname']; ?>" size="20" /><br>
             <label for="parentLname">Parent Last Name: </label>
-            <input type ="text" name ="text_parentlname" value="<?php echo $Profile['parentlname'] ?>" size="20" /><br>
+            <input type ="text" name ="text_parentlname" value="<?php echo $Profile['parentlname']; ?>" size="20" /><br>
                         
             <label for="email"> Email: </label> 
-            <input type ="text" name ="text_parentemail" value="<?php echo $Profile['parentemail'] ?>" size="20" /><br>
+            <input type ="text" name ="text_parentemail" value="<?php echo $Profile['parentemail']; ?>" size="20" /><br>
             
             <label for="phone1"> Phone1: </label> 
-            <input type ="text" name ="text_parentphone1" value="<?php echo $Profile['parentphone1'] ?>" size="20" /><br>
+            <input type ="text" name ="text_parentphone1" value="<?php echo $Profile['parentphone1']; ?>" size="20" /><br>
             <label for="phone2"> Phone2: </label> 
-            <input type ="text" name ="text_parentphone2" value="<?php echo $Profile['parentphone2'] ?>" size="20" /><br>
+            <input type ="text" name ="text_parentphone2" value="<?php echo $Profile['parentphone2']; ?>" size="20" /><br>
             <label for="address"> Address: </label> 
-            <input type ="text" name ="text_parentAddr" value="<?php echo $Profile['parentAddr'] ?>" size="20" /><br>
+            <input type ="text" name ="text_parentAddr" value="<?php echo $Profile['parentAddr']; ?>" size="20" /><br>
             <label for="city"> City: </label> 
-            <input type ="text" name ="text_parentcity" value="<?php echo $Profile['parentcity'] ?>" size="20" /><br>
+            <input type ="text" name ="text_parentcity" value="<?php echo $Profile['parentcity']; ?>" size="20" /><br>
             <label for="state"> State: </label> 
-            <input type ="text" name ="text_parentstate" value="<?php echo $Profile['parentstate'] ?>" size="20" /><br>
+            <input type ="text" name ="text_parentstate" value="<?php echo $Profile['parentstate']; ?>" size="20" /><br>
              <label for="zip"> Zip Code: </label> 
-            <input type ="text" name ="text_parentzip" value="<?php echo $Profile['parentzip'] ?>" size="20" /><br>
+            <input type ="text" name ="text_parentzip" value="<?php echo $Profile['parentzip']; ?>" size="20" /><br>
              <label for="country"> Country: </label> 
-            <input type ="text" name ="text_parentcountry" value="<?php echo $Profile['parentcountry'] ?>" size="20" /><br>
+            <input type ="text" name ="text_parentcountry" value="<?php echo $Profile['parentcountry']; ?>" size="20" /><br>
             <label for="patientfname"> Patient First Name: </label> 
-            <input type ="text" name ="text_patientfname" value="<?php echo $Profile['patientfname'] ?>" size="20" /><br> 
+            <input type ="text" name ="text_patientfname" value="<?php echo $Profile['patientfname']; ?>" size="20" /><br> 
             <label for="patientlname"> Patient Last Name: </label> 
-            <input type ="text" name ="text_patientlname" value="<?php echo $Profile['patientlname'] ?>" size="20" /><br>
+            <input type ="text" name ="text_patientlname" value="<?php echo $Profile['patientlname']; ?>" size="20" /><br>
              <label for="patientrelation"> Patient Relation: </label> 
-            <input type ="text" name ="text_patientrelation" value="<?php echo $Profile['patientrelation'] ?>" size="20" /><br>
+            <input type ="text" name ="text_patientrelation" value="<?php echo $Profile['patientrelation']; ?>" size="20" /><br>
              <label for="dob"> Patient Day Of Birth: </label> 
-            <input type ="text" name ="text_patientdob" value="<?php echo $Profile['patientdob'] ?>" size="20" /><br>
-             <label for="pdf"> Patient Diagnosis: </label> 
-            <input type ="text" name ="text_patientformpdf" value="<?php echo $Profile['patientformpdf'] ?>" size="20" /><br>
+            <input type ="text" name ="text_patientdob" value="<?php echo $Profile['patientdob']; ?>" size="20" /><br>
+             <label for="pdf"> Patient Diagnosis in PDF: </label> 
+            <input type ="text" name ="text_patientformpdf" value="<?php echo $Profile['patientformpdf']; ?>" size="50" /><br>
              <label for="notes"> Patient's Notes: </label> 
-            <input type ="text" name ="text_patientnotes" value="<?php echo $Profile['patientnotes'] ?>" size="20" /><br>
+            <input type ="text" name ="text_patientnotes" value="<?php echo $Profile['patientnotes']; ?>" size="20" /><br>
             
             <label for="swnotes"> Notes from Social Worker: </label> 
-            <input type ="text" name ="text_swnotes" value="" size="20" /><br>
-            
-            
-            
+            <input type ="text" name ="text_swnotes" value="" size="20" /> <br><br>
             <input type="submit" name="modify" value="Modify"/>
             
-  
-           
+                      
        </form>
 
     </div>
 </div>
 
-?>
 
 <?php 
-include (ROOT_DIR .'footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
+include (ROOT_DIR .'/footer.php');
+//include the footer file, this contains the proper </body> and </html> ending tag.
+
 ?>
+

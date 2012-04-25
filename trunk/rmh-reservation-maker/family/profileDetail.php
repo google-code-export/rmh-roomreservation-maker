@@ -92,7 +92,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
                 $content .= '<li>'.$familyProfile->get_parentcountry().'</li>';
                 $content .= '<li>'.$familyProfile->get_patientfname().'</li>';
                 $content .= '<li>'.$familyProfile->get_patientlname().'</li>';
-                $content .= '<li>'.$familyProfile->get_patientrelation().'</li>';
+                $content .= '<li>'.$familyProfile->get_patientRelation().'</li>';
                 $content .= '<li>'.$familyProfile->get_patientdob().'</li>';
                 $content .= '<li>'.$familyProfile->get_patientformpdf().'</li>';
                 $content .= '<li>'.$familyProfile->get_patientnotes().'</li>';

@@ -104,18 +104,18 @@ function insert_ProfileActivity($profileActivity){
 		return false;
 	}
         
-        connect();
+       connect();
         
         $query = "CALL GetRequestKeyNumber('ProfileActivityRequestID')";
-    $result = mysql_query ($query);
+        $result = mysql_query ($query);
         if (mysql_num_rows($result)!=0) {
             
 		$result_row = mysql_fetch_assoc($result); //gets the first row
 		$profileActivity->set_profileActivityRequestId($result_row['@ID := ProfileActivityRequestID']);
     }	
-        
-     mysql_close(); 
-     
+      mysql_close();
+      //HEY LINDA I'm not sure if you want to close the connection before you  insert
+      
 	// Now add it to the database
 	$query="INSERT INTO ProfileActivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID,
                 SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
