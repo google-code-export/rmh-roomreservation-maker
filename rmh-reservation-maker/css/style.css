@@ -383,7 +383,7 @@ rmh
     text-shadow: 1px 1px #CCC, -1px -1px #000;
     padding-bottom: 0px;
 }
-#container {margin:0 auto; padding: .5em 1em; width: 100%;}
+#container {margin:0 auto; padding:60px 0 0 0; width: 100%;}
 
 h1, h2, h3, h4, h5, h6 {color: #4c566c;  	text-shadow: rgba(255,255,255,0.5) 0 5px 6px, rgba(255,255,255,0.2) 1px 3px 3px;
 }
@@ -392,9 +392,6 @@ h1, h2, h3, h4, h5, h6 {color: #4c566c;  	text-shadow: rgba(255,255,255,0.5) 0 5
     list-style:none;
 }
 
-#container {
-    padding-top:60px;
-}
 
 
 .non {display: none;}
@@ -420,7 +417,58 @@ img.rmdlogo {
 
 .goback {background:url('../images/back.png')no-repeat; width:60px; height:29px;
 }
+
 .topLeftButton{position: absolute;
 top: 6px;
 left:10px;
 z-index: 100;}
+
+.topRightButton{position: absolute;
+top: 6px;
+right:10px;
+z-index: 101;}
+
+#nav {position: absolute;   
+      left: 10px; background:none; list-style: none; padding: 10px; width: 200px; min-height: 200px;}
+
+#nav li {padding: 10px 5px 5px 0;
+    font-family: Helvetica,sans-serif;
+    font-size: 14px;
+    background: #e4f5fc; /* Old browsers */
+background: -moz-linear-gradient(top, #e4f5fc 0%, #bfe8f9 50%, #9fd8ef 51%, #2ab0ed 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e4f5fc), color-stop(50%,#bfe8f9), color-stop(51%,#9fd8ef), color-stop(100%,#2ab0ed)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #e4f5fc 0%,#bfe8f9 50%,#9fd8ef 51%,#2ab0ed 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #e4f5fc 0%,#bfe8f9 50%,#9fd8ef 51%,#2ab0ed 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #e4f5fc 0%,#bfe8f9 50%,#9fd8ef 51%,#2ab0ed 100%); /* IE10+ */
+background: linear-gradient(top, #e4f5fc 0%,#bfe8f9 50%,#9fd8ef 51%,#2ab0ed 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e4f5fc', endColorstr='#2ab0ed',GradientType=0 ); /* IE6-9 */height:50px;
+    text-align: right;
+    height:30px;
+    width: 200px;
+}
+
+#nav li a:hover {
+    font-family: Helvetica,sans-serif;
+    color:white;
+    text-transform:none;
+    font-weight:bolder;
+    
+}
+
+#nav li a {text-decoration: none; color:navy; font-size:1.15em;}
+
+#nav li:hover {
+    background: #ebf1f6; /* Old browsers */
+background: -moz-linear-gradient(top,  #ebf1f6 0%, #abd3ee 50%, #89c3eb 51%, #d5ebfb 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ebf1f6), color-stop(50%,#abd3ee), color-stop(51%,#89c3eb), color-stop(100%,#d5ebfb)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%); /* IE10+ */
+background: linear-gradient(top,  #ebf1f6 0%,#abd3ee 50%,#89c3eb 51%,#d5ebfb 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebf1f6', endColorstr='#d5ebfb',GradientType=0 ); /* IE6-9 */
+
+}
+
+#content {
+    margin:auto 0 0 250px;
+}
