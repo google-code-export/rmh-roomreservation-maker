@@ -314,6 +314,10 @@ rmh
     border-bottom: #797f90 thin solid;
     font-weight: bold;
     font-family: Helvetica,sans-serif;
+    -webkit-box-shadow: 0px 4px 5px rgba(50, 50, 50, 0.75);
+-moz-box-shadow:    0px 4px 5px rgba(50, 50, 50, 0.75);
+box-shadow:         0px 4px 5px rgba(50, 50, 50, 0.75);
+top:0;
 }
 
 .formtop {
