@@ -14,7 +14,7 @@ include(ROOT_DIR.'/database/dbReservation.php');
     {
         $type = ($_POST['searchType']);
         
-        if ($type="Request ID")
+        if ($type=="Request ID")
         {                       
             $roomReservationRequestId = ($_POST["searchParam"]);
             $Reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);  
