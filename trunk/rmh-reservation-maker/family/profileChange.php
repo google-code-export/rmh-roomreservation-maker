@@ -30,7 +30,7 @@ $errors = array(); //error variable that stores any error occured
        //and also to prefill existing family profile data in the html form
         if(isset($_GET['family']) ){
             
-           $familyID = sanitize($_GET['family']);
+          $familyID = sanitize($_GET['family']);
             
           $Profile = familyProfileVar($familyID);
             
@@ -44,19 +44,22 @@ $errors = array(); //error variable that stores any error occured
         $profileActitivityStatus = "Unconfirmed";
 
         //retrieves the sw, and gets id, firstname and lastname
-        $currentUser = $_SESSION['_id'];
+        
+        $currentUser = getUserProfileID();
         $sw = retrieve_UserProfile_SW($currentUser);
         //print_r($sw);
-        $sw_id = $sw->get_userProfileId();
-        $sw_fname = $sw->get_swFirstName();
-        $sw_lname = $sw->get_swLastName();
+        $swObject = current($sw);
+        $sw_id = $swObject->get_userProfileId();
+        $sw_fname = $swObject->get_swFirstName();
+        $sw_lname = $swObject->get_swLastName();
         $dateSubmit = date("Y-m-d");
-             
+                    
         //comparing old family profile record with new data
         //if nothing is changed, then $change remains false and the request would not be inserted
         $change = false;
+        
         if(isset($_POST['familyProfileID'])){
-            $familyID = sanitize($_POST['familyProfileID']);
+           $familyID = sanitize($_POST['familyProfileID']);
            $Profile = familyProfileVar($familyID);
         }
             
@@ -174,38 +177,45 @@ $errors = array(); //error variable that stores any error occured
             else{
                $patientnotes = $Profile['patientnotes'];
             }
-             if(isset($_POST['swNote'])){
-                 $profileActityNotes = sanitize($_POST["swNote"]) ;
+             if(isset($_POST['text_swnotes'])){
+                 $profileActityNotes = sanitize($_POST['text_swnotes']);
              }
              else{
                  $profileActityNotes = "";
              }
             
- $current_activity = new ProfileActivity(0, 0, $familyID, $sw_id, $sw_lname, $sw_fname, 
+    $current_activity = new ProfileActivity(0, 0, $familyID, $sw_id, $sw_lname, $sw_fname, 
     0, "", "", $dateSubmit, 0, $activityType, $profileActitivityStatus, 
-    $parentfname, $parentlname, $parentemail, $parentphone1, $parentphone2, $parentAddr, $parentcity, $parentstate, $parentzip, 
-     $parentcountry, $patientfname, $patientlname, $patientrelation, $patientdob, $patientformpdf, $patientnotes, $profileActityNotes);
+    $parentfname, $parentlname, $parentemail, $parentphone1, $parentphone2, 
+    $parentAddr, $parentcity, $parentstate, $parentzip, 
+    $parentcountry, $patientfname, $patientlname, $patientrelation, 
+    $patientdob, $patientformpdf, $patientnotes, $profileActityNotes);
             
+           //if there is a change, insert a new profileActivity object 
            if ($change){
                
-               if(insert_ProfileActivity($current_activity)){
+                    if(insert_ProfileActivity($current_activity)){
                        echo "Successfully inserted a profile activity request";
                     }
-           insert_ProfileActivity($current_activity);
+                    
+                    insert_ProfileActivity($current_activity);
            }
-           else{
+           
+           //if nothing is changed, output error. No record is inserted into the db
+           else if (!$change){
                echo "no changes detected";
            }
+           
         /*
         EMAIL
                      
-        call email function to send unconfirmed status email to rmh staff
-        what should the requestkey be??
+        Calling email function to send unconfirmed status email to rmh staff
+        how can the request key be attached if it only accepts familyID and dateSubmit as parameters?
         */
-           
+        
         $RequestKey = $current_activity->get_profileActivityRequestId();
         
-        newFamilyMod($RequestKey, $dateSubmit);
+        newFamilyMod($familyID, $dateSubmit);
          
     } //end of success token validation
     
@@ -217,7 +227,7 @@ $errors = array(); //error variable that stores any error occured
     }
     else
     {
-        $errors['invalid_request'] = "An unknown error has occured.";
+        $errors['invalid_request'] = "Family Profile is not selected.";
     }
 
     function familyProfileVar($familyID){
@@ -246,10 +256,8 @@ $errors = array(); //error variable that stores any error occured
 
     <div id="container">
 
-    <?php include(ROOT_DIR.'/navigation.php');?>
-
     <div id="content">
-       
+        
        <?php
         if(!empty($errors))
         {
@@ -260,51 +268,73 @@ $errors = array(); //error variable that stores any error occured
          }
        ?>
        <form name ="profileChangeForm" method="post" action=" <?php echo BASE_DIR; ?>/family/profileChange.php">
-            <?php echo generateTokenField(); ?>   
-          
-            <input type ="hidden" name ="familyProfileID" value="<?php echo $familyID; ?>" />          
-            <label for="parentFname">Parent First Name: </label>
-            <input type ="text" name ="text_parentfname" value="<?php echo $Profile['parentfname']; ?>" size="20" /><br>
-            <label for="parentLname">Parent Last Name: </label>
-            <input type ="text" name ="text_parentlname" value="<?php echo $Profile['parentlname']; ?>" size="20" /><br>
-                        
-            <label for="email"> Email: </label> 
-            <input type ="text" name ="text_parentemail" value="<?php echo $Profile['parentemail']; ?>" size="20" /><br>
+            <?php echo generateTokenField(); ?>    
+           <table border ="1">
+              
+              <!--brings back the familyID-->
+            <input type ="hidden" name ="familyProfileID" value="<?php echo $familyID; ?>" />   
             
-            <label for="phone1"> Phone1: </label> 
-            <input type ="text" name ="text_parentphone1" value="<?php echo $Profile['parentphone1']; ?>" size="20" /><br>
-            <label for="phone2"> Phone2: </label> 
-            <input type ="text" name ="text_parentphone2" value="<?php echo $Profile['parentphone2']; ?>" size="20" /><br>
-            <label for="address"> Address: </label> 
-            <input type ="text" name ="text_parentAddr" value="<?php echo $Profile['parentAddr']; ?>" size="20" /><br>
-            <label for="city"> City: </label> 
-            <input type ="text" name ="text_parentcity" value="<?php echo $Profile['parentcity']; ?>" size="20" /><br>
-            <label for="state"> State: </label> 
-            <input type ="text" name ="text_parentstate" value="<?php echo $Profile['parentstate']; ?>" size="20" /><br>
-             <label for="zip"> Zip Code: </label> 
-            <input type ="text" name ="text_parentzip" value="<?php echo $Profile['parentzip']; ?>" size="20" /><br>
-             <label for="country"> Country: </label> 
-            <input type ="text" name ="text_parentcountry" value="<?php echo $Profile['parentcountry']; ?>" size="20" /><br>
-            <label for="patientfname"> Patient First Name: </label> 
-            <input type ="text" name ="text_patientfname" value="<?php echo $Profile['patientfname']; ?>" size="20" /><br> 
-            <label for="patientlname"> Patient Last Name: </label> 
-            <input type ="text" name ="text_patientlname" value="<?php echo $Profile['patientlname']; ?>" size="20" /><br>
-             <label for="patientrelation"> Patient Relation: </label> 
-            <input type ="text" name ="text_patientrelation" value="<?php echo $Profile['patientrelation']; ?>" size="20" /><br>
-             <label for="dob"> Patient Day Of Birth: </label> 
-            <input type ="text" name ="text_patientdob" value="<?php echo $Profile['patientdob']; ?>" size="20" /><br>
-             <label for="pdf"> Patient Diagnosis in PDF: </label> 
-            <input type ="text" name ="text_patientformpdf" value="<?php echo $Profile['patientformpdf']; ?>" size="50" /><br>
-             <label for="notes"> Patient's Notes: </label> 
-            <input type ="text" name ="text_patientnotes" value="<?php echo $Profile['patientnotes']; ?>" size="20" /><br>
-            
-            <label for="swnotes"> Notes from Social Worker: </label> 
-            <input type ="text" name ="text_swnotes" value="" size="20" /> <br><br>
-            <input type="submit" name="modify" value="Modify"/>
-            
-                      
+        <table border = "2" cellspacing = "10" cellpadding = "10" style="width:500px; margin-bottom: 10px;">
+        <thead>
+        <tr>
+        <th colspan="2"> Family Profile Modification Form </th>
+        </tr>
+        <tr>
+        <td><label for="parentFname">Parent First Name: </label></td>
+        <td><input type ="text" name ="text_parentfname" value="<?php echo $Profile['parentfname']; ?>" size="40" /> <br></td>
+        </tr>
+        <tr>
+        <td> <label for="parentLname">Parent Last Name: </label></td>
+        <td><input type ="text" name ="text_parentlname" value="<?php echo $Profile['parentlname']; ?>" size="40" /> <br></td> </tr>
+        <tr>
+        <td><label for="email"> Email: </label> </td>
+        <td><input type ="text" name ="text_parentemail" value="<?php echo $Profile['parentemail']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td> <label for="phone1"> Phone1: </label> </td>
+        <td><input type ="text" name ="text_parentphone1" value="<?php echo $Profile['parentphone1']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="phone2"> Phone2: </label> </td>
+        <td><input type ="text" name ="text_parentphone2" value="<?php echo $Profile['parentphone2']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td> <label for="address"> Address: </label> </td>
+        <td><input type ="text" name ="text_parentAddr" value="<?php echo $Profile['parentAddr']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td> <label for="city"> City: </label> </td>
+        <td> <input type ="text" name ="text_parentcity" value="<?php echo $Profile['parentcity']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="state"> State: </label> </td>
+        <td><input type ="text" name ="text_parentstate" value="<?php echo $Profile['parentstate']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="zip"> Zip Code: </label> </td>
+        <td><input type ="text" name ="text_parentzip" value="<?php echo $Profile['parentzip']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="country"> Country: </label> </td>
+        <td><input type ="text" name ="text_parentcountry" value="<?php echo $Profile['parentcountry']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="patientfname"> Patient First Name: </label> </td>
+        <td><input type ="text" name ="text_patientfname" value="<?php echo $Profile['patientfname']; ?>" size="40" /><br></td> </tr>
+        <tr>
+        <td><label for="patientlname"> Patient Last Name: </label> </td>
+        <td><input type ="text" name ="text_patientlname" value="<?php echo $Profile['patientlname']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="patientrelation"> Patient Relation: </label> </td>
+        <td> <input type ="text" name ="text_patientrelation" value="<?php echo $Profile['patientrelation']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="dob"> Patient Day Of Birth: </label> </td>
+        <td><input type ="text" name ="text_patientdob" value="<?php echo $Profile['patientdob']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="pdf"> Patient Diagnosis in PDF: </label> </td>
+        <td><input type ="text" name ="text_patientformpdf" value="<?php echo $Profile['patientformpdf']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="notes"> Patient's Notes: </label> </td>
+        <td><input type ="text" name ="text_patientnotes" value="<?php echo $Profile['patientnotes']; ?>" size="40" /><br></td></tr>
+        <tr>
+        <td><label for="swnotes"> Notes from Social Worker: </label> </td>
+        <td><input type ="text" name ="text_swnotes" value="" size="40" /> <br><br></td></tr>
+        </table>
+        <input type="submit" name="modify" value="Modify"/>
+              
        </form>
-
     </div>
 </div>
 
