@@ -14,7 +14,6 @@ include_once ('../core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 include_once (ROOT_DIR.'/domain/Family.php');
-include_once (ROOT_DIR.'\database\dbFamilyProfile.php');
 
 
 //email allows you to modify settings and check if mail was sent
@@ -75,11 +74,12 @@ function ConfirmCancel($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 {
     $SW = retrieve_UserProfile_SW($SWID);
     
-    $family = retrieve_FamilyProfile($familyID);
-    
-    $name = $family->get_patientfname() . " " . $family->get_patientlname();
-   
     if ($SW[0]->get_email_notification() == 'Yes'):
+        
+        $family = retrieve_FamilyProfile($familyID);
+
+        $name = $family->get_patientfname() . " " . $family->get_patientlname();
+   
         $to = $SW[0]->get_userEmail();
         
         $subject = "Confirmation of Canceled Request";
@@ -99,11 +99,13 @@ function ModifyDeny($RequestKey, $SWID, $familyID, $StartDate, $EndDate, $note =
 {
     $SW = retrieve_UserProfile_SW($SWID);
     
-    $family = retrieve_FamilyProfile($familyID);
-    
-    $name = $family->get_patientfname() . " " . $family->get_patientlname();
-   
     if ($SW[0]->get_email_notification() == 'Yes'):
+    
+        $family = retrieve_FamilyProfile($familyID);
+    
+        $name = $family->get_patientfname() . " " . $family->get_patientlname();
+   
+
         $to = $SW[0]->get_userEmail();
     
         $subject = "Cannot Accommodate Modified Request";
@@ -126,16 +128,17 @@ function ModifyAccept($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 {
     $SW = retrieve_UserProfile_SW($SWID);
     
-    $family = retrieve_FamilyProfile($familyID);
-    
-    $name = $family->get_patientfname() . " " . $family->get_patientlname();
-   
     if ($SW[0]->get_email_notification() == 'Yes'):
+        
+        $family = retrieve_FamilyProfile($familyID);
+    
+        $name = $family->get_patientfname() . " " . $family->get_patientlname();
+    
         $to = $SW[0]->get_userEmail();
         
         $subject = "Modified Request has been Accepted";
 
-        $message = "The request for $name's family for dates $StartDate - $EndDate has been accepted.\r\nThe request can be viewed at (URL)/$RequestKey";
+        $message = "The request for $name's family for dates $StartDate - $EndDate has been accepted.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
 
 
         email($to, $subject, $message);
