@@ -169,7 +169,7 @@ function build_family($result_row){
     $theFamily = new Family($result_row['FamilyProfileID'],$result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'],
         $result_row['Phone1'], $result_row['Phone2'], $result_row['Address'], $result_row['City'],
         $result_row['State'], $result_row['ZipCode'], $result_row['Country'], $result_row['PatientFirstName'],
-        $result_row['PatientLastName'], $result_row['PatientRelation'], $result_row['PatientDateOfBirth'],
+        $result_row['PatientLastName'], $result_row['PatientRelation'], $result_row['PatientBirthDate'],
         $result_row['FormPDF'], $result_row['Notes']);
     
     return $theFamily;
