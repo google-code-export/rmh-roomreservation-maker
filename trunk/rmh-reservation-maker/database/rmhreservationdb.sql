@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 16, 2012 at 02:33 AM
+-- Generation Time: Apr 26, 2012 at 02:23 AM
 -- Server version: 5.5.16
 -- PHP Version: 5.3.8
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `familyprofile` (
   `FormPDF` varchar(255) DEFAULT NULL,
   `Notes` text,
   PRIMARY KEY (`FamilyProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `familyprofile`
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `requestkeynumber` (
 --
 
 INSERT INTO `requestkeynumber` (`ProfileActivityRequestID`, `RoomReservationRequestID`) VALUES
-(7, 6);
+(7, 7);
 
 -- --------------------------------------------------------
 
@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `rmhstaffprofile` (
   `Phone` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`RMHStaffProfileID`),
   KEY `UserProfileID` (`UserProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `rmhstaffprofile`
@@ -200,7 +200,8 @@ CREATE TABLE IF NOT EXISTS `rmhstaffprofile` (
 INSERT INTO `rmhstaffprofile` (`RMHStaffProfileID`, `UserProfileID`, `Title`, `FirstName`, `LastName`, `Phone`) VALUES
 (1, 3, 'Mr.', 'Tom', 'Hansen', '7186562398'),
 (2, 1, 'Mr.', 'Frank', 'Petersen', '2126565511'),
-(3, 5, 'Mr.', 'Edward', 'Cho', '2122228888');
+(3, 5, 'Mr.', 'Edward', 'Cho', '2122228888'),
+(4, 8, 'Mr.', 'Stefan', 'Pavon', '2121231234');
 
 -- --------------------------------------------------------
 
@@ -227,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
   KEY `SocialWorkerProfileID` (`SocialWorkerProfileID`),
   KEY `RMHStaffProfileID` (`RMHStaffProfileID`),
   KEY `FamilyProfileID` (`FamilyProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `roomreservationactivity`
@@ -238,7 +239,8 @@ INSERT INTO `roomreservationactivity` (`RoomReservationActivityID`, `RoomReserva
 (2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
 (3, 3, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
 (4, 4, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
-(5, 5, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Apply', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', '');
+(5, 5, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Apply', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', ''),
+(6, 6, 3, 4, NULL, '2012-04-25 21:40:40', NULL, 'Apply', 'Unconfirmed', '2012-04-30 00:00:00', '2012-05-30 00:00:00', 'Pediatric Leukemias', '');
 
 -- --------------------------------------------------------
 
@@ -258,7 +260,7 @@ CREATE TABLE IF NOT EXISTS `socialworkerprofile` (
   `EmailNotification` enum('Yes','No') NOT NULL,
   PRIMARY KEY (`SocialWorkerProfileID`),
   KEY `UserProfileID` (`UserProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `socialworkerprofile`
@@ -266,7 +268,9 @@ CREATE TABLE IF NOT EXISTS `socialworkerprofile` (
 
 INSERT INTO `socialworkerprofile` (`SocialWorkerProfileID`, `UserProfileID`, `Title`, `FirstName`, `LastName`, `HospitalAffiliation`, `Phone`, `EmailNotification`) VALUES
 (1, 2, 'Ms.', 'Mary', 'Tove', 'Memorial Sloan-Kettering Cancer Center', '7183334444', 'Yes'),
-(2, 4, 'Ms.', 'Lauren', 'Schwan', 'Memorial Sloan-Kettering Cancer Center', '7187773232', 'No');
+(2, 4, 'Ms.', 'Lauren', 'Schwan', 'Memorial Sloan-Kettering Cancer Center', '7187773232', 'No'),
+(3, 6, 'Ms.', 'Yamiris', 'Pascual', 'Memorial Sloan-Kettering Cancer Center', '7181231234', 'Yes'),
+(4, 7, 'Ms.', 'Alisa', 'Modeste', 'Memorial Sloan-Kettering Cancer Center', '7181231234', 'Yes');
 
 -- --------------------------------------------------------
 
@@ -282,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `userprofile` (
   `Password` varchar(255) NOT NULL,
   `UserCategory` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`UserProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `userprofile`
@@ -293,7 +297,10 @@ INSERT INTO `userprofile` (`UserProfileID`, `UsernameID`, `UserEmail`, `Password
 (2, 'Mary789', 'mary1@gmail.com', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'Social Worker'),
 (3, 'Tom718', 'tom1@gmail.com', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver'),
 (4, 'Lauren653', 'lauren1@gmail.com', '91b06a9f87b7efe1be3d56f46bc739fae897bcc5', 'Social Worker'),
-(5, 'Admin', 'housemngr@rmhnewyork.org', '1be4d1253535f4e0ba0895e6e6918be38531823c', 'RMH Administrator');
+(5, 'Admin', 'housemngr@rmhnewyork.org', '1be4d1253535f4e0ba0895e6e6918be38531823c', 'RMH Administrator'),
+(6, 'ypascual', 'yamiris.pascual08@stjohns.edu', '24b170fad917b173d9f0c4e4f81f3a7030abc823', 'Social Worker'),
+(7, 'amodeste', 'alisa.modeste08@my.stjohns.edu', '5a1cdbb4da7ce239146dc3be556887e4b268afa7', 'Social Worker'),
+(8, 'spavon', 'stefan.pavon09@stjohns.edu', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'RMH Staff Approver');
 
 --
 -- Constraints for dumped tables
@@ -303,19 +310,19 @@ INSERT INTO `userprofile` (`UserProfileID`, `UsernameID`, `UserEmail`, `Password
 -- Constraints for table `activation`
 --
 ALTER TABLE `activation`
-  ADD CONSTRAINT `activation_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`);
+  ADD CONSTRAINT `Activation_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`);
 
 --
 -- Constraints for table `rmhstaffprofile`
 --
 ALTER TABLE `rmhstaffprofile`
-  ADD CONSTRAINT `rmhstaffprofile_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`);
+  ADD CONSTRAINT `RMHStaffprofile_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`);
 
 --
 -- Constraints for table `socialworkerprofile`
 --
 ALTER TABLE `socialworkerprofile`
-  ADD CONSTRAINT `socialworkerprofile_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`);
+  ADD CONSTRAINT `SocialWorkerProfile_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
