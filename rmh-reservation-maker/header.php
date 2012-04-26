@@ -11,44 +11,6 @@
     include('core/sessionManagement.php');
     
     checkSession();
- /**
-  * generateTokenField function that generates a token field for the form and stores it in the session for validating it later
-  * 
-  * @return string a unique token that can be used in the form
-  * @author Prayas Bhattarai
-  */  
-  function generateTokenField()
-  {
-      $token = generateRandomString();
-      $_SESSION['_token'] = $token;
-      return '<input type="hidden" id="form_token" name="form_token" value="'.$token.'" />';
-  }
-  
-  /**
-   * validateTokenField function that will check the validity of the form data that was submitted depending on the form token
-   * 
-   * @return boolean true if validates, false if it does not. 
-   */
-  function validateTokenField($postData)
-  {
-      if(array_key_exists('form_token', $postData))
-      {
-          if(isset($_SESSION['_token']) && ($_SESSION['_token'] == $postData['form_token']))
-          {
-              unset($_SESSION['_token']); //remove the token once it's been used, making it invalid for reuse
-              return true;
-          }
-          else
-          {
-              return false;
-          }
-      }
-      else
-      {
-          return false;
-      }
-  }
-    
   /**
 		 * Set our permission array for families, social workers, room reservation managers, and 
                  * administrators. If a page is not specified in the permission array, anyone logged into 
@@ -106,6 +68,9 @@
                 $permission_array['report.php']=1;
                 
                 $permission_array['SearchReservations.php']=1;
+                
+                $permission_array['activity.php'] = 2;
+                $permission_array['activityHandler.php'] = 2;
 
 		//Check if they're at a valid page for their access level.
 		$current_page = getCurrentPage();

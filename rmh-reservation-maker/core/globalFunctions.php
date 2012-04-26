@@ -80,4 +80,42 @@ function isAjax()
 {
     return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 }
+
+/**
+  * generateTokenField function that generates a token field for the form and stores it in the session for validating it later
+  * 
+  * @return string a unique token that can be used in the form
+  * @author Prayas Bhattarai
+  */  
+  function generateTokenField()
+  {
+      $token = generateRandomString();
+      $_SESSION['_token'] = $token;
+      return '<input type="hidden" id="form_token" name="form_token" value="'.$token.'" />';
+  }
+  
+  /**
+   * validateTokenField function that will check the validity of the form data that was submitted depending on the form token
+   * 
+   * @return boolean true if validates, false if it does not. 
+   */
+  function validateTokenField($postData)
+  {
+      if(array_key_exists('form_token', $postData))
+      {
+          if(isset($_SESSION['_token']) && ($_SESSION['_token'] == $postData['form_token']))
+          {
+              unset($_SESSION['_token']); //remove the token once it's been used, making it invalid for reuse
+              return true;
+          }
+          else
+          {
+              return false;
+          }
+      }
+      else
+      {
+          return false;
+      }
+  }
 ?>
