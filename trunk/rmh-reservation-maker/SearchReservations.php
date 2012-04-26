@@ -152,8 +152,9 @@ $showReservation = false;
         echo '<thead>
             <tr>
             <th>Request ID</th>
+            <th>Social Worker  Name</th>
             <th>Staff  Name</th>
-           <th>Parent  Name</th>
+            <th>Parent  Name</th>
            <th>Date Status sumbitted</th>
            <th>Begin Date</th>
            <th>End Date</th>
@@ -165,8 +166,9 @@ $showReservation = false;
         if($type=="Request ID")
         {
         $rmhRequestID= $foundReservations->get_roomReservationRequestID();
-        $rmhStaffName = $foundReservations->get_rmhStaffLastName().", ".$foundReservations->get_rmhStaffFirstName();
-       $rmhparentName= $foundReservations->get_parentLastName().", ".$foundReservations->get_parentFirstName();
+        $rmhSocialWorkerName = $foundReservations->get_swLastName().", ".$foundReservations->get_swFirstName();
+       $rmhStaffName = $foundReservations->get_rmhStaffLastName().", ".$foundReservations->get_rmhStaffFirstName();
+        $rmhparentName= $foundReservations->get_parentLastName().", ".$foundReservations->get_parentFirstName();
        $rmhDatasubmit = $foundReservations->get_rmhDateStatusSubmitted();
        $rmhbeginDate=$foundReservations->get_beginDate();
        $rmhEndDate=$foundReservations->get_endDate();
@@ -174,7 +176,8 @@ $showReservation = false;
        
        echo '<tr>';
        echo '<td>'.$rmhRequestID.'</td>';
-       echo '<td>'.$rmhStaffName.'</td>';
+       echo '<td>'.$rmhSocialWorkerName.'</td>';
+        echo '<td>'.$rmhStaffName.'</td>';
        echo '<td>'.$rmhparentName.'</td>';
        echo '<td>'.$rmhDatasubmit.'</td>';
        echo '<td>'.$rmhbeginDate.'</td>';
@@ -193,6 +196,7 @@ $showReservation = false;
        {
            
         $rmhRequestID= $reservation->get_roomReservationRequestID();
+        $rmhSocialWorkerName = $reservation->get_swLastName().", ".$reservation->get_swFirstName();
         $rmhStaffName = $reservation->get_rmhStaffLastName().", ".$reservation->get_rmhStaffFirstName();
         $rmhparentName= $reservation->get_parentLastName().", ".$reservation->get_parentFirstName();
         $rmhDatasubmit=$reservation->get_rmhDateStatusSubmitted();
@@ -203,6 +207,7 @@ $showReservation = false;
        
        echo '<tr>';
        echo '<td>'.$rmhRequestID.'</td>';
+       echo '<td>'.$rmhSocialWorkerName.'</td>';
        echo '<td>'.$rmhStaffName.'</td>';
        echo '<td>'.$rmhparentName.'</td>';
        echo '<td>'.$rmhDatasubmit.'</td>';
