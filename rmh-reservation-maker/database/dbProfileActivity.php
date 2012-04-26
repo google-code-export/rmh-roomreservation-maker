@@ -1,9 +1,10 @@
+
 <?php
 
 /**
  * Functions to create, insert, retrieve, update, and delete information from the
  * ProfileActivity table in the database. This table is used with the ProfileActivity class.  
- * @version April 21, 2012
+ * @version April 23, 2012
  * @author Linda Shek and Gergana Stoykova
  */
 
@@ -104,20 +105,20 @@ function insert_ProfileActivity($profileActivity){
 		return false;
 	}
         
-       connect();
+        connect();
         
         $query = "CALL GetRequestKeyNumber('ProfileActivityRequestID')";
-        $result = mysql_query ($query);
+    $result = mysql_query ($query);
         if (mysql_num_rows($result)!=0) {
             
 		$result_row = mysql_fetch_assoc($result); //gets the first row
 		$profileActivity->set_profileActivityRequestId($result_row['@ID := ProfileActivityRequestID']);
     }	
-      mysql_close();
-      //HEY LINDA I'm not sure if you want to close the connection before you  insert
-      
+        
+     mysql_close(); 
+     connect();
 	// Now add it to the database
-	$query="INSERT INTO ProfileActivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID,
+	$query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID,
                 SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
                Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, 
                PatientLastName, PatientRelation, PatientDateOfBirth, FormPDF, FamilyNotes, ProfileActivityNotes) VALUES(".
@@ -149,7 +150,7 @@ function insert_ProfileActivity($profileActivity){
 	// Check if successful
 	if(!$result) {
 		//print the error
-		echo mysql_error()." Could not insert into ProfileActivity :".$profileActivity->get_profileActivityRequestId()."\n";
+                echo mysql_error()." >>>Unable to insert into Profile Activity table. <br>";
 		mysql_close();
 		return false;
 	}
@@ -173,23 +174,24 @@ function retrieve_ProfileActivity_byRequestId($profileActivityRequestId){
        P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
        P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
        P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
-       FROM RMHStaffProfile R RIGHT OUTER JOIN 
-       ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
-       INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
-       INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID
+       FROM rmhstaffprofile R RIGHT OUTER JOIN 
+       profileactivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+       INNER JOIN socialworkerprofile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+       INNER JOIN familyprofile F ON P.FamilyProfileID = F.FamilyProfileID
        WHERE P.ProfileActivityRequestID =".$profileActivityRequestId;
-     
-        $result = mysql_query ($query);
-        if (mysql_num_rows($result)!==1) {
-	    mysql_close();
-		return false;
-	}
-	$result_row = mysql_fetch_assoc($result);
-	$theProfileActivity = build_profileActivity($result_row);
+    
+       $result = mysql_query($query);
+                if(mysql_num_rows($result)!==1)
+                {
+                 echo mysql_error()." >>>Unable to retrieve from Profile Activity table. <br>";
+                 mysql_close();
+                 return false;
+                }
+        $result_row = mysql_fetch_assoc($result);
+	$theProfileActivities = build_profileActivity($result_row);
 	mysql_close();
-	return $theProfileActivity;  
+	return $theProfileActivities;  
 }
-
 
 /**
  * Retrieves Profile Activity from the ProfileActivity table by Status ('UnConfirmed', 'Confirm', 'Deny')
@@ -198,6 +200,7 @@ function retrieve_ProfileActivity_byRequestId($profileActivityRequestId){
  */
 
 function retrieve_ProfileActivity_byStatus($profileActivityStatus){
+    
     connect();
 
     $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
@@ -205,20 +208,25 @@ function retrieve_ProfileActivity_byStatus($profileActivityStatus){
         P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
         P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName, P.PatientLastName, 
         P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
-        FROM RMHStaffProfile R RIGHT OUTER JOIN ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
-        INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
-        INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID
+        FROM rmhstaffprofile R RIGHT OUTER JOIN profileactivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+        INNER JOIN socialworkerprofile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+        INNER JOIN familyprofile F ON P.FamilyProfileID = F.FamilyProfileID
         WHERE P.Status = '".$profileActivityStatus."'";
     
-    $result = mysql_query ($query);
-        if(mysql_num_rows($result)!==1){
-            mysql_close();
-                return false;
+        $result = mysql_query($query);
+                if(mysql_num_rows($result)< 1)
+                {
+                 echo mysql_error(). " >>>Unable to retrieve from Profile Activity table. <br>";
+                    mysql_close();
+                    return false;
+                }
+        $theProfileActivities = array();    
+	while($result_row = mysql_fetch_assoc($result)){
+	$theProfileActivity = build_profileActivity($result_row);
+        $theProfileActivities[] = $theProfileActivity;
         }
-        $result_row = mysql_fetch_assoc($result);
-        $theProfileActivity = build_profileActivity($result_row);
-        mysql_close();
-        return $theProfileActivity;
+	mysql_close();
+	return $theProfileActivities;  
 }
 
 /**
@@ -228,62 +236,72 @@ function retrieve_ProfileActivity_byStatus($profileActivityStatus){
  */
 
 function retrieve_FamilyLastName_ProfileActivity($parentLastName){
-       connect();
+    
+  connect();
           
   $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
     S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
     P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
     P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
     P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
-    FROM RMHStaffProfile R RIGHT OUTER JOIN 
-    ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
-    INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
-    INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID 
+    FROM rmhstaffprofile R RIGHT OUTER JOIN 
+    profileactivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+    INNER JOIN socialworkerprofile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+    INNER JOIN familyprofile F ON P.FamilyProfileID = F.FamilyProfileID 
     WHERE F.ParentLastName ='".$parentLastName."'"; 
         
-        $result = mysql_query ($query);
-        if(mysql_num_rows($result)!==1){
-            mysql_close();
-                return false;
+        $result = mysql_query($query);
+                if(mysql_num_rows($result)< 1)
+                {
+                 echo mysql_error(). " >>>Unable to retrieve from Profile Activity table. <br>";
+                 mysql_close();
+                 return false;
+                }
+        $theProfileActivities = array();    
+	while($result_row = mysql_fetch_assoc($result)){
+	$theProfileActivity = build_profileActivity($result_row);
+        $theProfileActivities[] = $theProfileActivity;
         }
-        $result_row = mysql_fetch_assoc($result);
-        $theProfileActivity = build_profileActivity($result_row);
-        mysql_close();
-        return $theProfileActivity;
-       
-    }
+	mysql_close();
+	return $theProfileActivities;  
+}
     
 /**
  * Retrieves Profile Activity from the ProfileActivity table by Social Worker's Last Name
  * @param $socialWorkerLastName
  * @return the Profile Activity corresponding to Social Worker's Last Name, or false if not in the table.
  */
+   
+function retrieve_SocialWorkerLastName_ProfileActivity($socialWorkerLastName){
     
-   function retrieve_SocialWorkerLastName_ProfileActivity($socialWorkerLastName){
-       connect();
+  connect();
        
   $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
     S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
     P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
     P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
     P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
-    FROM RMHStaffProfile R RIGHT OUTER JOIN 
-    ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
-    INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
-    INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID
+    FROM rmhstaffprofile R RIGHT OUTER JOIN 
+    profileactivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+    INNER JOIN socialworkerprofile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+    INNER JOIN familyprofile F ON P.FamilyProfileID = F.FamilyProfileID
     WHERE S.LastName ='".$socialWorkerLastName."'";
   
-        $result = mysql_query ($query);
-        if(mysql_num_rows($result)!==1){
-            mysql_close();
-                return false;
+        $result = mysql_query($query);
+                if(mysql_num_rows($result)< 1)
+                {
+                 echo mysql_error(). " >>>Unable to retrieve from Profile Activity. <br>";
+                 mysql_close();
+                 return false;
+                }
+        $theProfileActivities = array();    
+	while($result_row = mysql_fetch_assoc($result)){
+	$theProfileActivity = build_profileActivity($result_row);
+        $theProfileActivities[] = $theProfileActivity;
         }
-        $result_row = mysql_fetch_assoc($result);
-        $theProfileActivity = build_profileActivity($result_row);
-        mysql_close();
-        return $theProfileActivity;
-       
-    }
+	mysql_close();
+	return $theProfileActivities;  
+}
     
     
 /**
@@ -292,38 +310,43 @@ function retrieve_FamilyLastName_ProfileActivity($parentLastName){
  * @return the Room Reservation corresponding to rmhStaffLastName, or false if not in the table.
  */
     
-    function retrieve_RMHStaffLastName_ProfileActivity($rmhStaffLastName){
-       connect();
+function retrieve_RMHStaffLastName_ProfileActivity($rmhStaffLastName){
+    
+      connect();
        
       $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
         S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
         P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
         P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
         P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes 
-        FROM RMHStaffProfile R RIGHT OUTER JOIN 
-        ProfileActivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
-        INNER JOIN SocialWorkerProfile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
-        INNER JOIN FamilyProfile F ON P.FamilyProfileID = F.FamilyProfileID
+        FROM rmhstaffprofile R RIGHT OUTER JOIN 
+        profileactivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+        INNER JOIN socialworkerprofile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+        INNER JOIN familyprofile F ON P.FamilyProfileID = F.FamilyProfileID
         WHERE R.LastName ='".$rmhStaffLastName."'";
      
-        $result = mysql_query ($query);
-        if(mysql_num_rows($result)!==1){
-            mysql_close();
-                return false;
+        $result = mysql_query($query);
+                if(mysql_num_rows($result)< 1)
+                {
+                 echo mysql_error(). " >>>Unable to retrieve from Profile Activity table. <br>";
+                 mysql_close();
+                 return false;
+                }
+        $theProfileActivities = array();    
+	while($result_row = mysql_fetch_assoc($result)){
+	$theProfileActivity = build_profileActivity($result_row);
+        $theProfileActivities[] = $theProfileActivity;
         }
-        $result_row = mysql_fetch_assoc($result);
-        $theProfileActivity = build_profileActivity($result_row);
-        mysql_close();
-        return $theProfileActivity;
-       
-    }
+	mysql_close();
+	return $theProfileActivities;  
+}
 
 /* 
  * auxiliary function to build a Profile Activity Request from a row in the ProfileActivity table
  */
     
 function build_profileActivity($result_row) {
-    $theProfileActivity = new ProfileActivity($result_row['ProfileActivityID'], $result_row['ProfileActivityRequestID'],
+    $theProfileActivities = new ProfileActivity($result_row['ProfileActivityID'], $result_row['ProfileActivityRequestID'],
         $result_row['FamilyProfileID'], $result_row['SocialWorkerProfileID'], $result_row['SW_LastName'], $result_row['SW_FirstName'], 
 	$result_row['RMHStaffProfileID'], $result_row['RMH_Staff_LastName'], $result_row['RMH_Staff_FirstName'],
 	$result_row['SW_DateStatusSubmitted'], $result_row['RMH_DateStatusSubmitted'], $result_row['ActivityType'],
@@ -333,7 +356,7 @@ function build_profileActivity($result_row) {
         $result_row['PatientLastName'], $result_row['PatientRelation'], $result_row['PatientDateOfBirth'], 
         $result_row['FormPDF'], $result_row['FamilyNotes'], $result_row['ProfileActivityNotes']);
    
-	return $theProfileActivity;
+	return $theProfileActivities;
 }
 
 /**
@@ -342,18 +365,23 @@ function build_profileActivity($result_row) {
  * @param $profileChangeRequestId the ProfileActivity to update
  */
 
-function update_status_ProfileActivity($profileActivityRequestId){
+function update_status_ProfileActivity($profileActivity){
+    
  connect();
- $query="UPDATE ProfileActivity SET RMHStaffProfileID = ".$profileActivity->get_rmhStaffProfileId().",". 
+ 
+ $query="UPDATE profileactivity SET RMHStaffProfileID = ".$profileActivity->get_rmhStaffProfileId().",". 
          "RMH_DateStatusSubmitted ='".$profileActivity->get_rmhDateStatusSubmitted()."',  
-         Status ='".$profileActivity->get_profileActivityStatus()."' WHERE ProfileActivityRequestID =".$profileActivity->$profileActivityRequestId;
- mysql_close();
+         Status ='".$profileActivity->get_profileActivityStatus()."' WHERE ProfileActivityRequestID =".$profileActivity->get_profileActivityRequestId();
+ 
+
  $result=mysql_query($query);
    	
     if(!$result) {
-		echo mysql_error() . ">>>Error updating ProfileActivity table. <br>";
+		echo mysql_error() . " >>>Unable to update from Profile Activity table. <br>";
+            mysql_close();
 	    return false;
     }  
+    mysql_close();
     return true;
 }
 
@@ -363,14 +391,18 @@ function update_status_ProfileActivity($profileActivityRequestId){
  */
 
 function delete_ProfileActivity($profileActivityRequestId) {
-	connect();
-    $query="DELETE FROM ProfileActivity WHERE ProfileActivityRequestID=\"".$profileActivityRequestId."\"";
+    
+    connect();
+        
+    $query="DELETE FROM profileactivity WHERE ProfileActivityRequestID=".$profileActivityRequestId;
 	$result=mysql_query($query);
-	mysql_close();
+	
 	if (!$result) {
-		echo (mysql_error()."unable to delete from ProfileActivity table: ".$profileActivityRequestId);
+		echo mysql_error()." >>>Unable to delete from Profile Activity table: ".$profileActivityRequestId;
+                mysql_close();
 		return false;
 	}
+    mysql_close();
     return true;
 }
 ?>
