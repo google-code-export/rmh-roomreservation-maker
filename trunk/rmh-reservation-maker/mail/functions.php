@@ -35,11 +35,8 @@ function email($add, $subject, $message)
             echo "This is what was passed in an array: $to <p>";
         endforeach;
         
-        $add = array("alisa.modeste08@stjohns.edu");
-        
     else:
         echo "This is what was passed in a string: $add";
-        $add = "alisa.modeste08@stjohns.edu";
     endif; 
     //Until here
     
@@ -69,6 +66,7 @@ function email($add, $subject, $message)
 
 
 //ConfirmCancel notifies the SW that the request has been cancelled.
+//@param int $SWID - UserProfileID
 //@author Alisa Modeste
 function ConfirmCancel($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 {
@@ -94,6 +92,7 @@ function ConfirmCancel($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 
 
 //ModifyDeny notifies the SW that the modified request couldn't be accommodated.
+//@param int $SWID - UserProfileID
 //@author Alisa Modeste
 function ModifyDeny($RequestKey, $SWID, $familyID, $StartDate, $EndDate, $note = "")
 {
@@ -123,6 +122,7 @@ function ModifyDeny($RequestKey, $SWID, $familyID, $StartDate, $EndDate, $note =
 }
 
 //ModifyAccept notifies the SW that the modified request has been accepted.
+//@param int $SWID - UserProfileID
 //@author Alisa Modeste
 function ModifyAccept($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 {
