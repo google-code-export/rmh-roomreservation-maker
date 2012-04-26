@@ -1,5 +1,7 @@
 <?php
-include_once('../mail/functions.php');    
+include_once('../mail/functions.php');  
+//include_once('..\mail\functionsWithPEAR.php');  
+
 //Doesn't work
 //newRequest(100,'2012-12-12','2012-12-22');
 
@@ -14,4 +16,7 @@ email('alisa.modeste08@stjohns.edu', 'sub Request', 'mess');
 
 echo "<p>testing ModifyAccept, expect one SW to be emailed with patient name included<p>";
 ModifyAccept(2,2,2, '2/2', '3/2');
+
+echo "<p>testing PasswordReset, expect ";
+PasswordReset('567yfghj', 'ana123', "alisa.modeste08@stjohns.edu")
 ?>
