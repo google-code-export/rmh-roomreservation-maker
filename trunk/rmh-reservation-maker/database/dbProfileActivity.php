@@ -370,7 +370,7 @@ function update_status_ProfileActivity($profileActivity){
  connect();
  
  $query="UPDATE profileactivity SET RMHStaffProfileID = ".$profileActivity->get_rmhStaffProfileId().",". 
-         "RMH_DateStatusSubmitted ='".$profileActivity->get_rmhDateStatusSubmitted()."',  
+         "RMH_DateStatusSubmitted ='".$profileActivity->get_rmhDateStatusSubm()."',  
          Status ='".$profileActivity->get_profileActivityStatus()."' WHERE ProfileActivityRequestID =".$profileActivity->get_profileActivityRequestId();
  
 
