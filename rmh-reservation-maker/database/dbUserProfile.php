@@ -245,43 +245,7 @@ function update_RMHStaffProfile($userprofile){
     return true;
 }
     
-/*
-  * Updates a User Profile in the UserProfile table by deleting it and re-inserting it  
-    *$userprofile the userprofile to update
-   *@author: Alain Brutus
- */
 
-/*function update_UserProfile ($userprofile) {  
-if (! $userprofile instanceof userprofile) {
-		echo ("Invalid argument for update_UserProfile function call");
-		return false;
-	}
-	if (delete_UserProfile($userprofile->get_profileId()))
-	   return insert_UserProfile($userprofile);
-	else {
-	   echo (mysql_error()."unable to update UserProfile table: ".$userprofile->get_userProfileId());
-	   return false;
-	}
-}*/
-
-/*
-  *Deletes a User Profile in the UserProfile table by userProfileId
-    *$userProfileId is the User Profile being deleted
-  *@author: Alain Brutus
- */
-
- 
-/*function delete_UserProfile($userProfileId) {
-	connect();
-    $query="DELETE FROM UserProfile WHERE UserProfileID ='".$userProfileId."'";
-	$result=mysql_query($query);
-	mysql_close();
-	if (!$result) {
-		echo (mysql_error()." unable to delete from UserProfile: ".$userProfileId);
-		return false;
-	}
-    return true;
-}*/
 
 /**
  * Retrieves User Profiles in the User Profile table by Role. 
@@ -336,12 +300,80 @@ function retrieve_all_UserProfile_byRole($userCategory){
                         
 	return $theUserProfiles;
 }
+    /*
+  *Retrieves  User Profile in the UserProfile table by RMH Staff Approver by profileID
+   *$profileid is the User Profile being retrieved for the RMH Staff Approver
+     *null used to keep order of constructor when unused column in constructor
+     * Returns an Object
+   *@author: Alain Brutus
+ */
+
+function retrieve_UserProfile_RMHApprover_OBJ($userProfileId)
+{
+    connect();
+    $query="SELECT U.UserProfileID, U.UserCategory,R.RMHStaffProfileID ,R.Title,R.FirstName, R.LastName,U.UsernameID, U.Password, U.UserEmail, R.Phone
+        FROM userprofile U JOIN rmhstaffprofile R
+        ON U.UserProfileID= R.UserProfileID
+        WHERE U.UserCategory='RMH Staff Approver' AND U.UserProfileID=\"".$userProfileId."\"";     
+        
+       $result = mysql_query($query) or die(mysql_error());
     
+    if (mysql_num_rows($result) <1)
+    {
+       mysql_close();
+        return false;
+    }
+    $result_row = mysql_fetch_assoc($result); 
+    $user = new UserProfile($result_row['UserCategory'], $result_row['UserProfileID'], $result_row['UsernameID'],$result_row['UserEmail'],
+    $result_row['Password'], $result_row['RMHStaffProfileID'],$result_row['Title'], $result_row['FirstName'],
+    $result_row['LastName'], $result_row['Phone'],'null', 'null',
+    'null', 'null', 'null', 'null', 'null');
+	
+        mysql_close();
+	return $user;  
+
+}
+
+/*
+    *Retrieves a User Profile in the UserProfile table for SocialWorker by profileID
+      *$profileid is the User Profile being retrieved for the SocialWorker
+ * Returns an object
+    *@author: Alain Brutus
+*/
+
+function retrieve_UserProfile_SW_OBJ($userProfileId)
+{
+        connect();
+	$query="SELECT U.UserProfileID, U.UserCategory, S.SocialWorkerProfileID,S.Title,S.FirstName, S.LastName,U.UsernameID, U.Password, U.UserEmail, S.Phone,S.HospitalAffiliation,S.EmailNotification
+            FROM userprofile U JOIN socialworkerprofile S
+            ON U.UserProfileID= S.UserProfileID
+            WHERE U.UserCategory='Social Worker' AND U.UserProfileID=\"".$userProfileId."\"";
+        
+        $result = mysql_query($query) or die(mysql_error());
+    
+    if (mysql_num_rows($result) <1)
+    {
+       mysql_close();
+        return false;
+    }
+    
+    $result_row = mysql_fetch_assoc($result); 
+    $user = new UserProfile($result_row['UserCategory'], $result_row['UserProfileID'], $result_row['UsernameID'],$result_row['UserEmail'],
+    $result_row['Password'],'null','null', 'null',
+    'null', 'null', $result_row['SocialWorkerProfileID'], $result_row['Title'],
+    $result_row['FirstName'], $result_row['LastName'], $result_row['HospitalAffiliation'], $result_row['Phone'], 
+    $result_row['EmailNotification']);
+	
+        mysql_close();
+	return $user;  
+
+}
 
 /*
   *Retrieves a User Profile in the UserProfile table by RMH Staff Approver by profileID
    *$profileid is the User Profile being retrieved for the RMH Staff Approver
      *null used to keep order of constructor when unused column in constructor
+ * Returns an array
    *@author: Alain Brutus
  */
 
@@ -377,6 +409,7 @@ function retrieve_UserProfile_RMHStaffApprover($userProfileId)
 /*
     *Retrieves a User Profile in the UserProfile table for SocialWorker by profileID
       *$profileid is the User Profile being retrieved for the SocialWorker
+ * Returns an array
     *@author: Alain Brutus
 */
 
