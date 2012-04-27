@@ -211,7 +211,7 @@ function FamilyModDeny($familyProfileId, $SWID)
 {
     $SW = retrieve_UserProfile_SW($SWID);
     
-    $to = $SW[0]->get_email();
+    $to = $SW[0]->get_userEmail();
     
     $subject = "Family Profile Modification Request";
     
