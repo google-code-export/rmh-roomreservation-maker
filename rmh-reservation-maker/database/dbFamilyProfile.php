@@ -286,13 +286,15 @@ function update_FamilyProfile($family)
             Notes = '".$family->get_patientnotes()."'
             WHERE FamilyProfileID = ".$family->get_familyProfileId();
     
-    mysql_close();
+    
  $result=mysql_query($query);
    	
     if(!$result) {
 		echo mysql_error() . "Error updating FamilyProfile table. <br>";
+                mysql_close();
 	    return false;
-    }  
+    }
+    mysql_close();
     return true;
 }
 
