@@ -227,8 +227,7 @@ function newRequest($RequestKey, $DateSubmitted, $BeginDate, $EndDate)
 {
     $subject = "Reservation Request made on $DateSubmitted";
     $message = "A new room reservation request has been made for the timeframe 
-                from $BeginDate to $EndDate.\r\n\r\nThe request can be viewed 
-                at (URL)/$RequestKey";
+                from $BeginDate to $EndDate.\r\n\r\nThe request ID is: $RequestKey";
     $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     for($i = 0; $i < count($Approver); $i++)
     {
@@ -245,7 +244,7 @@ function newReservationMod($RequestKey, $DateSubmitted, $FamilyProfileID)
     $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
     $subject = "Modification Request made on $DateSubmitted";
     $message = "A modification request has been made for the $familyLname 
-                family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+                family.\r\n\r\nThe request ID is: $RequestKey";
     $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     for($i = 0; $i < count($Approver); $i++)
     {
@@ -262,7 +261,7 @@ function newCancel($RequestKey, $DateSubmitted, $FamilyProfileID)
     $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
     $subject = "Cancellation Request made on $DateSubmitted";
     $message = "A cancellation request has been made for the $familyLname 
-                family.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
+                family.\r\n\r\nThe request ID is: $RequestKey";
     $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     for($i = 0; $i < count($Approver); $i++)
     {
@@ -273,13 +272,12 @@ function newCancel($RequestKey, $DateSubmitted, $FamilyProfileID)
 
 //Sends email to approvers requesting permission to modify a family profile.
 //@author Stefan Pavon
-function newFamilyMod($FamilyProfileID, $DateSubmitted)
+function newFamilyMod($RequestKey, $FamilyProfileID, $DateSubmitted)
 {
     $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
     $subject = "Family Profile Modification Request made on $DateSubmitted";
     $message = "A family profile modification request has been made for the 
-                $familyLname family.\r\n\r\nThe request can be viewed at (URL)/
-                $FamilyProfileID";
+                $familyLname family.\r\n\r\nThe request ID is: $RequestKey";
     $Approver = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     for($i = 0; $i < count($Approver); $i++)
     {
