@@ -46,7 +46,7 @@ class ProfileActivity {
          */
     function __construct($profileActivityId, $profileActivityRequestId, $familyProfileId, $socialWorkerProfileId, $swLastName, $swFirstName,         
  $rmhStaffProfileId, $rmhStaffLastName, $rmhStaffFirstName, $swDateStatusSubm, $rmhDateStatusSubm, $activityType, $profileActivityStatus,
- $parentLastName, $parentFirstName, $parentEmail, $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZip, 
+ $parentFirstName, $parentLastName, $parentEmail, $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZip, 
  $parentCountry, $patientFirstName, $patientLastName, $patientRelation, $patientDOB, $formPdf, $familyNotes, $profileActivityNotes){                
         $this->profileActivityId = $profileActivityId;
         $this->profileActivityRequestId = $profileActivityRequestId;
