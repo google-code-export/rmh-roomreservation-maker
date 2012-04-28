@@ -54,4 +54,40 @@ function getUserAccessLevel()
     return isset($_SESSION['access_level']) ? ($_SESSION['access_level']) : false;;
 }
 
+/**
+ * setSessionMessage function that sets errors or success message, so that it can be displayed even after the redirection
+ * @param array $message An array of messages that need to be displayed
+ * @param boolean $error If the message is an error message or not. By default, it is a normal message
+ */
+function setSessionMessage($message, $error=false)
+{
+    if($error)
+    {
+        $_SESSION['message_error'] = $message;
+    }
+    else
+    {
+        $_SESSION['message_normal'] = $message;
+
+    }
+}
+
+function showSessionMessage()
+{
+    if(isset($_SESSION['message_error']))
+    {
+        echo '<div class="session_message" style="color:#FF3300;">';
+        echo implode('<br />',$_SESSION['message_error']);
+        echo '</div>';
+        unset($_SESSION['message_error']);
+    }
+    else if(isset($_SESSION['message_normal']))
+    {
+        echo '<div class="session_message" style="color:#00BB00;">';
+        echo implode('<br />', $_SESSION['message_normal']);
+        echo '</div>';
+        unset($_SESSION['message_normal']);
+    }
+}
+
 ?>

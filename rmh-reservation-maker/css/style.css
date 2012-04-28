@@ -318,6 +318,7 @@ rmh
 -moz-box-shadow:    0px 4px 5px rgba(50, 50, 50, 0.75);
 box-shadow:         0px 4px 5px rgba(50, 50, 50, 0.75);
 top:0;
+z-index: 10;
 }
 
 .formtop {
@@ -642,3 +643,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', end
 }
 
 #pad {padding-top:60px;}
+
+.session_message
+{
+    background: url('../images/hide.png') center bottom no-repeat rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    padding: 10px 0;
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 50%;
+    z-index: 9;
+    cursor: pointer;
+}
