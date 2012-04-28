@@ -7,10 +7,19 @@ session_cache_expire(30);
 $title = 'Login';
 include('header.php');
 
+//Alter the content class based on user's login status
 if(isset($_SESSION['logged_in']))
     $classAdd = 'content' ; 
 else $classAdd = 'contentLogin';
 
+    //Access Level (Should match UserCategory in DB):
+    $accessLevel = array(
+                        'Family'=>0,
+                        'Social Worker'=>1,
+                        'RMH Staff Approver'=>2,
+                        'RMH Administrator'=>3
+                        );
+    
 $error = array(); //variable that sstores all the errors that occur in the login process
 //if data is submitted then do the following:
 //validate the token
