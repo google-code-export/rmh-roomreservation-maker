@@ -3,9 +3,7 @@
 session_start();
 session_cache_expire(30);
 
-$title = "Welcome"; //This should be the title for the page, included in the <title></title>
-
-include('../header.php'); //including this will further include (globalFunctions.php and config.php)
+include('../permission.php'); //including this will further include (globalFunctions.php and config.php)
 include_once(ROOT_DIR.'/database/dbProfileActivity.php');
 include_once(ROOT_DIR.'/database/dbReservation.php');
 include_once(ROOT_DIR.'/database/dbFamilyProfile.php');
@@ -125,31 +123,16 @@ $statuses = array('approve'=>'Confirm', 'deny'=>'Deny'); //Status info that is s
         //there was no POST DATA
         $errors['invalid_request'] = 'Invalid request type';
     }
-        
-
+    if(!empty($errors))
+    {
+       //if there were errors, set it as session message
+       setSessionMessage($errors, true);
+       header('Location: '.BASE_DIR.'/index.php');
+    }
+    else
+    {
+        //if there werer no errors, set the success message as session message.
+       setSessionMessage($messages);
+       header('Location: '.BASE_DIR.'/index.php');
+    }
 ?>
-
-<div id="container">
-    <div id="content">
-        <?php
-       
-            if(!empty($errors))
-            {
-                echo '<div style="color: #F33">';
-                echo implode('<br/>', $errors);
-                echo '</div>';
-            }
-            if(!empty($messages))
-            {
-                echo '<div style="color: #0B0">';
-                echo implode('<br/>', $messages);
-                echo '</div>';
-            }
-        ?>
-        <a href="<?php echo BASE_DIR.'/index.php';?>">Return to home</a>
-    </div>
-</div>
-<?php 
-include (ROOT_DIR.'/footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
-?>
-
