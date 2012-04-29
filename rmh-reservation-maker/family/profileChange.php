@@ -43,8 +43,7 @@ $errors = array(); //error variable that stores any error occured
         $activityType = "Modify";
         $profileActitivityStatus = "Unconfirmed";
 
-        //retrieves the sw, and gets id, firstname and lastname
-        
+        //retrieves the sw, and gets id, firstname and lastname      
         $currentUser = getUserProfileID();
         $sw = retrieve_UserProfile_SW($currentUser);
         //print_r($sw);
@@ -185,25 +184,23 @@ $errors = array(); //error variable that stores any error occured
              }
             
     $current_activity = new ProfileActivity(0, 0, $familyID, $sw_id, $sw_lname, $sw_fname, 
-    0, "", "", $dateSubmit, 0, $activityType, $profileActitivityStatus, 
-    $parentfname, $parentlname, $parentemail, $parentphone1, $parentphone2, 
-    $parentAddr, $parentcity, $parentstate, $parentzip, 
-    $parentcountry, $patientfname, $patientlname, $patientrelation, 
-    $patientdob, $patientformpdf, $patientnotes, $profileActityNotes);
+            0, "", "", $dateSubmit, 0, $activityType, $profileActitivityStatus, 
+            $parentfname, $parentlname, $parentemail, $parentphone1, $parentphone2, 
+            $parentAddr, $parentcity, $parentstate, $parentzip, 
+            $parentcountry, $patientfname, $patientlname, $patientrelation, 
+            $patientdob, $patientformpdf, $patientnotes, $profileActityNotes);
             
            //if there is a change, insert a new profileActivity object 
            if ($change){
                
                     if(insert_ProfileActivity($current_activity)){
                        echo "Successfully inserted a profile activity request";
-                    }
-                    
-                    insert_ProfileActivity($current_activity);
+                    }                  
            }
            
            //if nothing is changed, output error. No record is inserted into the db
            else if (!$change){
-               echo "no changes detected";
+               echo "no changes detected\r\n";
            }
            
         /*
@@ -215,7 +212,10 @@ $errors = array(); //error variable that stores any error occured
         
         $RequestKey = $current_activity->get_profileActivityRequestId();
         
-        newFamilyMod($familyID, $dateSubmit);
+        if(newFamilyMod($RequestKey, $familyID, $dateSubmit)){
+            echo "An email is sent to the RMH Approver";
+        }
+        echo '<a href="'.BASE_DIR.'/referralForm.php?family='.$familyID.'">Create Room Reservation</a>';
          
     } //end of success token validation
     
@@ -267,17 +267,17 @@ $errors = array(); //error variable that stores any error occured
             }
          }
        ?>
+        
        <form name ="profileChangeForm" method="post" action=" <?php echo BASE_DIR; ?>/family/profileChange.php">
             <?php echo generateTokenField(); ?>    
-           <table border ="1">
-              
-              <!--brings back the familyID-->
-            <input type ="hidden" name ="familyProfileID" value="<?php echo $familyID; ?>" />   
+                         
+        <!--brings back the familyID-->
+        <input type ="hidden" name ="familyProfileID" value="<?php echo $familyID; ?>" />   
             
-        <table border = "2" cellspacing = "10" cellpadding = "10" style="width:500px; margin-bottom: 10px;">
+        <table border = "0" cellspacing = "8" cellpadding = "5" style="width:500px; margin-bottom: 40px;">
         <thead>
         <tr>
-        <th colspan="2"> Family Profile Modification Form </th>
+        <th colspan="2"> <h2>Family Profile Modification Form </h2> </th>
         </tr>
         <tr>
         <td><label for="parentFname">Parent First Name: </label></td>
@@ -318,7 +318,7 @@ $errors = array(); //error variable that stores any error occured
         <td><input type ="text" name ="text_patientlname" value="<?php echo $Profile['patientlname']; ?>" size="40" /><br></td></tr>
         <tr>
         <td><label for="patientrelation"> Patient Relation: </label> </td>
-        <td> <input type ="text" name ="text_patientrelation" value="<?php echo $Profile['patientrelation']; ?>" size="40" /><br></td></tr>
+        <td> <input type ="text" name ="text_patientrelation" value="<?php echo $Profile['patientrelation']; ?>" size="40" /></td></tr>
         <tr>
         <td><label for="dob"> Patient Day Of Birth: </label> </td>
         <td><input type ="text" name ="text_patientdob" value="<?php echo $Profile['patientdob']; ?>" size="40" /><br></td></tr>
@@ -327,12 +327,14 @@ $errors = array(); //error variable that stores any error occured
         <td><input type ="text" name ="text_patientformpdf" value="<?php echo $Profile['patientformpdf']; ?>" size="40" /><br></td></tr>
         <tr>
         <td><label for="notes"> Patient's Notes: </label> </td>
-        <td><input type ="text" name ="text_patientnotes" value="<?php echo $Profile['patientnotes']; ?>" size="40" /><br></td></tr>
+        <td><input type ="text" name ="text_patientnotes" value="<?php echo $Profile['patientnotes']; ?>" size="40" /></td></tr>
         <tr>
         <td><label for="swnotes"> Notes from Social Worker: </label> </td>
-        <td><input type ="text" name ="text_swnotes" value="" size="40" /> <br><br></td></tr>
-        </table>
-        <input type="submit" name="modify" value="Modify"/>
+        <td><input type ="text" name ="text_swnotes" value="" size="40" /></td></tr>
+        <tr>
+            <td></td><td><input type="submit" name="modify" value="Modify"/></td></tr>
+        </thead>
+        </table>               
               
        </form>
     </div>
