@@ -8,6 +8,8 @@
  */
 
 include_once(ROOT_DIR.'/domain/ProfileActivity.php');
+include_once(ROOT_DIR.'/domain/Family.php');
+include_once(ROOT_DIR.'/database/dbFamilyProfile.php');
 include_once(ROOT_DIR.'/database/dbinfo.php');
 
 /**
