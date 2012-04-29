@@ -54,12 +54,13 @@ checkSession(); //check session if it has timed out or not
     
     /* ============ pages RMH ADMINISTRATOR can view ===============*/ 
     $permission_array['listUsers.php'] = 3;
+    $permission_array['userActionHandler.php'] = 3;
 
     $current_page = getCurrentPage(); //current page
     
     //Log-in security
     //If they aren't logged in, display our log-in form.
-    if(!isset($_SESSION['logged_in']) && $permission_array[$current_page] != -1){
+    if(!isset($_SESSION['logged_in']) && (isset($permission_array[$current_page]) && $permission_array[$current_page] != -1)){
         //Redirect to the login page only if the current page is NOT viewable by the world AND the logged in session variable is not set
         header('Location: '.BASE_DIR.DS.'login.php'); 
         exit();
@@ -74,11 +75,18 @@ checkSession(); //check session if it has timed out or not
             //if user is logged in start the permission check
             if(!isset($permission_array[$current_page]) || $permission_array[$current_page]>$_SESSION['access_level']){
                     //in this case, the user doesn't have permission to view this page.
-                    //we redirect them to the index page.
-                    header('Location: '.BASE_DIR.DS.'index.php');
-                    //note: if javascript is disabled for a user's browser, it would still show the page.
-                    //so we die().
-                    die();
+                    if(isAjax())
+                    {
+                        //if it is an ajax request, display an error
+                        echo "Restricted access";
+                        exit();
+                    }
+                    else
+                    {
+                        //we redirect them to the index page.
+                        header('Location: '.BASE_DIR.DS.'index.php');
+                        exit(); //just in case
+                    }
             }
     }
 ?>

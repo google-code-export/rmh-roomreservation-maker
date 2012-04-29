@@ -56,7 +56,7 @@ function displayUsersTable($allUsers)
         {
             echo '<tr>';
                 echo '<td>'.$user->get_usernameId().'</td>';
-                echo '<td>View</td>';
+                echo '<td><a class="viewUser" href="#" data-user="'.$user->get_userProfileId().'" data-group="'.$user->get_UserCategory().'">View</a></td>';
                 echo '<td>Edit</td>';
                 echo '<td>Delete</td>';
             echo '</tr>';
@@ -69,8 +69,6 @@ function displayUsersTable($allUsers)
 ?>
 
 <div id="container">
-
-    <?php include(ROOT_DIR.'/navigation.php');?>
 
     <div id="content" style="margin-left: 250px; margin-top: 23px;">
         
@@ -97,7 +95,23 @@ function displayUsersTable($allUsers)
        $('#filterUsers').change(function(){
           var userType = $(this).children('option:selected').val();
           window.location = '<?php echo BASE_DIR;?>/admin/listUsers.php?type='+userType;
-       }); 
+       });
+       
+       $('.viewUser').click(function(evt){
+           evt.preventDefault();
+           evt.stopImmediatePropagation();
+           var user = $(this).data('user');
+           var group = $(this).data('group');
+           var url = '<?php echo BASE_DIR;?>/admin/userActionHandler.php?view=' + user + '&group=' + group;
+           $.ajax({
+                    type: "POST",
+                    url: url
+                    }).success(function(data){
+                        $('#content').html(data);
+                    }).error(function(error){
+                        $('#content').html(error.responseText);
+                    });
+          });
     });
 </script>
 <?php 
