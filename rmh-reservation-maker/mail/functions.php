@@ -295,13 +295,13 @@ function NewFamilyProfile($profileID)
     $approvers = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     
     foreach($approvers as $user):
-        $to = $user->get_userEmail();
+        $to[] = $user->get_userEmail();
     
         $subject = "There is a Request for a New Family Profile";
         $message = "There is a request for a new family profile. Its Profile Activity ID is $profileID.";
-        
-        email($to, $subject, $message);
     endforeach;
+    
+    email($to, $subject, $message);
 }
 
 
