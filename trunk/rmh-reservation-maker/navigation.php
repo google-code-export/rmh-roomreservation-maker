@@ -34,6 +34,7 @@ else if($userAccess === 1)
     //Navigation for social workers
  ?>
     <li><a href="<?php echo BASE_DIR.'/referralForm.php?id=new';?>">New Referral</a></li>
+    <li><a href="<?php echo BASE_DIR.'/family/newProfile.php';?>">New Family Profile</a></li>
     <li><a href="<?php echo BASE_DIR.'/family/profileDetail.php';?>">Request Room</a></li>
     <li><a href="<?php echo BASE_DIR.'/family/profileChange.php';?>">Modify Family Profile</a></li>
     <li><a href="<?php echo BASE_DIR.'/report.php';?>">Report</a></li> 
@@ -61,5 +62,5 @@ else if($userAccess === 3)
 }
 ?>
     
-</ul><div class="topRightButton"><div id=" id="ios-arrow-left"><a href="<?php echo BASE_DIR.'/logout.php';?>">Logout</a></div></div>
+</ul><div class="topRightButton"><div id="ios-arrow-left"><a href="<?php echo BASE_DIR.'/logout.php';?>">Logout</a></div></div>
 <?php include (ROOT_DIR. '/inc/back.php'); ?>
