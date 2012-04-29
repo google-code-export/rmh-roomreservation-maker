@@ -184,18 +184,36 @@ function build_family($result_row){
 function retrieve_FamilyProfileByName($fname, $lname) 
 {
     connect();
-    $query = "SELECT * FROM familyprofile WHERE ParentFirstName = '".$fname. "' AND ParentLastName='".$lname."'";
+    $fname_sent = FALSE;
+    $lname_sent = FALSE;
+    $new_query = "SELECT * FROM familyprofile WHERE ";
     
-        // this can be useful for debugging, but turn it off before you commit!!
-    //echo "query is " . $query;
+    if( ( $fname == "" ) && ( $lname == "" ) )
+        return NULL; //two blank search fields is erroneous return a NULL
+    
+      if( $fname != "" ) 
+        $fname_sent = TRUE;
+    
+    if( $lname != "" ) 
+        $lname_sent = TRUE;
+        
+    if( $fname_sent && $lname_sent ) 
+        $new_query .= "ParentFirstName=\"$fname\" AND ParentLastName=\"$lname\"";
+    else if( $fname_sent ) //allow a blank last name??
+        $new_query .= "ParentFirstName=\"$fname\"";
+    else//allow a blank first name
+        $new_query .= "ParentLastName=\"$lname\"";
+    
+    // this can be useful for debugging, but turn it off before you commit!!
+    echo "query is " . $new_query;
     
 
-    $result = mysql_query($query) or die(mysql_error());
+    $result = mysql_query($new_query) or die(mysql_error());
     
     if (mysql_num_rows($result) <1)
     {
        mysql_close();
-        return false;
+        return NULL;
     }
     
     $families = array();
