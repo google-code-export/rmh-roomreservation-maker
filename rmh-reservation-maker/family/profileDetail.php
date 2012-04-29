@@ -23,8 +23,13 @@ include(ROOT_DIR . '/database/dbFamilyProfile.php');
 if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST['firstName'] ) || isset( $_POST['lastName'] ) ) )
     {
         $fn = ( (isset( $_POST['firstName'] ) )?sanitize( $_POST['firstName']):""); //if firstName isset, sanitize it, else empty string
+        if($fn == "first name" )
+            $fn = "";
         $ln = ( (isset( $_POST['lastName'] ) )?sanitize( $_POST['lastName']):"");
-        $families = retrieve_FamilyProfileByName($fn, $ln);
+        if($ln == "last name" )
+            $ln = "";
+        
+        $families = retrieve_FamilyProfileByName($fn, $ln);//calls db receives an array of family objs
         
         if( is_array( $families ) )
         {
@@ -43,7 +48,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
           // TODO : Create array for familyProfileId
           //
           //create a row with a td for lname, fname, town, dob
-           $table .= "<tr>\n\t<td><a href=\"javascript:void(0);\"id=\"";//TODO: DYNAMIC LINK CREATION
+           $table .= "<tr>\n\t<td><a href=\"?id=";//TODO: DYNAMIC LINK CREATION
            $table .= $family->get_familyProfileId();
            $table .= "\">";
            $table .= $family->get_parentlname();
@@ -54,7 +59,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
            $table .= $family->get_parentcity();
            $table .= "</td>";
            $table .= "<td>";
-           $table .= $family->get_patientdob();
+           $table .= $family->get_patientdob(); // TODO : Get rid of birthday time
            $table .= "</td>\n</tr>";
             // TODO : put familyProfileId into the elements of the array created above
             //var_dump($family);
@@ -76,12 +81,14 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         //there was no POST DATA  
     }
     
-    //if(isset($_GET['family']) )
-    function displayProfile( $familyProfile )//should this be pass by ref and set as const?
+    //
+   // function displayProfile( $familyProfile )//should this be pass by ref and set as const?
+    if(isset($_GET['id']) )
     {   //gets the familyid passed down by the family profile search and when the profile is selected(clicked)
-            $familyID = $familyProfile->get_familyProfileId();
-      
-            //$familyProfile = retrieve_dbFamilyProfile ($familyID);
+            $familyID = sanitize( $_GET['id'] );
+            //echo $familyID;
+            
+            $familyProfile = retrieve_FamilyProfile ($familyID);
             if($familyProfile){
                 $content = '<li>'.$familyProfile->get_parentfname().'</li>';
                 $content .= '<li>'.$familyProfile->get_parentlname().'</li>';
@@ -121,9 +128,9 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         <form name="searchForm" method="POST" action="<?php echo BASE_DIR;?>/family/profileDetail.php">
             <?php echo generateTokenField(); ?>
             Lookup family by parent first and last name:<br />
-            <input type="text" name="firstName" size="20" onfocus="if(this.value == 'first') { this.value = ''; }" value="first"/>
-            <input type="text" name="lastName" size="30" onfocus="if(this.value == 'last') { this.value = ''; }" value="last"/><br />
-            <input type="submit" value="Lookup" />
+            <input type="text" class="formt formtop" name="firstName" size="20" onfocus="if(this.value == 'first name') { this.value = ''; }" value="first name"/>
+            <input type="text" class="formt formbottom" name="lastName" size="30" onfocus="if(this.value == 'last name') { this.value = ''; }" value="last name"/><br />
+            <input type="submit" class="formsubmit" value="Lookup" />
         </form>
         
         </div>
