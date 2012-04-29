@@ -205,7 +205,7 @@ function retrieve_FamilyProfileByName($fname, $lname)
         $new_query .= "ParentLastName=\"$lname\"";
     
     // this can be useful for debugging, but turn it off before you commit!!
-    echo "query is " . $new_query;
+    //echo "query is " . $new_query;
     
 
     $result = mysql_query($new_query) or die(mysql_error());
