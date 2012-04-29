@@ -385,6 +385,66 @@ function update_status_ProfileActivity($profileActivity){
 }
 
 /**
+ * Function to update the family profile after the temporary family profile in the ProfileActivity table has been confirmed by an RMH Staff Approver.
+ * Checks if the Profile Activity object has an Activity Type of 'Edit' and a Status of 'Confirm'. Then, updates the 'FamilyProfile' table accordingly. 
+ * @param $profileActivity
+ */
+  //Still a Work in Progress (new family creation activity approval)
+  
+function update_FamilyProfile_On_ProfileActivity($profileActivity){
+	//Checks if the profileActivity was actually a profile activity
+	if(!$profileActivity instanceof ProfileActivity){
+		// Print an error
+		echo ("Invalid argument from update_FamilyProfile_On_ProfileActivity function\n");
+		return false;
+	}  
+        connect();
+        //Checks if the temporary family profile has an Activity Type of 'Edit' and a Status of 'Confirm'
+        if($profileActivity->get_activityType() == 'Edit' && $profileActivity->get_profileActivityStatus() == 'Confirm')
+            {
+            
+            $query = "SELECT FamilyProfileID, ParentFirstName, ParentLastName, Email, Phone1, Phone2, Address, City, State, ZipCode, Country,
+            PatientFirstName, PatientLastName, PatientRelation, PatientDateOfBirth, FormPDF, FamilyNotes
+            FROM profileactivity WHERE ProfileActivityRequestID = ".$profileActivity->get_profileActivityRequestId()." AND ActivityType = 'Edit' AND Status = 'Confirm'";
+
+            $result = mysql_query ($query);
+
+            //If the Profile Activity Request has been Confirmed, then update the FamilyProfile table
+            if(mysql_num_rows($result)==1)
+            {
+                 //gets results from the object
+                /*Prepare data for updating the Family Profile table*/     
+                $family = new Family($profileActivity->get_familyProfileId(),
+                         $profileActivity->get_parentFirstName(), 
+                         $profileActivity->get_parentLastName(), 
+                         $profileActivity->get_parentEmail(),
+                         $profileActivity->get_parentPhone1(), 
+                         $profileActivity->get_parentPhone2(), 
+                         $profileActivity->get_parentAddress(), 
+                         $profileActivity->get_parentCity(),
+                         $profileActivity->get_parentState(), 
+                         $profileActivity->get_parentZip(), 
+                         $profileActivity->get_parentCountry(), 
+                         $profileActivity->get_patientFirstName(),
+                         $profileActivity->get_patientLastName(), 
+                         $profileActivity->get_patientRelation(), 
+                         $profileActivity->get_patientDOB(),
+                         $profileActivity->get_formPdf(), 
+                         $profileActivity->get_familyNotes());
+
+                            return update_FamilyProfile($family);
+        }
+    }
+        else
+            {
+            //Prints an error message if Profile Activity Edit was not Confirmed
+            echo mysql_error()." >>>Temporary Family Profile Edit has not been Confirmed."; 
+            mysql_close();
+            return false;
+            }
+}
+
+/**
  * Deletes a Profile Activity Request from the ProfileActivity table.
  * @param $profileActivityRequestId the id of the ProfileActivity to delete
  */
