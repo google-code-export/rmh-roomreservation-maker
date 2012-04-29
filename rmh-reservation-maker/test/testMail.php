@@ -1,5 +1,5 @@
 <?php
-include_once('../mail/functions.php');  
+include_once('../mail/functions.php');    
 //This won't work because you need to use forward slashes not back slashes.
 //include_once('..\mail\functionsWithPEAR.php');  
 
@@ -21,5 +21,8 @@ echo "<p>testing ModifyAccept, expect one SW to be emailed with patient name inc
 ModifyAccept(2,7,2, '2/2', '3/2');
 
 echo "<p>testing PasswordReset, expect one user to be emailed<p>";
-PasswordReset('567yfghj', 'ana123', "alisa.modeste08@stjohns.edu")
+PasswordReset('567yfghj', 'anna123', "alisa.modeste08@stjohns.edu");
+        
+echo "<p>testing NewFamilyProfile, expect an array of users to be emailed<p>";
+NewFamilyProfile(345);
 ?>
