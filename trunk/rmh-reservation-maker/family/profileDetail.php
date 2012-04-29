@@ -20,10 +20,10 @@ include(ROOT_DIR .'/domain/Family.php');
 include(ROOT_DIR . '/database/dbFamilyProfile.php');
 
 
-if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['firstName']) && isset($_POST['lastName']))
+if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST['firstName'] ) || isset( $_POST['lastName'] ) ) )
     {
-        $fn = sanitize( $_POST['firstName']);
-        $ln = sanitize( $_POST['lastName']);
+        $fn = ( (isset( $_POST['firstName'] ) )?sanitize( $_POST['firstName']):""); //if firstName isset, sanitize it, else empty string
+        $ln = ( (isset( $_POST['lastName'] ) )?sanitize( $_POST['lastName']):"");
         $families = retrieve_FamilyProfileByName($fn, $ln);
         
         if( is_array( $families ) )
@@ -32,7 +32,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
             $table = "\n<table style=\"margin-left: 250px; margin-top: 23px;\">\n<thead>\n<tr>\n";
             $table .= "<th>Name</th><th>City</th><th>DOB</th>\n</tr></thead>";
             $numFamilies = 1;
-            
+            //create an array, 
         foreach( $families as $family )
         {
           
@@ -40,10 +40,12 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
           //echo "<script type=\"text/javascript\">$(\"#searchResults\").html(\"A family is returned!\");</script>";
           //echo "<script type=\"text/javascript\">alert(\"OMG\");</script>";//This works
           //
+          // TODO : Create array for familyProfileId
+          //
           //create a row with a td for lname, fname, town, dob
-           $table .= "<tr>\n\t<td><a href=\"javascript:void(0);\"id=\"";
+           $table .= "<tr>\n\t<td><a href=\"javascript:void(0);\"id=\"";//TODO: DYNAMIC LINK CREATION
            $table .= $family->get_familyProfileId();
-           $table .= "\">";//what do these links point to?  how can I have a link calling a function that has to pass an object?
+           $table .= "\">";
            $table .= $family->get_parentlname();
            $table .= ", ";
            $table .= $family->get_parentfname();
@@ -54,7 +56,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && isset($_POST['fi
            $table .= "<td>";
            $table .= $family->get_patientdob();
            $table .= "</td>\n</tr>";
-            
+            // TODO : put familyProfileId into the elements of the array created above
             //var_dump($family);
             
            $numFamilies++;
