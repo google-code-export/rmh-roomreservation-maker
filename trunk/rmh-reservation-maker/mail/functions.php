@@ -28,26 +28,15 @@ function email($add, $subject, $message)
     ini_set("SMTP","mailhubout.stjohns.edu");
     ini_set('sendmail_from', $from);
     ini_set("smtp_port","25");
-     
-    //For testing purposes
-    if (is_array($add)):
-        foreach ($add as $to):
-            echo "This is what was passed in an array: $to <p>";
-        endforeach;
-        
-    else:
-        echo "This is what was passed in a string: $add";
-    endif; 
-    //Until here
     
     if (is_array($add)):
         foreach ($add as $to):
             $mailed = mail($to, $subject, $message);
 
             if($mailed):
-                echo 'The email was sent';
+                echo 'The email was sent to $to';
             else:
-                echo 'The email could not be sent, please try again';
+                echo 'The email could not be sent to $to, please try again';
             endif;
         endforeach;
     else:
@@ -55,9 +44,9 @@ function email($add, $subject, $message)
         $mailed = mail($to, $subject, $message);
 
         if($mailed):
-            echo 'The email was sent';
+            echo 'The email was sent to $to';
         else:
-            echo 'The email could not be sent, please try again';
+            echo 'The email could not be sent to $to, please try again';
         endif;
     endif;
 
@@ -298,4 +287,23 @@ function PasswordReset($activation, $username, $userEmail)
     email($to, $subject, $message);
 }
 
+
+//NewFamilyProfile sends the approvers notice of the need to create a new family profile
+//@author Alisa Modeste
+function NewFamilyProfile($profileID)
+{
+    $approvers = retrieve_all_UserProfile_byRole('RMH Staff Approver');
+    
+    foreach($approvers as $user):
+        $to = $user->get_userEmail();
+    
+        $subject = "There is a Request for a New Family Profile";
+        $message = "There is a request for a new family profile. Its Profile Activity ID is $profileID.";
+        
+        email($to, $subject, $message);
+    endforeach;
+}
+
+
+//function NewFamilyDeny
 ?>
