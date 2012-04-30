@@ -29,14 +29,16 @@ function email($add, $subject, $message)
     ini_set('sendmail_from', $from);
     ini_set("smtp_port","25");
     
+    ///Until here
+    
     if (is_array($add)):
         foreach ($add as $to):
             $mailed = mail($to, $subject, $message);
 
             if($mailed):
-                echo 'The email was sent to $to';
+                echo "The email was sent to $to";
             else:
-                echo 'The email could not be sent to $to, please try again';
+                echo "The email could not be sent to $to, please try again";
             endif;
         endforeach;
     else:
@@ -44,9 +46,9 @@ function email($add, $subject, $message)
         $mailed = mail($to, $subject, $message);
 
         if($mailed):
-            echo 'The email was sent to $to';
+            echo "The email was sent to $to";
         else:
-            echo 'The email could not be sent to $to, please try again';
+            echo "The email could not be sent to $to, please try again";
         endif;
     endif;
 
@@ -295,12 +297,12 @@ function NewFamilyProfile($profileID)
     $approvers = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     
     foreach($approvers as $user):
-        $to[] = $user->get_userEmail();
-    
-        $subject = "There is a Request for a New Family Profile";
-        $message = "There is a request for a new family profile. Its Profile Activity ID is $profileID.";
+        $to[] = $user->get_userEmail();        
     endforeach;
     
+    $subject = "There is a Request for a New Family Profile";
+    $message = "There is a request for a new family profile. Its Profile Activity ID is $profileID.";
+
     email($to, $subject, $message);
 }
 
