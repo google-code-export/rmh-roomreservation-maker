@@ -56,7 +56,7 @@ else if($userAccess === 3)
     //Navigation for admins
  ?>
     <li><a href="<?php echo BASE_DIR.'/admin/listUsers.php';?>">View Users</a></li>
-    <li><a href="<?php echo BASE_DIR.'/index.php';?>">Admin Nav2</a></li>
+    <li><a href="<?php echo BASE_DIR.'/admin/addUser.php';?>">Add New User</a></li>
     
 <?php  
 }

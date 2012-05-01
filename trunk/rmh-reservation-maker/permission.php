@@ -54,6 +54,7 @@ checkSession(); //check session if it has timed out or not
     
     /* ============ pages RMH ADMINISTRATOR can view ===============*/ 
     $permission_array['listUsers.php'] = 3;
+    $permission_array['addUser.php'] = 3;
     $permission_array['userActionHandler.php'] = 3;
 
     $current_page = getCurrentPage(); //current page

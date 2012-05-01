@@ -90,6 +90,11 @@ function displayUsersTable($allUsers)
         
     </div>
 </div>
+<div class="overlay" style="display:none; background: url('<?php echo BASE_DIR;?>/images/bars.png') repeat; width: 100%; height: 100%; position: fixed;left:0; top:0; z-index: 999;">
+    <div class="modalBox" style="position: relative; background: none #FFFFFF; width: 400px; margin:150px auto; border-radius: 5px; padding: 5px;">
+        test
+    </div>
+</div>
 <script type="text/javascript">
     $(function(){
        $('#filterUsers').change(function(){
@@ -107,11 +112,18 @@ function displayUsersTable($allUsers)
                     type: "POST",
                     url: url
                     }).success(function(data){
-                        $('#content').html(data);
+                        $('.modalBox').html(data);
+                        $('.overlay').fadeIn();
                     }).error(function(error){
-                        $('#content').html(error.responseText);
+                        $('.modalBox').html(error.responseText);
                     });
           });
+          $('.overlay').click(function(evt){
+            if($(evt.target).hasClass('overlay'))
+                $(this).fadeOut();
+            else
+                return true;
+          })       
     });
 </script>
 <?php 

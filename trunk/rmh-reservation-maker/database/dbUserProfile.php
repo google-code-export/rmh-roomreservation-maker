@@ -19,10 +19,18 @@ include_once(ROOT_DIR.'/database/dbinfo.php');
  * @author Prayas Bhattarai
  */
 
-function retrieve_UserByAuth($username, $password)
+function retrieve_UserByAuth($username, $password=null)
 {
     connect();
-    $query = "SELECT UserCategory, UserProfileID FROM userprofile WHERE UsernameID = '".$username."' AND Password = '".$password."' LIMIT 1";
+    if($password)
+    {
+        $query = "SELECT UserCategory, UserProfileID FROM userprofile WHERE UsernameID = '".$username."' AND Password = '".$password."' LIMIT 1";
+    }
+    else
+    {
+        $query = "SELECT UserCategory, UserProfileID FROM userprofile WHERE UsernameID = '".$username."' LIMIT 1";
+    }
+    
     $result = mysql_query($query) or die(mysql_error());
     if(mysql_num_rows($result) !== 1)
     {
