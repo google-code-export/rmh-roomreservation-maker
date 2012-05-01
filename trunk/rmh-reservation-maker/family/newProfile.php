@@ -26,7 +26,7 @@ include_once(ROOT_DIR .'/mail/functions.php');
 
     if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
-        $activityType = "New";
+        $activityType = "Create";
         $profileActitivityStatus = "Unconfirmed";
 
         //retrieves the sw, and gets id, firstname and lastname      
@@ -158,9 +158,9 @@ include_once(ROOT_DIR .'/mail/functions.php');
         else if (empty($message)){
             //no error messages
             //create profile activity object
-            $current_activity = new ProfileActivity(0, 0, 0, $sw_id, $sw_lname, $sw_fname, 
-            0, "", "", $dateSubmit, 0, $activityType, $profileActitivityStatus, 
-            $parentfname, $parentlname, $parentemail, $parentphone1, $parentphone2, 
+            $current_activity = new ProfileActivity(0, 0, 0, $sw_id, $sw_lname, $sw_fname, //familyID and requestID set to 0 as placeholders. 
+            0, "", "", $dateSubmit, 0, $activityType, $profileActitivityStatus,             
+            $parentfname, $parentlname, $parentemail, $parentphone1, $parentphone2,        
             $parentAddr, $parentcity, $parentstate, $parentzip, 
             $parentcountry, $patientfname, $patientlname, $patientrelation, 
             $patientdob, $patientformpdf, $patientnotes, $profileActityNotes);
@@ -168,12 +168,15 @@ include_once(ROOT_DIR .'/mail/functions.php');
 //            print_r($message);
 //            var_dump($message);
           
-            // check of insert function returns true, then insert profileactivity                     
+            // check if insert function returns true, then insert profileactivity                     
             if(insert_ProfileActivity($current_activity)){
                  echo "Successfully inserted a profile activity request" . "<br/>";
                  
-                 //EMAIL FUNCTION FOR NEW FAMILY??
+                 //if profileActivity is inserted, send the email to rmh approver
+                 $profileID = $current_activity->get_profileActivityId();
+                 NewFamilyProfile($profileID);
                
+                 //I should pass the familyID to room reservation script 
                  echo '<a href="'.BASE_DIR.'/referralForm.php">Create Room Reservation</a>' . "\n";
         }       
         }
