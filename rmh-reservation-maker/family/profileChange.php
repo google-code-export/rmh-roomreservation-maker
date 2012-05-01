@@ -26,12 +26,15 @@ include_once(ROOT_DIR .'/mail/functions.php');
 
 $errors = array(); //error variable that stores any error occured
 
-       //gets the family profileID and retrieves the fields into an array to validate the input changes
-       //and also to prefill existing family profile data in the html form
-        if(isset($_GET['family']) ){
+        //if no family is passed, echo error and exit to prevent user from seeing the php error messages. 
+        if (!isset($_GET['family'])){
+            echo "The request could not be completed: Invalid family";
+            exit();
+        }
+       //gets the family profileID from the URL
+        if(isset($_GET['family'])){
             
-          $familyID = sanitize($_GET['family']);
-            
+          $familyID = sanitize($_GET['family']);           
           $Profile = familyProfileVar($familyID);
             
         }
@@ -40,7 +43,7 @@ $errors = array(); //error variable that stores any error occured
     {
          
         //default types and status of the profileactivity object
-        $activityType = "Modify";
+        $activityType = "Edit";
         $profileActitivityStatus = "Unconfirmed";
 
         //retrieves the sw, and gets id, firstname and lastname      
@@ -202,14 +205,8 @@ $errors = array(); //error variable that stores any error occured
            else if (!$change){
                echo "no changes detected\r\n";
            }
-           
-        /*
-        EMAIL
-                     
-        Calling email function to send unconfirmed status email to rmh staff
-        how can the request key be attached if it only accepts familyID and dateSubmit as parameters?
-        */
         
+        //Send email to notify the rmh approvers 
         $RequestKey = $current_activity->get_profileActivityRequestId();
         
         if(newFamilyMod($RequestKey, $familyID, $dateSubmit)){
@@ -230,6 +227,8 @@ $errors = array(); //error variable that stores any error occured
         $errors['invalid_request'] = "Family Profile is not selected.";
     }
 
+       //retrieves the family profile fields into an array to validate the input changes
+       //and also to prefill existing family profile data in the html form
     function familyProfileVar($familyID){
         $Profile = array();
             
