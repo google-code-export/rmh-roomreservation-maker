@@ -45,8 +45,6 @@ else if($userAccess === 2)
 {
     //Navigation for RMH reservation managers
  ?>
-    <li><a href="<?php echo BASE_DIR.'/index.php';?>">Manager Nav1</a></li>
-    <li><a href="<?php echo BASE_DIR.'/index.php';?>">Manager Nav2</a></li>
     <li><a href="<?php echo BASE_DIR.'/SearchReservations.php';?>">Search Reservations</a></li>
     
 <?php  
