@@ -94,6 +94,7 @@ else
 
 if(empty($errors))
 {
+    echo "<h2>User Detail</h2>";
     echo '<table cellpadding="3">';
     foreach($profile as $title=>$value)
     {
@@ -111,6 +112,7 @@ if(empty($errors))
 }
 else
 {
+    echo "Error";
     echo '<div style="color: #ff3300;">';
         echo implode('<br />', $errors);
     echo '</div>';

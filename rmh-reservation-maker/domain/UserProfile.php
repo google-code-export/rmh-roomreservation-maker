@@ -126,7 +126,7 @@ class UserProfile {
     //setter functions
     
     function set_userProfileId($profileNum){
-        $this->profileId = $profileNum;
+        $this->userProfileId = $profileNum;
     }
     
     function set_userCategory($userCat){
