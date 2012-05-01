@@ -44,6 +44,9 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
         $_SESSION['access_level'] = $accessLevel[$currentUser['UserCategory']];
         $_SESSION['_username'] = $db_username;
         $_SESSION['_id'] = $currentUser['UserProfileID'];
+        
+        checkDefaultPassword(); //check if the user is still using the default password
+        
         echo "<script type=\"text/javascript\">window.location = \"index.php\";</script>";
         exit();
     }
@@ -101,4 +104,70 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
             </div>
 	</div></center>
     </div>
-    <?php include('footer.php'); ?>
+    <?php include('footer.php');
+    
+function retrieveCurrentUserProfile()
+{
+    //since access level is stored in the session, use that to find the user category
+    //1 is for social worker
+    //2 is for staff approver
+    //3 is for admin
+    //if there is a db function available for this, this function is not needed
+    $accessLevel = getUserAccessLevel();
+    $userProfileId = getUserProfileID();
+    
+    switch($accessLevel)
+    {
+        case 1:
+           return retrieve_UserProfile_SW_OBJ($userProfileId);
+           break;
+        case 2:
+            return retrieve_UserProfile_RMHApprover_OBJ($userProfileId);
+            break;
+        case 3:
+            $userProfile = retrieve_UserProfile_RMHAdmin($userProfileId);
+            return is_array($userProfile) ? current($userProfile) : false;
+            break;
+        default:
+            return false;
+            break;
+    }
+}
+
+function checkDefaultPassword()
+{
+    $userProfile = retrieveCurrentUserProfile();
+    $currentPass = $userProfile->get_password();
+    
+    if(getUserAccessLevel() == 1)
+    {
+        //use functions for social workers
+        $fname = $userProfile->get_swFirstName();
+        $phone = $userProfile->get_swphone();
+        
+    }
+    else if(getUserAccessLevel() > 1)
+    {
+        //use functions for rmh staff
+        $fname = $userProfile->get_rmhStaffFirstName();
+        $phone = $userProfile->get_rmhStaffPhone();
+    }
+    else
+    {
+        return false;
+    }
+    
+    $defaultPass = trim(strtolower($fname)).trim(substr($phone, -4));
+    $defaultPass = getHashValue($defaultPass);
+    
+    if($defaultPass != $currentPass)
+    {
+        return true;
+    }
+    else
+    {
+        setSessionMessage(array('default_pass'=>'You are using the default password for your account. It is advised that you change your password immediately by clicking on the "Manage Account" section.'));
+    }
+    
+}
+    ?>

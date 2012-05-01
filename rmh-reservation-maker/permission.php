@@ -45,6 +45,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['profileDetail.php']=1;
     $permission_array['report.php']=1; //reporting
     $permission_array['SearchReservations.php']=1;
+    $permission_array['changeAccountSettings.php'] = 1; //password change page (could be enhanced to a user information change page
 
     
     /* ============ pages RMH STAFF APPROVER and above can view ===============*/
