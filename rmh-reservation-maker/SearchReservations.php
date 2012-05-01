@@ -1,4 +1,8 @@
 <?php
+/**Search function to find reservations in the database
+ * @version May 1, 2012
+ * author: Michael Pagliuca, Yue Li
+ */
 
 session_start();
 session_cache_expire(30);
@@ -7,7 +11,6 @@ $title = "Search Reservations";
 
 include('header.php');
 include(ROOT_DIR.'/database/dbReservation.php');
-//include(ROOT_DIR.'/navigation.php');
 
 $showReservation = false;
 
