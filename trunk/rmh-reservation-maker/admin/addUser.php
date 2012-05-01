@@ -179,6 +179,11 @@ else if(isset($_GET['type']))
     //get requests need to be validated too. Work on validating these kinds of requests.
 
     $userType = sanitize($_GET['type']);
+    if(!in_array($userType, array_keys($userCategories)))
+    {
+        $errors['invalid_parameter'] = 'Invalid User Category';
+        $userType = 'socialworker';
+    }
 }
 else
 {

@@ -60,6 +60,15 @@ else if($userAccess === 3)
     
 <?php  
 }
+
+//Navigation that appears for everyone (excluding family members)
+if($userAccess > 0)
+{
+?>
+    <li><a href="<?php echo BASE_DIR.'/changeAccountSettings.php';?>">Manage Account</a></li>
+    
+<?php
+}
 ?>
     
 </ul><div class="topRightButton"><div id="ios-arrow-left"><a href="<?php echo BASE_DIR.'/logout.php';?>">Logout</a></div></div>
