@@ -46,7 +46,8 @@ if(isset($_GET['type']) && !empty($_GET['type']) && isset($_GET['request']) && i
             {
                 $request = array(
                             'Request ID' => $reservation->get_roomReservationRequestID(),
-                            'Family' => $reservation->get_familyProfileId(),
+                            'Current Status' => $reservation->get_status(),
+                            'Family Profile ID' => $reservation->get_familyProfileId(),
                             'Social Worker' => $reservation->get_swFirstName().' '.$reservation->get_swLastName(),
                             'Date Submitted' => $reservation->get_swDateStatusSubmitted(),
                             'Activity Type'=>$reservation->get_activityType(),
@@ -69,6 +70,7 @@ if(isset($_GET['type']) && !empty($_GET['type']) && isset($_GET['request']) && i
             {
                 $request = array(
                             'Request ID' => $profileActivity->get_profileActivityRequestId(),
+                            'Current Status' => $profileActivity->get_profileActivityStatus(),
                             'Social Worker' => $profileActivity->get_swFirstName().' '.$profileActivity->get_swLastName(),
                             'Date Submitted' => $profileActivity->get_swDateStatusSubm(),
                             'Activity Type'=>$profileActivity->get_activityType(),
