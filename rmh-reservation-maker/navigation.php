@@ -29,6 +29,7 @@ $userAccess = getUserAccessLevel();
    
 <!--navigation links available to all members -->
 <li><a href="<?php echo BASE_DIR.'/index.php';?>">Home</a></li>
+<li><a href="<?php echo BASE_DIR.'/Helphomepage.php';?>">Help</a></li>
 <?php
 if($userAccess === 0)
 {
@@ -43,7 +44,6 @@ else if($userAccess === 1)
 {
     //Navigation for social workers
  ?>
-    <li><a href="<?php echo BASE_DIR.'/referralForm.php?id=new';?>">New Referral</a></li>
     <li><a href="<?php echo BASE_DIR.'/family/newProfile.php';?>">New Family Profile</a></li>
     <li><a href="<?php echo BASE_DIR.'/family/profileDetail.php';?>">Request Room</a></li>
     <li><a href="<?php echo BASE_DIR.'/report.php';?>">Report</a></li> 
