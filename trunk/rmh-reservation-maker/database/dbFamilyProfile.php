@@ -297,7 +297,7 @@ function update_FamilyProfile($family)
             ZipCode = '".$family->get_parentzip()."',
             Country = '".$family->get_parentcountry()."',
             PatientFirstName = '".$family->get_patientfname()."', 
-            ParentLastName = '".$family->get_patientlname()."', 
+            PatientLastName = '".$family->get_patientlname()."', 
             PatientRelation = '".$family->get_patientrelation()."', 
             PatientDateOfBirth = '".$family->get_patientdob()."',
             FormPDF = '".$family->get_patientformpdf()."', 
