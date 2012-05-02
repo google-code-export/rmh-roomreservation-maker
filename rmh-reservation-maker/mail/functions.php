@@ -200,11 +200,11 @@ function RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
         $to = $SW[0]->get_userEmail();
         
     
-    $subject = "Reservation Request $RequestKeyNumber";
+    $subject = "Reservation Request $RequestKey";
     
     $message = "Your reservation request, $RequestKey, for $name for the dates of $StartDate to $EndDate for has been accepted. \r\n\r\nThank You.";
   
-      mail($to, $subject, $message);
+      email($to, $subject, $message);
 
             
    endif;    
