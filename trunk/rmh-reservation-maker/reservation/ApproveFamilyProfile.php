@@ -21,6 +21,8 @@ $stat=get_status();
 $stat()='confirmed';
 set_status($stat);
 
+$familyProfileId=$reservation->get_familyProfileId(); 
 $SWID=$reservation->get_socialWorkerProfileId(); 
+
 FamilyModAccept($familyProfileId, $SWID);
 ?>

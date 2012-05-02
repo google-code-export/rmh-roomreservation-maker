@@ -23,6 +23,8 @@ set_status($stat);
 
 //Submit Changes to database
 
+$familyProfileId=$reservation->get_familyProfileId(); 
 $SWID=$reservation->get_socialWorkerProfileId(); 
+
 FamilyModDeny($familyProfileId, $SWID);
 ?>
