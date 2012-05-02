@@ -102,6 +102,7 @@ if($showForm == true)
     ?>
 <form name="reportForm" action="report.php" method="POST">
     <?php echo generateTokenField(); ?>
+    <div class="formt formtop" style="background:#FFF; padding-top:7px;">
     <label for="beginDate">Start Date:</label>
         <select name="beginMonth">
             <option value="">Month</option>
@@ -237,9 +238,9 @@ if($showForm == true)
             <option value="2012" <?php if($_POST['endYear']=='2012') echo "selected='selected'";?> >2012</option>
             <option value="2013" <?php if($_POST['endYear']=='2013') echo "selected='selected'";?> >2013</option>
 	</select>
-    <br><br>
+    <br><br></div>
     <label for="hospital" class="noShow non">Hospital (optional):</label>
-            <input class="formt formsingle" type="text" name="hospital" value="Hospital" onfocus="if(this.value == 'Hospital') { this.value = ''; }"/>
+            <input class="formt formbottom" type="text" name="hospital" value="Hospital" onfocus="if(this.value == 'Hospital') { this.value = ''; }"/>
     <br><br>
             <input class="formsubmit" type="submit" value="Submit" name="submit" />
 </form>
