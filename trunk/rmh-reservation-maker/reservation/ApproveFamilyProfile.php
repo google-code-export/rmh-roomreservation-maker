@@ -22,9 +22,10 @@ $stat=get_status();
 $stat()='Confirmed';
 set_status($stat);
 
+$requestID=$profileActivityRequestId;
 $profile = retrieve_ProfileActivity_byRequestId($profileActivityRequestId);
 $familyProfileId=$profile->get_familyProfileId(); 
 $SWID=$profile->get_socialWorkerProfileId(); 
 
-FamilyModAccept($familyProfileId, $SWID);
+FamilyModAccept($requestID, $familyID, $SWID)
 ?>

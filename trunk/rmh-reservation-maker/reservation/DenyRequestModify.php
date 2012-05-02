@@ -24,9 +24,10 @@ set_status($stat);
 
 $reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
 $RequestKey=$reservation->get_roomReservationRequestID();
-$DateToAndFrom= $reservation->get_beginDate()."-".$reservation->get_endDate(); 
-$familyLname=$family->get_parentlname(); 
+$StartDate= $reservation->get_beginDate();
+$EndDate=$reservation->get_endDate();
+$familyID=$reservation->get_familyProfileId(); 
 $SWID=$reservation->get_socialWorkerProfileId(); 
 
-ModifyDeny($RequestKey, $SWID, $familyLname, $DateToAndFrom, $note = "");
+RequestDeny($RequestKey, $StartDate, $EndDate, $SWID, $familyID);
 ?>
