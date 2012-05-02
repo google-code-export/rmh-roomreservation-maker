@@ -136,18 +136,18 @@ $messages = array();
        <form method="post" action="<?php echo BASE_DIR; ?>/changeAccountSettings.php">
            <div>
                         <label  for="edit_old_pass">Old Password</label>
-                        <input class="formt formtop" id="edit_old_pass" type="password" name="edit_old_pass" onfocus="if(this.value == 'Old Password') { this.value = ''; }" value="Old Password" />
+                        <input class="formt formtop" id="edit_old_pass" type="password" name="edit_old_pass" onfocus="if(this.value == 'Old Password') { this.value = ''; }" value="" />
                         <?php echo generateTokenField();
                         ?>
                      
                  </div>
                  <div>
                         <label  for="edit_new_pass">New Password</label>
-                        <input class="formt" id="edit_new_pass" type="password" name="edit_new_pass"  onfocus="if(this.value == 'New Password') { this.value = ''; }" value="New Password" />
+                        <input class="formt" id="edit_new_pass" type="password" name="edit_new_pass"  onfocus="if(this.value == 'New Password') { this.value = ''; }" value="" />
                  </div>
                  <div>
                         <label for="edit_verify_pass">Verify Password</label>
-                        <input class="formt formbottom" id="edit_verify_pass" type="password" name="edit_verify_pass"  onfocus="if(this.value == 'Verify Password') { this.value = ''; }"  value="Verify Password"/>
+                        <input class="formt formbottom" id="edit_verify_pass" type="password" name="edit_verify_pass"  onfocus="if(this.value == 'Verify Password') { this.value = ''; }"  value=""/>
                  </div>
                 
                 <p><input class="fomsubmit" type="submit" name="Submit" value="Submit" /></p>
