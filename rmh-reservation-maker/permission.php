@@ -60,6 +60,7 @@ checkSession(); //check session if it has timed out or not
     /* ============ pages RMH STAFF APPROVER and above can view ===============*/
     $permission_array['activity.php'] = 2; //approval page
     $permission_array['activityHandler.php'] = 2; //approval page handler
+    $permission_array['searchProfileActivity.php'] = 2; //profile activity search page
 
     
     /* ============ pages RMH ADMINISTRATOR can view ===============*/ 
