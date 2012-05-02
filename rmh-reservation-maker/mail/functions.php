@@ -1,19 +1,25 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- * 
- * 
- * To do:
- * URL
- * 
- */
+
+ * Copyright 2011 by Alisa Modeste, Yamiris Pascual, Stefan Pavon and Bonnie MacKellar.
+
+ * This program is part of RMH-RoomReservationMaker, which is free software,
+
+* inspired by the RMH Homeroom Project.
+
+ * It comes with absolutely no warranty.  You can redistribute and/or
+
+ * modify it under the terms of the GNU Public License as published
+
+ * by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+
+*/
+
 
 include_once ('../core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
-include_once (ROOT_DIR.'/domain/Family.php');
 
 
 //email allows you to modify settings and check if mail was sent
@@ -23,15 +29,16 @@ function email($add, $subject, $message)
 {
     /*
      * Not needed on Go Daddy
-     */ $from = 'alisa.modeste08@stjohns.edu'; //this SHOULD be a VALID email address
+     */
+    //$from = 'alisa.modeste08@stjohns.edu'; //this SHOULD be a VALID email address
 
-    ini_set("SMTP","mailhubout.stjohns.edu");
-    ini_set('sendmail_from', $from);
-    ini_set("smtp_port","25");
+    //ini_set("SMTP","mailhubout.stjohns.edu");
+   // ini_set('sendmail_from', $from);
+    //ini_set("smtp_port","25");
     
     ///Until here
     
-    if (is_array($add)):
+   if (is_array($add)):
         foreach ($add as $to):
             $mailed = mail($to, $subject, $message);
 
@@ -138,8 +145,15 @@ function ModifyAccept($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 }
 
 
-//Confirm Email tells the SW their request was submitted and they are able to have a copy of the RequestKey
-//@author: Yamiris Pascual
+
+/* module for RMH-RoomReservationMaker.  
+
+* Confirm Email tells the SW their request was submitted and they are able to have a copy of the RequestKey
+
+ * @author Yamiris Pascual
+
+ * @version May 2, 2012
+*/
 
 function Confirm($RequestKey, $StartDate, $EndDate,$SWID, $familyID)
 {
@@ -163,8 +177,15 @@ function Confirm($RequestKey, $StartDate, $EndDate,$SWID, $familyID)
       endif;     
 }
 
-//This email is sent to the SW to inform them that their request for a reservation has been accepted    
-//@author: Yamiris Pascual
+
+/* module for RMH-RoomReservationMaker.  
+
+*This email is sent to the SW to inform them that their request for a reservation has been accepted 
+
+ * @author Yamiris Pascual
+
+ * @version May 2, 2012
+*/
 function RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
 {
      $SW = retrieve_UserProfile_SW($SWID);
@@ -177,17 +198,28 @@ function RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
     
    
         $to = $SW[0]->get_email();
+        
     
     $subject = "Reservation Request $RequestKeyNumber";
     
     $message = "Your reservation request, $RequestKey, for $name for the dates of $StartDate to $EndDate for has been accepted. \r\n\r\nThank You.";
   
-    email($to, $subject, $message);
+      mail($to, $subject, $message);
+
+            
    endif;    
 }
 
-//This email is sent to the SW to inform them that their request for a reservation has been denied
-//@author:Yamiris Pascual
+
+
+/* module for RMH-RoomReservationMaker.  
+
+*This email is sent to the SW to inform them that their request for a reservation has been denied
+
+ * @author Yamiris Pascual
+
+ * @version May 2, 2012
+*/
 function RequestDeny($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
 {
    $SW = retrieve_UserProfile_SW($SWID);
@@ -209,9 +241,16 @@ function RequestDeny($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
    endif;
 }
 
-//Sends an email to the Social Worker to inform them that their request to modify the familiy profile
-//has been sent.  It also supplies the social worker with the requestID of their specified request.
-//@author: Yamiris Pascual
+
+/* module for RMH-RoomReservationMaker.  
+
+*Sends an email to the Social Worker to inform them that their request to modify the familiy profile
+has been sent.  It also supplies the social worker with the requestID of their specified request.
+
+ * @author Yamiris Pascual
+
+ * @version May 2, 2012
+*/
 function FamilyModConfirm($requestID, $familyID, $SWID)
 {
      $SW = retrieve_UserProfile_SW($SWID);
@@ -233,8 +272,14 @@ function FamilyModConfirm($requestID, $familyID, $SWID)
     endif;
 }
 
-//This email is sent to the SW to inform them that the request to Modify the family profile has been accepted
-//@author: Yamiris Pascual
+/* module for RMH-RoomReservationMaker.  
+
+This email is sent to the SW to inform them that the request to Modify the family profile has been accepted
+
+ * @author Yamiris Pascual
+
+ * @version May 2, 2012
+*/
 function FamilyModAccept($requestID, $familyID, $SWID)
 {
     $SW = retrieve_UserProfile_SW($SWID);
@@ -256,8 +301,15 @@ function FamilyModAccept($requestID, $familyID, $SWID)
     endif;
 }
 
-//This email is sent to the SW to inform them that the request to Modify the family profile has been denied.
-//@author: Yamiris Pascual
+
+/* module for RMH-RoomReservationMaker.  
+
+This email is sent to the SW to inform them that the request to Modify the family profile has been denied.
+
+ * @author Yamiris Pascual
+
+ * @version May 2, 2012
+*/
 function FamilyModDeny($requestID,$familyID, $SWID)
 {
      $SW = retrieve_UserProfile_SW($SWID);
