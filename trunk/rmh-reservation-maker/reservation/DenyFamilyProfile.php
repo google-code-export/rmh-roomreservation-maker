@@ -20,9 +20,9 @@ include_once("../mail/functions.php");
 $stat=get_status();
 $stat()='Denied';
 set_status($stat);
+
 //Submit Changes to database
-//Generate Key ID
-//->rmhStaffProfileId = $rmhStaffProfileId;
-//$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
+
+$SWID=$reservation->get_socialWorkerProfileId(); 
 FamilyModDeny($familyProfileId, $SWID);
 ?>
