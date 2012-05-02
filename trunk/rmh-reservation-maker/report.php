@@ -83,7 +83,7 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
     $_POST['endMonth'] = "";
     $_POST['endDay'] = "";
     $_POST['hospital'] = "";
-    $message = "Please select the data for your report.";
+    $message = "";
     $showForm = true;
 }
 //No POST data
@@ -96,7 +96,7 @@ else
     $_POST['endMonth'] = "";
     $_POST['endDay'] = "";
     $_POST['hospital'] = "";
-    $message = "Please select the data for your report.";
+    $message = "";
     $showForm = true;
 }
 
@@ -106,7 +106,15 @@ echo '<div id="container">';
 //if $showForm = true, display form to enter data
 if($showForm == true)
 {
-    echo '<font color="red">'.$message.'</font><br><br>';
+    if ($message =="")
+    {
+        echo "Please select the data for your report<br><br>";
+    }
+    else
+    {
+        echo '<div class="notice">'.$message.'</div><br><br>';   
+    }
+    
     //FORM
     ?>
 <form name="reportForm" action="report.php" method="POST">
@@ -114,7 +122,7 @@ if($showForm == true)
     
     if ($beginDateError==true)
     {
-        echo '<div class="formt formtop" style="background:#FF0; color: red; border:thin solid red; padding-top:7px;">';
+        echo '<div class="formt formtop" style="background:rgba(255, 255, 122, .7); color: red; border:thin solid red; padding-top:7px;">';
     }
  else 
     {
@@ -195,7 +203,7 @@ if($showForm == true)
     <?php
     if ($endDateError==true)
     {
-        echo '<div class="formt" style="background:#FF0; padding-top:7px; color: red; border-top:thin solid red;">';
+        echo '<div class="formt" style="background:rgba(255, 255, 122, .7); padding-top:7px; color: red; border-top:thin solid red;">';
     }
     else 
     {
@@ -328,7 +336,8 @@ else if($showReport == true)
     
     if(empty($theReservations))
     {
-        echo '<br><font color="red">No data matches your selections.</font>';
+        echo '<br><div class="notice">No data matches your selections.</div><br>';
+        echo '<a href="report.php"><div class="goback"></div></a>';
     }
     else
     {
