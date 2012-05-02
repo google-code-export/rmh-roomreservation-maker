@@ -1,17 +1,27 @@
 <?php
-/**
- *@author Kayla Haynes 
- */
+/*
+* Copyright 2011 by Kayla Haynes and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/*
+* Reporting module for RMH-RoomReservationMaker. 
+* Displays form for data entry and report after data is entered
+* @author Kayla Haynes
+* @version May 01, 2012
+*/
 session_start();
 session_cache_expire(30);
 
 $title = "Report Generation";
 
 include ('header.php');
-//include_once (ROOT_DIR.'/domain/Family.php');
 include_once (ROOT_DIR.'/domain/Reservation.php');
 include_once (ROOT_DIR.'/domain/UserProfile.php');
-//include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 include_once (ROOT_DIR.'/database/dbReservation.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 
@@ -305,9 +315,6 @@ else if($showReport == true)
             $parentName = $reservation->get_parentLastName().", ".$reservation->get_parentFirstName();
             $swName = $reservation->get_swLastName().", ".$reservation->get_swFirstName();
             $status = $reservation->get_status();
-            //$socialWorkerID = $reservation->get_socialWorkerProfileId();
-            //$socialWorker = retrieve_UserProfile_SW($socialWorkerID);
-            //$hospitalAff = $socialWorker->get_hospitalAff();
             $numReservations++;
             
             echo '<tr>';
