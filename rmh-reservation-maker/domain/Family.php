@@ -1,10 +1,20 @@
 <?php
 
 /*
- * Family class for RMH Reservation Maker
- * @version April 22, 2012
- * @author Gergana Stoykova and Linda Shek
- */
+* Copyright 2011 by Gergana Stoykova and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/*
+* Family Domain object for RMH-RoomReservationMaker. 
+* Family profile attributes
+* @author Gergana Stoykova
+* @version 5/2/2012
+*/
 
 class Family{
     

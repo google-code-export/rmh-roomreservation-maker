@@ -1,9 +1,20 @@
 <?php
 /*
- * ProfileActivity class for RMH Reservation Maker
- * @version April 21, 2012
- * @author Gergana Stoykova and Linda Shek
- */
+* Copyright 2011 by Gergana Stoykova and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/*
+* Profile Activity Domain Object for RMH-RoomReservationMaker. 
+* Specifies attributes for tracking the modifications to the family profile by Social worker
+* @author Gergana Stoykova
+* @version 5/2/2012
+*/
+
 /*include_once(ROOT_DIR.'/domain/Family.php');
 include_once(ROOT_DIR.'/domain/UserProfile.php');
 include_once(ROOT_DIR.'/database/dbProfileActivity.php');*/
