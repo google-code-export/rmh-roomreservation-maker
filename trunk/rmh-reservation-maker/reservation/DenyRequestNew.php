@@ -10,7 +10,7 @@
  
 /*
 * Deny New Request module for RMH-RoomReservationMaker. 
-* Brief description of module (see Homeroom for examples)
+* This function sends emails based on the specific case of the title
 * @author Paul Kubler
 * @version 5/1/12
 */
