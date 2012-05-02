@@ -1,4 +1,21 @@
 <?php
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/**
+* Add new user script for RMH-RoomReservationMaker. 
+* This page includes code that is used for adding a new user. 
+* The input fields are updated based on the user group that is selected by the user. This is done using javascript.
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
+
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);

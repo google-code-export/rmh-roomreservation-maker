@@ -1,10 +1,21 @@
 <?php
-
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
 /**
- * @author Prayas Bhattarai
- * 
- * This file includes all the functions that are called in the admin interface 
- */
+* userAction Handler script for RMH-RoomReservationMaker. 
+* This file contains all the functions and data manipulation script for the admin interface.
+* As of May 1 version, this is limited to code to handle View User action only 
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
+
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);

@@ -1,4 +1,20 @@
 <?php
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/**
+* Header script for RMH-RoomReservationMaker. 
+* This script is included in most pages that require user interaction (except for handlers).
+* This page contains the html tags and global includes that are required by each page.
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
  
 /*  Direct access of include files needs to prevented. In order to do that, the following constant defines PARENT.
     Any include page that has header included before, will have this constant defined. If the page is directly accessed,

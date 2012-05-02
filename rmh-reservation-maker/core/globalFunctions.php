@@ -1,18 +1,31 @@
 <?php
-
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
 /**
- * This file will include global functions that might be helpful for other pages.
- * If you think a function that has to be used in your code could be re-used by others,
- * please include it here. This file will be included in the header.php so, any other pages
- * that use header.php file will automatically have these functions available.
- * 
- * Also, feel free to modify any of the existing functions if you think you could make it more efficient
- */
+* Global functions for RMH-RoomReservationMaker. 
+* 
+* This file will include global functions that might be helpful for other pages.
+* If you think a function that has to be used in your code could be re-used by others,
+* please include it here. This file will be included in the header.php so, any other pages
+* that use header.php file will automatically have these functions available.
+* 
+* Also, feel free to modify any of the existing functions if you think you could make it more efficient
+
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
 
 include_once('config.php');
 
 /**
- * sanitize function that filters out harmful characters from being processed.
+ * sanitize function that filters out harmful characters from being processed. This function should be worked on.
  * 
  * @param string $data the field that needs to be sanitized
  * @param boolean $mysql (optional) set to true if the function is being used to sanitize at DB level. An active DB connection is required for this to work.
@@ -35,7 +48,7 @@ function sanitize($data, $mysql=false)
 /**
  * getCurrentPage function that returns the name of the current page excluding the path
  * 
- * @return string name of the current page, including the php extension 
+ * @return string name of the current page, including the php extension ex: globalFunctions.php
  */
 function getCurrentPage()
 {

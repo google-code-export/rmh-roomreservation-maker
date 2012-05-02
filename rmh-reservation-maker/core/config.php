@@ -1,11 +1,21 @@
 <?php
-
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
 /**
- * This file contains all the global configuration that needs to be setup before the application starts.
- * Since this file will be included by the header.php file, any thing that refers to header file will also
- * get the codes defined on this page
- * 
- */
+* Configuration script for RMH-RoomReservationMaker. 
+* This file contains all the global configuration that needs to be setup before the application starts.
+* Since this file will be included by the header.php file, any thing that refers to header file will also
+* get the constants defined on this page
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
 
 //As an attempt to start, the following code sets the default timezone that is used by the date/time function throughout
 date_default_timezone_set('America/New_York');
