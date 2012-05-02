@@ -22,9 +22,9 @@ $stat=get_status();
 $stat()='Denied';
 set_status($stat);
 
-$reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
-$familyProfileId=$reservation->get_familyProfileId(); 
-$SWID=$reservation->get_socialWorkerProfileId(); 
+$profile = retrieve_ProfileActivity_byRequestId($profileActivityRequestId);
+$familyProfileId=$profile->get_familyProfileId(); 
+$SWID=$profile->get_socialWorkerProfileId(); 
 
 FamilyModDeny($familyProfileId, $SWID);
 ?>
