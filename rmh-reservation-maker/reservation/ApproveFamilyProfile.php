@@ -18,7 +18,7 @@ include_once("../domain/Reservation.php");
 include_once("../mail/functions.php");
 //Append "-confirmed" to status
 $stat=get_status();
-$stat()+='-confirmed';
+$stat()='confirmed';
 set_status($stat);
 
 FamilyModAccept($familyProfileId, $SWID);
