@@ -17,8 +17,9 @@
 include_once("../domain/Reservation.php");
 include_once("../mail/functions.php");
 //Append "-confirmed" to status
+
 $stat=get_status();
-$stat()+='-denied';
+$stat()='Denied';
 set_status($stat);
 
 $reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
