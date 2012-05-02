@@ -21,6 +21,7 @@ $stat=get_status();
 $stat()='confirmed';
 set_status($stat);
 
+$reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
 $familyProfileId=$reservation->get_familyProfileId(); 
 $SWID=$reservation->get_socialWorkerProfileId(); 
 
