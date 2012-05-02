@@ -1,13 +1,14 @@
 <?php
 /**
  * @author Jessica Cheong
+ * @version May 1, 2012
  * 
- * Profile Change Request Form and the Handling
+ * Family Profile Change module for RMH-RoomReservationMaker.
+ *  
+ * When there is a need to modify an existing family profile. This is the page that directs the SW to update the family 
+ * profile that has incorrect or inaccutate data. The changes would be stored in a different table until the data is verfied by the
+ * RMH approver. A history of the activity is stored for future references. 
  * 
- * This page deals with the profile change function. When the SW creates a room reservation, and there is
- * a need to modify an existing family profile. This is the page that would direct the SW to make the
- * appropriate change. The change would be stored in a different table until the data is verfied by the
- * RMH approver. This activity is stored for future references. 
  */
 
 session_start();
@@ -26,11 +27,6 @@ include_once(ROOT_DIR .'/mail/functions.php');
 
 $errors = array(); //error variable that stores any error occured
 
-        //if no family is passed, echo error and exit to prevent user from seeing the php error messages. 
-        if (!isset($_GET['family'])){
-            echo "The request could not be completed: Invalid family";
-            exit();
-        }
        //gets the family profileID from the URL
         if(isset($_GET['family'])){
             
@@ -198,21 +194,23 @@ $errors = array(); //error variable that stores any error occured
                
                     if(insert_ProfileActivity($current_activity)){
                        echo "Successfully inserted a profile activity request";
+                       
+                        //Send email to notify the rmh approvers 
+                        $RequestKey = $current_activity->get_profileActivityId();
+
+                        if(newFamilyMod($RequestKey, $familyID, $dateSubmit)){
+                            echo "An email is sent to the RMH Approver";
+                        }
+                        
+                        echo '<a href="'.BASE_DIR.'/referralForm.php?family='.$familyID.'">Create Room Reservation</a>';
+                        exit();
                     }                  
            }
            
            //if nothing is changed, output error. No record is inserted into the db
            else if (!$change){
-               echo "no changes detected\r\n";
+               echo "You did not make any changes.";
            }
-        
-        //Send email to notify the rmh approvers 
-        $RequestKey = $current_activity->get_profileActivityRequestId();
-        
-        if(newFamilyMod($RequestKey, $familyID, $dateSubmit)){
-            echo "An email is sent to the RMH Approver";
-        }
-        echo '<a href="'.BASE_DIR.'/referralForm.php?family='.$familyID.'">Create Room Reservation</a>';
          
     } //end of success token validation
     
@@ -268,11 +266,19 @@ $errors = array(); //error variable that stores any error occured
        ?>
         
        <form name ="profileChangeForm" method="post" action=" <?php echo BASE_DIR; ?>/family/profileChange.php">
-            <?php echo generateTokenField(); ?>    
-                         
-        <!--brings back the familyID-->
-        <input type ="hidden" name ="familyProfileID" value="<?php echo $familyID; ?>" />   
+            <?php echo generateTokenField(); ?>   
             
+         <?php 
+           if (!isset($_GET['family'])){
+            echo "The request could not be completed: Invalid family";
+            exit();
+           }
+         ?>
+                                    
+        <!--brings back the familyID-->   
+        <input type ="hidden" name ="familyProfileID" value="<?php echo $familyID; ?>" />   
+           
+        
         <table border = "0" cellspacing = "8" cellpadding = "5" style="width:500px; margin-bottom: 40px;">
         <thead>
         <tr>
