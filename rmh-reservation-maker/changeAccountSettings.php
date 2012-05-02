@@ -134,34 +134,22 @@ $messages = array();
         
         <p>Please use this page to change your default password, if you haven't already done so.</p>
        <form method="post" action="<?php echo BASE_DIR; ?>/changeAccountSettings.php">
-            <table width="400" cellpadding="2">
-                    <td>
-                        <label for="edit_old_pass">Old Password<label>
-                    </td>
-                    <td>
-                        <input id="edit_old_pass" type="password" name="edit_old_pass" />
+           <div>
+                        <label  for="edit_old_pass">Old Password</label>
+                        <input class="formt formtop" id="edit_old_pass" type="password" name="edit_old_pass" onfocus="if(this.value == 'Old Password') { this.value = ''; }" value="Old Password" />
                         <?php echo generateTokenField();
                         ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="edit_new_pass">New Password<label>
-                    </td>
-                    <td>
-                        <input id="edit_new_pass" type="password" name="edit_new_pass" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="edit_verify_pass">Verify Password<label>
-                    </td>
-                    <td>
-                        <input id="edit_verify_pass" type="password" name="edit_verify_pass" />
-                    </td>
-                </tr>
+                     
+                 </div>
+                 <div>
+                        <label  for="edit_new_pass">New Password</label>
+                        <input class="formt" id="edit_new_pass" type="password" name="edit_new_pass"  onfocus="if(this.value == 'New Password') { this.value = ''; }" value="New Password" />
+                 </div>
+                 <div>
+                        <label for="edit_verify_pass">Verify Password</label>
+                        <input class="formt formbottom" id="edit_verify_pass" type="password" name="edit_verify_pass"  onfocus="if(this.value == 'Verify Password') { this.value = ''; }"  value="Verify Password"/>
+                 </div>
                 
-</table>
                 <p><input type="submit" name="Submit" value="Submit" /></p>
 </form>
         <?php 

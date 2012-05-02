@@ -657,3 +657,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', end
     z-index: 9;
     cursor: pointer;
 }
+
+.formform div {height:40px;}
+.notice {border:thin solid red; background:rgba(255,255,122,.7); padding:5px 3px; margin:5px 0px;}

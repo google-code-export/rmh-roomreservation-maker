@@ -227,98 +227,71 @@ else
             else
             {
         ?>
+        <div class="notice">Note: Password is automatically set as the combination of user's first name and last four digits of their phone number, all lowercase.</div>
         <form method="post" action="<?php echo BASE_DIR; ?>/admin/addUser.php">
-            <table width="400" cellpadding="2">
-                <tr>
-                    <td>
-                        <label for="userGroup">User Category</label>
-                    </td>
-                    <td>
-                        <select id="userGroup" name="userGroup">
+              
+                        <label class="noshow non" for="userGroup">User Category</label>
+                        <select class="formtop formt" id="userGroup" name="userGroup">
                             <option value="admin" <?php echo($userType == 'admin' ? ' selected="selected"' : null) ?>>RMH Administrator</option>
                             <option value="rmhstaff" <?php echo($userType == 'rmhstaff' ? ' selected="selected"' : null) ?>>RMH Staff Approver</option>
                             <option value="socialworker" <?php echo($userType == 'socialworker' ? ' selected="selected"' : null) ?>>Social Worker</option>
                         </select>
                         <?php echo generateTokenField();
                         ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        Note: Password is automatically set as the combination of user's first name and last four digits of their phone number, all lowercase.
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="add_title">Title<label>
-                    </td>
-                    <td>
-                        <input id="add_title" type="text" name="add_title" value="<?php echo isset($add_title)? $add_title : '';?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="add_fname">First name<label>
-                    </td>
-                    <td>
-                        <input id="add_fname" type="text" name="add_fname" value="<?php echo isset($add_fname)? $add_fname : '';?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="add_lname">Last name<label>
-                    </td>
-                    <td>
-                        <input id="add_lname" type="text" name="add_lname" value="<?php echo isset($add_lname)? $add_lname : '';?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="add_phone">Phone<label>
-                    </td>
-                    <td>
-                        <input id="add_phone" type="text" name="add_phone" value="<?php echo isset($add_phone)? $add_phone : '';?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="add_username">Username<label>
-                    </td>
-                    <td>
-                        <input id="add_username" type="text" name="add_username" value="<?php echo isset($add_username)? $add_username : '';?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="add_email">Email<label>
-                    </td>
-                    <td>
-                        <input id="add_email" type="text" name="add_email" value="<?php echo isset($add_email)? $add_email : '';?>" />
-                    </td>
-                </tr>
+                       
+                
+                
+                <div>   
+                        <label class="noshow non" for="add_title">Title</label>
+                        <input class="formt" id="add_title" type="text" name="add_title" onfocus="if(this.value == 'Title') { this.value = ''; }" value="Title" />
+                </div>   
+                <div>   
+                       
+                        <label class="noshow non" for="add_fname">First name</label>
+                        <input class="formt" id="add_fname" type="text" name="add_fname" onfocus="if(this.value == 'First Name') { this.value = ''; }" value="First Name" />
+                </div>   
+                <div>   
+                        <label class="noshow non" for="add_lname">Last name</label>
+                        <input class="formt" id="add_lname" type="text" name="add_lname" onfocus="if(this.value == 'Last Name') { this.value = ''; }" value="Last Name" />
+                </div>   
+                <div>   
+                        <label class="noshow non" for="add_phone">Phone</label>
+                        <input class="formt" id="add_phone" type="text" name="add_phone" onfocus="if(this.value == 'Phone #') { this.value = ''; }" value="Phone #" />
+                </div>   
+                <div>   
+                        <label class="noshow non" for="add_username">Username</label>
+                        <input class="formt" id="add_username" type="text" name="add_username" onfocus="if(this.value == 'username') { this.value = ''; }" value="username" />
+                       
+                </div>   
+                <div>   
+                       <label class="noshow non" for="add_email">Email</label>
+                       <input class="formt" id="add_email" type="text" name="add_email" onfocus="if(this.value == 'E-mail Address') { this.value = ''; }" value="E-mail Address" />
+                </div>   
                 <?php
                 if(isset($userType) && $userType == 'socialworker')
                 {
                 ?>
-                <tr>
-                    <td>
-                        <label for="add_hospital">Hospital Affiliation<label>
-                    </td>
-                    <td>
-                        <input id="add_hospital" type="text" name="add_hospital" value="<?php echo isset($add_hospital)? $add_hospital : '';?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="add_notify">Email Notification<label>
-                    </td>
-                    <td>
+                <div>   
+                       
+                        <label class="noshow non" for="add_hospital">Hospital Affiliation</label>
+
+                        <input class="formt formbottom" id="add_hospital" type="text" name="add_hospital" onfocus="if(this.value == 'Hospital Affiliation') { this.value = ''; }" value="Hospital Affiliation" />
+                       
+                </div>   
+                <br />
+                <div style="padding-top:10px;">
+                       
+                       
+                        <label for="add_notify">Email Notification</label>
+                               
+                       
+                       
                         <input type="radio" id="add_yes" name="add_notify" checked="true" value="Yes" />
                         <label for="add_yes">Yes</label>
                         <input type="radio" id="add_no" name="add_notify" value="No" />
                         <label for="add_no">No</label>
-                    </td>
-                </tr>    
+                       
+                </div>       
                 <?php
                 }
                 ?>
