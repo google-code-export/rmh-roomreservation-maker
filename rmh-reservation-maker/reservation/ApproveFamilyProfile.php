@@ -19,7 +19,7 @@ include_once("../domain/Reservation.php");
 include_once("../mail/functions.php");
 
 $stat=get_status();
-$stat()='confirmed';
+$stat()='Confirmed';
 set_status($stat);
 
 $reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
