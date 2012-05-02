@@ -2,7 +2,7 @@
 
 /*
 
- * Copyright 2011 by Alisa Modeste, Yamiris Pascual, Stefan Pavon and Bonnie MacKellar.
+ * Copyright 2012 by Alisa Modeste, Yamiris Pascual, Stefan Pavon and Bonnie MacKellar.
 
  * This program is part of RMH-RoomReservationMaker, which is free software,
 
@@ -22,30 +22,35 @@ include_once (ROOT_DIR.'/database/dbUserProfile.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 
 
-//email allows you to modify settings and check if mail was sent
-//@param array/string $add - one or more email recipients
-//@author Alisa Modeste
+
+/*
+* email module for RMH-RoomReservationMaker. 
+* Allows you to modify settings and check if mail was sent
+  @param array/string $add - one or more email recipients
+* @author Alisa Modeste
+* @version 05/02/12
+*/
 function email($add, $subject, $message)
 {
     /*
-     * Not needed on Go Daddy
-     */
-    //$from = 'alisa.modeste08@stjohns.edu'; //this SHOULD be a VALID email address
+      *///Not needed on Go Daddy
+     
+    $from = 'alisa.modeste08@stjohns.edu'; //this SHOULD be a VALID email address
 
-    //ini_set("SMTP","mailhubout.stjohns.edu");
-   // ini_set('sendmail_from', $from);
-    //ini_set("smtp_port","25");
+    ini_set("SMTP","mailhubout.stjohns.edu");
+    ini_set('sendmail_from', $from);
+    ini_set("smtp_port","25");
     
-    ///Until here
+    //Until here
     
    if (is_array($add)):
         foreach ($add as $to):
             $mailed = mail($to, $subject, $message);
 
             if($mailed):
-                echo "The email was sent to $to";
+                echo "<p>The email was sent to $to";
             else:
-                echo "The email could not be sent to $to, please try again";
+                echo "<p>The email could not be sent to $to, please try again";
             endif;
         endforeach;
     else:
@@ -53,9 +58,9 @@ function email($add, $subject, $message)
         $mailed = mail($to, $subject, $message);
 
         if($mailed):
-            echo "The email was sent to $to";
+            echo "<p>The email was sent to $to";
         else:
-            echo "The email could not be sent to $to, please try again";
+            echo "<p>The email could not be sent to $to, please try again";
         endif;
     endif;
 
@@ -63,9 +68,13 @@ function email($add, $subject, $message)
 }
 
 
-//ConfirmCancel notifies the SW that the request has been cancelled.
-//@param int $SWID - UserProfileID
-//@author Alisa Modeste
+/*
+* ConfirmCancel module for RMH-RoomReservationMaker. 
+* Notifies the social worker that the request has been cancelled.
+  @param int $SWID - looking for UserProfileID
+* @author Alisa Modeste
+* @version 05/02/12
+*/
 function ConfirmCancel($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 {
     $SW = retrieve_UserProfile_SW($SWID);
@@ -73,13 +82,10 @@ function ConfirmCancel($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
     if ($SW[0]->get_email_notification() == 'Yes'):
         
         $family = retrieve_FamilyProfile($familyID);
-
         $name = $family->get_patientfname() . " " . $family->get_patientlname();
    
         $to = $SW[0]->get_userEmail();
-        
         $subject = "Confirmation of Canceled Request";
-
         $message = "The cancellation for $name's family for dates $StartDate - $EndDate has been processed.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
 
         email($to, $subject, $message);
@@ -89,9 +95,13 @@ function ConfirmCancel($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 }
 
 
-//ModifyDeny notifies the SW that the modified request couldn't be accommodated.
-//@param int $SWID - UserProfileID
-//@author Alisa Modeste
+/*
+* ModifyDeny module for RMH-RoomReservationMaker. 
+* Notifies the social worker that the modified request couldn't be accommodated.
+  @param int $SWID - looking for UserProfileID
+* @author Alisa Modeste
+* @version 05/02/12
+*/
 function ModifyDeny($RequestKey, $SWID, $familyID, $StartDate, $EndDate, $note = "")
 {
     $SW = retrieve_UserProfile_SW($SWID);
@@ -99,12 +109,10 @@ function ModifyDeny($RequestKey, $SWID, $familyID, $StartDate, $EndDate, $note =
     if ($SW[0]->get_email_notification() == 'Yes'):
     
         $family = retrieve_FamilyProfile($familyID);
-    
         $name = $family->get_patientfname() . " " . $family->get_patientlname();
    
 
         $to = $SW[0]->get_userEmail();
-    
         $subject = "Cannot Accommodate Modified Request";
         
         if ($note != ""):
@@ -119,9 +127,14 @@ function ModifyDeny($RequestKey, $SWID, $familyID, $StartDate, $EndDate, $note =
     
 }
 
-//ModifyAccept notifies the SW that the modified request has been accepted.
-//@param int $SWID - UserProfileID
-//@author Alisa Modeste
+
+/*
+* ModifyAccept module for RMH-RoomReservationMaker. 
+* Notifies the social worker that the modified request has been accepted.
+  @param int $SWID - looking for UserProfileID
+* @author Alisa Modeste
+* @version 05/02/12
+*/
 function ModifyAccept($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 {
     $SW = retrieve_UserProfile_SW($SWID);
@@ -129,13 +142,10 @@ function ModifyAccept($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
     if ($SW[0]->get_email_notification() == 'Yes'):
         
         $family = retrieve_FamilyProfile($familyID);
-    
         $name = $family->get_patientfname() . " " . $family->get_patientlname();
     
         $to = $SW[0]->get_userEmail();
-        
         $subject = "Modified Request has been Accepted";
-
         $message = "The request for $name's family for dates $StartDate - $EndDate has been accepted.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
 
 
@@ -429,8 +439,14 @@ function newFamilyMod($RequestKey, $DateSubmitted, $FamilyProfileID)
     };
 }
 
-//PasswordReset sends an email to the user with a link to reset their password
-//@author Alisa Modeste
+
+/*
+* PasswordReset module for RMH-RoomReservationMaker. 
+* Sends an email to the user with a link to reset their password
+  @param mixed $activation - generated activation code
+* @author Alisa Modeste
+* @version 05/02/12
+*/
 function PasswordReset($activation, $username, $userEmail)
 {
     $to = $userEmail;
@@ -442,8 +458,12 @@ function PasswordReset($activation, $username, $userEmail)
 }
 
 
-//NewFamilyProfile sends the approvers notice of the need to create a new family profile
-//@author Alisa Modeste
+/*
+* NewFamilyProfile module for RMH-RoomReservationMaker. 
+* Sends the approvers notice of the need to create a new family profile
+* @author Alisa Modeste
+* @version 05/02/12
+*/
 function NewFamilyProfile($profileID)
 {
     $approvers = retrieve_all_UserProfile_byRole('RMH Staff Approver');
