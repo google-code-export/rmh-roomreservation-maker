@@ -3,7 +3,7 @@
 
 * Copyright 2011 by Michael Pagliuca, Yue Li and Bonnie MacKellar.
 
-* This program is part of RMH-RoomReservationMaker, which is free software,
+* This program is part of RMH-RoomReservation-Maker, which is free software,
 
 * inspired by the RMH Homeroom Project.
 
@@ -142,7 +142,7 @@ $showReservation = false;
        <form name="SearchReservations" method="post" action="SearchReservations.php">
             <?php echo generateTokenField(); ?>
 
-           <select name="searchType">
+           <select class="formt formtop"name="searchType">
                <option value = "Select Search Type">Select Search Type</option>
                <option value = "Request ID">Request ID</option>
                <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
@@ -151,13 +151,13 @@ $showReservation = false;
                <option value = "Status">Status</option>
            </select>
            
-           <input type="text" name="searchParam" value="" size="10" />
+           <input class="formt formbottom"  onfocus="if(this.value == '') { this.value = ''; }"type="text" name="searchParam" value="" size="10" />
            
            
            <br>
            <br>
            
-           <input type="submit" value="Search" name="enterSearch" />
+           <input class="formsubmit"type="submit" value="Search" name="enterSearch" />
            
        </form>
         <?php

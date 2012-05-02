@@ -188,8 +188,8 @@ include_once(ROOT_DIR .'/mail/functions.php');
     }//end of success validation of tokens
     else if(isset($_POST['form_token']) && !validateTokenField($_POST))
     {
-        //if the security validation failed. display/store the error:
-        //'The request could not be completed: security check failed!'
+        //if the security validation failed. display/store the error
+        //'The request could not be completed security check failed!'
         echo "The request could not be completed.";
     }
    
@@ -201,67 +201,58 @@ include_once(ROOT_DIR .'/mail/functions.php');
         
        <form name ="newProfileForm" method="post" action="newProfile.php">
             <?php echo generateTokenField(); ?>
-           
-        <table border = "0" cellspacing = "8" cellpadding = "5" style="width:500px; margin-bottom: 40px;">
-        <thead>
-        <tr>                         
+         
+        <div>                         
         <th colspan="2"> <h2> New Family Profile Form </h2></th>
-        </tr>
-        <tr>
-        <td>Parent First Name: </td> 
-        <td><input type="text" name="ParentFirstName" value="" size="40" /></td></tr>
-        <tr>
-        <td>Parent Last Name:</td>
-        <td><input type="text" name="ParentLastName" value="" size="40" /></td></tr>
-        <tr>
-        <td>Email:</td>
-        <td><input type="text" name="Email" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Phone1:</td>
-        <td><input type="text" name="Phone1" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Phone2:</td>
-        <td><input type="text" name="Phone2" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Address:</td>
-        <td><input type="text" name="Address" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>City:</td>
-        <td><input type="text" name="City" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>State:</td>
-        <td><input type="text" name="State" value="" size="40" /><br> </td></tr>
-        <tr>
-        <td>Zip Code:</td>
-        <td><input type="text" name="ZipCode" value="" size="40" /><br></td></tr>
-        <td>Country:</td>
-        <td><input type="text" name="Country" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Patient First Name: </td>
-        <td><input type="text" name="PatientFirstName" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Patient Last Name: </td>
-        <td><input type="text" name="PatientLastName" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Patient Relation:  </td>
-        <td><input type="text" name="PatientRelation" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Patient Date Of Birth:</td>
-        <td><input type="text" name="PatientDOB" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Patient Diagnosis: </td>
-        <td><input type="text" name="PatientDiagnosis" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Patient's Notes: </td>
-        <td><input type="text" name="PatientNote" value="" size="40" /><br></td></tr>
-        <tr>
-        <td>Notes from Social Worker: </td>
-        <td><input type="text" name="swNote" value="" size="40"/></td></tr>
-        <tr>                        
-            <td></td><td><input type="submit" name="submit" value="Modify"/></td></tr>
+        </div>
+        <div>
+
+         <input class="formtop formt" type="text" name="ParentFirstName" onfocus="if(this.value == 'Parent First Name') { this.value = ''; }"  value="Parent First Name" size="40" /></div>
+        <div>
+
+         <input class="formt" type="text" name="ParentLastName" onfocus="if(this.value == 'Parent Last Name') { this.value = ''; }"  value="Parent Last Name" size="40" /></div>
+        <div>
+
+         <input class="formt" type="text" name="Email" onfocus="if(this.value == 'E-Mail') { this.value = ''; }"  value="E-Mail" size="40" /><br></div>
+        <div>
+
+         <input class="formt" type="text" name="Phone1" onfocus="if(this.value == 'Phone # 1') { this.value = ''; }"  value="Phone # 1" size="40" /><br></div>
+        <div>
+
+         <input class="formt" type="text" name="Phone2" onfocus="if(this.value == 'Phone # 2') { this.value = ''; }"  value="Phone # 2" size="40" /><br></div>
+        <div>
+
+         <input class="formt" type="text" name="Address" onfocus="if(this.value == 'Address') { this.value = ''; }"  value="Address" size="40" /><br></div>
+        <div>
+
+         <input class="formt" type="text" name="City" onfocus="if(this.value == 'City') { this.value = ''; }"  value="City" size="40" /><br></div>
+        <div>
+
+         <input class="formt" type="text" name="State" onfocus="if(this.value == 'State') { this.value = ''; }"  value="State" size="40" /><br> </div>
+        <div>
+
+         <input class="formt"  type="text" name="ZipCode" onfocus="if(this.value == 'Zip Code') { this.value = ''; }"  value="Zip Code" size="40" /><br></div>
+
+         <input class="formt" type="text" name="Country" onfocus="if(this.value == 'Country') { this.value = ''; }"  value="Country" size="40" /><br>
+        
+         <input class="formt" type="text" name="PatientFirstName" onfocus="if(this.value == 'Patient First Nane') { this.value = ''; }"  value="Patient First Name" size="40" />
+   
+    
+         <input class="formt" type="text" name="PatientLastName" onfocus="if(this.value == 'Patient Last Name') { this.value = ''; }"  value="Patient Last Name" size="40" />
+
+  
+         <input class="formt"  type="text" name="PatientRelation" onfocus="if(this.value == 'Patient Relation') { this.value = ''; }"  value="Patient Relation" size="40" />
+   
+        
+         <input class="formt" type="text" name="PatientDOB" onfocus="if(this.value == 'Patient Date Of Birth') { this.value = ''; }"  value="Patient Date Of Birth" size="40" />
+    
+         
+         <input class="formt" type="text" name="PatientDiagnosis" onfocus="if(this.value == 'Patient Diagnosis') { this.value = ''; }" value="Patient Diagnosis"  size="40" />
+         <input class="formt" type="text" name="PatientNote" onfocus="if(this.value == 'Patient\'s Notes') { this.value = ''; }"  value="Patient's Notes" size="40" />
+         <input class="formt formbottom" type="text" name="swNote" onfocus="if(this.value == 'Notes from Social Worker') { this.value = ''; }" value="Notes from Social Worker"  size="40"/></div>
+        <div>                        
+              <input class="formsubmit"type="submit" name="submit" value="Modify"/></div>
             
-           </thead>
-           </table>
        </form>
 
     </div>
