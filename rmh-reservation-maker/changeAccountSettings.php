@@ -150,7 +150,7 @@ $messages = array();
                         <input class="formt formbottom" id="edit_verify_pass" type="password" name="edit_verify_pass"  onfocus="if(this.value == 'Verify Password') { this.value = ''; }"  value="Verify Password"/>
                  </div>
                 
-                <p><input type="submit" name="Submit" value="Submit" /></p>
+                <p><input class="fomsubmit" type="submit" name="Submit" value="Submit" /></p>
 </form>
         <?php 
             }
