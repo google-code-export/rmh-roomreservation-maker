@@ -14,7 +14,7 @@
 * @author Paul Kubler
 * @version 5/1/12
 */
-include_once("../database/dbReservation.php");
+include_once("../database/dbProfileActivity.php");
 include_once("../domain/Reservation.php");
 include_once("../mail/functions.php");
 
