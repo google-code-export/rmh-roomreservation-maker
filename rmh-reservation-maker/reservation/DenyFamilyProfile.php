@@ -23,8 +23,9 @@ $stat()='Denied';
 set_status($stat);
 
 $profile = retrieve_ProfileActivity_byRequestId($profileActivityRequestId);
-$familyProfileId=$profile->get_familyProfileId(); 
+$requestID=$profileActivityRequestId;
+$familyID=$profile->get_familyProfileId(); 
 $SWID=$profile->get_socialWorkerProfileId(); 
 
-FamilyModDeny($familyProfileId, $SWID);
+FamilyModDeny($requestID,$familyID, $SWID);
 ?>

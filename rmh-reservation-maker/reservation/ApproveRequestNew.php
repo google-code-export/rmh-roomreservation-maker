@@ -23,11 +23,11 @@ $stat()='Confirmed';
 set_status($stat);
 
 $reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
-$RequestKeyNumber=$reservation->get_roomReservationRequestID();
-$BeginDate= $reservation->get_beginDate(); 
+$RequestKey=$reservation->get_roomReservationRequestID();
+$StartDate= $reservation->get_beginDate(); 
 $EndDate=$reservation->get_endDate();
-$familyProfileId=$reservation->get_familyProfileId(); 
+$familyID=$reservation->get_familyProfileId(); 
 $SWID=$reservation->get_socialWorkerProfileId();
 
-RRequestAccept($RequestKeyNumber, $BeginDate, $EndDate, $familyProfileId,$SWID);
+RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID);
 ?>
