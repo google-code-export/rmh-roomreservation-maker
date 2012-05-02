@@ -280,9 +280,16 @@ function FamilyModDeny($requestID,$familyID, $SWID)
    endif;
 }
 
+/*
+* E-Mail module for RMH-RoomReservationMaker. 
 
-//Sends email to approvers about a new reservation request.
-//@author Stefan Pavon
+* Sends email to approvers about a new reservation request.
+
+* @author Stefan Pavon
+
+* @version 2012-5-1
+
+*/
 function newRequest($RequestKey, $DateSubmitted, $BeginDate, $EndDate)
 {
     $subject = "Reservation Request made on $DateSubmitted";
@@ -296,9 +303,17 @@ function newRequest($RequestKey, $DateSubmitted, $BeginDate, $EndDate)
     };
 }
 
-//Sends email to approvers about a modification to an existing room reservation 
-//request.
-//@author Stefan Pavon
+
+/*
+* E-Mail module for RMH-RoomReservationMaker. 
+
+* Sends email to approvers about a modification to an existing room reservation request.
+
+* @author Stefan Pavon
+
+* @version 2012-5-1
+
+*/
 function newReservationMod($RequestKey, $DateSubmitted, $FamilyProfileID)
 {
     $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
@@ -313,9 +328,16 @@ function newReservationMod($RequestKey, $DateSubmitted, $FamilyProfileID)
     };
 }
 
-//Sends email to approvers about the cancellation of an existing room
-//reservation request.
-//@author Stefan Pavon
+/*
+* E-Mail module for RMH-RoomReservationMaker. 
+
+* Sends email to approvers about the cancellation of an existing room reservation request.
+
+* @author Stefan Pavon
+
+* @version 2012-5-1
+
+*/
 function newCancel($RequestKey, $DateSubmitted, $FamilyProfileID)
 {
     $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
@@ -330,8 +352,17 @@ function newCancel($RequestKey, $DateSubmitted, $FamilyProfileID)
     };
 }
 
-//Sends email to approvers requesting permission to modify a family profile.
-//@author Stefan Pavon
+
+/*
+* E-Mail module for RMH-RoomReservationMaker. 
+
+* Sends email to approvers requesting permission to modify a family profile.
+
+* @author Stefan Pavon
+
+* @version 2012-5-1
+
+*/
 function newFamilyMod($RequestKey, $DateSubmitted, $FamilyProfileID)
 {
     $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
