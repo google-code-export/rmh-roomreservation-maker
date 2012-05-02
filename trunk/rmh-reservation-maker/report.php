@@ -171,6 +171,8 @@ if($showForm == true)
             <option value="2013" <?php if($_POST['beginYear']=='2013') echo "selected='selected'";?> >2013</option>
 	    </select>
     <br><br>
+    </div>
+       <div class="formt" style="background:#FFF; padding-top:7px; border-top:thin solid black;">
     <label for="endDate">End Date:</label>
         <select name="endMonth">
             <option value="">Month</option>
