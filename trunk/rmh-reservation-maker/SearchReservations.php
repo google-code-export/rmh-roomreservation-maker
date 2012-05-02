@@ -1,8 +1,34 @@
 <?php
-/**Search function to find reservations in the database
- * @version May 1, 2012
- * author: Michael Pagliuca, Yue Li
- */
+/*
+
+* Copyright 2011 by Michael Pagliuca, Yue Li and Bonnie MacKellar.
+
+* This program is part of RMH-RoomReservationMaker, which is free software,
+
+* inspired by the RMH Homeroom Project.
+
+* It comes with absolutely no warranty.  You can redistribute and/or
+
+* modify it under the terms of the GNU Public License as published
+
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+
+*/
+
+ 
+
+/*
+
+* SearchReservations module for RMH-RoomReservationMaker. 
+
+* Searches through Reservations table for specified terms and displays
+* them in a table format
+
+* @author Michael Pagliuca, Yue Li
+
+* @version May 2, 2012
+
+*/
 
 session_start();
 session_cache_expire(30);
@@ -115,7 +141,7 @@ $showReservation = false;
         
        <form name="SearchReservations" method="post" action="SearchReservations.php">
             <?php echo generateTokenField(); ?>
-           
+
            <select name="searchType">
                <option value = "Select Search Type">Select Search Type</option>
                <option value = "Request ID">Request ID</option>
