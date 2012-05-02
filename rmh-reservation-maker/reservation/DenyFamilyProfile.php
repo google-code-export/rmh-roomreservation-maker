@@ -21,8 +21,7 @@ $stat=get_status();
 $stat()='Denied';
 set_status($stat);
 
-//Submit Changes to database
-
+$reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
 $familyProfileId=$reservation->get_familyProfileId(); 
 $SWID=$reservation->get_socialWorkerProfileId(); 
 
