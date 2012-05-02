@@ -1,13 +1,25 @@
 <?php
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
 /**
- * @author Prayas Bhattarai
- * 
- * Password Reset Page
- * 
- * This page deals with resetting password for a user. A randomly generated activation code will be
- * sent to the user's email address. After they click the link that has the activation code, they 
- * will be presented with the ability to change their password.
- */
+* Password Reset Page for RMH-RoomReservationMaker. 
+* This page deals with resetting password for a user. A randomly generated activation code will be
+* sent to the user's email address. After they click the link that has the activation code, they 
+* will be presented with the ability to change their password.
+*
+* Work in progress because of Activation functions in the db level is not available.
+*
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
+
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);
@@ -15,6 +27,7 @@ session_cache_expire(30);
 $title = "Reset Password"; //This should be the title for the page, included in the <title></title>
 
 include('header.php'); //including this will further include (globalFunctions.php and config.php)
+include(ROOT_DIR.'/database/dbUserProfile.php');
 
 $error = array(); //an array that holds the 
 
@@ -31,12 +44,14 @@ $testData = array('test0'=>'', 'test1'=>'activation');
             
             $username = isset($_POST['username']) ? sanitize($_POST['username']) : '';
 
+            $userRetrieved = retrieve_UserByAuth($username);
+            
             //check the database, if the username exists or not
-            if($username != '' && array_key_exists($username, $testData))
+            if($userRetrieved)
             {
                 //the user exists, create a random string as an activation code and send an email
                 //store the activation code in the DB
-
+                
                 //check the activation table for the user's info and expiry, 
                 //if it is already there notify the user to check their email again
                 if(!empty($testData[$username]) && true)
@@ -166,7 +181,7 @@ $testData = array('test0'=>'', 'test1'=>'activation');
 ?>
 
 <div id="container">
-
+    <div id="pad"></div>
     <div id="content">
         <?php
         if(!empty($error))

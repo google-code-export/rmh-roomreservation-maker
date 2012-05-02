@@ -97,7 +97,7 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
                     </p>
                     <ul class="hometext">
                             <li>You must be a Ronald McDonald House <i>staff member</i> or <i>social worker</i> to access this system.</li>
-                            <li>If you do not remember your Password, <a href="reset.php">click here to reset it.</a></li>
+                            <!--<li>If you do not remember your Password, <a href="reset.php">click here to reset it.</a></li>-->
                     </ul>
                     <div>
                             <form class="loginForm"method="post" action="login.php">
