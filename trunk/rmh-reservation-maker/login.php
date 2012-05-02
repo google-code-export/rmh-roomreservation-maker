@@ -1,7 +1,19 @@
 <?php
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
 /**
- * @author Prayas Bhattarai 
- */
+* Login script for RMH-RoomReservationMaker. 
+* All the login code goes here, including username password check, setting session variables and checking for default password
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
 session_start();
 session_cache_expire(30);
 $title = 'Login';
@@ -134,6 +146,11 @@ function retrieveCurrentUserProfile()
     }
 }
 
+/**
+ * checkDefaultPassword function that checks if the currently logged in user is using a default password. Sets a session message which is displayed when the user is redirected to the index page, which suggests the user to change their password.
+ * @author Prayas Bhattarai
+ * @return boolean 
+ */
 function checkDefaultPassword()
 {
     $userProfile = retrieveCurrentUserProfile();

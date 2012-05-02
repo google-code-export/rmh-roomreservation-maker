@@ -1,13 +1,25 @@
 <?php
-
 /*
- * This file contains all the functions that are required to access the session variables.
- * Instead of directly allowing the other pages to access the session variables,
- * these functions provide an interface to access those variables. One of the reasons for this is,
- * in the future, we could manipulate the data that is returned by the functions in someway - if ever required.
- * The other advantage could be, if ever we needed to change the current session variable names, we could do so without
- * changing the code which uses that session variable elsewhere in the app.
- */
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/**
+* Session Management functions for RMH-RoomReservationMaker. 
+* This file contains all the functions that are required to access the session variables.
+* Instead of directly allowing the other pages to access the session variables,
+* these functions provide an interface to access those variables. One of the reasons for this is,
+* in the future, we could manipulate the data that is returned by the functions in someway - if ever required.
+* The other advantage could be, if ever we needed to change the current session variable names, we could do so without changing the code which uses that session variable elsewhere in the app.
+* This module also includes function to check if the session has timed out or not, setting and displaying session messages
+*
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
 
 /**
  * checkSession function checks if the session has timed out or not due to inactivity. and logs out the user based on the condition

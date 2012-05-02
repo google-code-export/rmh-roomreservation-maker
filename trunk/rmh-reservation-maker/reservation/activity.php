@@ -1,4 +1,23 @@
 <?php
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/**
+* Actvity Approval Script for RMH-RoomReservationMaker. 
+* 
+* This file contains the script to allow/deny different kinds of activities (by an RMH Staff Approver:
+* Room reservation request or family profile add/modify activity
+*
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
+
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);

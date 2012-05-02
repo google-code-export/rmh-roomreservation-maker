@@ -1,4 +1,20 @@
 <?php
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/**
+* List User page for RMH-RoomReservationMaker. 
+* This file contains the script to list out all the users that are registered in the system.
+* The users are grouped by their category and can be filtered based on this category.
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);

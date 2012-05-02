@@ -1,4 +1,19 @@
 <?php
+/*
+* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/**
+* Activity Handler script for RMH-RoomReservationMaker. 
+* This file contains the activity handler script. All the modification performed in the activity.php file is passed to this handler, to make the actual changes.
+* @author Prayas Bhattarai
+* @version May 1, 2012
+*/
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);
@@ -29,9 +44,7 @@ $statuses = array('approve'=>'Confirm', 'deny'=>'Deny'); //Status info that is s
         if($requestType == 'profile')
         {
             $profileActivity = retrieve_ProfileActivity_byRequestId($requestId);
-            
-            
-            
+         
             $profileActivity->set_rmhStaffProfileId($rmhStaffProfileId);
             $profileActivity->set_rmhDateStatusSubm(date("Y-m-d H:i:s"));
             $profileActivity->set_profileActivityStatus($statuses[$status]);
