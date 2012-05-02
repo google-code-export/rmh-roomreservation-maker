@@ -16,14 +16,14 @@
 */
 include_once("../domain/Reservation.php");
 include_once("../mail/functions.php");
-//Append "-confirmed" to status
+
+
 $stat=get_status();
 $stat()+='-confirmed';
 set_status($stat);
-//Submit Changes to database
-//Generate Key ID
-//->rmhStaffProfileId = $rmhStaffProfileId;
-//$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
+
+
+$reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
 $RequestKey=$reservation->get_roomReservationRequestID();
 $DateToAndFrom= $reservation->get_beginDate()."-".$reservation->get_endDate();
 $familyLname=$family->get_parentlname(); 

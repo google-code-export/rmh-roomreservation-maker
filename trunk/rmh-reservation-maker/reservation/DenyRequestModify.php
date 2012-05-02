@@ -20,12 +20,8 @@ include_once("../mail/functions.php");
 $stat=get_status();
 $stat()+='-denied';
 set_status($stat);
-//Submit Changes to database
-//Generate Key ID
-//->rmhStaffProfileId = $rmhStaffProfileId;
-//$this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
 
-//Send automatic email to SW
+$reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
 $RequestKeyNumber=$reservation->get_roomReservationRequestID();
 $DateToAndFrom= $reservation->get_beginDate()."-".$reservation->get_endDate(); 
 $familyLname=$family->get_parentlname(); 
