@@ -138,77 +138,122 @@ function ModifyAccept($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
 }
 
 
-//Confirm Email tells the SW their request was submitted and 
+//Confirm Email tells the SW their request was submitted and they are able to have a copy of the RequestKey
+//@author: Yamiris Pascual
 
-function Confirm($RequestKeyNumber, $BeginDate, $EndDate,$SWID)
+function Confirm($RequestKey, $StartDate, $EndDate,$SWID, $familyID)
 {
-    $SW = retrieve_UserProfile_SW($SWID);
+    $SW = retrieve_UserProfile_SW($SWID);   //gets social worker user profile using their ID that is being passed
+    
+    if($SW[0]->get_email_notification() == 'Yes'):  //if the email_notification on their profile is 'Yes' proceed
+        
+     $family = retrieve_FamilyProfile($familyID);
+    
+       $name = $family->get_patientfname() . " " . $family->get_patientlname(); //Sets the patients first and last name to the variable $name
+    
    
-        $to = $SW[0]->get_email();
+        $to = $SW[0]->get_email();  //gets the sw email address
     
         $subject = "Your request has been submitted";
         
-       $message = "We received your request for a reservation for $BeginDate to $EndDate. \r\nYour confirmation number is $RequestKeyNumber. Please keep in your records for future use.\r\n\r\n Thank you.";
+       $message = "We received your request for a reservation for $StartDate to $EndDate for $name. \r\nYour confirmation number is $RequestKey. Please keep in your records for future use.\r\n\r\n Thank you.";
     
       
         email($to, $subject, $message);
-           
+      endif;     
 }
 
-//This email is sent to the SW to inform them that their request for a reservation has been accepted         
-function RequestAccept($RequestKeyNumber, $BeginDate, $EndDate, $familyProfileId,$SWID)
+//This email is sent to the SW to inform them that their request for a reservation has been accepted    
+//@author: Yamiris Pascual
+function RequestAccept($RequestKeyNumber, $StartDate, $EndDate, $familyID,$SWID)
 {
-    $SW = retrieve_UserProfile_SW($SWID);
+     $SW = retrieve_UserProfile_SW($SWID);
     
-    $to = $SW[0]->get_email();
+    if($SW[0]->get_email_notification() == 'Yes'):
+        
+     $family = retrieve_FamilyProfile($familyID);
+    
+       $name = $family->get_patientfname() . " " . $family->get_patientlname();
+    
+   
+        $to = $SW[0]->get_email();
     
     $subject = "Reservation Request $RequestKeyNumber";
     
-    $message = "Your reservation request, $RequestKeyNumber for $BeginDate to $EndDate for user $familyProfileId has been accepted. \r\n Please click on the link [URL] to confirm.\r\n\r\nThank You.";
+    $message = "Your reservation request, $RequestKeyNumber, for $name for the dates of $StartDate to $EndDate for has been accepted. \r\n\r\nThank You.";
   
     email($to, $subject, $message);
+   endif;    
 }
 
 //This email is sent to the SW to inform them that their request for a reservation has been denied
-function RequestDeny($RequestKeyNumber, $BeginDate, $EndDate, $familyProfileId, $SWID)
+//@author:Yamiris Pascual
+function RequestDeny($RequestKey, $StartDate, $EndDate, $familyID, $SWID)
 {
- $SW = retrieve_UserProfile_SW($SWID);
+   $SW = retrieve_UserProfile_SW($SWID);
     
-    $to = $SW[0]->get_email();
+    if($SW[0]->get_email_notification() == 'Yes'):
+        
+     $family = retrieve_FamilyProfile($familyID);
     
-    $subject = "Reservation Request $RequestKeyNumber";
+       $name = $family->get_patientfname() . " " . $family->get_patientlname();
     
-    $message = "Your reservation request, $RequestKeyNumber for $BeginDate to $EndDate for user $familyProfileId has been denied.\r\n\r\nThank You.";
+   
+        $to = $SW[0]->get_email();    
+    
+    $subject = "Reservation Request $RequestKey";
+    
+    $message = "Your reservation request, $RequestKey, for $name, for the dates of $StartDate to $EndDate has been denied.\r\n\r\nThank You.";
   
     email($to, $subject, $message);   
+   endif;
 }
 
 //This email is sent to the SW to inform them that the request to Modify the family profile has been accepted
-function FamilyModAccept($familyProfileId, $SWID)
-{
-  $SW = retrieve_UserProfile_SW($SWID);
-    
-    $to = $SW[0]->get_email();
-    
-    $subject = "Family Profile Modification Request";
-    
-    $message = "The request to update the Family user,$familyProfileId, has been accepted.\r\n\r\nThank you.";
-  
-    email($to, $subject, $message);    
-}
-
-//This email is sent to the SW to inform them that the request to Modify the family profile has been denied.
-function FamilyModDeny($familyProfileId, $SWID)
+//@author: Yamiris Pascual
+function FamilyModAccept($familyID, $SWID)
 {
     $SW = retrieve_UserProfile_SW($SWID);
     
-    $to = $SW[0]->get_userEmail();
+    if($SW[0]->get_email_notification() == 'Yes'):
+        
+     $family = retrieve_FamilyProfile($familyID);
+    
+       $name = $family->get_patientfname() . " " . $family->get_patientlname();
+    
+   
+        $to = $SW[0]->get_email();
     
     $subject = "Family Profile Modification Request";
     
-    $message = "The request to update the Family user, $familyProfileId profile, has been denied.\r\n\r\nThank you.";
+    $message = "The request to update the Family of $name, has been accepted.\r\n\r\nThank you.";
   
-    email($to, $subject, $message);  
+    email($to, $subject, $message); 
+    endif;
+}
+
+//This email is sent to the SW to inform them that the request to Modify the family profile has been denied.
+//@author: Yamiris Pascual
+function FamilyModDeny($familyID, $SWID)
+{
+     $SW = retrieve_UserProfile_SW($SWID);
+    
+    if($SW[0]->get_email_notification() == 'Yes'):
+        
+     $family = retrieve_FamilyProfile($familyID);
+    
+       $name = $family->get_patientfname() . " " . $family->get_patientlname();
+    
+   
+        $to = $SW[0]->get_email();
+    
+    
+    $subject = "Family Profile Modification Request";
+    
+    $message = "The request to update the Family of $name profile, has been denied.\r\n\r\nThank you.";
+  
+    email($to, $subject, $message); 
+   endif;
 }
 
 
