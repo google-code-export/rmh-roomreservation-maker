@@ -30,7 +30,7 @@ include(ROOT_DIR.'/database/dbProfileActivity.php');
 
 $request = array();
 $errors = array();
-if(isset($_GET['type']) && isset($_GET['request']))
+if(isset($_GET['type']) && !empty($_GET['type']) && isset($_GET['request']) && is_numeric($_GET['request']))
 {
     //type of activity and request id is set, do the following
     $requestType = sanitize($_GET['type']);
@@ -42,7 +42,9 @@ if(isset($_GET['type']) && isset($_GET['request']))
         case 'reservation':
             //request about reservation, get the information about the reservation, display the information first
             $reservation = retrieve_RoomReservationActivity_byRequestId($requestId);
-            $request = array(
+            if($reservation)
+            {
+                $request = array(
                             'Request ID' => $reservation->get_roomReservationRequestID(),
                             'Family' => $reservation->get_familyProfileId(),
                             'Social Worker' => $reservation->get_swFirstName().' '.$reservation->get_swLastName(),
@@ -53,12 +55,19 @@ if(isset($_GET['type']) && isset($_GET['request']))
                             'Diagnosis' => $reservation->get_patientDiagnosis(),
                             'Room Notes' => $reservation->get_roomnote()
                             );
+            }
+            else
+            {
+                $errors['invalid_reservation'] = "Cannot find the reservation activity";
+            }
             break;
         
         case 'profile':
             //request is about profile change/add/cancel, display the information first
             $profileActivity = retrieve_ProfileActivity_byRequestId($requestId);
-            $request = array(
+            if($profileActivity)
+            {
+                $request = array(
                             'Request ID' => $profileActivity->get_profileActivityRequestId(),
                             'Social Worker' => $profileActivity->get_swFirstName().' '.$profileActivity->get_swLastName(),
                             'Date Submitted' => $profileActivity->get_swDateStatusSubm(),
@@ -81,7 +90,11 @@ if(isset($_GET['type']) && isset($_GET['request']))
                             'PDF Form'=> $profileActivity->get_formPdf(),
                             'Notes'=> $profileActivity->get_familyNotes()
                             );
-            
+            }
+            else
+            {
+                $errors['invalid_profile_activity'] = "Cannot find the profile activity";
+            }
             break;
         default:
             $errors['invalid_parameter'] = "Invalid parameters supplied";
