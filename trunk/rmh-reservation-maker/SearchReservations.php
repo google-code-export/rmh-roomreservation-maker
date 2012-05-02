@@ -184,7 +184,7 @@ $showReservation = false;
             <th>Social Worker  Name</th>
             <th>Staff  Name</th>
             <th>Parent  Name</th>
-           <th>Date Status submitted</th>
+           <th>Reservation creation date </th>
            <th>Begin Date</th>
            <th>End Date</th>
            <th>Status</th>
