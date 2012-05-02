@@ -332,7 +332,7 @@ function newCancel($RequestKey, $DateSubmitted, $FamilyProfileID)
 
 //Sends email to approvers requesting permission to modify a family profile.
 //@author Stefan Pavon
-function newFamilyMod($RequestKey, $FamilyProfileID, $DateSubmitted)
+function newFamilyMod($RequestKey, $DateSubmitted, $FamilyProfileID)
 {
     $familyLname = retrieve_FamilyProfile($FamilyProfileID)->get_parentlname();
     $subject = "Family Profile Modification Request made on $DateSubmitted";
