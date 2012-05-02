@@ -165,7 +165,7 @@ function Confirm($RequestKey, $StartDate, $EndDate,$SWID, $familyID)
 
 //This email is sent to the SW to inform them that their request for a reservation has been accepted    
 //@author: Yamiris Pascual
-function RequestAccept($RequestKeyNumber, $StartDate, $EndDate, $familyID,$SWID)
+function RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
 {
      $SW = retrieve_UserProfile_SW($SWID);
     
@@ -180,7 +180,7 @@ function RequestAccept($RequestKeyNumber, $StartDate, $EndDate, $familyID,$SWID)
     
     $subject = "Reservation Request $RequestKeyNumber";
     
-    $message = "Your reservation request, $RequestKeyNumber, for $name for the dates of $StartDate to $EndDate for has been accepted. \r\n\r\nThank You.";
+    $message = "Your reservation request, $RequestKey, for $name for the dates of $StartDate to $EndDate for has been accepted. \r\n\r\nThank You.";
   
     email($to, $subject, $message);
    endif;    
@@ -188,7 +188,7 @@ function RequestAccept($RequestKeyNumber, $StartDate, $EndDate, $familyID,$SWID)
 
 //This email is sent to the SW to inform them that their request for a reservation has been denied
 //@author:Yamiris Pascual
-function RequestDeny($RequestKey, $StartDate, $EndDate, $familyID, $SWID)
+function RequestDeny($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
 {
    $SW = retrieve_UserProfile_SW($SWID);
     
@@ -209,9 +209,33 @@ function RequestDeny($RequestKey, $StartDate, $EndDate, $familyID, $SWID)
    endif;
 }
 
+//Sends an email to the Social Worker to inform them that their request to modify the familiy profile
+//has been sent.  It also supplies the social worker with the requestID of their specified request.
+//@author: Yamiris Pascual
+function FamilyModConfirm($requestID, $familyID, $SWID)
+{
+     $SW = retrieve_UserProfile_SW($SWID);
+    
+    if($SW[0]->get_email_notification() == 'Yes'):
+        
+     $family = retrieve_FamilyProfile($familyID);
+    
+       $name = $family->get_patientfname() . " " . $family->get_patientlname();
+    
+   
+        $to = $SW[0]->get_email();
+    
+    $subject = "Family Profile Modification Request $requestID";
+    
+    $message = "The request to update $name profile has been sent.  Here is the confirmation number for that request, $requestID, please retain for future uses.\r\n\r\nThank You.";
+  
+    email($to, $subject, $message); 
+    endif;
+}
+
 //This email is sent to the SW to inform them that the request to Modify the family profile has been accepted
 //@author: Yamiris Pascual
-function FamilyModAccept($familyID, $SWID)
+function FamilyModAccept($requestID, $familyID, $SWID)
 {
     $SW = retrieve_UserProfile_SW($SWID);
     
@@ -224,9 +248,9 @@ function FamilyModAccept($familyID, $SWID)
    
         $to = $SW[0]->get_email();
     
-    $subject = "Family Profile Modification Request";
+    $subject = "Family Profile Modification Request $requestID";
     
-    $message = "The request to update the Family of $name, has been accepted.\r\n\r\nThank you.";
+    $message = "Request $requestID, to update the Family of $name, has been accepted.\r\n\r\nThank you.";
   
     email($to, $subject, $message); 
     endif;
@@ -234,7 +258,7 @@ function FamilyModAccept($familyID, $SWID)
 
 //This email is sent to the SW to inform them that the request to Modify the family profile has been denied.
 //@author: Yamiris Pascual
-function FamilyModDeny($familyID, $SWID)
+function FamilyModDeny($requestID,$familyID, $SWID)
 {
      $SW = retrieve_UserProfile_SW($SWID);
     
@@ -248,9 +272,9 @@ function FamilyModDeny($familyID, $SWID)
         $to = $SW[0]->get_email();
     
     
-    $subject = "Family Profile Modification Request";
+    $subject = "Family Profile Modification Request $requestID";
     
-    $message = "The request to update the Family of $name profile, has been denied.\r\n\r\nThank you.";
+    $message = "Request $requestID, to update the Family of $name profile, has been denied.\r\n\r\nThank you.";
   
     email($to, $subject, $message); 
    endif;
