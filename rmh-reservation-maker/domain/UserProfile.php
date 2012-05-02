@@ -12,8 +12,8 @@
 /*
 * UserProfile Domain Object for RMH-RoomReservationMaker. 
 * Specifies the attributes for user profiles for RMH Staff Member and Social Worker
-* @author <Your name>
-* @version <Date>
+* @author Gergana Stoykova
+* @version 5/2/2012
 */
 
 
