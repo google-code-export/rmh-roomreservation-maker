@@ -29,7 +29,7 @@ $userAccess = getUserAccessLevel();
    
 <!--navigation links available to all members -->
 <li><a href="<?php echo BASE_DIR.'/index.php';?>">Home</a></li>
-<li><a href="<?php echo BASE_DIR.'/Helphomepage.php';?>">Help</a></li>
+<li><a href="<?php echo BASE_DIR.'/Help/Help%20homepage.php';?>">Help</a></li>
 <?php
 if($userAccess === 0)
 {
