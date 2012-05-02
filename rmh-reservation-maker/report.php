@@ -21,13 +21,18 @@ $title = "Report Generation";
 
 include ('header.php');
 include_once (ROOT_DIR.'/domain/Reservation.php');
+include_once (ROOT_DIR.'/domain/Family.php');
 include_once (ROOT_DIR.'/domain/UserProfile.php');
 include_once (ROOT_DIR.'/database/dbReservation.php');
+include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 
 
 $showForm = false;
 $showReport = false;
+$beginDateError = false;
+$endDateError = false;
+
 
 /**
  *Determines whether to display form or report 
@@ -39,12 +44,14 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
    if ((empty($_POST['beginYear'])) || (empty($_POST['beginMonth'])) || (empty($_POST['beginDay'])))
    {
        $message = "Please select a beginning date.";
+       $beginDateError = true;
        $showForm = true;
    }
    //endDate is not set
    else if ((empty($_POST['endYear'])) || (empty($_POST['endMonth'])) || (empty($_POST['endDay'])))
    {
        $message = "Please select an ending date.";
+       $endDateError = true;
        $showForm = true;
    }
    //All data is set
@@ -56,6 +63,8 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
        if(($endDateMins - $beginDateMins) <= 0)
        {
            $message = "End date must be after begin date.";
+           $beginDateError = true;
+           $endDateError = true;
            $showForm = true;
        }
        else
@@ -97,12 +106,22 @@ echo '<div id="container">';
 //if $showForm = true, display form to enter data
 if($showForm == true)
 {
-    echo $message."<br><br>";
+    echo '<font color="red">'.$message.'</font><br><br>';
     //FORM
     ?>
 <form name="reportForm" action="report.php" method="POST">
-    <?php echo generateTokenField(); ?>
-    <div class="formt formtop" style="background:#FFF; padding-top:7px;">
+    <?php echo generateTokenField(); 
+    
+    if ($beginDateError==true)
+    {
+        echo '<div class="formt formtop" style="background:#FF0; color: red; border:thin solid red; padding-top:7px;">';
+    }
+ else 
+    {
+       echo '<div class="formt formtop" style="background:#FFF; padding-top:7px;">'; 
+    }
+    
+    ?>
     <label for="beginDate">Start Date:</label>
         <select name="beginMonth">
             <option value="">Month</option>
@@ -172,7 +191,18 @@ if($showForm == true)
 	    </select>
     <br><br>
     </div>
-       <div class="formt" style="background:#FFF; padding-top:7px; border-top:thin solid black;">
+    
+    <?php
+    if ($endDateError==true)
+    {
+        echo '<div class="formt" style="background:#FF0; padding-top:7px; color: red; border-top:thin solid red;">';
+    }
+    else 
+    {
+       echo '<div class="formt" style="background:#FFF; padding-top:7px; border-top:thin solid black;">'; 
+    }
+    ?>
+       
     <label for="endDate">End Date:</label>
         <select name="endMonth">
             <option value="">Month</option>
@@ -266,6 +296,10 @@ else if($showReport == true)
     {
         $hospital = "";
     }
+    else if ($_POST['hospital']=="MSKCC")
+    {
+        $hospital = "Memorial Sloan-Kettering Cancer Center";
+    }
     else
     {
         $hospital = sanitize($_POST['hospital']); 
@@ -273,8 +307,8 @@ else if($showReport == true)
 
     //REPORT
     echo "Report Requested by: ".$userId."<br>";
-    echo "Beginning Date: ".$beginDate."<br>";
-    echo "Ending Date: ".$endDate."<br>";
+    echo "Beginning Date: ".date('m/d/Y', strtotime($beginDate))."<br>";
+    echo "Ending Date: ".date('m/d/Y', strtotime($endDate))."<br>";
     
     //report for all hospitals
     if(empty($hospital))
@@ -294,7 +328,7 @@ else if($showReport == true)
     
     if(empty($theReservations))
     {
-        echo "<br>No data matches your selections.";
+        echo '<br><font color="red">No data matches your selections.</font>';
     }
     else
     {
@@ -303,9 +337,11 @@ else if($showReport == true)
             <table border = "2" cellspacing = "10" cellpadding = "10">';       
         echo '<thead>
             <tr>
+            <th>#</th>
             <th>Begin Date</th>
             <th>End Date</th>
             <th>Parent Name</th>
+            <th>Patient Name</th>
             <th>Social Worker</th>
             <th>Status</th>
             </thead>
@@ -313,17 +349,22 @@ else if($showReport == true)
 
         foreach ($theReservations as $reservation)
         {
-            $beginDate = $reservation->get_beginDate();
-            $endDate = $reservation->get_endDate();
+            $beginDate = date('m/d/Y', strtotime($reservation->get_beginDate()));
+            $endDate = date('m/d/Y', strtotime($reservation->get_endDate()));
             $parentName = $reservation->get_parentLastName().", ".$reservation->get_parentFirstName();
+            $familyId = $reservation->get_familyProfileId();
+            $family = retrieve_FamilyProfile($familyId);
+            $patientName = $family->get_patientlname().", ".$family->get_patientfname();
             $swName = $reservation->get_swLastName().", ".$reservation->get_swFirstName();
             $status = $reservation->get_status();
             $numReservations++;
             
             echo '<tr>';
-            echo '<td align="center">'.$beginDate.'</td>
+            echo '<td align="center"><b>'.$numReservations.'</b></font></td>
+                  <td align="center">'.$beginDate.'</td>
                   <td align="center">'.$endDate. '</td>
                   <td align="center">'.$parentName. '</td>
+                  <td align="center">'.$patientName.'</td>
                   <td align="center">'.$swName. '</td>
                   <td align="center">'.$status.'</td>';
             echo '</tr>';
