@@ -1,9 +1,19 @@
 <?php
+
+/*
+* Copyright 2011 by Linda Shek and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+
 /**
  * Functions to create, retrieve, update, and delete information from the
  * RoomReservationActivity table in the database. This table is used with the reservation class.  
  * @version April 23, 2012
- * @author Linda Shek and Gergana Stoykova
+ * @author Linda Shek 
  */
 
 include_once (ROOT_DIR.'/domain/Reservation.php');
@@ -53,7 +63,7 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
     //Check if the creation was successful
     if(!$result) {
                 //Print an error
-		echo mysql_error(). ">>>Error creating RoomReservationActivity table. <br>";
+                echo mysql_error(). ">>>Error creating RoomReservationActivity table. <br>";
                 mysql_close();
                 return false;
     }
@@ -66,15 +76,14 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
  * will be utilized by the social worker. 
  * @param $reservation = the reservation to insert
  */
-//tested
 
  function insert_RoomReservationActivity ($reservation){
     //Check if the reservation was actually a reservation
      if (! $reservation instanceof Reservation) {
                 //Print an error
-		echo ("Invalid argument for insert_RoomReservationActivity function call");
-		return false;
-	}
+                echo ("Invalid argument for insert_RoomReservationActivity function call");
+                return false;
+        }
         //Connect to the database
                 connect();
         
@@ -101,13 +110,13 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
                 $reservation->get_endDate()."','".
                 $reservation->get_patientDiagnosis()."','".
                 $reservation->get_roomnote()."')";
-    //echo $query;
+
     $result = mysql_query($query);
     //Check if successful
         if (!$result) {
                 //print the error
-		echo mysql_error()." >>>Unable to insert into Room Reservation Activity table. <br>";
-		mysql_close();   
+                echo mysql_error()." >>>Unable to insert into Room Reservation Activity table. <br>";
+                mysql_close();   
                 return false;
     }
     //Success
@@ -120,7 +129,6 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
  * @param $roomReservationRequestId 
  * @return the Room Reservation corresponding to roomReservationRequestId, or false if not in the table.
  */
-//tested
 
 function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId){
         //Connects to the the database
@@ -149,8 +157,9 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
 
 /**
  * Retrieves Room Reservation from the RoomReservationActivity table by Status ('Unconfirmed', 'Confirm', 'Deny')
+ * @param $status
+ * @return the Room Reservation corresponding to status, or false if not in the table.
  */
- //tested
       
 function retrieve_RoomReservationActivity_byStatus($status){
     
@@ -184,8 +193,8 @@ function retrieve_RoomReservationActivity_byStatus($status){
 /**
  * Retrieves Room Reservation from the RoomReservationActivity table for a specific Family
  * @param $parentLastName
+ * @return the Room Reservation corresponding to the Parent's Last Name, or false if not in the table.
  */
-//tested
     
 function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
     
@@ -220,7 +229,6 @@ function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
  * @param $socialWorkerLastName
  * @return the Room Reservation corresponding to Social Worker's Last Name, or false if not in the table.
  */
-//tested
 
 function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName){
     
@@ -251,11 +259,10 @@ function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLast
       }
     
 /**
- * Retrieves Room Reservation from the RoomReservationActivity table by RMH Staff Approver's Last Name
+ * Retrieves Room Reservation from the RoomReservationActivity table by an RMH Staff Approver's Last Name
  * @param $rmhStaffLastName
- * @return the Room Reservation corresponding to rmhStaffLastName, or false if not in the table.
+ * @return the Room Reservation corresponding to and RMH Staff's Last Name, or false if not in the table.
  */
- //tested 
       
 function retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
     
@@ -286,10 +293,10 @@ function retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
       }
     
  /*
-  * Retrieves for a selected $hospitalAffiliation, all Room Reservations that were made between $begindate and $enddate, inclusive 
-  * 
+  * Retrieves for a selected Hospital Affiliation, and all Room Reservations that were made between Begin Date and End Date, inclusive 
+  * @param $hospitalAffiliation, $beginDate, $endDate
+  * @return the Room Reservation corresponding to Hospital Affiliation, Begin Date, End Date, or false if not in the table. 
   */
- //tested
       
 function retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffiliation, $beginDate, $endDate){
     
@@ -321,14 +328,14 @@ function retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffilia
       }
 
 /*
- * Retrieves all Room Reservations by $status that were made between $begindate and $enddate, inclusive
- * 
+ * Retrieves all Room Reservations that were made between $begindate and $enddate, inclusive
+ * @param $beginDate, $endDate
+ * @return the Room Reservation corresponding to Begin Date and End Date, or false if not in the table. 
  */
-//tested
       
 function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
     
-	connect();
+        connect();
     
         $query = "SELECT RR.RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName, 
             F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, 
@@ -338,7 +345,6 @@ function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID 
             WHERE RR.BeginDate >= '".$beginDate."' AND RR.EndDate <= '".$endDate."' 
             ORDER BY RR.SW_DateStatusSubmitted";
-        //echo $query;
  
       $result = mysql_query($query);
           if(mysql_num_rows($result)< 1)
@@ -348,12 +354,12 @@ function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
            return false;
           }  
         $theReservations = array();
-	while ($result_row = mysql_fetch_assoc($result)) {
-	    $theReservation = build_reservation($result_row);
-	    $theReservations[] = $theReservation;
-	}
-	mysql_close();
-	return $theReservations;
+        while ($result_row = mysql_fetch_assoc($result)) {
+            $theReservation = build_reservation($result_row);
+            $theReservations[] = $theReservation;
+        }
+        mysql_close();
+        return $theReservations;
 }
 
 /* 
@@ -372,8 +378,8 @@ function build_reservation($result_row) {
 /**
  * Updates the status, rmhStaffProfileId, and RMH_DateStatusSubmitted of a Reservation in the RoomReservationActivity table.
  * This function is utilized by the RMH Staff who confirms or denies a room request that is made by the social worker. 
+ * @param $reservation the RoomReservationActivity to update
  */
-//tested
 
 function update_status_RoomReservationActivity($reservation){
     
@@ -384,11 +390,11 @@ function update_status_RoomReservationActivity($reservation){
          Status ='".$reservation->get_status()."' WHERE RoomReservationRequestID =".$reservation->get_roomReservationRequestId();
 
  $result = mysql_query($query);
-   	
+        
     if(!$result) {
-		echo mysql_error()." >>>Unable to update from Room Reservation Activity table. <br>";
+                echo mysql_error()." >>>Unable to update from Room Reservation Activity table. <br>";
             mysql_close();
-	    return false;
+            return false;
     } 
     mysql_close();
     return true;
@@ -398,20 +404,19 @@ function update_status_RoomReservationActivity($reservation){
  * Deletes a Room Reservation Request from the RoomReservationActivity table.
  * @param $roomReservationRequestId the id of the RoomReservationActivity to delete
  */
-//tested
 
 function delete_RoomReservationActivity($roomReservationRequestId) {
     
  connect();
         
     $query="DELETE FROM roomreservationactivity WHERE RoomReservationRequestID=".$roomReservationRequestId;
-	 $result = mysql_query($query);
-	
-	if (!$result) {
-		echo mysql_error()." >>>Unable to delete from Room Reservation Activity table: ".$roomReservationRequestId;
+         $result = mysql_query($query);
+        
+        if (!$result) {
+                echo mysql_error()." >>>Unable to delete from Room Reservation Activity table: ".$roomReservationRequestId;
                 mysql_close();
-		return false;
-	}
+                return false;
+        }
     mysql_close();
     return true;
 }

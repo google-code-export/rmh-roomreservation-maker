@@ -1,10 +1,19 @@
 <?php
 
+/*
+* Copyright 2011 by Linda Shek and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+
 /**
  * Functions to create, insert, retrieve, update, and delete information from the
- * ProfileActivity table in the database. This table is used with the ProfileActivity class.  
+ * ProfileActivity table in the database. This table is used with the ProfileActivity class and the Family class.  
  * @version April 23, 2012
- * @author Linda Shek and Gergana Stoykova
+ * @author Linda Shek 
  */
 
 include_once(ROOT_DIR.'/domain/ProfileActivity.php');
@@ -36,7 +45,7 @@ include_once(ROOT_DIR.'/database/dbinfo.php');
  * PatientFirstName: displays first name of the patient
  * PatientLastName: displays last name of the patient
  * PatientRelation: displays the relationship with the patient
- * PatientDateOfBirth: displays the Patient's Date of Birth
+ * PatientDateOfBirth: displays the Patient's date of birth
  * FormPDF: displays the URL of the family's pdf form
  * FamilyNotes; (optional) notes from the the rmh staff/social worker regarding the family
  * ProfileActivityNotes: (optional) notes from the rmh staff/social worker regarding the profile activity
@@ -44,12 +53,12 @@ include_once(ROOT_DIR.'/database/dbinfo.php');
 
 //DO NOT CALL THE FUNCTION Create_ProfileActivity() if TABLE ALREADY EXISTS. 
 /*function create_ProfileActivity(){
-	//Connect to the server
-	connect();
-	// Check if the table exists already
-	mysql_query("DROP TABLE IF EXISTS ProfileActivity");
-	// Create the table and store the result
-	$result = mysql_query("CREATE TABLE ProfileActivity (
+        //Connect to the server
+        connect();
+        // Check if the table exists already
+        mysql_query("DROP TABLE IF EXISTS ProfileActivity");
+        // Create the table and store the result
+        $result = mysql_query("CREATE TABLE ProfileActivity (
             ProfileActivityID int NOT NULL AUTO_INCREMENT,
             ProfileActivityRequestID int NOT NULL,
             FamilyProfileID int NOT NULL,
@@ -80,15 +89,15 @@ include_once(ROOT_DIR.'/database/dbinfo.php');
             KEY RMHStaffProfileID (RMHStaffProfileID),
             KEY SocialWorkerProfileID (SocialWorkerProfileID),
             KEY FamilyProfileID (FamilyProfileID))");
-	// Check if the creation was successful
-	if(!$result){
-		// Print an error
-		echo mysql_error(). ">>>Error creating ProfileActivity table <br>";
-		mysql_close();
-		return false;
-	}
-	mysql_close();
-	return true;
+        // Check if the creation was successful
+        if(!$result){
+                // Print an error
+                echo mysql_error(). ">>>Error creating ProfileActivity table <br>";
+                mysql_close();
+                return false;
+        }
+        mysql_close();
+        return true;
 }*/
 
 
@@ -99,36 +108,37 @@ include_once(ROOT_DIR.'/database/dbinfo.php');
  */
 
 function insert_ProfileActivity($profileActivity){
-	// Check if the profileActivity was actually a profile activity
-	if(!$profileActivity instanceof ProfileActivity){
-		// Print an error
-		echo ("Invalid argument from insert_ProfileActivity function\n");
-		return false;
-	}
+        // Check if the profileActivity was actually a profile activity
+        if(!$profileActivity instanceof ProfileActivity){
+                // Print an error
+                echo ("Invalid argument from insert_ProfileActivity function\n");
+                return false;
+        }
         
         connect();
-        
+        // Calls the store procedure 'GetRequestKeyNumber' to get the next highest request id
         $query = "CALL GetRequestKeyNumber('ProfileActivityRequestID')";
-    $result = mysql_query ($query);
+        $result = mysql_query ($query);
         if (mysql_num_rows($result)!=0) {
             
-		$result_row = mysql_fetch_assoc($result); //gets the first row
-		$profileActivity->set_profileActivityRequestId($result_row['@ID := ProfileActivityRequestID']);
-    }	
+                $result_row = mysql_fetch_assoc($result); //gets the first row
+                //Sets the request id to the next highest request id 
+                $profileActivity->set_profileActivityRequestId($result_row['@ID := ProfileActivityRequestID']);
+    }   
         
      mysql_close(); 
      connect();
-	// Now add it to the database
-	$query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID,
+        // Now add it to the database
+        $query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID,
                 SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
-               Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, 
-               PatientLastName, PatientRelation, PatientDateOfBirth, FormPDF, FamilyNotes, ProfileActivityNotes) VALUES(".
-			$profileActivity->get_profileActivityRequestId().",".
+                Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, 
+                PatientLastName, PatientRelation, PatientDateOfBirth, FormPDF, FamilyNotes, ProfileActivityNotes) VALUES(".
+                        $profileActivity->get_profileActivityRequestId().",".
                         $profileActivity->get_familyProfileId().",". 
                         $profileActivity->get_socialWorkerProfileId().",'".  
                         $profileActivity->get_swDateStatusSubm()."','".                           
                         $profileActivity->get_activityType()."','".
-			$profileActivity->get_profileActivityStatus()."','".                        
+                        $profileActivity->get_profileActivityStatus()."','".                        
                         $profileActivity->get_parentFirstName()."','".
                         $profileActivity->get_parentLastName()."','".
                         $profileActivity->get_parentEmail()."','".
@@ -146,18 +156,18 @@ function insert_ProfileActivity($profileActivity){
                         $profileActivity->get_formPdf()."','".
                         $profileActivity->get_familyNotes()."','".               
                         $profileActivity->get_profileActivityNotes()."')";
-			
-	$result=mysql_query($query);
-	// Check if successful
-	if(!$result) {
-		//print the error
+                        
+        $result=mysql_query($query);
+        // Check if successful
+        if(!$result) {
+                //print the error
                 echo mysql_error()." >>>Unable to insert into Profile Activity table. <br>";
-		mysql_close();
-		return false;
-	}
-	// Success. 
-	mysql_close();
-	return true;
+                mysql_close();
+                return false;
+        }
+        // Success. 
+        mysql_close();
+        return true;
 }
 
 /**
@@ -189,15 +199,15 @@ function retrieve_ProfileActivity_byRequestId($profileActivityRequestId){
                  return false;
                 }
         $result_row = mysql_fetch_assoc($result);
-	$theProfileActivities = build_profileActivity($result_row);
-	mysql_close();
-	return $theProfileActivities;  
+        $theProfileActivities = build_profileActivity($result_row);
+        mysql_close();
+        return $theProfileActivities;  
 }
 
 /**
- * Retrieves Profile Activity from the ProfileActivity table by Status ('UnConfirmed', 'Confirm', 'Deny')
- * 
- * 
+ * Retrieves Profile Activity from the ProfileActivity table by Status ('Unconfirmed', 'Confirm', 'Deny')
+ * @param $profileActivityStatus
+ * @return the Profile Activity corresponding to the profile activity status, or false if not in the table.
  */
 
 function retrieve_ProfileActivity_byStatus($profileActivityStatus){
@@ -222,18 +232,18 @@ function retrieve_ProfileActivity_byStatus($profileActivityStatus){
                     return false;
                 }
         $theProfileActivities = array();    
-	while($result_row = mysql_fetch_assoc($result)){
-	$theProfileActivity = build_profileActivity($result_row);
+        while($result_row = mysql_fetch_assoc($result)){
+        $theProfileActivity = build_profileActivity($result_row);
         $theProfileActivities[] = $theProfileActivity;
         }
-	mysql_close();
-	return $theProfileActivities;  
+        mysql_close();
+        return $theProfileActivities;  
 }
 
 /**
  * Retrieves Profile Activity from the ProfileActivity table for a specific Family
  * @param $parentLastName
- * 
+ * @return the Profile Activity corresponding to the Parent's Last Name, or false if not in the table.
  */
 
 function retrieve_FamilyLastName_ProfileActivity($parentLastName){
@@ -259,12 +269,12 @@ function retrieve_FamilyLastName_ProfileActivity($parentLastName){
                  return false;
                 }
         $theProfileActivities = array();    
-	while($result_row = mysql_fetch_assoc($result)){
-	$theProfileActivity = build_profileActivity($result_row);
+        while($result_row = mysql_fetch_assoc($result)){
+        $theProfileActivity = build_profileActivity($result_row);
         $theProfileActivities[] = $theProfileActivity;
         }
-	mysql_close();
-	return $theProfileActivities;  
+        mysql_close();
+        return $theProfileActivities;  
 }
     
 /**
@@ -296,14 +306,13 @@ function retrieve_SocialWorkerLastName_ProfileActivity($socialWorkerLastName){
                  return false;
                 }
         $theProfileActivities = array();    
-	while($result_row = mysql_fetch_assoc($result)){
-	$theProfileActivity = build_profileActivity($result_row);
+        while($result_row = mysql_fetch_assoc($result)){
+        $theProfileActivity = build_profileActivity($result_row);
         $theProfileActivities[] = $theProfileActivity;
         }
-	mysql_close();
-	return $theProfileActivities;  
-}
-    
+        mysql_close();
+        return $theProfileActivities;  
+}   
     
 /**
  * Retrieves Profile Activity from the ProfileActivity table by RMH Staff Approver's Last Name
@@ -334,12 +343,12 @@ function retrieve_RMHStaffLastName_ProfileActivity($rmhStaffLastName){
                  return false;
                 }
         $theProfileActivities = array();    
-	while($result_row = mysql_fetch_assoc($result)){
-	$theProfileActivity = build_profileActivity($result_row);
+        while($result_row = mysql_fetch_assoc($result)){
+        $theProfileActivity = build_profileActivity($result_row);
         $theProfileActivities[] = $theProfileActivity;
         }
-	mysql_close();
-	return $theProfileActivities;  
+        mysql_close();
+        return $theProfileActivities;  
 }
 
 /* 
@@ -349,21 +358,21 @@ function retrieve_RMHStaffLastName_ProfileActivity($rmhStaffLastName){
 function build_profileActivity($result_row) {
     $theProfileActivities = new ProfileActivity($result_row['ProfileActivityID'], $result_row['ProfileActivityRequestID'],
         $result_row['FamilyProfileID'], $result_row['SocialWorkerProfileID'], $result_row['SW_LastName'], $result_row['SW_FirstName'], 
-	$result_row['RMHStaffProfileID'], $result_row['RMH_Staff_LastName'], $result_row['RMH_Staff_FirstName'],
-	$result_row['SW_DateStatusSubmitted'], $result_row['RMH_DateStatusSubmitted'], $result_row['ActivityType'],
-	$result_row['Status'], $result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'], 
+        $result_row['RMHStaffProfileID'], $result_row['RMH_Staff_LastName'], $result_row['RMH_Staff_FirstName'],
+        $result_row['SW_DateStatusSubmitted'], $result_row['RMH_DateStatusSubmitted'], $result_row['ActivityType'],
+        $result_row['Status'], $result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'], 
         $result_row['Phone1'], $result_row['Phone2'], $result_row['Address'],$result_row['City'], 
         $result_row['State'], $result_row['ZipCode'],$result_row['Country'], $result_row['PatientFirstName'],
         $result_row['PatientLastName'], $result_row['PatientRelation'], $result_row['PatientDateOfBirth'], 
         $result_row['FormPDF'], $result_row['FamilyNotes'], $result_row['ProfileActivityNotes']);
    
-	return $theProfileActivities;
+        return $theProfileActivities;
 }
 
 /**
  * Updates the status, rmhStaffProfileId, and RMH_DateStatusSubmitted of a Profile Activity in the ProfileActivity table.
  * This function is utilized by the RMH Staff who confirms or denies a profile activity request that is made by the social worker. 
- * @param $profileChangeRequestId the ProfileActivity to update
+ * @param $profileActivity the ProfileActivity to update
  */
 
 function update_status_ProfileActivity($profileActivity){
@@ -376,11 +385,11 @@ function update_status_ProfileActivity($profileActivity){
  
 
  $result=mysql_query($query);
-   	
+        
     if(!$result) {
-		echo mysql_error() . " >>>Unable to update from Profile Activity table. <br>";
+                echo mysql_error() . " >>>Unable to update from Profile Activity table. <br>";
             mysql_close();
-	    return false;
+            return false;
     }  
     mysql_close();
     return true;
@@ -391,15 +400,15 @@ function update_status_ProfileActivity($profileActivity){
  * Checks if the Profile Activity object has an Activity Type of 'Edit' and a Status of 'Confirm'. Then, updates the 'FamilyProfile' table accordingly. 
  * @param $profileActivity
  */
-  //Still a Work in Progress (new family creation activity approval)
+  //New family creation activity approval still needs to be resolved
   
 function update_FamilyProfile_On_ProfileActivity($profileActivity){
-	//Checks if the profileActivity was actually a profile activity
-	if(!$profileActivity instanceof ProfileActivity){
-		// Print an error
-		echo ("Invalid argument from update_FamilyProfile_On_ProfileActivity function\n");
-		return false;
-	}  
+        //Checks if the profileActivity was actually a profile activity
+        if(!$profileActivity instanceof ProfileActivity){
+                // Print an error
+                echo ("Invalid argument from update_FamilyProfile_On_ProfileActivity function\n");
+                return false;
+        }  
         connect();
         //Checks if the temporary family profile has an Activity Type of 'Edit' and a Status of 'Confirm'
         if($profileActivity->get_activityType() == 'Edit' && $profileActivity->get_profileActivityStatus() == 'Confirm')
@@ -456,13 +465,13 @@ function delete_ProfileActivity($profileActivityRequestId) {
     connect();
         
     $query="DELETE FROM profileactivity WHERE ProfileActivityRequestID=".$profileActivityRequestId;
-	$result=mysql_query($query);
-	
-	if (!$result) {
-		echo mysql_error()." >>>Unable to delete from Profile Activity table: ".$profileActivityRequestId;
+        $result=mysql_query($query);
+        
+        if (!$result) {
+                echo mysql_error()." >>>Unable to delete from Profile Activity table: ".$profileActivityRequestId;
                 mysql_close();
-		return false;
-	}
+                return false;
+        }
     mysql_close();
     return true;
 }
