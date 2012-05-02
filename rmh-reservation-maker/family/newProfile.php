@@ -1,12 +1,16 @@
 <?php
 
  /*
-  * @author Jessica Cheong
-  * 
-  * New family profile form
-  * SW will complete the new family profile form
-  * the form is then saved in the profile activity table until the record is validated by the RMH approver. 
-  */
+ * @author Jessica Cheong
+ * @version May 1, 2012
+ * 
+ * New Family Profile module for RMH-RoomReservationMaker.
+ * 
+ * To make a new family profile, the new family profile form is required to be filled out completely.
+ * The form is then saved in another table until the record is validated by the RMH approver. 
+ * A history of the activity is stored for future references. 
+ * 
+ */
     
 //start the session and set cache expiry
 session_start();
