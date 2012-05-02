@@ -383,10 +383,10 @@ if($showForm == true)
 </select>
     <br><br>
 
-            <input class="formt formtop" type="text" name="PatientDiagnosis" value="Patient Diagnosis"  onfocus="if(this.value == 'Patient Diagnosis') { this.value = ''; }"size="15" <?php if(isset($newPatientDiagnosis)){print stripslashes($newPatientDiagnosis);}else{print "";} ?> /><br>
-           <input class="formt"type="text" name="Notes" value="Notes"  onfocus="if(this.value == 'Notes') { this.value = ''; }"size="15" <?php if(isset($newBeginDate)){print stripslashes($newBeginDate);}else{print "";} ?> /><br>
-            <input class="formt" type="text" name="ParentLastName" value="Last Name"  onfocus="if(this.value == 'Last Name') { this.value = ''; }"size="15" <?php if(isset($newParentLastName)){print stripslashes($newParentLastName);}else{print "";} ?> /><br>
-           <input class="formt formbottom" type="text" name="ParentFirstName" value="First Name"  onfocus="if(this.value == 'First Name') { this.value = ''; }"size="15" <?php if(isset($newParentFirstName)){print stripslashes($newParentFirstName);}else{print "";} ?> /><br>
+Patient Diagnosis:<input class="formt formtop" type="text" name="PatientDiagnosis" value=""/><br>
+Notes:           <input class="formt"type="text" name="Notes" value=""/><br>
+Parent Last Name:            <input class="formt" type="text" name="ParentLastName" value=""/><br>
+Parent First Name:           <input class="formt formbottom" type="text" name="ParentFirstName" value="" /><br>
            
            <input class="formsubmit"type="submit" value="Submit" name="submit" />
        </form>            
@@ -435,41 +435,47 @@ sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
         //$lname = $familyObject->get_parentLastName();
         
 
-            if( isset( $_POST['PatientDiagnosis'] ) ){
+            if( isset( $_POST['PatientDiagnosis'] ) && $_POST['PatientDiagnosis'] != ""){
             $newPatientDiagnosis = sanitize( $_POST['PatientDiagnosis'] );
             }
             else { 
                 $message['PatientDiagnosis'] = "You must enter the Patients Diagnosis.";
-                $showForm = true;
             }
            
-            if( isset( $_POST['Notes'] ) ){
+            if( isset( $_POST['Notes'] ) && $_POST['Notes'] != ""){
             $newNotes = sanitize( $_POST['Notes'] );
             }
 
-            if( isset( $_POST['ParentLastName'] ) ){
+            if( isset( $_POST['ParentLastName'] )&& $_POST['ParentLastName'] != "") {
             $newParentLastName = sanitize( $_POST['ParentLastName'] );
              }
              else{
-                 $message['ParentLastName'] = "You must enter the Parents Last Name.";
-                 $showForm = true;
+                  $message['ParentLastName'] = "You must enter the Parents Last Name.";
              }
-            if( isset( $_POST['ParentFirstName'] ) ){
+            if( isset( $_POST['ParentFirstName'] ) && $_POST['ParentFirstName'] != ""){
             $newParentFirstName = sanitize( $_POST["ParentFirstName"] );
             }
             else {
                 $message['ParentFirstName'] = "You must enter the Parents First Name.";
+
+            }
+            }
+            
+            
+              if(!empty($message)){
+            echo '<p><font color="red">The reservation was unsuccessful!</font></p><br/>';
+            
+            foreach ($message as $messages){
+                echo $messages . "<br/>";        
                 $showForm = true;
             }
-            }
-            
-            
-            
+              }
 
  
   
 
        if (empty($message)){
+        echo '<p><font color="red">The reservation was made successfully made!</font></p><br/>';
         echo "The referral was made by : " .$userId. "<br>";
         echo "The Begin Date is : " .$newBeginDate. "<br>";
         echo "The End Date is : " .$newEndDate. "<br>";
