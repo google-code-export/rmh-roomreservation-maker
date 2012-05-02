@@ -1,9 +1,19 @@
 <?php
-/**
- * Reservation class for RMH Room Reservation Maker. 
- * @version April 20, 2012
- * @author Linda Shek and Gergana Stoykova
- */
+/*
+* Copyright 2011 by Gergana Stoykova and Bonnie MacKellar.
+* This program is part of RMH-RoomReservationMaker, which is free software,
+* inspired by the RMH Homeroom Project.
+* It comes with absolutely no warranty.  You can redistribute and/or
+* modify it under the terms of the GNU Public License as published
+* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
+*/
+ 
+/*
+* Reservation Domain Object for RMH-RoomReservationMaker. 
+* Specifies attributes needed to create and modify a room request
+* @author Gergana Stoykova
+* @version 5/2/2012
+*/
 
 //include_once(ROOT_DIR .'/domain/UserProfile.php');
 //include_once(ROOT_DIR .'/domain/Family.php');
