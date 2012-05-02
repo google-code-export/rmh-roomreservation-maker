@@ -166,7 +166,7 @@ function Confirm($RequestKey, $StartDate, $EndDate,$SWID, $familyID)
        $name = $family->get_patientfname() . " " . $family->get_patientlname(); //Sets the patients first and last name to the variable $name
     
    
-        $to = $SW[0]->get_email();  //gets the sw email address
+        $to = $SW[0]->get_userEmail();  //gets the sw email address
     
         $subject = "Your request has been submitted";
         
@@ -197,7 +197,7 @@ function RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
        $name = $family->get_patientfname() . " " . $family->get_patientlname();
     
    
-        $to = $SW[0]->get_email();
+        $to = $SW[0]->get_userEmail();
         
     
     $subject = "Reservation Request $RequestKeyNumber";
@@ -231,7 +231,7 @@ function RequestDeny($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
        $name = $family->get_patientfname() . " " . $family->get_patientlname();
     
    
-        $to = $SW[0]->get_email();    
+        $to = $SW[0]->get_userEmail();    
     
     $subject = "Reservation Request $RequestKey";
     
@@ -262,7 +262,7 @@ function FamilyModConfirm($requestID, $familyID, $SWID)
        $name = $family->get_patientfname() . " " . $family->get_patientlname();
     
    
-        $to = $SW[0]->get_email();
+        $to = $SW[0]->get_userEmail();
     
     $subject = "Family Profile Modification Request $requestID";
     
@@ -291,7 +291,7 @@ function FamilyModAccept($requestID, $familyID, $SWID)
        $name = $family->get_patientfname() . " " . $family->get_patientlname();
     
    
-        $to = $SW[0]->get_email();
+        $to = $SW[0]->get_userEmail();
     
     $subject = "Family Profile Modification Request $requestID";
     
@@ -321,7 +321,7 @@ function FamilyModDeny($requestID,$familyID, $SWID)
        $name = $family->get_patientfname() . " " . $family->get_patientlname();
     
    
-        $to = $SW[0]->get_email();
+        $to = $SW[0]->get_userEmail();
     
     
     $subject = "Family Profile Modification Request $requestID";
