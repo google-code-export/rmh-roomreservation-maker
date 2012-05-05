@@ -1,15 +1,21 @@
 <?php
 /*
  * @author Jessica Cheong
+ * @co-author William Lodise
  * 
- * This page reflects the complete detail of the family profile after SW have searched the family 
- * based on the first and last name, and when SW has selected the family from the list of result.
+ * @version May 1, 2012
+ *
+ * Family Search / New Room Request module for RMH-RoomReservationMaker.
  * 
- * Two options would be given to the SW:
+ * This page allows SW to search families by name, and select the correct family (from a list if more than one result)
+ * When the family is selected, their profile information is displayed and
+ * two options are given to the SW:
+ * 
  * 1. modify the profile.
  * 2. continue with the room reservation with the selected family profile.
  * 
  */
+
 session_start();
 session_cache_expire(30);
 

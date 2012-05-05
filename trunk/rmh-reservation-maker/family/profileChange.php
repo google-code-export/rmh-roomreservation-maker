@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Jessica Cheong
  * @version May 1, 2012
@@ -182,7 +183,7 @@ $errors = array(); //error variable that stores any error occured
                  $profileActityNotes = "";
              }
             
-    $current_activity = new ProfileActivity(0, 0, $familyID, $sw_id, $sw_lname, $sw_fname, 
+        $current_activity = new ProfileActivity(0, 0, $familyID, $sw_id, $sw_lname, $sw_fname, 
             0, "", "", $dateSubmit, 0, $activityType, $profileActitivityStatus, 
             $parentfname, $parentlname, $parentemail, $parentphone1, $parentphone2, 
             $parentAddr, $parentcity, $parentstate, $parentzip, 
@@ -196,7 +197,7 @@ $errors = array(); //error variable that stores any error occured
                        echo "Successfully inserted a profile activity request";
                        
                         //Send email to notify the rmh approvers 
-                        $RequestKey = $current_activity->get_profileActivityId();
+                        $RequestKey = $current_activity->get_profileActivityRequestId();
 
                         if(newFamilyMod($RequestKey, $familyID, $dateSubmit)){
                             echo "An email is sent to the RMH Approver";
@@ -269,6 +270,7 @@ $errors = array(); //error variable that stores any error occured
             <?php echo generateTokenField(); ?>   
             
          <?php 
+         //if no family is passed, echo error 
            if (!isset($_GET['family'])){
             echo "The request could not be completed: Invalid family";
             exit();
