@@ -35,7 +35,8 @@ include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 
 $showForm = false;
 $showReport = false;
-$message = array();
+
+
 
 
 
@@ -44,8 +45,10 @@ $message = array();
 //if token works
     if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
-   
-       //startDate is not set
+
+        
+        
+   //startDate is not set
     if ((empty($_POST['beginYear'])) || (empty($_POST['beginMonth'])) || (empty($_POST['beginDay'])))
    {
        $message = '<p><font color="red">You must select a beginning date!</font></p>';
@@ -69,7 +72,7 @@ else
 ($_POST['endYear']*365*24*60)+($_POST['endMonth']*30*24*60)+($_POST['endDay']*24*60);
        if(($endDateMins - $beginDateMins) <= 0)
        {
-           $message = "End date must be after begin date.";
+           $message = '<p><font color="red">End date must be after begin Date!</font></p>';
            $showForm = true;
        }
        else
@@ -78,6 +81,9 @@ else
        }
     }
     }
+    
+
+
   
     
 //Token is bad
@@ -93,7 +99,7 @@ else
     $_POST['Notes'] = "";
     $_POST['ParentLastName'] = "";
     $_POST['ParentFirstName'] = "";
-    $message = "Please select the data for your report.";
+    $message = '<p><font color="red">Please select and enter all required data for your reservation</font></p>';
     $showForm = true;
 }  
 //No POST data
@@ -109,13 +115,14 @@ else
     $_POST['Notes'] = "";
     $_POST['ParentLastName'] = "";
     $_POST['ParentFirstName'] = "";
-    $message = "Please select the data for your report.";
+    $message = '<p><font color="red">Please select and enter all required data for your reservation</font></p>';
     $showForm = true;
 
 }
 
+ 
 
-    
+
     
    // mail("approvers email address goes here", $RoomReservationRequestID,
 //"This is a pending request")//email the approver the request key, not sure
@@ -382,11 +389,12 @@ if($showForm == true)
 "selected='selected'";?> >2013</option>
 </select>
     <br><br>
-
-Patient Diagnosis:<input class="formt formtop" type="text" name="PatientDiagnosis" value=""/><br>
-Notes:           <input class="formt"type="text" name="Notes" value=""/><br>
-Parent Last Name:            <input class="formt" type="text" name="ParentLastName" value=""/><br>
-Parent First Name:           <input class="formt formbottom" type="text" name="ParentFirstName" value="" /><br>
+         <input class="formt formtop" type="text" name="PatientName" value=PatientNamewouldprefilledhere>
+         <input class="formt" type="text" name="PatientDiagnosis" value=PatientDiagnosis onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
+         <input class="formt"type="text" name="Notes" value=Notes onfocus="if(this.value == 'Notes'){ this.value = ''; }"/>
+            <input class="formt" type="text" name="ParentLastName" value=ParentLastName onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/>
+          <input class="formt formbottom" type="text" name="ParentFirstName" value=ParentFirstName onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/>
+          
            
            <input class="formsubmit"type="submit" value="Submit" name="submit" />
        </form>            
@@ -407,14 +415,7 @@ sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
             
             
 
-    if($_POST['Notes']=="Notes")
-    {
-        $newNotes = "";
-    }
-    else
-    {
-        $newNotes = sanitize($_POST['Notes']);
-    }
+   
     
        //retrieves the sw, and gets id, firstname and lastname      
         $currentUser = getUserProfileID();
@@ -439,10 +440,12 @@ sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
             $newPatientDiagnosis = sanitize( $_POST['PatientDiagnosis'] );
             }
             else { 
-                $message['PatientDiagnosis'] = "You must enter the Patients Diagnosis.";
+                $message = "You must enter the Patients Diagnosis.";
+                $showForm = true;
+                
             }
            
-            if( isset( $_POST['Notes'] ) && $_POST['Notes'] != ""){
+            if( isset( $_POST['Notes'] )){
             $newNotes = sanitize( $_POST['Notes'] );
             }
 
@@ -450,31 +453,28 @@ sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
             $newParentLastName = sanitize( $_POST['ParentLastName'] );
              }
              else{
-                  $message['ParentLastName'] = "You must enter the Parents Last Name.";
+                  $message = "You must enter the Parents Last Name.";
+                  $showForm = true;
+                  
              }
             if( isset( $_POST['ParentFirstName'] ) && $_POST['ParentFirstName'] != ""){
             $newParentFirstName = sanitize( $_POST["ParentFirstName"] );
             }
             else {
-                $message['ParentFirstName'] = "You must enter the Parents First Name.";
-
-            }
-            }
-            
-            
-              if(!empty($message)){
-            echo '<p><font color="red">The reservation was unsuccessful!</font></p><br/>';
-            
-            foreach ($message as $messages){
-                echo $messages . "<br/>";        
+                $message = "You must enter the Parents First Name.";
                 $showForm = true;
-            }
-              }
+                 
 
+            }
+            }
+            
+   
+     
  
   
 
-       if (empty($message)){
+       if(empty($message))
+      {
         echo '<p><font color="red">The reservation was made successfully made!</font></p><br/>';
         echo "The referral was made by : " .$userId. "<br>";
         echo "The Begin Date is : " .$newBeginDate. "<br>";
@@ -512,6 +512,7 @@ sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
         echo '<td>'.$sw_id.'</td>';
         echo '<td>'.$newBeginDate.'</td>';
         echo '<td>'.$newEndDate.'</td>';
+       
       
         
         $currentreservation = new Reservation (0, 0, 0, $newParentLastName, 
