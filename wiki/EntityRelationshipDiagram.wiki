@@ -4,6 +4,9 @@
 
 The purpose of this page is to provide an overview of the current entity relationship diagram. 
 
+= Entity Relationship Diagram =
+
+<a href="http://s283.photobucket.com/albums/kk285/lindashek1/?action=view&amp;current=ERD.png" target="_blank"><img src="http://i283.photobucket.com/albums/kk285/lindashek1/ERD.png" border="0" alt="Photobucket"><a/>
 
 = Table Details =
 
@@ -22,105 +25,100 @@ Below is an explanation of each entity presented in the entity relationship diag
 
 Below is an explanation of each field for each entity presented in the entity relationship diagram:
 
-<table border="1" cellpadding="8" >
-<th>Table Name:</th>
-<th>Activation</th>
-<tr>
-<th>Column Name</th>
-<th>Column Description</th>
-</tr>
-<tr>
-<td>ActivationID</td>
-<td>Primary key of the Activation table.</td>
-</tr>
-<tr>
-<td>UserProfileID</td>
-<td>Points to the UserProfile table.</td>
-</tr>
-<tr>
-<td>ActivationCode</td>
-<td>Displays the activation code for password reset.</td>
-</tr>
-<tr>
-<td>ResetTime</td>
-<td>Displays the time of the password reset.</td>
-</tr>
-<tr>
-<td>ResetStatus</td>
-<td>Displays the status of 1-'Yes' or 0-'No' regarding the password reset.</td>
-</tr>
-</table>
+==Table Name: Activation==
+ * *ActivationID* : Primary key of the Activation table. 
+ * *UserProfileID* : Points to the UserProfile table. 
+ * *ActivationCode* : Displays the activation code for password reset.
+ * *ResetTime* : Displays the time of the password reset.
+ * *ResetStatus* : Displays the status of 'Yes' or 'No' regarding the password reset.
 
-<table border="1" cellpadding="8" >
-<th>Table Name:</th>
-<th>UserProfile</th>
-<tr>
-<th>Column Name</th>
-<th>Column Description</th>
-</tr>
-<tr>
-<td>UserProfileID</td>
-<td>Primary key of the UserProfile table.</td>
-</tr>
-<tr>
-<td>UsernameID</td>
-<td>Displays the username of the user.</td>
-</tr>
-<tr>
-<td>UserEmail</td>
-<td>Displays the user's email address.</td>
-</tr>
-<tr>
-<td>Password</td>
-<td>Displays the user's hashed password.</td>
-</tr>
-<tr>
-<td>UserCategory</td>
-<td>Displays the user's category: 'Social Worker', 'RMH Staff Approver', 'RMH Administrator'.</td>
-</tr>
-</table>
+==Table Name: UserProfile==
+ * *UserProfileID* : Primary key of the UserProfile table.
+ * *UsernameID* : Displays the username of the user.
+ * *UserEmail* : Displays the user's email address.
+ * *Password* : Displays the user's hashed password.
+ * *UserCategory* : Displays the user's category: 'Social Worker', 'RMH Staff Approver', 'RMH Administrator'.
 
-<table border="1" cellpadding="8" >
-<th>Table Name:</th>
-<th>SocialWorkerProfile</th>
-<tr>
-<th>Column Name</th>
-<th>Column Description</th>
-</tr>
-<tr>
-<td>SocialWorkerProfileID</td>
-<td>Primary key of the SocialWorkerProfile table.</td>
-</tr>
-<tr>
-<td>UserProfileID</td>
-<td>Points to the UserProfile table.</td>
-</tr>
-<tr>
-<td>Title</td>
-<td>Displays the title of the Social Worker: 'Ms., Mr., Mrs., etc.'</td>
-</tr>
-<tr>
-<td>FirstName</td>
-<td>Displays the first name of the social worker.</td>
-</tr>
-<tr>
-<td>LastName</td>
-<td>Displays the last name of the social worker.</td>
-</tr>
-<tr>
-<td>HospitalAffiliation</td>
-<td>Displays the hospital the social worker is affiliated with.</td>
-</tr>
-<tr>
-<td>Phone</td>
-<td>Displays the phone number of the social worker.</td>
-</tr>
-<tr>
-<td>EmailNotification</td>
-<td>Displays whether or not the social worker would like to receive email notifications regarding profile activities and room reservation activities.</td>
-</tr>
-</table>
+==Table Name: SocialWorkerProfile==
+ * *SocialWorkerProfileID* : Primary key of the SocialWorkerProfile table.
+ * *UserProfileID* : Points to the UserProfile table.
+ * *Title* : Displays the title of the Social Worker: 'Ms., Mr., Mrs., etc.'
+ * *FirstName* : Displays the first name of the social worker.
+ * *LastName* : Displays the last name of the social worker.
+ * *HospitalAffiliation* : Displays the hospital the social worker is affiliated with.
+ * *Phone* : Displays the phone number of the social worker.
+ * *EmailNotification* : Displays whether or not the social worker would like to receive email notifications regarding profile activities and room reservation activities.
 
-= Entity Relationship Diagram =
+==Table Name: RMHStaffProfile==
+ * *RMHStaffProfileID* : Primary key of the RMHStaffProfile table.
+ * *UserProfileID* : Points to the UserProfile table.
+ * *Title* : Displays the title of the RMH Staff: 'Ms., Mr., Mrs., etc.'
+ * *FirstName* : Displays the first name of the RMH Staff.
+ * *LastName* : Displays the last name of the RMH Staff.
+ * *Phone* : Displays the phone number of the RMH Staff.
 
-<img src="http://code.google.com/p/rmh-roomreservation-maker/source/browse/trunk/rmh-reservation-maker/images/ERD.png" alt="ERD" />
+==Table Name: FamilyProfile==
+ * *FamilyProfileID* : Primary key of the FamilyProfile table.
+ * *ParentFirstName* : Displays the first name of the parent. 
+ * *ParentLastName* : Displays the last name of the parent. 
+ * *Email* : Displays the email address of the parent. 
+ * *Phone1* : Displays the primary phone number of the parent.
+ * *Phone2* : Displays the secondary phone number of the parent. 
+ * *Address* : Displays the parent address. 
+ * *City* : Displays the parent city.
+ * *State* : Displays the parent state. 
+ * *ZipCode* : Displays the parent zip-code.
+ * *Country* : Displays the parent country. 
+ * *PatientFirstName* : Displays the first name of the patient. 
+ * *PatientLastName* : Displays the last name of the patient. 
+ * *PatientRelation* : Displays the patient relation with the parent.
+ * *PatientDateOfBirth* : Displays the patient's date of birth.
+ * *FormPDF* : Displays the URL of the family form in pdf format. 
+ * *Notes* : (optional) Notes about the family profile.
+
+==Table Name: ProfileActivity==
+ * *ProfileActivityID* : Primary key of the ProfileActivity table. 
+ * *ProfileActivityRequestID* : Displays the request key number for the profile activity.
+ * *FamilyProfileID* : Points to the FamilyProfile table. 
+ * *SocialWorkerProfileID* : Points to the SocialWorkerProfile table.
+ * *RMHStaffProfileID* : Points to the RMHStaffProfile table. 
+ * *SW_DateStatusSubmitted* : Displays the timestamp of the profile activity status that was submitted by the social worker. 
+ * *RMH_DateStatusSubmitted* : Displays the timestamp of the profile activity status that was submitted by the rmh staff. 
+ * *ActivityType* : Utilized by the social worker for the room request: 'Apply','Modify','Cancel'.
+ * *Status* : Utilized by the rmh staff for the room request:    'Unconfirmed','Confirm','Deny'.
+ * *ParentFirstName* : Displays the first name of the parent.
+ * *ParentLastName* : Displays the last name of the parent.
+ * *Email*: Displays the email address of the parent.
+ * *Phone1*: Displays the primary phone number of the parent.
+ * *Phone2*: Displays the secondary phone number of the parent.
+ * *Address*: Displays  the parent address.
+ * *City*: Displays the parent city.
+ * *State*: Displays the parent state.
+ * *ZipCode*: Displays the parent zip-code. 
+ * *Country*: Displays the parent country.
+ * *PatientFirstName*: Displays the first name of the patient.
+ * *PatientLastName*: Displays the last name of the patient.
+ * *PatientRelation*: Displays the patient relation with the parent.
+ * *PatientDateOfBirth*: Displays the patient's date of birth.
+ * *FormPDF*: Displays the URL of the family's pdf form.
+ * *FamilyNotes*: (optional) Notes from the the RMH Staff and/or Social Worker regarding the family profile. 
+ * *ProfileActivityNotes*: (optional) Notes from the RMH Staff and/or Social Worker regarding the profile activity.
+
+==Table Name: RoomReservationActivity==
+ * *RoomReservationActivityID *: Primary key of the RoomReservationActivity table.
+ * *RoomReservationRequestID*: Displays the request key number for the room reservation activity.
+ * *FamilyProfileID*: Points to the FamilyProfile table. 
+ * *SocialWorkerProfileID*: Points to the SocialWorkerProfile table. 
+ * *RMHStaffProfileID*: Points to the RMH Staff Profile table. 
+ * *SW_DateStatusSubmitted*: Displays the timestamp of the room reservation activity status submitted by the social worker.
+ * *RMH_DateStatusSubmitted*: Displays the timestamp of the room reservation activity status submitted by the rmh staff.
+ * *ActivityType*: Utilized by the social worker for the room request: 'Apply','Modify','Cancel'.
+ * *Status*: Utilized by the rmh staff for the room request: 'Unconfirmed','Confirm','Deny'.
+ * *BeginDate*: Displays the estimate begin date of the room reservation for the family.
+ * *EndDate*: Displays the estimate end date of the room reservation for the family.
+ * *PatientDiagnosis*: (optional) Displays comments on patient diagnosis.
+ * *Notes*: (optional) Notes from the RMH Staff and/or Social Worker about the room reservation activity. 
+
+==Table Name: RequestKeyNumber==
+ * *RoomReservationRequestID* : Displays the next highest room reservation request id, when the store procedure, _GetRequestKeyNumber_ is called. 
+ * *ProfileActivityRequestID* : Displays the next highest profile activity request id, when the store procedure, _GetRequestKeyNumber_ is called. 
