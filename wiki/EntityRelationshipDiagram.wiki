@@ -1,0 +1,126 @@
+#summary Overview: Entity Relationship Diagram.
+
+= Introduction =
+
+The purpose of this page is to provide an overview of the current entity relationship diagram. 
+
+
+= Table Details =
+
+Below is an explanation of each entity presented in the entity relationship diagram:
+
+  * The <u>*Activation*</u> table: Lists all information regarding password reset.
+  * The <u>*UserProfile*</u> table: Lists all user profiles.
+  * The <u>*SocialWorkerProfile*</u> table: Lists all Social Worker profiles.
+  * The <u>*RMHStaffProfile*</u> table: Lists all Ronald McDonald House Staff profiles.
+  * The <u>*FamilyProfile*</u> table: Lists all family profiles.
+  * The <u>*ProfileActivity*</u> table: Lists all profile activities.
+  * The <u>*RoomReservationActivity*</u> table: Lists all room reservation activities.
+  * The <u>*RequestKeyNumber*</u> table: A look-up table to find the next highest request key number for both 'ProfileActivityRequestID' and 'RoomReservationRequestID'. Works with the store procedure called: _GetRequestKeyNumber_.
+
+= Table Structures and Descriptions =
+
+Below is an explanation of each field for each entity presented in the entity relationship diagram:
+
+<table border="1" cellpadding="8" >
+<th>Table Name:</th>
+<th>Activation</th>
+<tr>
+<th>Column Name</th>
+<th>Column Description</th>
+</tr>
+<tr>
+<td>ActivationID</td>
+<td>Primary key of the Activation table.</td>
+</tr>
+<tr>
+<td>UserProfileID</td>
+<td>Points to the UserProfile table.</td>
+</tr>
+<tr>
+<td>ActivationCode</td>
+<td>Displays the activation code for password reset.</td>
+</tr>
+<tr>
+<td>ResetTime</td>
+<td>Displays the time of the password reset.</td>
+</tr>
+<tr>
+<td>ResetStatus</td>
+<td>Displays the status of 1-'Yes' or 0-'No' regarding the password reset.</td>
+</tr>
+</table>
+
+<table border="1" cellpadding="8" >
+<th>Table Name:</th>
+<th>UserProfile</th>
+<tr>
+<th>Column Name</th>
+<th>Column Description</th>
+</tr>
+<tr>
+<td>UserProfileID</td>
+<td>Primary key of the UserProfile table.</td>
+</tr>
+<tr>
+<td>UsernameID</td>
+<td>Displays the username of the user.</td>
+</tr>
+<tr>
+<td>UserEmail</td>
+<td>Displays the user's email address.</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>Displays the user's hashed password.</td>
+</tr>
+<tr>
+<td>UserCategory</td>
+<td>Displays the user's category: 'Social Worker', 'RMH Staff Approver', 'RMH Administrator'.</td>
+</tr>
+</table>
+
+<table border="1" cellpadding="8" >
+<th>Table Name:</th>
+<th>SocialWorkerProfile</th>
+<tr>
+<th>Column Name</th>
+<th>Column Description</th>
+</tr>
+<tr>
+<td>SocialWorkerProfileID</td>
+<td>Primary key of the SocialWorkerProfile table.</td>
+</tr>
+<tr>
+<td>UserProfileID</td>
+<td>Points to the UserProfile table.</td>
+</tr>
+<tr>
+<td>Title</td>
+<td>Displays the title of the Social Worker: 'Ms., Mr., Mrs., etc.'</td>
+</tr>
+<tr>
+<td>FirstName</td>
+<td>Displays the first name of the social worker.</td>
+</tr>
+<tr>
+<td>LastName</td>
+<td>Displays the last name of the social worker.</td>
+</tr>
+<tr>
+<td>HospitalAffiliation</td>
+<td>Displays the hospital the social worker is affiliated with.</td>
+</tr>
+<tr>
+<td>Phone</td>
+<td>Displays the phone number of the social worker.</td>
+</tr>
+<tr>
+<td>EmailNotification</td>
+<td>Displays whether or not the social worker would like to receive email notifications regarding profile activities and room reservation activities.</td>
+</tr>
+</table>
+
+= Entity Relationship Diagram =
+
+<img src="http://code.google.com/p/rmh-roomreservation-maker/source/browse/trunk/rmh-reservation-maker/images/ERD.png" alt="ERD" />
