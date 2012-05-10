@@ -88,7 +88,7 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
                 connect();
         
         $query = "CALL GetRequestKeyNumber('RoomReservationRequestID')";
-    $result = mysql_query ($query);
+    $result = mysql_query ($query)or die(mysql_error());
         if (mysql_num_rows($result)!=0) {
             
                 $result_row = mysql_fetch_assoc($result); //gets the first row
