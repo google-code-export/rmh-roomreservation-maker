@@ -8,16 +8,10 @@
         $cat2 = new Cat;
           $cat2->setColor("orange");
           $cat2->setname("Garfield");
-          $myCats[] = $cat1;
+          $myCats[] = $cat2;
           
            $cat3 = new Cat;
           $cat3->setColor("tabby");
           $cat3->setname("Fluffy");
-          $myCats[] = $cat1;
-          
-          function showname($cat1, $cat2, $cat3){
-              echo $cat1;
-              echo $cat2;
-              echo $cat3;
-          }
+          $myCats[] = $cat3;
 ?>
