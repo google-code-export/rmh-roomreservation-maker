@@ -1,9 +1,7 @@
 <?php
-// this represents one cat
 class Cat {
     private $name;
     private $color;
-    private $breed;
 
     
     function setName($nm)
@@ -26,38 +24,9 @@ class Cat {
         return $this->color;
     }
     
-    function setBreed($brd)
-    {
-        $this->breed = $brd;
-    }
-    
-    function getBreed()
-    {
-        return $this->breed; 
-    }
-    
     function meow()
     {
         return $name . " says Meow!";
     }
-    
-    function purr()
-    {
-        return $name. "purrrrs";
-    }
-    
-    function displayCat()
-    {
-        echo "My name is " . $this->name . " and my color is " . $this->color . " and my breed is " . $this->breed . "<br />";
-    }
-       //count the number of cats of a particular color
-          function countColor()
-          {
-              
-              echo "Color: " . $this->getColor();
-              
-                         
-                                       
-          }
 }
 ?>
