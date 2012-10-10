@@ -4,7 +4,7 @@ class Cat {
     private $color;
     private $breed;
 
-    
+
     function setName($nm)
     {
         $this->name = $nm;

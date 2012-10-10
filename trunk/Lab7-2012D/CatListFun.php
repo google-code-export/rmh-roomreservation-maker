@@ -39,7 +39,7 @@
           function displayCatInfo($catExample)
           {
               
-              foreach ($catExample[] as $item)
+              foreach ($catExample as $item)
               {
                 echo "Name: " . $item->getName();
                 echo "<br>";
