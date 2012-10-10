@@ -31,7 +31,7 @@ class Cat {
         return $this->breed;
     }
     
-    function setBreed()
+    function setBreed($brd)
     {
         $this->breed = $brd;
     }
