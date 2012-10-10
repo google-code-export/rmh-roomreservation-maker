@@ -2,6 +2,8 @@
 class Cat {
     private $name;
     private $color;
+    private $breed;
+    
 
     
     function setName($nm)
@@ -22,6 +24,16 @@ class Cat {
     function getColor()
     {
         return $this->color;
+    }
+    
+    function getBreed()
+    {
+        return $this->breed;
+    }
+    
+    function setBreed()
+    {
+        $this->breed = $brd;
     }
     
     function meow()
