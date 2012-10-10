@@ -26,7 +26,7 @@
               $size=sizeof($myCats);//int
               for($i=0;i<size;$i++);
               {
-                  if($myCats[$i]==$color)//if array index at i is same as color
+                  if($myCats[$i]->getColor()==$color)//if array index at i is same as color
                   {
                       $count++;
                   }
