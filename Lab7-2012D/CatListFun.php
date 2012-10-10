@@ -1,5 +1,5 @@
 <?php
-
+          include ('cat.php');
           $cat1 = new Cat;
           $cat1->setColor("black");
           $cat1->setBreed("Calico");
