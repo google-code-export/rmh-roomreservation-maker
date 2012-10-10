@@ -1,5 +1,6 @@
 <?php
-          include ('cat.php');
+include('Cat.php');
+
           $cat1 = new Cat;
           $cat1->setColor("black");
           $cat1->setBreed("Calico");
@@ -18,7 +19,9 @@
           $cat3->setname("Fluffy");
           $myCats[] = $cat3;
 
-          
+          displayCatInfo($cat1);
+          displayCatInfo($cat2);
+          displayCatInfo($cat3);
           
           function countByColor($color,$myCats)//string,array
           {
@@ -38,15 +41,14 @@
           
           function displayCatInfo($catExample)
           {
-              
-              foreach ($catExample as $item)
-              {
-                echo "Name: " . $item->getName();
+                echo "Name: " . $catExample->getName();
                 echo "<br>";
-                echo "Color: " . $item->getColor();
+                echo "Color: " . $catExample->getColor();
                 echo "<br>";
-                echo "Breed: " . $item->getBreed();
+                echo "Breed: " . $catExample->getBreed();
                 echo "<br>";
-              }
+                echo "<br>";
+
+        
           }
 ?>
