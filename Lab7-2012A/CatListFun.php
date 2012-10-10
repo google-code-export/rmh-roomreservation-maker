@@ -1,5 +1,6 @@
 <?php
-require("cat.php");
+
+include_once 'Cat.php';
 
           $cat1 = new Cat;
           $cat1->setColor("black");
@@ -19,7 +20,18 @@ require("cat.php");
           $cat3->setBreed("Ragdoll");
           $myCats[] = $cat3;
           
-  CatListFun($myCats, "orange");
+          displayInfo($cat1);
+          displayInfo($cat2);
+          displayInfo($cat3);
+          CatListFun($myCats, "orange");          
+          
+          
+          function displayInfo(Cat $n)
+          {
+          echo $n->getName() . " is a " . $n->getColor() . " " . $n->getBreed() ." cat.</br> </br>";
+          };
+   
+
           
   
   
@@ -37,6 +49,6 @@ require("cat.php");
          echo "There are " . $colorCount . " " . $selectedColor . " cats.";
 
   
-  }
+  };
           
 ?>
