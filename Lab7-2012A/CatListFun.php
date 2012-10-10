@@ -20,6 +20,7 @@ include_once 'Cat.php';
           $cat3->setBreed("Ragdoll");
           $myCats[] = $cat3;
           
+
           displayInfo($cat1);
           displayInfo($cat2);
           displayInfo($cat3);
@@ -30,9 +31,6 @@ include_once 'Cat.php';
           {
           echo $n->getName() . " is a " . $n->getColor() . " " . $n->getBreed() ." cat.</br> </br>";
           };
-   
-
-          
   
   
   
