@@ -421,7 +421,7 @@ sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
         $currentUser = getUserProfileID();
         $sw = retrieve_UserProfile_SW($currentUser);
         $swObject = current($sw);
-        $sw_id = $swObject->get_userProfileId();
+        $sw_id = $swObject->get_swProfileId();
         $swFirstName = $swObject->get_swFirstName();
         $swLastName = $swObject->get_swLastName();
         $ActivityType ="Apply";
