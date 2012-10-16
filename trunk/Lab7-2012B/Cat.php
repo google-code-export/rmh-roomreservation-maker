@@ -1,11 +1,12 @@
+
 <?php
-class Cat {
+   
+    class Cat {
     private $name;
     private $color;
     private $breed;
 
 
-    
     function setName($nm)
     {
         $this->name = $nm;
@@ -25,7 +26,14 @@ class Cat {
     {
         return $this->color;
     }
-    
+        function setBreed($brd){
+         $this->breed=$brd;
+         
+         }
+    function getBreed()
+    {
+        return $this->breed;
+    }
     function setBreed($brd)
     {
         $this->breed = $brd;
