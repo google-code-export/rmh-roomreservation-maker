@@ -22,21 +22,9 @@ include('Cat.php');
           displayCatInfo($cat1);
           displayCatInfo($cat2);
           displayCatInfo($cat3);
+         
           
-          function countByColor($color,$myCats)//string,array
-          {
-              $count;//int
-              $size=sizeof($myCats);//int
-              for($i=0;i<size;$i++);
-              {
-                  if($myCats[$i]->getColor()==$color)//if array index at i is same as color
-                  {
-                      $count++;
-                  }
-              }
-              return $count;              
-          }
-          
+          echo "The number of cats of color orange is " . countByColor("orange",$myCats);
 
           
           function displayCatInfo($catExample)
@@ -48,7 +36,19 @@ include('Cat.php');
                 echo "Breed: " . $catExample->getBreed();
                 echo "<br>";
                 echo "<br>";
-
-        
+          }
+          
+          function countByColor($color,$myCats)//string,array
+          {
+              $count;//int
+              $size=sizeof($myCats);//int
+              foreach ($myCats as $item)
+              {
+                  if($item->getColor()==$color)//if array index at i is same as color
+                  {
+                      $count++;
+                  }
+              }
+              return $count;              
           }
 ?>
