@@ -34,15 +34,6 @@
     {
         return $this->breed;
     }
-    function setBreed($brd)
-    {
-        $this->breed = $brd;
-    }
-    
-    function getBreed()
-    {
-        return $this->breed;
-    }
     
     
     function meow()
