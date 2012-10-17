@@ -5,8 +5,6 @@
           $cat1->setColor("black");
           $cat1->setName("Zoe");
           $cat1->setBreed("Burmese");
-          
-          $cat1->setBreed("Burmese");
           $myCats[] = $cat1;
          
           
@@ -14,14 +12,11 @@
           $cat2->setColor("orange");
           $cat2->setName("Garfield");
           $cat2->setBreed("LaPerm");
-          $cat2->setBreed("LaPerm");
           $myCats[] = $cat2;
           
           $cat3 = new Cat;
           $cat3->setColor("tabby");
           $cat3->setName("Fluffy");
-          $cat3->setBreed("Tabby");
-          
           $cat3->setBreed("Tabby");
           $myCats[] = $cat3;
           
