@@ -20,7 +20,7 @@ include ('Cat.php');
           $myCats[] = $cat3;
           
           $cont = 0;
-          displayCount($cat1,$cont);
+          displayCount($cat1,$cont); // calling the function to count the cats.
           displayCount($cat2,$cont);
           displayCount($cat3,$cont);
           
@@ -31,13 +31,11 @@ include ('Cat.php');
           displayCatInfo($cat3);
           
 
-function displayCount($cat,&$cont)
+function displayCount($cat,&$cont)  // function the count how many cats with the collor orange
 {
-             
-       //     print_r($cat);
- 
-            if($cat->getColor() == 'orange')
-                          $cont ++;
+
+            if($cat->getColor() == 'orange')    //comparison to verify the orange collor
+                          $cont ++;   //counting the cats
 }
 
 function displayCatInfo($theCats)
