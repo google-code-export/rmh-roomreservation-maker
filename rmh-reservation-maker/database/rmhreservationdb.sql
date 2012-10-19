@@ -298,9 +298,9 @@ INSERT INTO `userprofile` (`UserProfileID`, `UsernameID`, `UserEmail`, `Password
 (3, 'Tom718', 'tom1@gmail.com', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver'),
 (4, 'Lauren653', 'lauren1@gmail.com', '91b06a9f87b7efe1be3d56f46bc739fae897bcc5', 'Social Worker'),
 (5, 'Admin', 'housemngr@rmhnewyork.org', '1be4d1253535f4e0ba0895e6e6918be38531823c', 'RMH Administrator'),
-(6, 'ypascual', 'yamiris.pascual08@stjohns.edu', '24b170fad917b173d9f0c4e4f81f3a7030abc823', 'Social Worker'),
-(7, 'amodeste', 'alisa.modeste08@my.stjohns.edu', '5a1cdbb4da7ce239146dc3be556887e4b268afa7', 'Social Worker'),
-(8, 'spavon', 'stefan.pavon09@stjohns.edu', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'RMH Staff Approver');
+(6, 'ypascual', 'bob123@aim.com', '24b170fad917b173d9f0c4e4f81f3a7030abc823', 'Social Worker'),
+(7, 'amodeste', 'david.elias09@stjohns.edu', '5a1cdbb4da7ce239146dc3be556887e4b268afa7', 'Social Worker'),
+(8, 'spavon', 'dhee@optonline.net', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'RMH Staff Approver');
 
 --
 -- Constraints for dumped tables
