@@ -35,7 +35,7 @@ function email($add, $subject, $message)
     /*
       *///Not needed on Go Daddy
      
-    $from = 'alisa.modeste08@stjohns.edu'; //this SHOULD be a VALID email address
+    $from = 'david.elias09@stjohns.edu'; //this SHOULD be a VALID email address
 
     ini_set("SMTP","mailhubout.stjohns.edu");
     ini_set('sendmail_from', $from);
@@ -465,6 +465,7 @@ function PasswordReset($activation, $username, $userEmail)
 * @version 05/02/12
 */
 function NewFamilyProfile($profileID)
+
 {
     $approvers = retrieve_all_UserProfile_byRole('RMH Staff Approver');
     
@@ -478,6 +479,23 @@ function NewFamilyProfile($profileID)
     email($to, $subject, $message);
 }
 
+
+
+  
+$to = 'westjuvenile1@aim.com'; //valid destination email address
+$subject = 'testing php mail function windows';
+$message = 'This is a test email, I am testing the php mail function';
+ 
+$mailed = mail($to, $subject, $message);
+ 
+if($mailed)
+{
+    echo 'The email was sent';
+}
+else
+{
+    echo 'The email could not be sent, please try again';
+}
 
 //function NewFamilyDeny
 ?>
