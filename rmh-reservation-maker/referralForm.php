@@ -37,7 +37,17 @@ $showForm = false;
 $showReport = false;
 
 
-
+        //get family values from database to fill into form
+        if(isset($_GET['family'])){
+          $familyID = sanitize($_GET['family']);}
+        
+        $family = retrieve_FamilyProfile($familyID);
+        //$familyObject = current($family);
+        $patientfname= $family->get_patientfname();
+        $patientlname= $family->get_patientlname();
+        $patientnotes= $family->get_patientnotes();
+        $parentfname= $family->get_parentfname();
+        $parentlname= $family->get_parentlname();
 
 
 
@@ -389,11 +399,12 @@ if($showForm == true)
 "selected='selected'";?> >2013</option>
 </select>
     <br><br>
-         <input class="formt formtop" type="text" name="PatientName" value=PatientNamewouldprefilledhere>
+         <input class="formt formtop" type="text" name="PatientLastName" value="<?php echo htmlspecialchars($patientlname); ?>"/>
+         <input class="formt" type="text" name="PatientFirstName" value="<?php echo htmlspecialchars($patientfname); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
          <input class="formt" type="text" name="PatientDiagnosis" value=PatientDiagnosis onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
-         <input class="formt"type="text" name="Notes" value=Notes onfocus="if(this.value == 'Notes'){ this.value = ''; }"/>
-            <input class="formt" type="text" name="ParentLastName" value=ParentLastName onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/>
-          <input class="formt formbottom" type="text" name="ParentFirstName" value=ParentFirstName onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/>
+         <input class="formt"type="text" name="Notes" value="<?php echo htmlspecialchars($patientnotes); ?>" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/>
+         <input class="formt" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($parentlname); ?>" onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/>
+         <input class="formt formbottom" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($parentfname); ?>" onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/>
           
            
            <input class="formsubmit"type="submit" value="Submit" name="submit" />
@@ -402,9 +413,6 @@ if($showForm == true)
      <?php
 
 }
-
-    //$newParentLastName = sanitize(get_parentlname());
-    //$newParentFirstName = sanitize(get_parentfname());
 
      else if($showReport == true)
             {
@@ -429,13 +437,8 @@ sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
         $swDateStatusSubmitted = date("Y-m-d");
         $userId = sanitize(getCurrentUser());
         
-        //$familyProfileId = get_familyProfileId();
-        //$family = retrieve_FamilyProfile($familyProfileId);
-        //$familyObject = current($family);
-        //$fname = $familyObject->get_parentFirstName();
-        //$lname = $familyObject->get_parentLastName();
-        
 
+        
             if( isset( $_POST['PatientDiagnosis'] ) && $_POST['PatientDiagnosis'] != ""){
             $newPatientDiagnosis = sanitize( $_POST['PatientDiagnosis'] );
             }
