@@ -88,7 +88,7 @@ function ConfirmCancel($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
         $subject = "Confirmation of Canceled Request";
         $message = "The cancellation for $name's family for dates $StartDate - $EndDate has been processed.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
 
-        email($to, $subject, $message);
+        mail($to, $subject, $message);
     
     endif;
     
@@ -121,7 +121,7 @@ function ModifyDeny($RequestKey, $SWID, $familyID, $StartDate, $EndDate, $note =
             $message = "The request for $name's family for dates $StartDate - $EndDate cannot be accommodated.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
         endif;
 
-        email($to, $subject, $message);
+        mail($to, $subject, $message);
     endif;
     
     
@@ -149,7 +149,7 @@ function ModifyAccept($RequestKey, $SWID, $familyID, $StartDate, $EndDate)
         $message = "The request for $name's family for dates $StartDate - $EndDate has been accepted.\r\n\r\nThe request can be viewed at (URL)/$RequestKey";
 
 
-        email($to, $subject, $message);
+        mail($to, $subject, $message);
     endif;
     
 }
@@ -183,7 +183,7 @@ function Confirm($RequestKey, $StartDate, $EndDate,$SWID, $familyID)
        $message = "We received your request for a reservation for $StartDate to $EndDate for $name. \r\nYour confirmation number is $RequestKey. Please keep in your records for future use.\r\n\r\n Thank you.";
     
       
-        email($to, $subject, $message);
+        mail($to, $subject, $message);
       endif;     
 }
 
@@ -214,7 +214,7 @@ function RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
     
     $message = "Your reservation request, $RequestKey, for $name for the dates of $StartDate to $EndDate for has been accepted. \r\n\r\nThank You.";
   
-      email($to, $subject, $message);
+      mail($to, $subject, $message);
 
             
    endif;    
@@ -247,7 +247,7 @@ function RequestDeny($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
     
     $message = "Your reservation request, $RequestKey, for $name, for the dates of $StartDate to $EndDate has been denied.\r\n\r\nThank You.";
   
-    email($to, $subject, $message);   
+    mail($to, $subject, $message);   
    endif;
 }
 
@@ -278,7 +278,7 @@ function FamilyModConfirm($requestID, $familyID, $SWID)
     
     $message = "The request to update $name profile has been sent.  Here is the confirmation number for that request, $requestID, please retain for future uses.\r\n\r\nThank You.";
   
-    email($to, $subject, $message); 
+    mail($to, $subject, $message); 
     endif;
 }
 
@@ -307,7 +307,7 @@ function FamilyModAccept($requestID, $familyID, $SWID)
     
     $message = "Request $requestID, to update the Family of $name, has been accepted.\r\n\r\nThank you.";
   
-    email($to, $subject, $message); 
+    mail($to, $subject, $message); 
     endif;
 }
 
@@ -338,7 +338,7 @@ function FamilyModDeny($requestID,$familyID, $SWID)
     
     $message = "Request $requestID, to update the Family of $name profile, has been denied.\r\n\r\nThank you.";
   
-    email($to, $subject, $message); 
+    mail($to, $subject, $message); 
    endif;
 }
 
@@ -361,7 +361,7 @@ function newRequest($RequestKey, $DateSubmitted, $BeginDate, $EndDate)
     for($i = 0; $i < count($Approver); $i++)
     {
         $to = $Approver[$i]->get_userEmail();
-        email($to, $subject, $message);
+        mail($to, $subject, $message);
     };
 }
 
@@ -386,7 +386,7 @@ function newReservationMod($RequestKey, $DateSubmitted, $FamilyProfileID)
     for($i = 0; $i < count($Approver); $i++)
     {
         $to = $Approver[$i]->get_userEmail();
-        email($to, $subject, $message);
+        mail($to, $subject, $message);
     };
 }
 
@@ -410,7 +410,7 @@ function newCancel($RequestKey, $DateSubmitted, $FamilyProfileID)
     for($i = 0; $i < count($Approver); $i++)
     {
         $to = $Approver[$i]->get_userEmail();
-        email($to, $subject, $message);
+        mail($to, $subject, $message);
     };
 }
 
@@ -435,7 +435,7 @@ function newFamilyMod($RequestKey, $DateSubmitted, $FamilyProfileID)
     for($i = 0; $i < count($Approver); $i++)
     {
         $to = $Approver[$i]->get_userEmail();
-        email($to, $subject, $message);
+        mail($to, $subject, $message);
     };
 }
 
@@ -454,7 +454,7 @@ function PasswordReset($activation, $username, $userEmail)
     $subject = "Request for Password Reset";
     $message = "Please click the link to reset your password: (URL)?user=$username&activation=$activation";
     
-    email($to, $subject, $message);
+    mail($to, $subject, $message);
 }
 
 
@@ -476,7 +476,7 @@ function NewFamilyProfile($profileID)
     $subject = "There is a Request for a New Family Profile";
     $message = "There is a request for a new family profile. Its Profile Activity ID is $profileID.";
 
-    email($to, $subject, $message);
+    mail($to, $subject, $message);
 }
 
 
