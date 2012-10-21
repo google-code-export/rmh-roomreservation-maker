@@ -39,15 +39,13 @@ $showReport = false;
 
         //get family values from database to fill into form
         if(isset($_GET['family'])){
-          $familyID = sanitize($_GET['family']);}
-        
+        $familyID = sanitize($_GET['family']);
         $family = retrieve_FamilyProfile($familyID);
-        //$familyObject = current($family);
         $patientfname= $family->get_patientfname();
         $patientlname= $family->get_patientlname();
         $patientnotes= $family->get_patientnotes();
         $parentfname= $family->get_parentfname();
-        $parentlname= $family->get_parentlname();
+        $parentlname= $family->get_parentlname();}
 
 
 
