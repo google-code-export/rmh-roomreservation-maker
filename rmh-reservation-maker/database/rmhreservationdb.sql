@@ -236,11 +236,11 @@ CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
 
 INSERT INTO `roomreservationactivity` (`RoomReservationActivityID`, `RoomReservationRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `BeginDate`, `EndDate`, `PatientDiagnosis`, `Notes`) VALUES
 (1, 1, 1, 1, 1, '2012-02-17 10:33:28', '2012-02-18 13:22:20', 'Apply', 'Confirm', '2012-03-01 00:00:00', '2012-04-01 00:00:00', 'Pediatric Sarcomas', ''),
-(2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(3, 3, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(4, 4, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
-(5, 5, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Apply', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', ''),
-(6, 6, 3, 4, NULL, '2012-04-25 21:40:40', NULL, 'Apply', 'Unconfirmed', '2012-04-30 00:00:00', '2012-05-30 00:00:00', 'Pediatric Leukemias', '');
+(2, 1, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
+(3, 1, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
+(4, 2, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
+(5, 2, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Apply', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', ''),
+(6, 3, 3, 4, NULL, '2012-04-25 21:40:40', NULL, 'Apply', 'Unconfirmed', '2012-04-30 00:00:00', '2012-05-30 00:00:00', 'Pediatric Leukemias', '');
 
 -- --------------------------------------------------------
 
@@ -298,9 +298,7 @@ INSERT INTO `userprofile` (`UserProfileID`, `UsernameID`, `UserEmail`, `Password
 (3, 'Tom718', 'tom1@gmail.com', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver'),
 (4, 'Lauren653', 'lauren1@gmail.com', '91b06a9f87b7efe1be3d56f46bc739fae897bcc5', 'Social Worker'),
 (5, 'Admin', 'housemngr@rmhnewyork.org', '1be4d1253535f4e0ba0895e6e6918be38531823c', 'RMH Administrator'),
-(6, 'ypascual', 'bob123@aim.com', '24b170fad917b173d9f0c4e4f81f3a7030abc823', 'Social Worker'),
-(7, 'amodeste', 'david.elias09@stjohns.edu', '5a1cdbb4da7ce239146dc3be556887e4b268afa7', 'Social Worker'),
-(8, 'spavon', 'dhee@optonline.net', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'RMH Staff Approver');
+(6, 'ypascual', 'bob123@aim.com', '24b170fad917b173d9f0c4e4f81f3a7030abc823', 'Social Worker');
 
 --
 -- Constraints for dumped tables
@@ -321,8 +319,9 @@ ALTER TABLE `rmhstaffprofile`
 --
 -- Constraints for table `socialworkerprofile`
 --
-ALTER TABLE `socialworkerprofile`
+/*ALTER TABLE `socialworkerprofile`
   ADD CONSTRAINT `SocialWorkerProfile_ibfk_1` FOREIGN KEY (`UserProfileID`) REFERENCES `userprofile` (`UserProfileID`);
+*/
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
