@@ -5,7 +5,7 @@
 	session_start();
 	session_cache_expire(30);
         $title = 'Help Homepage';
-        include ('header.php');
+        include ('../header.php');
 ?>
 <html>
 	<head>
@@ -30,4 +30,5 @@
 		<p>If these help pages don't answer your questions, please contact the <a href="mailto:housemngr@rmhportland.org">House Manager</a>.</p>
 	</body>
 </html>
+<?PHP include('../footer.php'); ?>
 
