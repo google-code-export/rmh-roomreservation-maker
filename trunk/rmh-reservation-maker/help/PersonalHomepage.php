@@ -5,7 +5,7 @@
 session_start();
 session_cache_expire(30);
 $title = 'Personal Homepage';
-include ('header.php');
+include ('../header.php');
 ?>
 <html>
     <head>
@@ -48,4 +48,5 @@ you will also see the following current information displayed:
         
     </body>
 </html>
+<?PHP include('../footer.php'); ?>
 
