@@ -5,7 +5,7 @@
 	session_start();
 	session_cache_expire(30);
         $title = 'Patient Reports';
-        include ('header.php');
+        include ('../header.php');
 ?>
 <html>
     <head>
@@ -28,5 +28,5 @@
                     
     </body>
 </html>
-<?PHP include('footer.php'); ?>
+<?PHP include('../footer.php'); ?>
 
