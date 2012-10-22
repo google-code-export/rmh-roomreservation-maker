@@ -4,6 +4,8 @@
 */
 	session_start();
 	session_cache_expire(30);
+        $title = 'Reservation Search Help';
+        include ('../header.php');
 ?>
 <html>
 	<head>
@@ -31,5 +33,6 @@
 <p> Remember to <strong>logout</strong> when you are finished using RMH Reservation Maker.
 	</body>
 </html>
+<?PHP include('../footer.php'); ?>
 
 
