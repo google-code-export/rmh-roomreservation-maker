@@ -5,7 +5,7 @@ Brian Harrison Charles Holenstein
 session_start();
 session_cache_expire(30);
 $title = 'Reservation Search Help';
-include ('header.php');
+include ('../header.php');
 
 ?>
 <html>
@@ -33,6 +33,6 @@ include ('header.php');
         
     </body>
 </html>
-<?PHP include('footer.php'); ?>
+<?PHP include('../footer.php'); ?>
 
 
