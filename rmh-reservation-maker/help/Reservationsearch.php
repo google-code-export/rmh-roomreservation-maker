@@ -4,17 +4,25 @@
  */
 session_start();
 session_cache_expire(30);
-$title = 'Reservation Search Help';
-include ('header.php');
+$title = 'Adding People to the Database Help Page';
+include ('../header.php');
 ?>
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>How to add People to the Database</title>
+        <title>Adding People to the Database</title>
+        <br/><br/>
     </head>
     <body>
-        <div align ="Left"><p><strong>How to Add People to the Database</strong><BR>
+        <div align ="center"><h1><strong>Adding People to the Database</h1><br/>
+            <ol>
+                <li>Select <i>"New Referral"</i> from the left panel.</li>
+                <li>You will now see a long form with information like <i>"First Name</i>and<i>"Last Name"</i>
+                   to be filled in.</li>
+                <li>When you are finished, select the <b>Submit</b> button at the bottom of the page.</li>
+                <li>next step</li>
+            </ol>
                 <p><B>Step 1:</B>Select <i>"New Referral"</i>from the left panel.<BR><BR>
                     
                 <p><B>Step 2:</B>You will now see a long form with information like <i>"First Name</i>and<i>"Last Name"</i>
@@ -29,4 +37,4 @@ include ('header.php');
                 <p><B>Step 6:</B>When you have finished you can return to any other function by selecting it on the navigation bar.<BR><BR>    
     </body>
 </html>
-<?PHP include('footer.php'); ?>
+<?PHP include('../footer.php'); ?>
