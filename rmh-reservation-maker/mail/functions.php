@@ -498,4 +498,33 @@ else
 }
 
 //function NewFamilyDeny
+
+function randURL()
+{
+    /*This piece of code should generate the random string to append to the URL link
+    * that will go in the email. 
+    * The contents of the email should contain webaddress.com/blah(append(.))rng url
+    * along with a message regarding the family reservation being made.
+    */ 
+    $length=12; //need to set a length for the URL, currently at 12
+    $characters='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //the set of characters that can be chosen, should be 52.
+    $randString='';
+    for ($i = 0; $i < $length; $i++) {
+    //chooses one character from the entire set of available characters in characters
+    //this continues until it fills up the length.
+       $randString .= $characters[mt_rand(0, strlen($characters))];
+    }
+    echo $randString;
+    /*This code should be in the message portion of the email;
+    *$message = "Hello, (family name) family. Your room reservation request has been approved
+    *from (date) to (date). However, there is more paperwork to fill out. If you would like,
+    * please do so here: (url at blah.com/blah(append)randURL()";
+    *remember that it has to be double quotes so that the PHP will evaluate correctly. 
+    *Question: How do we make sure that the URL works and remembers the family?
+    *Question: How do we get the values from the filled in forms again?
+    *Question: I assume that the person who is handling the UI will be coding in the forms graphics?
+    *Question: use reservation or db methods to change information?
+    */
+}
 ?>
