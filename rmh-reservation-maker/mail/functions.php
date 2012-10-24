@@ -515,7 +515,7 @@ function randURL()
     //this continues until it fills up the length.
        $randString .= $characters[mt_rand(0, strlen($characters))];
     }
-    echo $randString;
+    return $randString;
     /*This code should be in the message portion of the email;
     *$message = "Hello, (family name) family. Your room reservation request has been approved
     *from (date) to (date). However, there is more paperwork to fill out. If you would like,
