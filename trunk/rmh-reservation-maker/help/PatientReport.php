@@ -13,7 +13,7 @@
         <title>Patient Reports</title>
     </head>
     <body>
-        <div align="left"><p><strong>Patient Reports</strong>
+        <div align="center"><p><strong>Patient Reports</strong>
           
                 <p><B>Step 1:</B>Select <i>"Report"</i> from the left panel.<BR><BR>
                     

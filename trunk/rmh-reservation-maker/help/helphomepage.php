@@ -13,8 +13,8 @@
 			RMH Reservation Maker
 		</title>
 	</head>
-	<body>
-		<p><strong>RMH Reservation Maker Help Pages</strong></p>
+	<body><br><br><br>
+            <div align="center">
 <ol>
 		<li>	<a href="Loginhelp.php">Signing into the System</a></li><br>
 			<!--<ul><li><a href="?helpPage=index.php">About your Personal Home Page</a></li></ul><br> -->
