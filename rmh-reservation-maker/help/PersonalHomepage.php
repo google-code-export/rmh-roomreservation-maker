@@ -13,7 +13,7 @@ include ('../header.php');
         <title>Information about Your Personal Home page</title>
     </head>
     <body>
-        <div align="left"><p><strong>Information about Your Personal Home Page</strong><BR>
+        <div align="center"><p><strong>Information about Your Personal Home Page</strong><BR>
         
 <p>Whenever you log into the RMH Reservation Maker, some useful information will appear.
 	<p> <B>If you are a volunteer, a social worker, or a manager</B> and

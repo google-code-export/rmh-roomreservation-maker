@@ -14,7 +14,7 @@
 		</title>
 	</head>
 	<body>
-		<div align="left"><p><strong> Signing in and out of the System</strong>
+		<div align="center"><p><strong> Signing in and out of the System</strong>
 		<p>Access to <i>Homeroom</i> requires a Username and a Password.  The form looks like this:
 		<p><table align="center">
 					<tr><td>Username:</td>

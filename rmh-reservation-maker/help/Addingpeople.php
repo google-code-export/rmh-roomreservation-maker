@@ -14,7 +14,7 @@ include ('../header.php');
         <title>How to edit a Persons Information in the Database</title>
     </head>
     <body>
-        <div align ="Left"><p><strong>How to edit a Persons Information in the Database</strong><BR>
+        <div align ="center"><p><strong>How to edit a Persons Information in the Database</strong><BR>
                 
                 <p><B>Step 1:</B> Select <i>"New Referral"</i> from the left panel.<BR><BR>
                     

@@ -13,7 +13,7 @@
         <title>Approving Reservation Requests</title>
     </head>
     <body>
-        <div align="left"><p><strong>Approving Reservation Requests</strong>
+        <div align="center"><p><strong>Approving Reservation Requests</strong>
           
                 <p><B>Step 1:</B>Select <i>"Search Reservation"</i> from the left panel.<BR><BR>
                     
