@@ -40,6 +40,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['login.php']=-1; //login page is viewable by everyone
     $permission_array['logout.php']=-1; //logout page
     $permission_array['reset.php']=-1; //password reset page (available to everyone)
+    $permission_array['helphomepage.php']=-1; //sets permission for the helphomepage
     
     
     /* ============ pages users with access level of FAMILY and above can view ===============*/
