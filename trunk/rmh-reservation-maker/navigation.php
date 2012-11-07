@@ -37,6 +37,9 @@ if($userAccess === 0)
  ?>
     <li><a href="<?php echo BASE_DIR.'/index.php';?>">Family Nav1</a></li>
     <li><a href="<?php echo BASE_DIR.'/index.php';?>">Family Nav2</a></li>
+    <li><a href="javascript:logout_Of_Website();">Log Out</a></li>
+    
+
     
 <?php  
 }
@@ -65,19 +68,32 @@ else if($userAccess === 3)
  ?>
     <li><a href="<?php echo BASE_DIR.'/admin/listUsers.php';?>">View Users</a></li>
     <li><a href="<?php echo BASE_DIR.'/admin/addUser.php';?>">Add New User</a></li>
-    
+
 <?php  
 }
-
 //Navigation that appears for everyone (excluding family members)
 if($userAccess > 0)
 {
 ?>
     <li><a href="<?php echo BASE_DIR.'/changeAccountSettings.php';?>">Manage Account</a></li>
+    <li><a href="javascript:logout_Of_Website();">Log Out</a></li>
     
 <?php
-}
+} 
 ?>
     
 </ul><div class="topRightButton"><div id="ios-arrow-left"><a href="<?php echo BASE_DIR.'/logout.php';?>">Logout</a></div></div>
 <?php include (ROOT_DIR. '/inc/back.php'); ?>
+
+<script>
+function logout_Of_Website()
+//logs the User out of the website
+{
+var c=confirm("Please confirm that you want to log out");
+if (c==true)
+  {
+  window.open('logout.php');
+  }
+}
+</script>
+
