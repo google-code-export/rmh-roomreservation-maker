@@ -50,6 +50,8 @@ checkSession(); //check session if it has timed out or not
     /* ============ pages SOCIAL WORKERs and above can view ===============*/
     $permission_array['referralForm.php']=1;
     $permission_array['newProfile.php']=1;
+    $permission_array['FamilyProfileMenu.php']=1;
+    $permission_array['SearchFamily.php']=1;    
     $permission_array['profileChange.php']=1;
     $permission_array['SearchReservations.php']=1;
     $permission_array['profileDetail.php']=1;
