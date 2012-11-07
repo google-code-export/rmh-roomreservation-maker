@@ -4,10 +4,10 @@
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 
 echo ROOT_DIR.'/database/dbFamilyProfile.php';
-echo "testing retrieve_dbFamilyProfileByName, expect one family to be found";
+echo "</br> testing retrieve_dbFamilyProfileByName, expect one family to be found";
 test_retrieve_dbFamilyProfileByName("Scott", "Miller");
 
-echo "testing retrieve_dbFamilyProfileByName, expect no families to be found";
+echo "</br> testing retrieve_dbFamilyProfileByName, expect no families to be found";
 test_retrieve_dbFamilyProfileByName("Joe", "Miller");
 
 function test_retrieve_dbFamilyProfileByName($fname, $lname)
@@ -29,6 +29,7 @@ else
 function display_family($family)
 {
     echo "id is " . $family->get_familyProfileId() .  "</br>";
+    echo "status is " . $family->get_familyProfileStatus() . "</br>";
     echo " lname is " . $family->get_parentlname().  "</br>";
     echo " fname is " . $family->get_parentfname().  "</br>";
     echo " patient first name is " . $family->get_patientfname() . "</br>";

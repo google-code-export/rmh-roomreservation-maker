@@ -426,6 +426,7 @@ function update_FamilyProfile_On_ProfileActivity($profileActivity){
                  //gets results from the object
                 /*Prepare data for updating the Family Profile table*/     
                 $family = new Family($profileActivity->get_familyProfileId(),
+                         $profileActivity->get_familyProfileStatus(),
                          $profileActivity->get_parentFirstName(), 
                          $profileActivity->get_parentLastName(), 
                          $profileActivity->get_parentEmail(),

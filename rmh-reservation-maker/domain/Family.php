@@ -19,6 +19,7 @@
 class Family{
     
     private $familyProfileId;
+    private $familyProfileStatus;
     private $parentFirstName;
     private $parentLastName;
     private $parentEmail;
@@ -39,12 +40,13 @@ class Family{
     /**constructor for Family**/
     
     
-    function __construct($familyProfileId, $parentFirstName, $parentLastName, $parentEmail,
+    function __construct($familyProfileId, $familyProfileStatus, $parentFirstName, $parentLastName, $parentEmail,
             $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZIP,
             $parentCountry, $patientFirstName, $patientLastName, $patientRelation,
             $patientDateOfBirth, $patientFormPdf, $patientNotes){
         
     $this->familyProfileId = $familyProfileId;
+    $this->familyProfileStatus = $familyProfileStatus;
     $this->parentFirstName= $parentFirstName;
     $this->parentLastName = $parentLastName;
     $this->parentEmail =$parentEmail;
@@ -66,6 +68,10 @@ class Family{
     //getters
     function get_familyProfileId(){
         return $this->familyProfileId;
+    }
+    
+    function get_familyProfileStatus(){
+        return $this->familyProfileStatus;
     }
     
     function get_parentfname(){
@@ -136,6 +142,10 @@ class Family{
     //setters
     function set_familyProfileId($famProfId){
         $this->familyProfileId = $famProfId;
+    }
+    
+    function set_familyProfileStatus($famProfStat){
+        $this->familyProfileStatus = $famProfStat;
     }
     
     function set_parentfname($parFName){

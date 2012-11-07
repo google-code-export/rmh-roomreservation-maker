@@ -12,6 +12,7 @@ include_once(ROOT_DIR.'/database/dbinfo.php');
 /**
  * Creates a FamilyProfile table with the following fields:
  * FamilyProfileID: primary key of the FamilyProfile table.
+ * FamilyProfileStatus: either "Pending" or "Permanent" 
  * ParentFirstName: first name of the parent. 
  * ParentLastName: last name of the parent. 
  * Email: email address of the parent. 
@@ -36,6 +37,7 @@ function create_FamilyProfile(){
     mysql_query("DROP TABLE IF EXISTS FamilyProfile");
     $result = mysql_query("CREATE TABLE FamilyProfile (
         FamilyProfileID int NOT NULL AUTO_INCREMENT,
+        FamilyProfileStatus enum('Pending', 'Permanent') NOT NULL, 
         ParentFirstName varchar(50) NOT NULL,
         ParentLastName varchar(50) NOT NULL,
         Email varchar(255) DEFAULT NULL,
@@ -63,7 +65,7 @@ function create_FamilyProfile(){
 **/
 
 /**
- * function that inserts a Family Profile based on the FamilyProfileID, ParentFirstName, ParentLastName, Email
+ * function that inserts a Family Profile based on the FamilyProfileID, FamilyProfileStatus, ParentFirstName, ParentLastName, Email
  * Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, PatientLastName, PatientRelation
  * PatientDateOfBirth, FormPDF, and Notes provided. 
  * Note: if calling function insert_FamilyProfileDetail make -1 as a placeholder for familyProfileId. 
@@ -71,12 +73,12 @@ function create_FamilyProfile(){
  * @author Linda Shek 
  */
  
-function insert_FamilyProfileDetail($familyProfileId, $parentFirstName, $parentLastName, $parentEmail,
+function insert_FamilyProfileDetail($familyProfileId, $familyProfileStatus, $parentFirstName, $parentLastName, $parentEmail,
             $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZIP,
             $parentCountry, $patientFirstName, $patientLastName, $patientRelation,
             $patientDateOfBirth, $patientFormPdf, $patientNotes){
     
-    $family = new Family ($familyProfileId, $parentFirstName, $parentLastName, $parentEmail,
+    $family = new Family ($familyProfileId, $familyProfileStatus, $parentFirstName, $parentLastName, $parentEmail,
             $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZIP,
             $parentCountry, $patientFirstName, $patientLastName, $patientRelation,
             $patientDateOfBirth, $patientFormPdf, $patientNotes);
@@ -106,9 +108,10 @@ function insert_FamilyProfile ($family){
         connect();
     }*/
 
-    $query = "INSERT INTO familyprofile (ParentFirstName, ParentLastName, Email, Phone1, 
+    $query = "INSERT INTO familyprofile (FamilyProfileStatus, ParentFirstName, ParentLastName, Email, Phone1, 
                 Phone2, Address, City, State, ZipCode, Country, PatientFirstName, PatientLastName,
                 PatientRelation, PatientDateOfBirth, FormPDF, Notes) VALUES ('". 
+                $family->get_familyProfileStatus()."','".
                 $family->get_parentfname()."','".
                 $family->get_parentlname()."','".
                 $family->get_parentemail()."','".
@@ -166,7 +169,7 @@ function retrieve_FamilyProfile ($familyProfileId)
  */
 
 function build_family($result_row){
-    $theFamily = new Family($result_row['FamilyProfileID'],$result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'],
+    $theFamily = new Family($result_row['FamilyProfileStatus'],$result_row['FamilyProfileID'],$result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'],
         $result_row['Phone1'], $result_row['Phone2'], $result_row['Address'], $result_row['City'],
         $result_row['State'], $result_row['ZipCode'], $result_row['Country'], $result_row['PatientFirstName'],
         $result_row['PatientLastName'], $result_row['PatientRelation'], $result_row['PatientDateOfBirth'],
@@ -218,7 +221,7 @@ function retrieve_FamilyProfileByName($fname, $lname)
     
     $families = array();
     while ($result_row = mysql_fetch_assoc($result)) {
-        $family = new Family($result_row['FamilyProfileID'], $result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'],
+        $family = new Family($result_row['FamilyProfileID'], $result_row['FamilyProfileStatus'], $result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'],
                         $result_row['Phone1'], $result_row['Phone2'], $result_row['Address'], $result_row['City'],
                         $result_row['State'], $result_row['ZipCode'], $result_row['Country'], $result_row['PatientFirstName'],
                         $result_row['PatientLastName'], $result_row['PatientRelation'], $result_row['PatientDateOfBirth'],
@@ -231,6 +234,53 @@ function retrieve_FamilyProfileByName($fname, $lname)
     return $families;
 }
 
+/**
+ * Function to retrieve an array of Family Profiles from the family profile table 
+ * Family Status is the search field
+ * @param status
+ * @author Chris Giglio
+ */
+/**function retrieve_FamilyProfileByStatus($familyProfileStatus){
+    
+    connect();
+    $status_sent = FALSE;
+    $new_query = "SELECT * FROM familyprofile WHERE ";
+    
+    
+    if( ( $familyProfileStatus == "") )
+        return NULL; 
+    
+      if( $familyProfileStatus != "" ) 
+        $status_sent = TRUE;
+        
+    if( $status_sent ) 
+        $new_query .= "FamilyProfileStatus=\"$familyProfileStatus\"";
+    
+    
+    $result = mysql_query($new_query) or die(mysql_error());
+    
+    if (mysql_num_rows($result) <1)
+    {
+       mysql_close();
+        return NULL;
+    }
+    
+    $families = array();
+    while ($result_row = mysql_fetch_assoc($result)) {
+        $family = new Family($result_row['FamilyProfileID'], $result_row['FamilyProfileStatus'], $result_row['ParentFirstName'], $result_row['ParentLastName'], $result_row['Email'],
+                        $result_row['Phone1'], $result_row['Phone2'], $result_row['Address'], $result_row['City'],
+                        $result_row['State'], $result_row['ZipCode'], $result_row['Country'], $result_row['PatientFirstName'],
+                        $result_row['PatientLastName'], $result_row['PatientRelation'], $result_row['PatientDateOfBirth'],
+                        $result_row['FormPDF'], $result_row['Notes']);
+
+
+        $families[] = $family;
+    }
+    mysql_close();
+    return $families;
+}
+ * 
+ */
 
 /*function getall_family() 
 {
@@ -259,12 +309,12 @@ function retrieve_FamilyProfileByName($fname, $lname)
  * @author Linda Shek 
  */
 
-function update_FamilyProfileDetail($familyProfileId, $parentFirstName, $parentLastName, $parentEmail,
+function update_FamilyProfileDetail($familyProfileId, $familyProfileStatus, $parentFirstName, $parentLastName, $parentEmail,
             $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZIP,
             $parentCountry, $patientFirstName, $patientLastName, $patientRelation,
             $patientDateOfBirth, $patientFormPdf, $patientNotes){
     
-    $family = new Family ($familyProfileId, $parentFirstName, $parentLastName, $parentEmail,
+    $family = new Family ($familyProfileId, $familyProfileStatus, $parentFirstName, $parentLastName, $parentEmail,
             $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZIP,
             $parentCountry, $patientFirstName, $patientLastName, $patientRelation,
             $patientDateOfBirth, $patientFormPdf, $patientNotes);
@@ -286,7 +336,9 @@ function update_FamilyProfile($family)
     }
     connect();
     
-    $query= "UPDATE familyprofile SET ParentFirstName = '".$family->get_parentfname()."', 
+    $query= "UPDATE familyprofile SET 
+            FamilyProfileStatus ='".$family->get_familyProfileStatus()."',
+            ParentFirstName = '".$family->get_parentfname()."', 
             ParentLastName ='".$family->get_parentlname()."', 
             Email = '".$family->get_parentemail()."',
             Phone1 = '".$family->get_parentphone1()."',

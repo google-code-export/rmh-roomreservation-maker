@@ -96,6 +96,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             
             $familyProfile = retrieve_FamilyProfile ($familyID);
             if($familyProfile){
+                $content = '<li>'.$familyProfile->get_familyProfileStatus().'</li>';
                 $content = '<li>'.$familyProfile->get_parentfname().'</li>';
                 $content .= '<li>'.$familyProfile->get_parentlname().'</li>';
                 $content .= '<li>'.$familyProfile->get_parentemail().'</li>';
