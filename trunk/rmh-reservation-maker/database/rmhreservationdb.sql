@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `activation` (
 DROP TABLE IF EXISTS `familyprofile`;
 CREATE TABLE IF NOT EXISTS `familyprofile` (
   `FamilyProfileID` int(11) NOT NULL AUTO_INCREMENT,
+  `FamilyProfileStatus` enum('Pending','Permanent') NOT NULL,
   `ParentFirstName` varchar(50) NOT NULL,
   `ParentLastName` varchar(50) NOT NULL,
   `Email` varchar(255) DEFAULT NULL,
@@ -99,10 +100,10 @@ CREATE TABLE IF NOT EXISTS `familyprofile` (
 -- Dumping data for table `familyprofile`
 --
 
-INSERT INTO `familyprofile` (`FamilyProfileID`, `ParentFirstName`, `ParentLastName`, `Email`, `Phone1`, `Phone2`, `Address`, `City`, `State`, `ZipCode`, `Country`, `PatientFirstName`, `PatientLastName`, `PatientRelation`, `PatientDateOfBirth`, `FormPDF`, `Notes`) VALUES
-(1, 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '110-76 76th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches'),
-(2, 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 34', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats'),
-(3, 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@unilim.fr', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights');
+INSERT INTO `familyprofile` (`FamilyProfileID`, `FamilyProfileStatus`, `ParentFirstName`, `ParentLastName`, `Email`, `Phone1`, `Phone2`, `Address`, `City`, `State`, `ZipCode`, `Country`, `PatientFirstName`, `PatientLastName`, `PatientRelation`, `PatientDateOfBirth`, `FormPDF`, `Notes`) VALUES
+(1, 'Pending', 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '110-76 76th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches'),
+(2, 'Permanent', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 34', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats'),
+(3, 'Permanent', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@unilim.fr', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights');
 
 -- --------------------------------------------------------
 
@@ -112,7 +113,7 @@ INSERT INTO `familyprofile` (`FamilyProfileID`, `ParentFirstName`, `ParentLastNa
 
 DROP TABLE IF EXISTS `profileactivity`;
 CREATE TABLE IF NOT EXISTS `profileactivity` (
-  `ProfileActivityID` int(11) NOT NULL AUTO_INCREMENT,
+  `ProfileActivityID` int(11) NOT NULL,
   `ProfileActivityRequestID` int(11) NOT NULL,
   `FamilyProfileID` int(11) NOT NULL,
   `SocialWorkerProfileID` int(11) NOT NULL,
@@ -142,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `profileactivity` (
   KEY `RMHStaffProfileID` (`RMHStaffProfileID`),
   KEY `SocialWorkerProfileID` (`SocialWorkerProfileID`),
   KEY `FamilyProfileID` (`FamilyProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `profileactivity`
