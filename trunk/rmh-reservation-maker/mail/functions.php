@@ -515,16 +515,22 @@ function randURL()
     //this continues until it fills up the length.
        $randString .= $characters[mt_rand(0, strlen($characters))];
     }
-    return $randString;
     /*This code should be in the message portion of the email;
     *$message = "Hello, (family name) family. Your room reservation request has been approved
     *from (date) to (date). However, there is more paperwork to fill out. If you would like,
     * please do so here: (url at blah.com/blah(append)randURL()";
     *remember that it has to be double quotes so that the PHP will evaluate correctly. 
-    *Question: How do we make sure that the URL works and remembers the family?
-    *Question: How do we get the values from the filled in forms again?
-    *Question: I assume that the person who is handling the UI will be coding in the forms graphics?
-    *Question: use reservation or db methods to change information?
     */
+    return $randString;
 }
+
+function urlToText($randURL,$familyID)
+{
+    $URLFile="URLs.txt";
+    $fh = fopen($URLFile, 'a') or die("can't open file");
+    $stringData=$randURL . " " . $familyID . "\n";
+    fwrite($fh,$stringData);
+    fclose($fh);
+}
+
 ?>
