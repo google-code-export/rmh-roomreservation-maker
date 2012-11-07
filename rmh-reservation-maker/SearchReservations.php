@@ -188,6 +188,7 @@ $showReservation = false;
            <th>Begin Date</th>
            <th>End Date</th>
            <th>Status</th>
+           <th>Modify</th>
            
             </thead>
             <tbody>';
@@ -206,15 +207,16 @@ $showReservation = false;
        echo '<tr>';
        echo '<td>'.$rmhRequestID.'</td>';
        echo '<td>'.$rmhSocialWorkerName.'</td>';
-        echo '<td>'.$rmhStaffName.'</td>';
+       echo '<td>'.$rmhStaffName.'</td>';
        echo '<td>'.$rmhparentName.'</td>';
        echo '<td>'.$rmhDatasubmit.'</td>';
        echo '<td>'.$rmhbeginDate.'</td>';
        echo '<td>'.$rmhEndDate.'</td>';
+       echo '<td>'.$rmhStatus.'</td>';
        if(getUserAccessLevel() > 1)
        {
            //if the user is an approver, let the user modify the status
-           $link = '<a href="'.BASE_DIR.'/reservation/activity.php?type=reservation&request='.$rmhRequestID.'">'.$rmhStatus.'</a>';
+           $link = '<a href="'.BASE_DIR.'/reservation/activity.php?type=reservation&request='.$rmhRequestID.'">'."Change Status".'</a>';
            
            echo '<td>'.$link.'</td>';
        }
@@ -250,6 +252,7 @@ $showReservation = false;
        echo '<td>'.$rmhDatasubmit.'</td>';
        echo '<td>'.$rmhbeginDate.'</td>';
        echo '<td>'.$rmhEndDate.'</td>';
+       
        if(getUserAccessLevel() > 1)
        {
            //if the user is an approver, let the user modify the status
