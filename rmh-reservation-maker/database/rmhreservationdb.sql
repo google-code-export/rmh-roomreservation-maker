@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `profileactivity` (
   `SW_DateStatusSubmitted` datetime DEFAULT NULL,
   `RMH_DateStatusSubmitted` datetime DEFAULT NULL,
   `ActivityType` enum('Create','Edit') NOT NULL,
-  `Status` enum('Unconfirmed','Confirm','Deny') NOT NULL,
+  `Status` enum('Unconfirmed','Confirmed','Denied') NOT NULL,
   `ParentFirstName` varchar(50) NOT NULL,
   `ParentLastName` varchar(50) NOT NULL,
   `Email` varchar(255) DEFAULT NULL,
@@ -150,12 +150,12 @@ CREATE TABLE IF NOT EXISTS `profileactivity` (
 --
 
 INSERT INTO `profileactivity` (`ProfileActivityID`, `ProfileActivityRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `ParentFirstName`, `ParentLastName`, `Email`, `Phone1`, `Phone2`, `Address`, `City`, `State`, `ZipCode`, `Country`, `PatientFirstName`, `PatientLastName`, `PatientRelation`, `PatientDateOfBirth`, `FormPDF`, `FamilyNotes`, `ProfileActivityNotes`) VALUES
-(1, 1, 1, 1, 1, '2012-01-10 18:22:43', '2012-01-12 17:22:43', 'Create', 'Confirm', 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '100-70 40th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches', 'New Family Profile'),
-(2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 14:23:13', 'Edit', 'Confirm', 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '110-76 76th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches', 'New Address 110-76 76th Avenue'),
-(3, 3, 2, 1, 1, '2012-02-21 15:22:43', '2012-02-22 19:22:43', 'Create', 'Confirm', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 29', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Family Profile'),
-(4, 4, 2, 1, 1, '2012-03-02 15:44:22', '2012-03-03 12:43:12', 'Edit', 'Confirm', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 34', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Address Borgartun 34'),
+(1, 1, 1, 1, 1, '2012-01-10 18:22:43', '2012-01-12 17:22:43', 'Create', 'Confirmed', 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '100-70 40th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches', 'New Family Profile'),
+(2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 14:23:13', 'Edit', 'Confirmed', 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '110-76 76th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches', 'New Address 110-76 76th Avenue'),
+(3, 3, 2, 1, 1, '2012-02-21 15:22:43', '2012-02-22 19:22:43', 'Create', 'Confirmed', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 29', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Family Profile'),
+(4, 4, 2, 1, 1, '2012-03-02 15:44:22', '2012-03-03 12:43:12', 'Edit', 'Confirmed', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 34', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Address Borgartun 34'),
 (5, 5, 3, 1, NULL, '2012-04-01 10:22:43', NULL, 'Create', 'Unconfirmed', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@unilim.fr', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights', 'New Family Profile'),
-(6, 6, 3, 1, 1, '2012-04-02 10:22:43', '2012-04-03 15:22:33', 'Edit', 'Deny', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@gmail.com', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights', 'New Family Profile needs to be approved first');
+(6, 6, 3, 1, 1, '2012-04-02 10:22:43', '2012-04-03 15:22:33', 'Edit', 'Denied', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@gmail.com', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights', 'New Family Profile needs to be approved first');
 
 -- --------------------------------------------------------
 
