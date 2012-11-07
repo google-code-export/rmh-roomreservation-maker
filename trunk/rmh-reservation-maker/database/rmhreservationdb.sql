@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
   `SW_DateStatusSubmitted` datetime DEFAULT NULL,
   `RMH_DateStatusSubmitted` datetime DEFAULT NULL,
   `ActivityType` enum('Apply','Modify','Cancel') NOT NULL,
-  `Status` enum('Unconfirmed','Confirm','Deny') NOT NULL,
+  `Status` enum('Unconfirmed','Confirmed','Denied') NOT NULL,
   `BeginDate` datetime NOT NULL,
   `EndDate` datetime NOT NULL,
   `PatientDiagnosis` text,
