@@ -55,7 +55,7 @@ else if($userAccess === 2)
     //Navigation for RMH reservation managers
  ?>
     <li><a href="<?php echo BASE_DIR.'/SearchReservations.php';?>">Search Reservations</a></li>
-    <li><a href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Search Profile Activity
+    <li><a href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Approve Family Profile Changes
     
 <?php  
 }
