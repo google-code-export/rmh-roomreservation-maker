@@ -240,7 +240,7 @@ function retrieve_FamilyProfileByName($fname, $lname)
  * @param status
  * @author Chris Giglio
  */
-/**function retrieve_FamilyProfileByStatus($familyProfileStatus){
+function retrieve_FamilyProfileByStatus($familyProfileStatus){
     
     connect();
     $status_sent = FALSE;
@@ -279,8 +279,7 @@ function retrieve_FamilyProfileByName($fname, $lname)
     mysql_close();
     return $families;
 }
- * 
- */
+
 
 /*function getall_family() 
 {
