@@ -45,8 +45,19 @@ $showReport = false;
         $patientlname= $family->get_patientlname();
         $patientnotes= $family->get_patientnotes();
         $parentfname= $family->get_parentfname();
-        $parentlname= $family->get_parentlname();}
-
+        $parentlname= $family->get_parentlname();
+        setFamilyID($familyID);
+        }
+        else
+        {
+            $family = retrieve_FamilyProfile($_SESSION['familyID']);
+            $patientfname= $family->get_patientfname();
+            $patientlname= $family->get_patientlname();
+            $patientnotes= $family->get_patientnotes();
+            $parentfname= $family->get_parentfname();
+            $parentlname= $family->get_parentlname();
+        }
+        
 
 
 
@@ -55,7 +66,7 @@ $showReport = false;
     {
 
         
-        
+    
    //startDate is not set
     if ((empty($_POST['beginYear'])) || (empty($_POST['beginMonth'])) || (empty($_POST['beginDay'])))
    {
@@ -65,11 +76,11 @@ $showReport = false;
    //endDate is not set
    else if ((empty($_POST['endYear'])) || (empty($_POST['endMonth'])) || (empty($_POST['endDay'])))
    {
-       $message = '<p><font color="red">You must select a end date!</font></p>';
+       $message = '<p><font color="red">You must select an end date!</font></p>';
        $showForm = true;
    }
     
-  
+
    //Everything is set
 else
     {
@@ -88,11 +99,55 @@ else
            $showReport = true;
        }
     }
+            //patient last name is not set
+            if( isset( $_POST['PatientLastName'] )&& !empty($_POST['PatientLastName'])){
+            $newPatientLastName = sanitize( $_POST['PatientLastName'] );
+             }
+             else{
+                  $message = '<p><font color="red">You must enter the Patient Last Name.</font></p>';
+                  $showForm = true;
+                  
+             }
+             //patient first name is not set
+             if( isset( $_POST['PatientFirstName'] )&& !empty($_POST['PatientFirstName'])){
+            $newPatientFirstName = sanitize( $_POST['PatientFirstName'] );
+             }
+             else{
+                  $message = '<p><font color="red">You must enter the Patient First Name.</font></p>';
+                  $showForm = true;
+                  
+             }         
+            //patient diagnosis is not set
+            if( isset( $_POST['PatientDiagnosis'] ) && !empty($_POST['PatientDiagnosis'])){
+            $newPatientDiagnosis = sanitize( $_POST['PatientDiagnosis'] );
+            }
+            else { 
+                $message = '<p><font color="red">You must enter the Patient Diagnosis.</font></p>';
+                $showForm = true;
+                
+            }
+            //notes are not set
+            if( isset( $_POST['Notes'] )){
+            $newNotes = sanitize( $_POST['Notes'] );
+            }
+            //parent last name is not set
+            if( isset( $_POST['ParentLastName'] )&& !empty($_POST['ParentLastName'])){
+            $newParentLastName = sanitize( $_POST['ParentLastName'] );
+             }
+             else {
+                  $message = '<p><font color="red">You must enter the Parents Last Name.</font></p>';
+                  $showForm = true;  
+             }
+             //parent first name is not set
+            if( isset( $_POST['ParentFirstName'] ) && !empty($_POST['ParentFirstName'])){
+            $newParentFirstName = sanitize( $_POST["ParentFirstName"] );
+            }
+            else {
+                $message = '<p><font color="red">You must enter the Parents First Name.</font></p>';
+                $showForm = true;
+            }
     }
     
-
-
-  
     
 //Token is bad
  else if(isset($_POST['form_token']) && !validateTokenField($_POST))
@@ -397,12 +452,18 @@ if($showForm == true)
 "selected='selected'";?> >2013</option>
 </select>
     <br><br>
-         <input class="formt formtop" type="text" name="PatientLastName" value="<?php echo htmlspecialchars($patientlname); ?>"/>
-         <input class="formt" type="text" name="PatientFirstName" value="<?php echo htmlspecialchars($patientfname); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
-         <input class="formt" type="text" name="PatientDiagnosis" value=PatientDiagnosis onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
-         <input class="formt"type="text" name="Notes" value="<?php echo htmlspecialchars($patientnotes); ?>" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/>
-         <input class="formt" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($parentlname); ?>" onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/>
-         <input class="formt formbottom" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($parentfname); ?>" onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/>
+    <label for="patientlname">Patient Last Name</label>
+         <input class="formt formtop" id="patientlname" type="text" name="PatientLastName" value="<?php echo htmlspecialchars($patientlname); ?>"/>
+         <label for="patientfname">Patient First Name</label>
+         <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="<?php echo htmlspecialchars($patientfname); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
+         <label for="patientdiagnosis">Patient Diagnosis</label>        
+         <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value=PatientDiagnosis onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
+         <label for="notes">Notes</label>         
+         <input class="formt" id="notes" type="text" name="Notes" value="<?php echo htmlspecialchars($patientnotes); ?>" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/>
+         <label for="parentlname">Parent Last Name</label>         
+         <input class="formt" id="parentlname" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($parentlname); ?>" onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/>
+         <label for="parentfirstname">Parent First Name</label>         
+         <input class="formt formbottom" id="parentfirstname" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($parentfname); ?>" onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/>
           
            
            <input class="formsubmit"type="submit" value="Submit" name="submit" />
@@ -436,37 +497,7 @@ sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
         $userId = sanitize(getCurrentUser());
         
 
-        
-            if( isset( $_POST['PatientDiagnosis'] ) && $_POST['PatientDiagnosis'] != ""){
-            $newPatientDiagnosis = sanitize( $_POST['PatientDiagnosis'] );
-            }
-            else { 
-                $message = "You must enter the Patients Diagnosis.";
-                $showForm = true;
-                
-            }
-           
-            if( isset( $_POST['Notes'] )){
-            $newNotes = sanitize( $_POST['Notes'] );
-            }
 
-            if( isset( $_POST['ParentLastName'] )&& $_POST['ParentLastName'] != "") {
-            $newParentLastName = sanitize( $_POST['ParentLastName'] );
-             }
-             else{
-                  $message = "You must enter the Parents Last Name.";
-                  $showForm = true;
-                  
-             }
-            if( isset( $_POST['ParentFirstName'] ) && $_POST['ParentFirstName'] != ""){
-            $newParentFirstName = sanitize( $_POST["ParentFirstName"] );
-            }
-            else {
-                $message = "You must enter the Parents First Name.";
-                $showForm = true;
-                 
-
-            }
             }
             
    
@@ -533,4 +564,4 @@ sanitize($_POST['endYear']."-".$_POST['endMonth']."-".$_POST['endDay']);
 
     <?php    
 include (ROOT_DIR.'/footer.php');
-?> 
+?>
