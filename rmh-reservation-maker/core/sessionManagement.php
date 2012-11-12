@@ -102,4 +102,8 @@ function showSessionMessage()
     }
 }
 
+function setFamilyID($familyID)
+{
+    $_SESSION['familyID']= $familyID;
+}
 ?>
