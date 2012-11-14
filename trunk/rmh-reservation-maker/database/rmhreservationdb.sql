@@ -199,10 +199,11 @@ CREATE TABLE IF NOT EXISTS `rmhstaffprofile` (
 --
 
 INSERT INTO `rmhstaffprofile` (`RMHStaffProfileID`, `UserProfileID`, `Title`, `FirstName`, `LastName`, `Phone`) VALUES
-(1, 3, 'Mr.', 'Tom', 'Hansen', '7186562398'),
+(1, 3, 'Mr.', 'Johnny', 'Bermudez', '7186562398'),
 (2, 1, 'Mr.', 'Frank', 'Petersen', '2126565511'),
 (3, 5, 'Mr.', 'Edward', 'Cho', '2122228888'),
-(4, 8, 'Mr.', 'Stefan', 'Pavon', '2121231234');
+(4, 8, 'Mr.', 'Tian', 'Shen', '2121231234'),
+(5,9,'Mr', 'Tom','Approver','2123334444');
 
 -- --------------------------------------------------------
 
@@ -269,9 +270,7 @@ CREATE TABLE IF NOT EXISTS `socialworkerprofile` (
 
 INSERT INTO `socialworkerprofile` (`SocialWorkerProfileID`, `UserProfileID`, `Title`, `FirstName`, `LastName`, `HospitalAffiliation`, `Phone`, `EmailNotification`) VALUES
 (1, 2, 'Ms.', 'Mary', 'Tove', 'Memorial Sloan-Kettering Cancer Center', '7183334444', 'Yes'),
-(2, 4, 'Ms.', 'Lauren', 'Schwan', 'Memorial Sloan-Kettering Cancer Center', '7187773232', 'No'),
-(3, 6, 'Ms.', 'Yamiris', 'Pascual', 'Memorial Sloan-Kettering Cancer Center', '7181231234', 'Yes'),
-(4, 7, 'Ms.', 'Alisa', 'Modeste', 'Memorial Sloan-Kettering Cancer Center', '7181231234', 'Yes');
+(2, 4, 'Ms.', 'Lauren', 'Schwan', 'Memorial Sloan-Kettering Cancer Center', '7187773232', 'No');
 
 -- --------------------------------------------------------
 
@@ -299,9 +298,8 @@ INSERT INTO `userprofile` (`UserProfileID`, `UsernameID`, `UserEmail`, `Password
 (3, 'jbermudez', 'Johnny.Bermudez08@stjohns.edu', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver'),
 (4, 'Lauren653', 'lauren1@gmail.com', '91b06a9f87b7efe1be3d56f46bc739fae897bcc5', 'Social Worker'),
 (5, 'Admin', 'housemngr@rmhnewyork.org', '1be4d1253535f4e0ba0895e6e6918be38531823c', 'RMH Administrator'),
-(6, 'ypascual', 'bob123@aim.com', '24b170fad917b173d9f0c4e4f81f3a7030abc823', 'Social Worker'),
-(7, 'delias', 'david.elias09@stjohns.edu', '5a1cdbb4da7ce239146dc3be556887e4b268afa7', 'Social Worker'),
-(8, 'tshen', 'tian.shen09@stjohns.edu', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'RMH Staff Approver');
+(8, 'tshen', 'tian.shen09@stjohns.edu', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'RMH Staff Approver'),
+(9, 'Tom718', 'tom1@gmail.com', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver');
 
 --
 -- Constraints for dumped tables
