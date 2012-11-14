@@ -513,12 +513,35 @@ function randURL()
 }
 
 function urlToText($randURL,$familyID)
-{
+{//stores the URL with the family ID in a text file
+    //the text file is in the wamp folder
     $URLFile="URLs.txt";
     $fh = fopen($URLFile, 'a') or die("can't open file");
     $stringData=$randURL . " " . $familyID . "\n";
     fwrite($fh,$stringData);
     fclose($fh);
+}
+
+function parseURL()
+{
+    //grabs the part of the URL that contains the actual RNG URL
+    $parts=parse_url(curPageURL(),PHP_URL_PATH);
+    $piecesOfURL=explode("?S=",$parts);
+    return array_slice($piecesOfURL,1,1);
+}
+
+function curPageURL()
+{
+    //returns the current URL for parsing in the above function
+    $pageURL = 'http';
+    if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+    $pageURL .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") {
+     $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+    } else {
+     $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
 }
 
 ?>
