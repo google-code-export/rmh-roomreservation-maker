@@ -277,8 +277,7 @@ $showReservation = false;
         }
         ?>
         <br><br><br>
-        <input type="button" value="Help" align="center" onclick="location.href='help/Reservationsearch.php'" />
-    </div>
+        <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='./help/Reservationsearch.php'" />
 </div>
 <?php 
 include ('footer.php');
