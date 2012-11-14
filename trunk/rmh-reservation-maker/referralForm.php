@@ -35,6 +35,7 @@ include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 
 $showForm = false;
 $showReport = false;
+$message= array();
 
 
         //get family values from database to fill into form
@@ -70,13 +71,13 @@ $showReport = false;
    //startDate is not set
     if ((empty($_POST['beginYear'])) || (empty($_POST['beginMonth'])) || (empty($_POST['beginDay'])))
    {
-       $message = '<p><font color="red">You must select a beginning date!</font></p>';
+       $message['BeginningDate'] = '<p><font color="red">You must select a beginning date!</font></p>';
        $showForm = true;
    }
    //endDate is not set
-   else if ((empty($_POST['endYear'])) || (empty($_POST['endMonth'])) || (empty($_POST['endDay'])))
+   if ((empty($_POST['endYear'])) || (empty($_POST['endMonth'])) || (empty($_POST['endDay'])))
    {
-       $message = '<p><font color="red">You must select an end date!</font></p>';
+       $message['EndDate'] = '<p><font color="red">You must select an end date!</font></p>';
        $showForm = true;
    }
     
@@ -91,7 +92,7 @@ else
 ($_POST['endYear']*365*24*60)+($_POST['endMonth']*30*24*60)+($_POST['endDay']*24*60);
        if(($endDateMins - $beginDateMins) <= 0)
        {
-           $message = '<p><font color="red">End date must be after begin Date!</font></p>';
+           $message['EndAfterBeginDate'] = '<p><font color="red">End date must be after begin Date!</font></p>';
            $showForm = true;
        }
        else
@@ -104,7 +105,7 @@ else
             $newPatientLastName = sanitize( $_POST['PatientLastName'] );
              }
              else{
-                  $message = '<p><font color="red">You must enter the Patient Last Name.</font></p>';
+                  $message['PatientLastName'] = '<p><font color="red">You must enter the Patient Last Name.</font></p>';
                   $showForm = true;
                   
              }
@@ -113,7 +114,7 @@ else
             $newPatientFirstName = sanitize( $_POST['PatientFirstName'] );
              }
              else{
-                  $message = '<p><font color="red">You must enter the Patient First Name.</font></p>';
+                  $message['PatientFirstName'] = '<p><font color="red">You must enter the Patient First Name.</font></p>';
                   $showForm = true;
                   
              }         
@@ -122,11 +123,10 @@ else
             $newPatientDiagnosis = sanitize( $_POST['PatientDiagnosis'] );
             }
             else { 
-                $message = '<p><font color="red">You must enter the Patient Diagnosis.</font></p>';
+                $message['PatientDiagnosis'] = '<p><font color="red">You must enter the Patient Diagnosis.</font></p>';
                 $showForm = true;
                 
             }
-            //notes are not set
             if( isset( $_POST['Notes'] )){
             $newNotes = sanitize( $_POST['Notes'] );
             }
@@ -135,7 +135,7 @@ else
             $newParentLastName = sanitize( $_POST['ParentLastName'] );
              }
              else {
-                  $message = '<p><font color="red">You must enter the Parents Last Name.</font></p>';
+                  $message['ParentLastName'] = '<p><font color="red">You must enter the Parents Last Name.</font></p>';
                   $showForm = true;  
              }
              //parent first name is not set
@@ -143,9 +143,17 @@ else
             $newParentFirstName = sanitize( $_POST["ParentFirstName"] );
             }
             else {
-                $message = '<p><font color="red">You must enter the Parents First Name.</font></p>';
+                $message['ParentFirstName'] = '<p><font color="red">You must enter the Parents First Name.</font></p>';
                 $showForm = true;
             }
+        echo '<div id="content" style="margin-left: 300px; margin-top: 23px;">';
+        if (!empty($message)) 
+        {
+        foreach ($message as $messages) 
+            {
+            echo $messages;
+            }
+        }
     }
     
     
@@ -181,12 +189,13 @@ else
     $message = '<p><font color="red">Please select and enter all required data for your reservation</font></p>';
     $showForm = true;
 
-}
+} ?>
+</div>
 
  
 
 
-    
+<?php    
    // mail("approvers email address goes here", $RoomReservationRequestID,
 //"This is a pending request")//email the approver the request key, not sure
 //if it should look like this though.
@@ -197,7 +206,6 @@ else
    //if $showForm = true, display form to enter data
 if($showForm == true)
 {
-    echo $message."<br><br>";
     //FORM
     ?>
 <form name ="NewReferralForm" method="POST" action="referralForm.php">
