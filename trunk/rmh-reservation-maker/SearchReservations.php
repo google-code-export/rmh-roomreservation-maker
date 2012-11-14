@@ -276,7 +276,8 @@ $showReservation = false;
         }
         }
         ?>
-
+        <br><br><br>
+        <input type="button" value="Help" align="center" onclick="location.href='help/Reservationsearch.php'" />
     </div>
 </div>
 <?php 
