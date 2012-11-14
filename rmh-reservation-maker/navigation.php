@@ -92,7 +92,7 @@ function logout_Of_Website()
 var c=confirm("Please confirm that you want to log out");
 if (c==true)
   {
-  window.open('logout.php');
+  window.open('logout.php','_self');
   }
 }
 </script>
