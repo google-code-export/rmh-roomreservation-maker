@@ -42,49 +42,49 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 
     if (
             isset($_POST['ParentFirstName']) && 
-            $_POST['ParentFirstName'] != "Parent First Name" && 
+//            $_POST['ParentFirstName'] != "Parent First Name" && 
             $_POST['ParentFirstName'] != "") {
         $parentFirstName = $_POST['ParentFirstName'];    
     } 
     else {
-        $message['ParentFirstName'] = "Must enter Parent First Name.";
+        $message['ParentFirstName'] = "Must enter a parent's first name!";
     }
     
     if (
             isset($_POST['ParentLastName']) && 
-            $_POST['ParentLastName'] != "Parent Last Name" && 
+//            $_POST['ParentLastName'] != "Parent Last Name" && 
             $_POST['ParentLastName'] != "") {
         $parentLastName = $_POST['ParentLastName'];
     } 
     else {
-        $message['ParentLastName'] = "Must enter Parent Last Name.";
+        $message['ParentLastName'] = "Must enter a parent's last name!";
         // print_r($message);
     }
     
     if (
             isset($_POST['Email']) && 
-            $_POST['Email'] != "E-Mail" && 
+//            $_POST['Email'] != "E-Mail" && 
             $_POST['Email'] != "") {
         $parentEmail = $_POST['Email'];
     } 
     else {
-        $message['Email'] = "Must enter Email.";
+        $message['Email'] = "Must enter a parent's email!";
     }
     
     if (
             isset($_POST['Phone1']) && 
-            $_POST['Phone1'] != "Phone # 1" && 
+//            $_POST['Phone1'] != "Phone # 1" && 
             $_POST['Phone1'] != "") {
         $phone1 =$_POST['Phone1'];
     } 
     else {
-        $message['Phone1'] = "Must enter Phone1";
+        $message['Phone1'] = "Must enter a primary phone number!";
         //print_r($message);
     }
     
     if (
             isset($_POST['Phone2']) && 
-            $_POST['Phone2'] != "Phone # 2" && 
+//            $_POST['Phone2'] != "Phone # 2" && 
             $_POST['Phone2'] != "") {
         $phone2 = $_POST['Phone2'];
     } 
@@ -94,85 +94,87 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
     
     if (
             isset($_POST['Address']) && 
-            $_POST['Address'] != "Address" && 
+//            $_POST['Address'] != "Address" && 
             $_POST['Address'] != "") {
         $address = $_POST['Address'];
     } 
     else {
-        $message['Address'] = "Must enter Address";
+        $message['Address'] = "Must enter the family's street address!";
     }
     
     if (
             isset($_POST['City']) && 
-            $_POST['City'] != "City" && 
+//            $_POST['City'] != "City" && 
             $_POST['City'] != "") {
         $city = $_POST['City'];
     } 
     else {
-        $message['City'] = "Must enter City";
+        $message['City'] = "Must enter the family's city of residence!";
     }
     
     if (
             isset($_POST['State']) && 
-            $_POST['State'] != "State" && 
+//            $_POST['State'] != "State" && 
             $_POST['State'] != "") {
         $state = $_POST['State'];
     } 
     else {
-        $message['State'] = "Must enter State";
+        $message['State'] = "Must enter the family's state or territory of 
+            residence!";
     }
     
     if (
             isset($_POST['ZipCode']) && 
-            $_POST['ZipCode'] != "Zip Code" && 
+//            $_POST['ZipCode'] != "Zip Code" && 
             $_POST['ZipCode'] != "") {
         $zip = $_POST['ZipCode'];
     } 
     else {
-        $message['ZipCode'] = "Must enter Zip Code";
+        $message['ZipCode'] = "Must enter the zip code corresponding to the 
+            family's place of residence!";
     }
     
     if (
             isset($_POST['Country']) && 
-            $_POST['Country'] != "Country" && 
+//            $_POST['Country'] != "Country" && 
             $_POST['Country'] != "") {
         $country = $_POST['Country'];
     } else {
-        $message['Country'] = "Must enter Country";
+        $message['Country'] = "Must enter the family's country of residence!";
     }
     
     if (
             isset($_POST['PatientFirstName']) && 
-            $_POST['PatientFirstName'] != "Patient First Name" && 
+//            $_POST['PatientFirstName'] != "Patient First Name" && 
             $_POST['PatientFirstName'] != "") {
         $patientFirstName = $_POST['PatientFirstName'];
     } 
     else {
-        $message['PatientFirstName'] = "Must enter Patient First Name.";
+        $message['PatientFirstName'] = "Must enter the patient's first name!";
     }
     
     if (
             isset($_POST['PatientLastName']) && 
-            $_POST['PatientLastName'] != "Patient Last Name" && 
+//            $_POST['PatientLastName'] != "Patient Last Name" && 
             $_POST['PatientLastName'] != "") {
         $patientLastName = $_POST['PatientLastName'];
     } 
     else {
-        $message['PatientLastName'] = "Must enter Patient Last Name";
+        $message['PatientLastName'] = "Must enter the patient's first name!";
     }
     
     if (
             isset($_POST['PatientRelation']) && 
-            $_POST['PatientRelation'] != "Patient Relation" && 
+//            $_POST['PatientRelation'] != "Patient Relation" && 
             $_POST['PatientRelation'] != "") {
         $patientRelation = $_POST['PatientRelation'];
     } else {
-        $message['PatientRelation'] = " Must enter Patient Relation.";
+        $message['PatientRelation'] = " Must enter the parent's relationship to the child!";
     }
     
     if (
             isset($_POST['PatientDOB']) && 
-            $_POST['PatientDOB'] != "Patient Date Of Birth" && 
+//            $_POST['PatientDOB'] != "Patient Date Of Birth" && 
             $_POST['PatientDOB'] != "") {
         $patientDateOfBirth = $_POST['PatientDOB'];
     } else {
@@ -181,7 +183,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
     
     if (
             isset($_POST['PatientDiagnosis']) && 
-            $_POST['PatientDiagnosis'] != "Patient Diagnosis" && 
+//            $_POST['PatientDiagnosis'] != "Patient Diagnosis" && 
             $_POST['PatientDiagnosis'] != "") {
         $patientFormPDF = $_POST['PatientDiagnosis'];
     } else {
@@ -190,7 +192,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
     
     if (
             isset($_POST['PatientNote']) && 
-            $_POST['PatientNote'] != "Patient's Notes" && 
+//            $_POST['PatientNote'] != "Patient's Notes" && 
             $_POST['PatientNote'] != "") {
         $patientNote = $_POST['PatientNote'];
     } else {
@@ -199,7 +201,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
     
     if (
             isset($_POST['swNote']) && 
-            $_POST['swNote'] != "Notes from Social Worker" && 
+//            $_POST['swNote'] != "Notes from Social Worker" && 
             $_POST['swNote'] != "") {
         $profileActityNotes = $_POST['swNote'];
     } else {
@@ -215,14 +217,73 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 //                echo $messages . "<br/>";               
 //            }
     } else if (empty($message)) {
+        //TODO: Create familyProfile object.
+        $temporaryFamilyProfile = new Family(
+                0,                          //$familyProfileId, 
+                "Pending",                  //$familyProfileStatus, 
+                $parentFirstName, 
+                $parentLastName, 
+                $parentEmail, 
+                $phone1,              //
+                $phone2, 
+                $address, 
+                $city, 
+                $state, 
+                $zip, 
+                $country, 
+                $patientFirstName, 
+                $patientLastName, 
+                $patientRelation, 
+                date($patientDateOfBirth), 
+                $patientFormPDF, 
+                $patientNote);
+        
+        //TODO: Insert familyProfile object.
+        if(insert_FamilyProfile($temporaryFamilyProfile)) echo "Temporary family profile inserted successfully</br>";
+        //TODO: Get familyProfileID from the familyProfile object.
+        
+        $results = retrieve_FamilyProfileByName($temporaryFamilyProfile->get_parentfname(), $temporaryFamilyProfile->get_parentlname());
+        $resultsFamily = $results[0];
+        $temporaryFamilyProfileID = $resultsFamily->get_familyProfileId();
+        
+        //TODO: Set the profileActivity to the familyprofile's values.
         //no error messages
         //create profile activity object
-        $current_activity = new ProfileActivity(0, 0, 0, $sw_id, $sw_lname, $sw_fname, //familyID and requestID set to 0 as placeholders. 
-                        0, "", "", $dateSubmit, 0, $activityType, $profileActitivityStatus,
-                        $parentFirstName, $parentLastName, $parentEmail, $phone1, $phone2,
-                        $address, $city, $state, $zip,
-                        $country, $patientFirstName, $patientLastName, $patientRelation,
-                        $patientDateOfBirth, $patientFormPDF, $patientNote, $profileActityNotes);
+        
+        $current_activity = new ProfileActivity(
+                0,                          //$profileActivityId
+                0,                          //$profileActivityRequestId
+                $temporaryFamilyProfileID,    //$familyProfileId
+                    //requestID set to 0 as placeholders.         
+                    //TODO: change this!
+                $sw_id,                     //
+                $sw_lname,                  //
+                $sw_fname,                  //
+                0,                          //$rmhStaffProfileId
+                "",                         //$rmhStaffLastName
+                "",                         //$rmhStaffFirstName
+                $dateSubmit,                //$swDateStatusSubm
+                0,                          //$rmhDateStatusSubm
+                $activityType,              //
+                $profileActitivityStatus,   //
+                $parentFirstName,           //
+                $parentLastName,            //
+                $parentEmail,               //
+                $phone1,                    //
+                $phone2,                    //
+                $address,                   //
+                $city,                      //
+                $state,                     //
+                $zip,                       //
+                $country,                   //
+                $patientFirstName,          //
+                $patientLastName,           //
+                $patientRelation,           //
+                $patientDateOfBirth,        //
+                $patientFormPDF,            //
+                $patientNote,               //
+                $profileActityNotes         //
+        );
 
 //            print_r($message);
 //            var_dump($message);
@@ -274,171 +335,130 @@ if (!empty($message)) {
                        name="ParentFirstName" 
                        placeholder="Parent first name"
                        <?php isset($parentFirstName) ? print ("value=\"$parentFirstName\"") : print("");?>
-                       size="40" 
                        />
-            </div>
             
-            <div>
-
                 <input class="formt" 
                        type="text" 
                        name="ParentLastName" 
                        placeholder="Parent last name"
                        <?php isset($parentLastName) ? print ("value=\"$parentLastName\"") : print("");?>
-                       size="40" 
                        />
-            </div>
             
-            <div>
                 <input class="formt" 
                        type="text" 
                        name="Email" 
                        placeholder="Parent's email address"
-                       <?php isset($parentEmail) ? print ("value=\"$parentEmail\"") : print("");?>
-                       size="40" 
+                       <?php isset($parentEmail) ? print ("value=\"$parentEmail\"") : print("");?>            
                        />
-            </div>
-            
-            <div>
+                
                 <input class="formt" 
                        type="text" 
                        name="Phone1" 
                        placeholder="Parent's primary phone number"
                        <?php isset($phone1) ? print ("value=\"$phone1\"") : print("");?>
-                       size="40" 
                        />
-            </div>
-            
-            <div>
+                
                 <input class="formt" 
                        type="text" 
                        name="Phone2" 
                        placeholder="Parent's secondary phone number"
                        <?php isset($phone2) ? print ("value=\"$phone2\"") : print("");?>
-                       size="40" 
                        />
-            </div>
             
-            <div>
                 <input class="formt" 
                        type="text" 
                        name="Address" 
                        placeholder="Address"
                        <?php isset($address) ? print ("value=\"$address\"") : print("");?>
-                       size="40" 
                        />
-            </div>
-            
-            <div>
+                
                 <input class="formt" 
                        type="text" 
                        name="City" 
                        placeholder="City"
                        <?php isset($city) ? print ("value=\"$city\"") : print("");?>
-                       size="40" 
                        />
-            </div>
-            
-            <div>
+                
                 <input class="formt" 
                        type="text" 
                        name="State" 
                        placeholder="State"
                        <?php isset($state) ? print ("value=\"$state\"") : print("");?>
-                       size="40" 
                        />
-            </div>
-            
-            <div>
+                
                 <input class="formt"  
                        type="text" 
                        name="ZipCode" 
                        placeholder="ZipCode"
-                       <?php isset($zip) ? print ("value=\"$zip\"") : print("");?>
-                       size="40" 
+                       <?php isset($zip) ? print ("value=\"$zip\"") : print("");?>        
+                       />
+            
+                <input class="formt" 
+                       type="text" 
+                       name="Country" 
+                       placeholder="Country"
+                       <?php isset($country) ? print ("value=\"$country\"") : print("");?>
+                       />
+
+                <input class="formt" 
+                       type="text" 
+                       name="PatientFirstName" 
+                       placeholder="Patient's first name"
+                       <?php isset($patientFirstName) ? print ("value=\"$patientFirstName\"") : print("");?>
+                       />
+
+                <input class="formt" 
+                       type="text" 
+                       name="PatientLastName" 
+                       placeholder="Patient's last name"
+                       <?php isset($patientLastName) ? print ("value=\"$patientLastName\"") : print("");?>
+                       />
+
+                <input class="formt"  
+                       type="text" 
+                       name="PatientRelation" 
+                       placeholder="Parent's relationship toward patient"
+                       <?php isset($patientRelation) ? print ("value=\"$patientRelation\"") : print("");?>                    
+                       />
+
+                <input class="formt"
+                       type="date"
+                       name="PatientDOB"
+                       placeholder="Patient's date of birth"
+                       <?php isset($patientDateOfBirth) ? print ("value=\"$patientDateOfBirth\"") : print("");?>
+                       />
+
+                <input class="formt" 
+                       type="text" 
+                       name="PatientDiagnosis" 
+                       placeholder="Patient's current diagnosis"
+                       <?php isset($patientFormPDF) ? print ("value=\"$patientFormPDF\"") : print("");?>
+                       />
+
+                <input class="formt" 
+                       type="text" 
+                       name="PatientNote" 
+                       placeholder="Notes on patient"
+                       <?php isset($patientNote) ? print ("value=\"$patientNote\"") : print("");?>
+                       />
+
+                <input class="formt formbottom" 
+                       type="text" 
+                       name="swNote" 
+                       placeholder="Anything you would like to note"
+                       <?php isset($profileActityNotes) ? print ("value=\"$profileActityNotes\"") : print("");?>
                        />
             </div>
 
-            
-            <input class="formt" 
-                   type="text" 
-                   name="Country" 
-                   placeholder="Country"
-                   <?php isset($country) ? print ("value=\"$country\"") : print("");?>
-                   size="40" 
-                   />
-            
+            <div>                        
+                <input class="formsubmit" 
+                       type="submit" 
+                       name="submit" 
+                       value="Create New Profile"
+                       />
+            </div>
 
-            <input class="formt" 
-                   type="text" 
-                   name="PatientFirstName" 
-                   placeholder="Patient's first name"
-                   <?php isset($patientFirstName) ? print ("value=\"$patientFirstName\"") : print("");?>
-                   size="40" 
-                   />
-
-
-            <input class="formt" 
-                   type="text" 
-                   name="PatientLastName" 
-                   placeholder="Patient's last name"
-                   <?php isset($patientLastName) ? print ("value=\"$patientLastName\"") : print("");?>
-                   size="40" 
-                   />
-
-
-            <input class="formt"  
-                   type="text" 
-                   name="PatientRelation" 
-                   placeholder="Parent's relationship toward patient"
-                   <?php isset($patientRelation) ? print ("value=\"$patientRelation\"") : print("");?>
-                   size="40" 
-                   />
-
-
-            <input class="formt" 
-                   type="text" 
-                   name="PatientDOB" 
-                   placeholder="Patient's Date of Birth (yyyy-mm-dd)"
-                   <?php isset($patientDateOfBirth) ? print ("value=\"$patientDateOfBirth\"") : print("");?>
-                   size="40" 
-                   />
-
-
-            <input class="formt" 
-                   type="text" 
-                   name="PatientDiagnosis" 
-                   placeholder="Patient's current diagnosis"
-                   <?php isset($patientFormPDF) ? print ("value=\"$patientFormPDF\"") : print("");?>
-                   size="40" 
-                   />
-            
-            
-            <input class="formt" 
-                   type="text" 
-                   name="PatientNote" 
-                   placeholder="Notes on patient"
-                   <?php isset($patientNote) ? print ("value=\"$patientNote\"") : print("");?>
-                   size="40" 
-                   />
-        
-        <input class="formt formbottom" 
-               type="text" 
-               name="swNote" 
-               placeholder="Anything you would like to note"
-               <?php isset($profileActityNotes) ? print ("value=\"$profileActityNotes\"") : print("");?>
-               size="40"/>
-    </div>
-    
-    <div>                        
-        <input class="formsubmit" 
-               type="submit" 
-               name="submit" 
-               value="Create New Profile"
-               />
-    </div>
-
-</form>
+        </form>
         <input class="helpbutton" type="submit" value="Help" align="bottom" onclick="location.href='../help/CreatingFamilyProfile.php'" />
 
 </div>
