@@ -7,10 +7,20 @@ echo ">>>DIRECTORY: ".ROOT_DIR.'/database/dbProfileActivity.php <br><br>';
 //retrieve_ProfileActivity_byStatus($profileActivityStatus)
 echo "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////"."</br>";
 echo ">>>TESTING: retrieve_dbProfileActivity_byStatus, expect four Profile Activities to be found". "</br>";
-test_retrieve_dbProfileActivity_byStatus("Confirm");
+test_retrieve_dbProfileActivity_byStatus("Confirmed");
 
 echo ">>>TESTING: retrieve_dbProfileActivity_byStatus, expect no Profile Activity to be found."."</br>";
 test_retrieve_dbProfileActivity_byStatus("Denied");
+
+echo ">>>TESTING: insert_dbProfileActivity, expect success</br>";
+
+$profileActivity = new ProfileActivity(0, 1, 2, 1, "Tove", "Mary", 1, "Shen",  "Tian", "2012-01-10 18:22:43", "2012-01-12 17:22:43","Create", "Pending", 
+        "Joe", "Jones", "joejones@gmail.com", "9149999999", "9148888888", "333 1st Street", "Funville", "CT", "11111", "US", "Sammy", "Jone", 
+        "father", "2005-02-18 00:00:00", "","","");
+test_insert_dbProfileActivity($profileActivity);
+
+
+
 
 function test_retrieve_dbProfileActivity_byStatus($profileActivityStatus)
 {
@@ -26,7 +36,18 @@ else
          display_profileactivity($profileactivity);
     }
 }
+
 }
+
+function test_insert_dbProfileActivity($profileActivity)
+{
+    $retVal = insert_ProfileActivity($profileActivity);
+    if ($retVal == true)
+        echo "</br> Insert succeeded </br>";
+    else
+        echo "</br> Insert failed </br>";
+}
+
 
 function display_profileactivity($profileactivity)
 {

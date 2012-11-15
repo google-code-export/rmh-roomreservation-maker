@@ -113,7 +113,7 @@ INSERT INTO `familyprofile` (`FamilyProfileID`, `FamilyProfileStatus`, `ParentFi
 
 DROP TABLE IF EXISTS `profileactivity`;
 CREATE TABLE IF NOT EXISTS `profileactivity` (
-  `ProfileActivityID` int(11) NOT NULL,
+  `ProfileActivityID` int(11) NOT NULL AUTO_INCREMENT,
   `ProfileActivityRequestID` int(11) NOT NULL,
   `FamilyProfileID` int(11) NOT NULL,
   `SocialWorkerProfileID` int(11) NOT NULL,
