@@ -129,13 +129,17 @@ function insert_ProfileActivity($profileActivity){
      mysql_close(); 
      connect();
         // Now add it to the database
-        $query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID,
-                SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
+        if($profileActivity->get_rmhStaffProfileId()!=0) {  
+            //if it is a current record, an RMHStaffProfileID is inserted into database
+            
+            $query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID, 
+                RMHStaffProfileID, SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
                 Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, 
                 PatientLastName, PatientRelation, PatientDateOfBirth, FormPDF, FamilyNotes, ProfileActivityNotes) VALUES(".
                         $profileActivity->get_profileActivityRequestId().",".
                         $profileActivity->get_familyProfileId().",". 
-                        $profileActivity->get_socialWorkerProfileId().",'".  
+                        $profileActivity->get_socialWorkerProfileId().",".  
+                        $profileActivity->get_rmhStaffProfileId().",'".
                         $profileActivity->get_swDateStatusSubm()."','".                           
                         $profileActivity->get_activityType()."','".
                         $profileActivity->get_profileActivityStatus()."','".                        
@@ -156,6 +160,37 @@ function insert_ProfileActivity($profileActivity){
                         $profileActivity->get_formPdf()."','".
                         $profileActivity->get_familyNotes()."','".               
                         $profileActivity->get_profileActivityNotes()."')";
+        }
+        else {  //new record, has no RMH Staff Member is associated to record, RMHStaffProfileID set to NULL
+            $query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID, 
+                SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
+                Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, 
+                PatientLastName, PatientRelation, PatientDateOfBirth, FormPDF, FamilyNotes, ProfileActivityNotes) VALUES(".
+                        $profileActivity->get_profileActivityRequestId().",".
+                        $profileActivity->get_familyProfileId().",". 
+                        $profileActivity->get_socialWorkerProfileId().",'".
+                        $profileActivity->get_swDateStatusSubm()."','".                           
+                        $profileActivity->get_activityType()."','".
+                        $profileActivity->get_profileActivityStatus()."','".                        
+                        $profileActivity->get_parentFirstName()."','".
+                        $profileActivity->get_parentLastName()."','".
+                        $profileActivity->get_parentEmail()."','".
+                        $profileActivity->get_parentPhone1()."','".
+                        $profileActivity->get_parentPhone2()."','".
+                        $profileActivity->get_parentAddress()."','".
+                        $profileActivity->get_parentCity()."','".
+                        $profileActivity->get_parentState()."','".
+                        $profileActivity->get_parentZip()."','".
+                        $profileActivity->get_parentCountry()."','".
+                        $profileActivity->get_patientFirstName()."','".
+                        $profileActivity->get_patientLastName()."','".
+                        $profileActivity->get_patientRelation()."','".
+                        $profileActivity->get_patientDOB()."','".
+                        $profileActivity->get_formPdf()."','".
+                        $profileActivity->get_familyNotes()."','".               
+                        $profileActivity->get_profileActivityNotes()."')";
+        }
+            
                         
         $result=mysql_query($query);
         // Check if successful
