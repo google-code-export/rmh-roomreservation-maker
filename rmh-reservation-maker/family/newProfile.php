@@ -303,8 +303,8 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 //            //if profileActivity is inserted, send the email to rmh approver
 //            $profileID = $current_activity->get_profileActivityId();
 //            NewFamilyProfile($profileID);
-
-            // TODO: Need to pass the familyID to room reservation script 
+            
+            $_SESSION['familyID'] = $temporaryFamilyProfileID;
             echo '
                         <p><a href="' . BASE_DIR . '/referralForm.php">Create Room Reservation</a></p>
                     </div>
