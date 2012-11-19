@@ -237,7 +237,13 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
                 $patientNote);
         
         //TODO: Insert familyProfile object.
-        if(insert_FamilyProfile($temporaryFamilyProfile)) echo "Temporary family profile inserted successfully</br>";
+        if(insert_FamilyProfile($temporaryFamilyProfile)) 
+            echo '
+                <div id="container">
+                    <div id="content">
+                        <p>Temporary family profile inserted successfully.</p>
+                    </div>
+                </div>';
         //TODO: Get familyProfileID from the familyProfile object.
         
         $results = retrieve_FamilyProfileByName($temporaryFamilyProfile->get_parentfname(), $temporaryFamilyProfile->get_parentlname());
@@ -286,15 +292,23 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 //            print_r($message);
 //            var_dump($message);
         // check if insert function returns true, then insert profileactivity                     
+        
         if (insert_ProfileActivity($current_activity)) {
-            echo "Successfully inserted a profile activity request" . "<br/>";
+            echo '
+                <div id="container">
+                    <div id="content">
+                        <p>Successfully inserted a profile activity request.</p>
+                    ';
 
-            //if profileActivity is inserted, send the email to rmh approver
-            $profileID = $current_activity->get_profileActivityId();
-            NewFamilyProfile($profileID);
+//            //if profileActivity is inserted, send the email to rmh approver
+//            $profileID = $current_activity->get_profileActivityId();
+//            NewFamilyProfile($profileID);
 
-            //Need to pass the familyID to room reservation script 
-            echo '<a href="' . BASE_DIR . '/referralForm.php">Create Room Reservation</a>' . "\n";
+            // TODO: Need to pass the familyID to room reservation script 
+            echo '
+                        <p><a href="' . BASE_DIR . '/referralForm.php">Create Room Reservation</a></p>
+                    </div>
+                </div>';
         }
     }
 }//end of success validation of tokens
@@ -423,7 +437,7 @@ if (!empty($message)) {
                        type="date"
                        name="PatientDOB"
                        placeholder="Patient's date of birth"
-                       <?php isset($patientDateOfBirth) ? print ("value=\"$patientDateOfBirth\"") : print("");?>
+                       <?php // isset($patientDateOfBirth) ? print ("value=\"$patientDateOfBirth\"") : print("");?>
                        />
 
                 <input class="formt" 
