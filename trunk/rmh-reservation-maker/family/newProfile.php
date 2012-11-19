@@ -47,7 +47,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $parentFirstName = $_POST['ParentFirstName'];    
     } 
     else {
-        $message['ParentFirstName'] = "Must enter a parent's first name!";
+        $message['ParentFirstName'] = '<p><font color="red">You must enter the Parent First Name.</font></p>';
     }
     
     if (
@@ -57,7 +57,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $parentLastName = $_POST['ParentLastName'];
     } 
     else {
-        $message['ParentLastName'] = "Must enter a parent's last name!";
+        $message['ParentLastName'] = '<p><font color="red">You must enter the Parent Last Name.</font></p>';
         // print_r($message);
     }
     
@@ -68,7 +68,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $parentEmail = $_POST['Email'];
     } 
     else {
-        $message['Email'] = "Must enter a parent's email!";
+        $message['Email'] = '<p><font color="red">You must enter the Email.</font></p>';
     }
     
     if (
@@ -78,7 +78,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $phone1 =$_POST['Phone1'];
     } 
     else {
-        $message['Phone1'] = "Must enter a primary phone number!";
+        $message['Phone1'] = '<p><font color="red">You must enter the Parent Primary Phone Number</font></p>';
         //print_r($message);
     }
     
@@ -99,7 +99,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $address = $_POST['Address'];
     } 
     else {
-        $message['Address'] = "Must enter the family's street address!";
+        $message['Address'] = '<p><font color="red">You must enter the Address.</font></p>';
     }
     
     if (
@@ -109,7 +109,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $city = $_POST['City'];
     } 
     else {
-        $message['City'] = "Must enter the family's city of residence!";
+        $message['City'] = '<p><font color="red">You must enter the City.</font></p>';
     }
     
     if (
@@ -119,8 +119,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $state = $_POST['State'];
     } 
     else {
-        $message['State'] = "Must enter the family's state or territory of 
-            residence!";
+        $message['State'] = '<p><font color="red">You must enter the State.</font><p>';
     }
     
     if (
@@ -130,8 +129,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $zip = $_POST['ZipCode'];
     } 
     else {
-        $message['ZipCode'] = "Must enter the zip code corresponding to the 
-            family's place of residence!";
+        $message['ZipCode'] = '<p><font color="red">You must enter the Zip Code.</font></p>';
     }
     
     if (
@@ -140,7 +138,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
             $_POST['Country'] != "") {
         $country = $_POST['Country'];
     } else {
-        $message['Country'] = "Must enter the family's country of residence!";
+        $message['Country'] = '<p><font color="red">You must enter the Country.</font></p>';
     }
     
     if (
@@ -150,7 +148,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $patientFirstName = $_POST['PatientFirstName'];
     } 
     else {
-        $message['PatientFirstName'] = "Must enter the patient's first name!";
+        $message['PatientFirstName'] = '<p><font color="red">You must enter the Patient First Name.</font></p>';
     }
     
     if (
@@ -160,7 +158,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
         $patientLastName = $_POST['PatientLastName'];
     } 
     else {
-        $message['PatientLastName'] = "Must enter the patient's first name!";
+        $message['PatientLastName'] = '<p><font color="red">You must enter the Patient Last Name.</font><p>';
     }
     
     if (
@@ -169,7 +167,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
             $_POST['PatientRelation'] != "") {
         $patientRelation = $_POST['PatientRelation'];
     } else {
-        $message['PatientRelation'] = " Must enter the parent's relationship to the child!";
+        $message['PatientRelation'] = '<p><font color="red">You must enter the Patient Relation.</font></p>';
     }
     
     if (
@@ -178,7 +176,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
             $_POST['PatientDOB'] != "") {
         $patientDateOfBirth = $_POST['PatientDOB'];
     } else {
-        $message['PatientDOB'] = "Must enter Patient Date of Birth (yyyy-mm-dd).";
+        $message['PatientDOB'] = '<p><font color="red">You must enter the Patient Date of Birth.</font></p>';
     }
     
     if (
@@ -323,7 +321,7 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 if (!empty($message)) {
     echo "Cannot create New Profile: " . "</br>";
     foreach ($message as $messages) {
-        echo $messages . "<br/>";
+        echo $messages;
     }
 }
 ?>
