@@ -82,7 +82,7 @@ if($userAccess > 0)
 } 
 ?>
     
-</ul><div class="topRightButton"><div id="ios-arrow-left"><a href="<?php echo BASE_DIR.'/logout.php';?>">Logout</a></div></div>
+</ul>
 <?php include (ROOT_DIR. '/inc/back.php'); ?>
 
 <script>
