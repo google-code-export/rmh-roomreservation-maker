@@ -151,11 +151,15 @@ $messages = array();
                  </div>
                 
                 <p><input class="fomsubmit" type="submit" name="Submit" value="Submit" /></p>
-</form>
+                
+        </form>
+        </br></br>
+    <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='./help/accountmanage.php'" />
         <?php 
             }
             ?>
     </div>
+    
 </div>
 <?php 
 include (ROOT_DIR.'/footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
