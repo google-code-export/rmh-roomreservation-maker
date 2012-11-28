@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Welcome to the registration form</title>
+        <title>Welcome to the Registration Form Page</title>
         <!--remember to <include_once> stephon's file so that it works-->
         
     </head>
@@ -17,26 +17,25 @@
  */
 
 
-/*
-$randURL=randURL();//generate rand
-//$randURL=$_GET["url"];
-$familyID=getFamilyIDFromURL($randURL);//will get -1 til fixed
-clearContents();
-if(!isset($familyID))
+randURL();//generate the url (test)
+
+if(isset($_GET["url]"])) //get the url if possible. If not, set url as -1.
 {
-    $familyID=-1;
+    $randURL=$_GET["url"];
 }
-echo "There should be something here.";
-echo "$familyID";
-echo "Where is the familyID?";
+else
+    $randURL=-1;
+$familyID=getFamilyIDFromURL($randURL);
 //currently does not work, but assume that it works and that it returns the family
 //ID that was matched to the randomly generated URL
 if($familyID==-1)
 {
-    header( "refresh:5;url=index.php" );
-  echo 'You\'ll be redirected in about 5 secs. If not, click <a href="wherever.php">here</a>.'; 
+    header( "refresh:10;url=index.php" );
+    echo "We're sorry. We could not find the form for you to fill out.<br/>";
+    echo 'You\'ll be redirected in about 10 secs. If not, click <a href="../index.php">here</a>.'; 
 }
-*/
+//load stephon's form
+
 
 
 
@@ -78,15 +77,11 @@ function getFamilyIDFromURL($randURL)
     $URLFile="URLs.txt";
     $fileContents=file_get_contents($URLFile);
     $URLArray=explode(" ",$fileContents);
-    echo '$randURL is '.$randURL;
     foreach ($URLArray as $URLs)
     {
-        echo "We are looking at $URLs \n";
         if($URLs==$randURL)
         {
-            echo "Found a match\nThe index is ";
-            echo key($URLArray);
-            return $URLArray[key($URLArray)+1];
+            return $URLArray[key($URLArray)];
         }
     }
     return -1;
@@ -123,3 +118,4 @@ function curPageURL()
 }
 
 ?>
+</html>
