@@ -299,9 +299,13 @@ else
 </table>
                 <p><input type="submit" name="Submit" value="Submit" /></p>
 </form>
+        </br></br>
+    <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/AddaUser.php'" />
+    
         <?php } //end else if for messages
         ?>
 </div>
+    
 </div>
 <script>
 $(function(){
