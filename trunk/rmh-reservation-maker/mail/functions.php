@@ -20,6 +20,7 @@
 include_once ('../core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
+include_once ('../family/prereg.php');
 
 
 
@@ -214,10 +215,15 @@ function RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
     
     $message = "Your reservation request, $RequestKey, for $name for the dates of $StartDate to $EndDate for has been accepted. \r\n\r\nThank You.";
   
-     email($to, $subject, $message);
-
-            
-   endif;    
+    email($to, $subject, $message);
+    
+    $tempURL=randURL();
+    
+    urlToText($tempURL,$familyID);
+    
+    FamilyConfirm($familyID,$StartDate,$EndDate,$tempURL);  
+    
+    endif;    
 }
 
 
