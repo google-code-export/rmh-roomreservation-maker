@@ -9,6 +9,8 @@ include ('../header.php');
 ?>
 
 <html>
+    <div id="container">
+        <div id="content">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Searching for a Family Profile</title>
@@ -38,5 +40,8 @@ include ('../header.php');
     </body>
     <!-- <input type="button" value="Back" align="center" onclick="location.href='../family/SearchFamily.php'" /> -->
     <input class="helpbutton" type="submit" value="Back" align="bottom" onclick="location.href='../family/SearchFamily.php'" />
+        </div>
+        </div>
+    </div>
 </html>
 <?PHP include('../footer.php'); ?>
