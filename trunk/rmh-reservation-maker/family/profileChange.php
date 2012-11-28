@@ -48,7 +48,7 @@ $errors = array(); //error variable that stores any error occured
         $sw = retrieve_UserProfile_SW($currentUser);
         //print_r($sw);
         $swObject = current($sw);
-        $sw_id = $swObject->get_userProfileId();
+        $sw_id = $swObject->get_swProfileId();
         $sw_fname = $swObject->get_swFirstName();
         $sw_lname = $swObject->get_swLastName();
         $dateSubmit = date("Y-m-d");
