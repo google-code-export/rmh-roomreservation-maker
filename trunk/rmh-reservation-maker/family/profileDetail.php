@@ -145,8 +145,11 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         <div id="searchResults"><!--this div will receive content after a search is performed-->
             search results go here
         </div>
+        </br></br>
+        <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/RoomRequest.php'" />
             <?php if( isset( $content ) ){ echo $content;} ?>
     </div>
+    
 </div>
 <?php 
 include (ROOT_DIR.'/footer.php');
