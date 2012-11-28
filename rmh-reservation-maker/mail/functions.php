@@ -545,29 +545,4 @@ function clearContents()
     $fh = fopen($URLFile, 'w') or die("can't open file");
     fclose($fh);
 }
-
-
-//delete the parsers if they end up being unnecessary.
-function parseURL()
-{
-    //grabs the part of the URL that contains the actual RNG URL
-    $parts=parse_url(curPageURL(),PHP_URL_PATH);
-    $piecesOfURL=explode("?S=",$parts);
-    return array_slice($piecesOfURL,1,1);
-}
-
-function curPageURL()
-{
-    //returns the current URL for parsing in the above function
-    $pageURL = 'http';
-    if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
-    $pageURL .= "://";
-    if ($_SERVER["SERVER_PORT"] != "80") {
-     $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-    } else {
-     $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-    }
-    return $pageURL;
-}
-
 ?>
