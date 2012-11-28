@@ -20,7 +20,6 @@
 include_once ('../core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
-include_once ('../family/prereg.php');
 
 
 
@@ -217,9 +216,9 @@ function RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
   
     email($to, $subject, $message);
     
-    $tempURL=randURL($familyID);
+    /*$tempURL=randURL($familyID);
     
-    FamilyConfirm($familyID,$StartDate,$EndDate,$tempURL);  
+    FamilyConfirm($familyID,$StartDate,$EndDate,$tempURL);  */
     
     endif;    
 }
@@ -490,5 +489,85 @@ function NewFamilyProfile($profileID)
   
 
 //function NewFamilyDeny
+
+
+function randURL($familyID)
+{
+    /*This piece of code should generate the random string to append to the URL link
+    * that will go in the email. 
+    * The contents of the email should contain webaddress.com/blah(append(.))rng url
+    * along with a message regarding the family reservation being made.
+    */ 
+    $length=12; //need to set a length for the URL, currently at 12
+    $characters='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    //the set of characters that can be chosen, should be 52.
+    $randString='';
+    for ($i = 0; $i < $length; $i++) {
+    //chooses one character from the entire set of available characters in characters
+    //this continues until it fills up the length.
+       $randString .= $characters[mt_rand(0, strlen($characters))];
+    }
+    urlToText($randString,$familyID);
+    return $randString;
+}
+
+function urlToText($randURL,$familyID)
+{
+    //stores the URL with the family ID in a text file
+    //the text file is in the wamp folder
+    $URLFile='../mail/URLs.txt';
+    $fh = fopen($URLFile, 'a') or die("can't open file");
+    $stringData=$randURL . " " . $familyID . " ";
+    fwrite($fh,$stringData);
+    fclose($fh);
+}
+
+function getFamilyIDFromURL($randURL)
+{
+    //gets the family ID associated with a specific URL
+    $URLFile='../mail/URLs.txt';
+    $fileContents=file_get_contents($URLFile);
+    $URLArray=explode(" ",$fileContents);
+    foreach ($URLArray as $URLs)
+    {
+        if($URLs==$randURL)
+        {
+            return $URLArray[key($URLArray)];
+        }
+    }
+    return -1;
+}
+
+function clearContents()
+{
+    //clears the entire file, eventually will end up clearing 1 entry. Probably.
+    $URLFile="URLs.txt";
+    $fh = fopen($URLFile, 'w') or die("can't open file");
+    fclose($fh);
+}
+
+
+//delete the parsers if they end up being unnecessary.
+function parseURL()
+{
+    //grabs the part of the URL that contains the actual RNG URL
+    $parts=parse_url(curPageURL(),PHP_URL_PATH);
+    $piecesOfURL=explode("?S=",$parts);
+    return array_slice($piecesOfURL,1,1);
+}
+
+function curPageURL()
+{
+    //returns the current URL for parsing in the above function
+    $pageURL = 'http';
+    if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
+    $pageURL .= "://";
+    if ($_SERVER["SERVER_PORT"] != "80") {
+     $pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+    } else {
+     $pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    }
+    return $pageURL;
+}
 
 ?>
