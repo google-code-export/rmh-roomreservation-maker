@@ -121,9 +121,10 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             <div style="margin-top: 50px" > <input style="margin-top: 50 px" type="submit" class="formsubmit" value="Search" />
             </div>
         </form>
-        
+            <br><br><br>
+            <input class="helpbutton" type="submit" value="Help" align="bottom" onclick="location.href='../help/SearchingFamilyProfile.php'" />
         </div>
-        <input class="helpbutton" type="submit" value="Help" align="bottom" onclick="location.href='../help/SearchingFamilyProfile.php'" />
+        
     
 <?php 
 include (ROOT_DIR.'/footer.php');
