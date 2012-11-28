@@ -471,6 +471,7 @@ if (!empty($message)) {
             </div>
 
         </form>
+        <br><br><br>
         <input class="helpbutton" type="submit" value="Help" align="bottom" onclick="location.href='../help/CreatingFamilyProfile.php'" />
 
 </div>
