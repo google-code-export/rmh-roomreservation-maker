@@ -9,6 +9,8 @@ include ('../header.php');
 ?>
 
 <html>
+    <div id="container">
+        <div id="content">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Creating a new Family Profile</title>
@@ -37,5 +39,8 @@ include ('../header.php');
                 <p><B>Step 6:</B>When you have finished you can return to any other function by selecting it on the navigation bar.<BR><BR>    
     </body>
     <input class="helpbutton" type="submit" value="Back" align="bottom" onclick="location.href='../family/newProfile.php'" />
+        </div>
+        </div>
+        
 </html>
 <?PHP include('../footer.php'); ?>
