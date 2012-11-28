@@ -295,11 +295,11 @@ CREATE TABLE IF NOT EXISTS `userprofile` (
 INSERT INTO `userprofile` (`UserProfileID`, `UsernameID`, `UserEmail`, `Password`, `UserCategory`) VALUES
 (1, 'delias', 'david.elias097@gmail.com', '1bf57729257d42dd5ac2cc2214b6d5984e736b4a', 'RMH Staff Approver'),
 (2, 'Mary789', 'mary1@gmail.com', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'Social Worker'),
-(3, 'jbermudez', 'Johnny.Bermudez08@stjohns.edu', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver'),
+(3, 'delias2', 'david.elias097@gmail.com', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver'),
 (4, 'Lauren653', 'lauren1@gmail.com', '91b06a9f87b7efe1be3d56f46bc739fae897bcc5', 'Social Worker'),
 (5, 'Admin', 'housemngr@rmhnewyork.org', '1be4d1253535f4e0ba0895e6e6918be38531823c', 'RMH Administrator'),
-(8, 'tshen', 'tian.shen09@stjohns.edu', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'RMH Staff Approver'),
-(9, 'Tom718', 'tom1@gmail.com', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver');
+(8, 'delias3', 'david.elias097@gmail.com', '225068c27586b06e6439b2a4ff3b2a97581bffc7', 'RMH Staff Approver'),
+(9, 'delias1', 'david.elias09@stjohns.edu', '6473f3b11a9eb09f83c52a5b3a567de788f76b05', 'RMH Staff Approver');
 
 --
 -- Constraints for dumped tables
