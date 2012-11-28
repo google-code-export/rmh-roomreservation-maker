@@ -217,9 +217,7 @@ function RequestAccept($RequestKey, $StartDate, $EndDate, $SWID, $familyID)
   
     email($to, $subject, $message);
     
-    $tempURL=randURL();
-    
-    urlToText($tempURL,$familyID);
+    $tempURL=randURL($familyID);
     
     FamilyConfirm($familyID,$StartDate,$EndDate,$tempURL);  
     
