@@ -103,13 +103,16 @@ function displayUsersTable($allUsers)
             displayUsersTable($allUsers);
         ?> 
         </div>
-        
+        </br></br>
+    <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/ViewUserHelp.php'" />
     </div>
+    
 </div>
 <div class="overlay" style="display:none; background: url('<?php echo BASE_DIR;?>/images/bars.png') repeat; width: 100%; height: 100%; position: fixed;left:0; top:0; z-index: 999;">
     <div class="modalBox" style="position: relative; background: none #FFFFFF; width: 400px; margin:150px auto; border-radius: 5px; padding: 5px;">
         test
     </div>
+    
 </div>
 <script type="text/javascript">
     $(function(){
