@@ -40,7 +40,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['login.php']=-1; //login page is viewable by everyone
     $permission_array['logout.php']=-1; //logout page
     $permission_array['reset.php']=-1; //password reset page (available to everyone)
-    $permission_array['helphomepage.php']=-1; //sets permission for the helphomepage
+    $permission_array['accountmanage.php'] = -1; //managing your account help page
     
     
     /* ============ pages users with access level of FAMILY and above can view ===============*/
@@ -61,6 +61,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['Reservationsearch.php']=1; //Reservation Search help page
     $permission_array['CreatingFamilyProfile.php']=1; //Creating a new family profile help page
     $permission_array['SearchingFamilyProfile.php']=1; //Searching for a family profile
+    $permission_array['RoomRequest.php'] = 1; //Giving the RoomRequest help page social worker permission
 
     
     /* ============ pages RMH STAFF APPROVER and above can view ===============*/
@@ -73,6 +74,8 @@ checkSession(); //check session if it has timed out or not
     $permission_array['listUsers.php'] = 3;
     $permission_array['addUser.php'] = 3;
     $permission_array['userActionHandler.php'] = 3;
+    $permission_array['ViewUserHelp.php'] = 3; //Adding View User help page to admin's permissions
+    $permission_array['AddaUser.php'] = 3; //Added permission for the adding a user help page
 
     $current_page = getCurrentPage(); //current page
     
