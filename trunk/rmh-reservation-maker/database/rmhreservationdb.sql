@@ -24,6 +24,7 @@ DELIMITER $$
 --
 -- Procedures
 --
+/*
 DROP PROCEDURE IF EXISTS `GetRequestKeyNumber`$$
 CREATE DEFINER= CURRENT_USER PROCEDURE `GetRequestKeyNumber`(IN RequestType VARCHAR(255))
 BEGIN 
@@ -47,7 +48,7 @@ BEGIN
         END IF;
         
   END$$
-
+*/
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -152,17 +153,17 @@ CREATE TABLE IF NOT EXISTS `profileactivity` (
 INSERT INTO `profileactivity` (`ProfileActivityID`, `ProfileActivityRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `ParentFirstName`, `ParentLastName`, `Email`, `Phone1`, `Phone2`, `Address`, `City`, `State`, `ZipCode`, `Country`, `PatientFirstName`, `PatientLastName`, `PatientRelation`, `PatientDateOfBirth`, `FormPDF`, `FamilyNotes`, `ProfileActivityNotes`) VALUES
 (1, 1, 1, 1, 1, '2012-01-10 18:22:43', '2012-01-12 17:22:43', 'Create', 'Confirmed', 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '100-70 40th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches', 'New Family Profile'),
 (2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 14:23:13', 'Edit', 'Confirmed', 'Jane', 'Smith', 'janesmith@gmail.com', '7181234455', '6465562312', '110-76 76th Avenue', 'White Plains', 'New York', '10601', 'USA', 'Joey', 'Smith', 'Mother', '1998-02-18 00:00:00', 'www.rmhforms.com/family1form.pdf', 'patient is allergic to peaches', 'New Address 110-76 76th Avenue'),
-(3, 3, 2, 1, 1, '2012-02-21 15:22:43', '2012-02-22 19:22:43', 'Create', 'Confirmed', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 29', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Family Profile'),
-(4, 4, 2, 1, 1, '2012-03-02 15:44:22', '2012-03-03 12:43:12', 'Edit', 'Confirmed', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 34', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Address Borgartun 34'),
-(5, 5, 3, 1, NULL, '2012-04-01 10:22:43', NULL, 'Create', 'Unconfirmed', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@unilim.fr', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights', 'New Family Profile'),
-(6, 6, 3, 1, 1, '2012-04-02 10:22:43', '2012-04-03 15:22:33', 'Edit', 'Denied', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@gmail.com', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights', 'New Family Profile needs to be approved first');
+(3, 1, 2, 1, 1, '2012-02-21 15:22:43', '2012-02-22 19:22:43', 'Create', 'Confirmed', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 29', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Family Profile'),
+(4, 2, 2, 1, 1, '2012-03-02 15:44:22', '2012-03-03 12:43:12', 'Edit', 'Confirmed', 'Scott', 'Miller', 'scottmiller@gmail.com', '7188884455', '6465562322', 'Borgartun 34', 'REYKJAVIK', 'N/A', '105', 'Iceland', 'Nate', 'Miller', 'Father', '1997-01-14 00:00:00', 'www.rmhforms.com/family2form.pdf', 'patient is allergic to cats', 'New Address Borgartun 34'),
+(5, 1, 3, 1, NULL, '2012-04-01 10:22:43', NULL, 'Create', 'Unconfirmed', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@unilim.fr', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights', 'New Family Profile'),
+(6, 2, 3, 1, 1, '2012-04-02 10:22:43', '2012-04-03 15:22:33', 'Edit', 'Denied', 'Nathalie', 'Alexandrie', 'nathalie.alexandrie@gmail.com', '1.23.45.67.89', '1.44.24.22.36', '2 avenue de la Soeur Rosalie', 'Paris', 'N/A', '75001', 'France', 'Nate', 'Miller', 'GrandMother', '1995-03-10 00:00:00', 'www.rmhforms.com/family3form.pdf', 'patient is sensitive to bright lights', 'New Family Profile needs to be approved first');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `requestkeynumber`
 --
-
+/*
 DROP TABLE IF EXISTS `requestkeynumber`;
 CREATE TABLE IF NOT EXISTS `requestkeynumber` (
   `ProfileActivityRequestID` int(11) NOT NULL,
@@ -175,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `requestkeynumber` (
 
 INSERT INTO `requestkeynumber` (`ProfileActivityRequestID`, `RoomReservationRequestID`) VALUES
 (7, 7);
-
+*/
 -- --------------------------------------------------------
 
 --
@@ -213,7 +214,7 @@ INSERT INTO `rmhstaffprofile` (`RMHStaffProfileID`, `UserProfileID`, `Title`, `F
 
 DROP TABLE IF EXISTS `roomreservationactivity`;
 CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
-  `RoomReservationActivityID` int(11) NOT NULL AUTO_INCREMENT,
+  `RoomReservationActivityID` int(11) NOT NULL,
   `RoomReservationRequestID` int(11) NOT NULL,
   `FamilyProfileID` int(11) NOT NULL,
   `SocialWorkerProfileID` int(11) NOT NULL,
@@ -226,11 +227,11 @@ CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
   `EndDate` datetime NOT NULL,
   `PatientDiagnosis` text,
   `Notes` text,
-  PRIMARY KEY (`RoomReservationActivityID`),
+  KEY `RoomReservationActivityID` (`RoomReservationActivityID`),
   KEY `SocialWorkerProfileID` (`SocialWorkerProfileID`),
   KEY `RMHStaffProfileID` (`RMHStaffProfileID`),
   KEY `FamilyProfileID` (`FamilyProfileID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1  ;
 
 --
 -- Dumping data for table `roomreservationactivity`
@@ -238,11 +239,11 @@ CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
 
 INSERT INTO `roomreservationactivity` (`RoomReservationActivityID`, `RoomReservationRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `BeginDate`, `EndDate`, `PatientDiagnosis`, `Notes`) VALUES
 (1, 1, 1, 1, 1, '2012-02-17 10:33:28', '2012-02-18 13:22:20', 'Apply', 'Confirm', '2012-03-01 00:00:00', '2012-04-01 00:00:00', 'Pediatric Sarcomas', ''),
-(2, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(3, 3, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(4, 4, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
-(5, 5, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Apply', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', ''),
-(6, 6, 3, 4, NULL, '2012-04-25 21:40:40', NULL, 'Apply', 'Unconfirmed', '2012-04-30 00:00:00', '2012-05-30 00:00:00', 'Pediatric Leukemias', '');
+(1, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
+(1, 3, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
+(2, 1, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
+(2, 2, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Modify', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', ''),
+(3, 1, 3, 4, NULL, '2012-04-25 21:40:40', NULL, 'Apply', 'Unconfirmed', '2012-04-30 00:00:00', '2012-05-30 00:00:00', 'Pediatric Leukemias', '');
 
 -- --------------------------------------------------------
 

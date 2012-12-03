@@ -71,6 +71,75 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
     return true;
 }*/
 
+/*
+ * Retrieves the highest RoomReservationRequestID, depending on the status of the request, Apply (a new reservation) 
+ * or Modify/Cancel (an existing reservation), and increments it providing the insert function with th emost current 
+ * copy of the record, while preserving a history of changes made.
+ * @param $reservation = the reservation being modified.
+ * @author Chris Giglio
+ */
+
+function generateNextRoomReservationRequestID($reservation){
+    
+    connect();
+    $status = $reservation->get_activityType();
+     //if ActivityType is set to Apply (there fore it is a new reservation)
+    if($status == "Apply"){ 
+        //Select the highest RoomReservationActivityID and increment it
+            $query = "SELECT MAX(RoomReservationActivityID) FROM roomreservationactivity";
+            $result = mysql_query($query);
+           
+            while($result_row=  mysql_fetch_array($result)){
+                
+                $reservationActID=$result_row['MAX(RoomReservationActivityID)'];
+                $reservationActID++;
+            }
+            //Activity ID receives new value, Request ID is set to 1, as this is a new request. 
+                $reservation->set_RoomReservationActivityID($reservationActID);
+                $reservation->set_RoomReservationRequestID(1);
+                
+                
+        
+     }
+       
+     //if ActivityType is set to Modify or Cancel (therefore it is an existing reservation) a record is saved recording the change
+    else { 
+        $famprofid=$reservation->get_familyProfileId();
+        $query = "SELECT MAX(RoomReservationActivityID) FROM roomreservationactivity WHERE FamilyProfileID = ".
+            $famprofid;
+        $result= mysql_query($query);
+    
+    while($result_row=mysql_fetch_array($result)){
+        $ActivityID=$result_row['MAX(RoomReservationActivityID)'];
+        }
+        //activity id remains the same for an existing reservation.
+        $reservation->set_roomReservationActivityID($ActivityID);
+    
+        //Since this is an existing request, the request ID is increased by 1, and the activity ID remains the same
+        $query = "SELECT MAX(RoomReservationRequestID) FROM roomreservationactivity WHERE RoomReservationActivityID = ".
+            $ActivityID; //select the highest request id for the record with the matching activity id.
+    $result= mysql_query($query);
+    
+    while($result_row=mysql_fetch_array($result)){
+        
+        $reservationReqID=$result_row['MAX(RoomReservationRequestID)'];
+        $reservationReqID++;
+        }
+        //increment the request id
+        $reservation->set_roomReservationRequestID($reservationReqID);
+        
+        
+        
+        
+        
+        
+    } 
+    
+      
+        mysql_close();
+    
+}
+
 /**
  * Inserts a new Room Reservation Request into the RoomReservationActivity table. This function
  * will be utilized by the social worker. 
@@ -84,6 +153,8 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
                 echo ("Invalid argument for insert_RoomReservationActivity function call");
                 return false;
         }
+        
+        /*
         //Connect to the database
                 connect();
         
@@ -96,11 +167,16 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
     }   
         
      mysql_close(); 
+         * 
+         */
+        
+     generateNextRoomReservationRequestID($reservation);
      
      connect();
      //Now add it to the database
-     $query="INSERT INTO roomreservationactivity (RoomReservationRequestID, FamilyProfileID, SocialWorkerProfileID, 
+     $query="INSERT INTO roomreservationactivity (RoomReservationActivityID, RoomReservationRequestID, FamilyProfileID, SocialWorkerProfileID, 
          SW_DateStatusSubmitted, ActivityType, BeginDate, EndDate, PatientDiagnosis, Notes) VALUES(".
+                $reservation->get_roomReservationActivityID().",".
                 $reservation->get_roomReservationRequestID().",".
                 $reservation->get_familyProfileId().",".     
                 $reservation->get_socialWorkerProfileId().",'".
