@@ -220,10 +220,10 @@ if($showForm == true)
          <input class="formt formtop" id="patientlname" type="text" name="PatientLastName" value="<?php echo htmlspecialchars($patientlname); ?>"/>
          <label for="patientfname">Patient First Name</label>
          <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="<?php echo htmlspecialchars($patientfname); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
-         <label for="patientdiagnosis">Patient Diagnosis</label>        
-         <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value=PatientDiagnosis onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
+         <label for="patientdiagnosis">Patient Diagnosis and Reason for Stay</label>        
+         <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" placeholder="Patient's diagnosis and reason for stay" <?php isset($newPatientDiagnosis) ? print ("value=\"$newPatientDiagnosis\"") : print("");?>/>
          <label for="notes">Notes</label>         
-         <input class="formt" id="notes" type="text" name="Notes" value="<?php echo htmlspecialchars($patientnotes); ?>" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/>
+         <input class="formt" id="notes" type="text" name="Notes" placeholder="Notes" <?php isset($patientnotes) ? print ("value=\"$patientnotes\"") : print("");?> />
          <label for="parentlname">Parent Last Name</label>         
          <input class="formt" id="parentlname" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($parentlname); ?>" onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/>
          <label for="parentfirstname">Parent First Name</label>         
@@ -311,7 +311,7 @@ sanitize($_POST['enddate']);
        
       
         
-        $currentreservation = new Reservation (0, 0, 0, $newParentLastName, 
+        $currentreservation = new Reservation (0, 0, $_SESSION['familyID'], $newParentLastName, 
                 $newParentFirstName, $sw_id, $swLastName, $swFirstName, 0, "",
                 "", $swDateStatusSubmitted, "", $ActivityType, $Status, $newBeginDate, $newEndDate,
                 $newPatientDiagnosis, $newNotes);
