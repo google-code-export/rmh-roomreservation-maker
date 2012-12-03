@@ -100,6 +100,38 @@ include_once(ROOT_DIR.'/database/dbinfo.php');
         return true;
 }*/
 
+/*
+ * Replaces built in procedure from database, retrieves current ProfileActivityRequestID and increments it to 
+ * provide highest request ID for alterations made to a family profile.
+ * @param $profileactivity = the profile activity being edited. 
+ * @author Chris Giglio
+ */
+
+function generateNextProfileActivityRequestId($profileActivity){
+      
+    connect();
+
+    $query = "SELECT MAX(ProfileActivityRequestID) FROM profileactivity WHERE FamilyProfileID = ".
+            $profileActivity->get_familyProfileId();
+    $result= mysql_query($query);
+    /*
+        if (mysql_num_rows($result)!=0){
+            $result_row = mysql_fetch_assoc($result);
+        }
+     * 
+     */
+     while($result_row=mysql_fetch_array($result)){
+         
+         $profActReqId=$result_row['MAX(ProfileActivityRequestID)'];
+         $profActReqId++;
+     }
+    
+    $profileActivity->set_profileActivityRequestId($profActReqId); 
+     
+     echo $profActReqId;
+        
+    mysql_close();
+  }  
 
 /**
  * Inserts a new Profile Activity Request into the ProfileActivity table. This function
@@ -114,10 +146,11 @@ function insert_ProfileActivity($profileActivity){
                 echo ("Invalid argument from insert_ProfileActivity function\n");
                 return false;
         }
-        
+   /*     
         connect();
         // Calls the store procedure 'GetRequestKeyNumber' to get the next highest request id
         $query = "CALL GetRequestKeyNumber('ProfileActivityRequestID')";
+        
         $result = mysql_query ($query);
         if (mysql_num_rows($result)!=0) {
             
@@ -125,8 +158,12 @@ function insert_ProfileActivity($profileActivity){
                 //Sets the request id to the next highest request id 
                 $profileActivity->set_profileActivityRequestId($result_row['@ID := ProfileActivityRequestID']);
     }   
-        
+      
      mysql_close(); 
+  * 
+  */
+ generateNextProfileActivityRequestId($profileActivity);
+ 
      connect();
         // Now add it to the database
         if($profileActivity->get_rmhStaffProfileId()!=0) {  
@@ -191,10 +228,10 @@ function insert_ProfileActivity($profileActivity){
                         $profileActivity->get_profileActivityNotes()."')";
         }
             
-                        
+                                
         $result=mysql_query($query);
         // Check if successful
-        if(!$result) {
+       if(!$result) {
                 //print the error
                 echo mysql_error()." >>>Unable to insert into Profile Activity table. <br>";
                 mysql_close();
@@ -204,6 +241,33 @@ function insert_ProfileActivity($profileActivity){
         mysql_close();
         return true;
 }
+
+function retrieve_ProfileActivity_byFamilyProfileID($familyProfileID){
+    
+    connect();
+    
+    $query = "SELECT MAX(P.ProfileActivityRequestID), P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
+        S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
+       P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
+       P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
+       P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes FROM rmhstaffprofile R RIGHT OUTER JOIN profileactivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
+       INNER JOIN socialworkerprofile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
+       INNER JOIN familyprofile F ON P.FamilyProfileID = F.FamilyProfileID WHERE P.FamilyProfileID = ".$familyProfileID;
+    
+    $result = mysql_query($query);
+                if(mysql_num_rows($result)!==1)
+                {
+                 echo mysql_error()." >>>Unable to retrieve from Profile Activity table. <br>";
+                 mysql_close();
+                 return false;
+                }
+        $result_row = mysql_fetch_assoc($result);
+        $theProfileActivities = build_profileActivity($result_row);
+        mysql_close();
+        return $theProfileActivities;
+    
+}
+
 
 /**
  * Retrieves a Profile Activity from the ProfileActivity table by Request Id

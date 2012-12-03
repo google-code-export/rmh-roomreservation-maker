@@ -43,6 +43,7 @@ $statuses = array('approve'=>'Confirm', 'deny'=>'Deny'); //Status info that is s
         
         if($requestType == 'profile')
         {
+            //$profileActivity = retrieve_ProfileActivity_byFamilyProfileID($familyProfileID);
             $profileActivity = retrieve_ProfileActivity_byRequestId($requestId);
          
             $profileActivity->set_rmhStaffProfileId($rmhStaffProfileId);

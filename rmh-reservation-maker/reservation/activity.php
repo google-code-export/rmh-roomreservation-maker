@@ -66,6 +66,7 @@ if(isset($_GET['type']) && !empty($_GET['type']) && isset($_GET['request']) && i
         case 'profile':
             //request is about profile change/add/cancel, display the information first
             $profileActivity = retrieve_ProfileActivity_byRequestId($requestId);
+            //$profileActivity = retrieve_ProfileActivity_byFamilyProfileID($familyProfileID);
             if($profileActivity)
             {
                 $request = array(
