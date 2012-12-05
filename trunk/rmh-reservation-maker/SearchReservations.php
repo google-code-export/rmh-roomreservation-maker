@@ -144,7 +144,6 @@ $showReservation = false;
 
            <select class="formt formtop"name="searchType">
                <option value = "Select Search Type">Select Search Type</option>
-               <option value = "Request ID">Request ID</option>
                <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
                <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
                <option value = "Family (Last Name)">Family (Last Name)</option>
@@ -273,13 +272,21 @@ $showReservation = false;
         
         echo '</table>';
         }
+           echo "Which one do you want to modify? (Choose by Request ID): <input class='formt' 
+                       type='text' 
+                       name='ID' 
+                       placeholder='Choose Request ID to modify or delete'
+                      />";
+            $buttonEdit = "<a href='../reservation/EditReservation.php' style='color: white' <input type='submit' name='edit' class='formsubmit' /> Edit </a>";
+            $buttonDelete = " <input class='formsubmit' id='php_button' type='submit' value='Delete' >";
+            echo $buttonEdit;
+            echo $buttonDelete;
         }
+
         }
+        
         ?>
-        <br><br><br>
-        <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='./help/Reservationsearch.php'" />
-</div>
+       
 <?php 
 include ('footer.php');
 ?>
-
