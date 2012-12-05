@@ -19,7 +19,7 @@
 session_start();
 session_cache_expire(30);
 
-$title = "Family Profile in detail"; 
+$title = "Family Profile in Detail"; 
 
 include('../header.php'); 
 include(ROOT_DIR .'/domain/Family.php');
@@ -30,10 +30,10 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
     {
        
         $fn = ( (isset( $_POST['firstName'] ) )?sanitize( $_POST['firstName']):""); //if firstName isset, sanitize it, else empty string
-        if($fn == "first name" )
+        if($fn == "First Name" )
             $fn = "";
         $ln = ( (isset( $_POST['lastName'] ) )?sanitize( $_POST['lastName']):"");
-        if($ln == "last name" )
+        if($ln == "Last Name" )
             $ln = "";
        
         $families = retrieve_FamilyProfileByName($fn, $ln);//calls db receives an array of family objs
