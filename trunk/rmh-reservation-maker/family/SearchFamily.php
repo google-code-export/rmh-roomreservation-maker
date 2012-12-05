@@ -116,8 +116,8 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         <form name="searchForm" method="POST" action="<?php echo BASE_DIR;?>/family/profileDetail.php">
             <?php echo generateTokenField(); ?>
            
-            <input type="text" class="formt formtop" name="firstName" size="20" onfocus="if(this.value == 'first name') { this.value = ''; }" value="first name"/>
-            <input type="text" class="formt formbottom" name="lastName" size="30" onfocus="if(this.value == 'last name') { this.value = ''; }" value="last name"/><br />
+            <input type="text" class="formt formtop" name="firstName" size="20" onfocus="if(this.value == 'First Name') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'First Name'; }" value="First Name"/>
+            <input type="text" class="formt formbottom" name="lastName" size="30" onfocus="if(this.value == 'Last Name') { this.value = ''; }" onblur="if(this.value==''){this.value = 'Last Name';}" value="Last Name"/><br />
             <div style="margin-top: 30px" > <input style="margin-top: 40 px" type="submit" class="formsubmit" value="Search" />
             </div>
         </form>
