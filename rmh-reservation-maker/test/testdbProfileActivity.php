@@ -63,6 +63,7 @@ function test_insert_dbProfileActivity($profileActivity)
         echo "</br> Insert succeeded </br>";
     else
         echo "</br> Insert failed </br>";
+    echo "Profile Activity Request ID: ".$profileActivity->get_profileActivityRequestID();
 }
 
 
