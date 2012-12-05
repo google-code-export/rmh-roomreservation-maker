@@ -10,7 +10,7 @@
  * 
  */
 
-if(isset($_GET["url]"])) //get the url if possible. If not, set url as -1.
+if(isset($_GET["url"])) //get the url if possible. If not, set url as -1.
 {
     $randURL=$_GET["url"];
 }
