@@ -8,17 +8,20 @@ include_once('../mail/functions.php');
 //newRequest($RequestKey, $DateSubmitted, $BeginDate, $EndDate)
 //newRequest(100,'2012-12-12','2012-12-22','2012-12-30');
 
-echo "testing ConfirmCancel, expect one SW to be emailed with patient name included<p>";
-ConfirmCancel(2,7,2, '2/2', '3/2');
-
-echo "<p>testing ModifyDeny, expect one SW to be emailed with patient name included<p>";
-ModifyDeny(2,7,2, '2/2', '3/2');
+echo"TESTING VARDUMP";
+vardumping(2);
 
 echo "<p>testing email, expect email attempt to be successful<p>";
 email('david.elias09@stjohns.edu', 'sub Request', 'mess');//to me
 
+echo "testing ConfirmCancel, expect one SW to be emailed with patient name included<p>";
+ConfirmCancel(2,2,2, '2/2', '3/2');
+
+echo "<p>testing ModifyDeny, expect one SW to be emailed with patient name included<p>";
+ModifyDeny(2,2,2, '2/2', '3/2');
+
 echo "<p>testing ModifyAccept, expect one SW to be emailed with patient name included<p>";
-ModifyAccept(2,7,2, '2/2', '3/2');
+ModifyAccept(2,2,2, '2/2', '3/2');
 
 echo "<p>testing PasswordReset, expect one user to be emailed<p>";
 PasswordReset('567yfghj', 'anna123', "david.elias09@stjohns.edu");
@@ -28,35 +31,37 @@ NewFamilyProfile(345);
 
 
 echo"<p>testing Confirm<p>";
-Confirm(7, '3/3','3/4',7,3);
+Confirm(7, '3/3','3/4',2,2);
 
 echo "<p>Testing RequestAccept<p>";
-RequestAccept(7,'3/2', '3/3', 7, 3);
+RequestAccept(7,'3/2', '3/3', 2, 2);
 
 
 echo"<p>Testing RequesDeny<p>";
-RequestDeny(7,'3/2', '3/3', 7, 3);
+RequestDeny(7,'3/2', '3/3', 2, 2);
 
 echo"testing FamilyModConfirm";
-FamilyModConfirm(7, 3, 7);
+FamilyModConfirm(7, 2, 2);
 
 echo"<p>Testing FamilyModAccept<p>";
-FamilyModAccept(7, 3, 7);
+FamilyModAccept(7, 2, 2);
 
 echo"<p>testing FamilyModDeny<p>";
-FamilyModDeny(7,3,7);
+FamilyModDeny(7,2,2);
 
 echo"<p>Testing newRequest<p>";
 newRequest(123, '3/1', '3/2', '3/3');
 
 echo"<p>Testing NewReservationMod";
-newReservationMod(1234, '3/1', 3);
+newReservationMod(1234, '3/1', 2);
 
 echo"<p>Testing NewCancel";
-newCancel(1321321321, '3/1', 3);
+newCancel(1321321321, '3/1', 2);
 
 echo"<p>Testing newFamilyMod</br>";
-newFamilyMod(1321321321, '3/1', 3);
+newFamilyMod(1321321321, '3/1', 2);
+
+
 
 
 
@@ -105,8 +110,6 @@ else
 {
     echo 'The email could not be sent, please try again (Stjohns)';
 }
-
-
 
 
 
