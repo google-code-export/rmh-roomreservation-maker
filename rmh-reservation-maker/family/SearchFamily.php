@@ -24,8 +24,8 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         if( is_array( $families ) )
         {
         //TODO: start table with tags
-        //    $table = "\n<table style=\"margin-left: 250px; margin-top: 23px;\">\n<thead>\n<tr>\n";
-        //    $table .= "<th>Name</th><th>City</th><th>DOB</th>\n</tr></thead>";
+          //  $table = "\n<table style=\"margin-left: 250px; margin-top: 23px;\">\n<thead>\n<tr>\n";
+          // $table .= "<th>Name</th><th>City</th><th>DOB</th>\n</tr></thead>";
         //    $numFamilies = 1;
             //create an array, 
         foreach( $families as $family )
@@ -80,21 +80,21 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             
             $familyProfile = retrieve_FamilyProfile ($familyID);
             if($familyProfile){
-               // $content = '<li>'.$familyProfile->get_parentfname().'</li>';
-               // $content .= '<li>'.$familyProfile->get_parentlname().'</li>';
-               // $content .= '<li>'.$familyProfile->get_parentemail().'</li>';
-               // $content .= '<li>'.$familyProfile->get_parentphone1().'</li>';
-               // $content .= '<li>'.$familyProfile->get_parentphone2().'</li>';
-               // $content .= '<li>'.$familyProfile->get_parentcity().'</li>';
-               // $content .= '<li>'.$familyProfile->get_parentstate().'</li>';
-               // $content .= '<li>'.$familyProfile->get_parentzip().'</li>';
-               // $content .= '<li>'.$familyProfile->get_parentcountry().'</li>';
-               // $content .= '<li>'.$familyProfile->get_patientfname().'</li>';
-               // $content .= '<li>'.$familyProfile->get_patientlname().'</li>';
-               // $content .= '<li>'.$familyProfile->get_patientRelation().'</li>';
-               // $content .= '<li>'.$familyProfile->get_patientdob().'</li>';
-               // $content .= '<li>'.$familyProfile->get_patientformpdf().'</li>';
-               // $content .= '<li>'.$familyProfile->get_patientnotes().'</li>';
+                //$content = '<li>'.$familyProfile->get_parentfname().'</li>';
+                //$content .= '<li>'.$familyProfile->get_parentlname().'</li>';
+                //$content .= '<li>'.$familyProfile->get_parentemail().'</li>';
+                //$content .= '<li>'.$familyProfile->get_parentphone1().'</li>';
+                //$content .= '<li>'.$familyProfile->get_parentphone2().'</li>';
+                //$content .= '<li>'.$familyProfile->get_parentcity().'</li>';
+                //$content .= '<li>'.$familyProfile->get_parentstate().'</li>';
+                //$content .= '<li>'.$familyProfile->get_parentzip().'</li>';
+                //$content .= '<li>'.$familyProfile->get_parentcountry().'</li>';
+                //$content .= '<li>'.$familyProfile->get_patientfname().'</li>';
+                //$content .= '<li>'.$familyProfile->get_patientlname().'</li>';
+                //$content .= '<li>'.$familyProfile->get_patientRelation().'</li>';
+                //$content .= '<li>'.$familyProfile->get_patientdob().'</li>';
+                //$content .= '<li>'.$familyProfile->get_patientformpdf().'</li>';
+                //$content .= '<li>'.$familyProfile->get_patientnotes().'</li>';
         
 
             }
@@ -109,7 +109,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
 ?>
    
     
-    <div id="content" style="margin-left: 250px; margin-top: 23px;">
+    <div id="content" style="margin-left: 250px; margin-top: 13px;">
         
         <div id="searchForm"> <!--this div should be hidden when search results are displayed-->
         
@@ -118,7 +118,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
            
             <input type="text" class="formt formtop" name="firstName" size="20" onfocus="if(this.value == 'first name') { this.value = ''; }" value="first name"/>
             <input type="text" class="formt formbottom" name="lastName" size="30" onfocus="if(this.value == 'last name') { this.value = ''; }" value="last name"/><br />
-            <div style="margin-top: 50px" > <input style="margin-top: 50 px" type="submit" class="formsubmit" value="Search" />
+            <div style="margin-top: 30px" > <input style="margin-top: 40 px" type="submit" class="formsubmit" value="Search" />
             </div>
         </form>
             <br><br><br>

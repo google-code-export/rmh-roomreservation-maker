@@ -480,4 +480,3 @@ if (!empty($message)) {
 include (ROOT_DIR . '/footer.php');
 //include the footer file, this contains the proper </body> and </html> ending tag.
 ?>
-
