@@ -19,6 +19,7 @@
 //include_once(ROOT_DIR .'/domain/Family.php');
 class Reservation  {
    
+    private $roomReservationKey;
     private $roomReservationActivityID;
     private $roomReservationRequestID;
     private $familyProfileId;
@@ -40,11 +41,12 @@ class Reservation  {
     private $roomnote;
     
       
-    function __construct($roomReservationActivityID, $roomReservationRequestID, $familyProfileId, $parentLastName, 
+    function __construct($roomReservationKey, $roomReservationActivityID, $roomReservationRequestID, $familyProfileId, $parentLastName, 
                 $parentFirstName, $socialWorkerProfileId, $swLastName, $swFirstName, $rmhStaffProfileId, $rmhStaffLastName,
                 $rmhStaffFirstName, $swDateStatusSubmitted, $rmhDateStatusSubmitted, $activityType, $status, $beginDate, $endDate,
                 $patientDiagnosis, $roomnote){
         
+            $this->roomReservationKey = $roomReservationKey;
             $this->roomReservationActivityID = $roomReservationActivityID;
             $this->roomReservationRequestID = $roomReservationRequestID;
             $this->familyProfileId = $familyProfileId;
@@ -67,6 +69,9 @@ class Reservation  {
             }
     
     //getters
+    function get_roomReservationKey(){
+        return $this->roomReservationKey;
+    }
     function get_roomReservationActivityID(){
          return $this->roomReservationActivityID;
     }
@@ -145,6 +150,9 @@ class Reservation  {
     
     
     //setters
+    function set_roomReservationKey($roomResKey){
+        $this->roomReservationKey = $roomResKey;
+    }
     function set_roomReservationActivityID($roomResId){
          $this->roomReservationActivityID = $roomResId;
     }
@@ -182,7 +190,7 @@ class Reservation  {
     }
     
     function set_rmhStaffLastName($rLname){
-        $this->rmhStaffLastName = $rLame;
+        $this->rmhStaffLastName = $rLname;
     }
     
     function set_rmhStaffFirstName($rFname){

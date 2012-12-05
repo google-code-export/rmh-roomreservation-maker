@@ -22,33 +22,7 @@ SET time_zone = "+00:00";
 
 DELIMITER $$
 --
--- Procedures
---
-/*
-DROP PROCEDURE IF EXISTS `GetRequestKeyNumber`$$
-CREATE DEFINER= CURRENT_USER PROCEDURE `GetRequestKeyNumber`(IN RequestType VARCHAR(255))
-BEGIN 
-        DECLARE ID int;
- 
-        IF RequestType = "RoomReservationRequestID" THEN 
-            SELECT @ID := RoomReservationRequestID
-            FROM RequestKeyNumber;
-            UPDATE RequestKeyNumber SET RoomReservationRequestID = @ID + 1; 
-            
-            SELECT RoomReservationRequestID
-            FROM RequestKeyNumber;
-        ELSE    
-            SELECT @ID := ProfileActivityRequestID
-            FROM RequestKeyNumber;
-            UPDATE RequestKeyNumber SET ProfileActivityRequestID = @ID + 1;
 
-             SELECT ProfileActivityRequestID
-             FROM RequestKeyNumber;
-
-        END IF;
-        
-  END$$
-*/
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -160,23 +134,7 @@ INSERT INTO `profileactivity` (`ProfileActivityID`, `ProfileActivityRequestID`, 
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `requestkeynumber`
---
-/*
-DROP TABLE IF EXISTS `requestkeynumber`;
-CREATE TABLE IF NOT EXISTS `requestkeynumber` (
-  `ProfileActivityRequestID` int(11) NOT NULL,
-  `RoomReservationRequestID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `requestkeynumber`
---
-
-INSERT INTO `requestkeynumber` (`ProfileActivityRequestID`, `RoomReservationRequestID`) VALUES
-(7, 7);
-*/
 -- --------------------------------------------------------
 
 --
@@ -214,6 +172,7 @@ INSERT INTO `rmhstaffprofile` (`RMHStaffProfileID`, `UserProfileID`, `Title`, `F
 
 DROP TABLE IF EXISTS `roomreservationactivity`;
 CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
+  `RoomReservationKey` int(11) NOT NULL AUTO_INCREMENT,
   `RoomReservationActivityID` int(11) NOT NULL,
   `RoomReservationRequestID` int(11) NOT NULL,
   `FamilyProfileID` int(11) NOT NULL,
@@ -227,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
   `EndDate` datetime NOT NULL,
   `PatientDiagnosis` text,
   `Notes` text,
-  KEY `RoomReservationActivityID` (`RoomReservationActivityID`),
+  PRIMARY KEY `RoomReservationKey` (`RoomReservationKey`),
   KEY `SocialWorkerProfileID` (`SocialWorkerProfileID`),
   KEY `RMHStaffProfileID` (`RMHStaffProfileID`),
   KEY `FamilyProfileID` (`FamilyProfileID`)
@@ -237,13 +196,13 @@ CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
 -- Dumping data for table `roomreservationactivity`
 --
 
-INSERT INTO `roomreservationactivity` (`RoomReservationActivityID`, `RoomReservationRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `BeginDate`, `EndDate`, `PatientDiagnosis`, `Notes`) VALUES
-(1, 1, 1, 1, 1, '2012-02-17 10:33:28', '2012-02-18 13:22:20', 'Apply', 'Confirm', '2012-03-01 00:00:00', '2012-04-01 00:00:00', 'Pediatric Sarcomas', ''),
-(1, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(1, 3, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(2, 1, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
-(2, 2, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Modify', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', ''),
-(3, 1, 3, 4, NULL, '2012-04-25 21:40:40', NULL, 'Apply', 'Unconfirmed', '2012-04-30 00:00:00', '2012-05-30 00:00:00', 'Pediatric Leukemias', '');
+INSERT INTO `roomreservationactivity` (`RoomReservationKey`, `RoomReservationActivityID`, `RoomReservationRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `BeginDate`, `EndDate`, `PatientDiagnosis`, `Notes`) VALUES
+(1, 1, 1, 1, 1, 1, '2012-02-17 10:33:28', '2012-02-18 13:22:20', 'Apply', 'Confirm', '2012-03-01 00:00:00', '2012-04-01 00:00:00', 'Pediatric Sarcomas', ''),
+(2, 1, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
+(3, 1, 3, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
+(4, 2, 1, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
+(5, 2, 2, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Modify', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', ''),
+(6, 3, 1, 3, 4, NULL, '2012-04-25 21:40:40', NULL, 'Apply', 'Unconfirmed', '2012-04-30 00:00:00', '2012-05-30 00:00:00', 'Pediatric Leukemias', '');
 
 -- --------------------------------------------------------
 
@@ -305,7 +264,7 @@ INSERT INTO `userprofile` (`UserProfileID`, `UsernameID`, `UserEmail`, `Password
 --
 -- Constraints for dumped tables
 --
-
+DROP TABLE IF EXISTS `requestkeynumber`;
 --
 -- Constraints for table `activation`
 --

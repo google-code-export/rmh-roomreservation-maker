@@ -114,12 +114,7 @@ function generateNextProfileActivityRequestId($profileActivity){
     $query = "SELECT MAX(ProfileActivityRequestID) FROM profileactivity WHERE FamilyProfileID = ".
             $profileActivity->get_familyProfileId();
     $result= mysql_query($query);
-    /*
-        if (mysql_num_rows($result)!=0){
-            $result_row = mysql_fetch_assoc($result);
-        }
-     * 
-     */
+    
      while($result_row=mysql_fetch_array($result)){
          
          $profActReqId=$result_row['MAX(ProfileActivityRequestID)'];
@@ -128,7 +123,7 @@ function generateNextProfileActivityRequestId($profileActivity){
     
     $profileActivity->set_profileActivityRequestId($profActReqId); 
      
-     echo $profActReqId;
+    
         
     mysql_close();
   }  
@@ -146,28 +141,14 @@ function insert_ProfileActivity($profileActivity){
                 echo ("Invalid argument from insert_ProfileActivity function\n");
                 return false;
         }
-   /*     
-        connect();
-        // Calls the store procedure 'GetRequestKeyNumber' to get the next highest request id
-        $query = "CALL GetRequestKeyNumber('ProfileActivityRequestID')";
-        
-        $result = mysql_query ($query);
-        if (mysql_num_rows($result)!=0) {
-            
-                $result_row = mysql_fetch_assoc($result); //gets the first row
-                //Sets the request id to the next highest request id 
-                $profileActivity->set_profileActivityRequestId($result_row['@ID := ProfileActivityRequestID']);
-    }   
-      
-     mysql_close(); 
-  * 
-  */
+   
  generateNextProfileActivityRequestId($profileActivity);
  
      connect();
         // Now add it to the database
         if($profileActivity->get_rmhStaffProfileId()!=0) {  
             //if it is a current record, an RMHStaffProfileID is inserted into database
+            //@author Chris Giglio 
             
             $query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID, 
                 RMHStaffProfileID, SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
@@ -198,7 +179,7 @@ function insert_ProfileActivity($profileActivity){
                         $profileActivity->get_familyNotes()."','".               
                         $profileActivity->get_profileActivityNotes()."')";
         }
-        else {  //new record, has no RMH Staff Member is associated to record, RMHStaffProfileID set to NULL
+        else {  //new record, has no RMH Staff Member associated to record, RMHStaffProfileID set to NULL
             $query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID, 
                 SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
                 Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, 
@@ -241,6 +222,12 @@ function insert_ProfileActivity($profileActivity){
         mysql_close();
         return true;
 }
+/**
+ * Retrieves a Profile Activity from the ProfileActivity table by the Family Profile ID associated with that record 
+ * @param $familyProfileID
+ * @return the Profile Activity corresponding to familyProfileID, or false if not in the table.
+ * @author Chris Giglio
+ */
 
 function retrieve_ProfileActivity_byFamilyProfileID($familyProfileID){
     
@@ -422,7 +409,7 @@ function retrieve_SocialWorkerLastName_ProfileActivity($socialWorkerLastName){
 function retrieve_RMHStaffLastName_ProfileActivity($rmhStaffLastName){
     
       connect();
-       
+            
       $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
         S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
         P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
