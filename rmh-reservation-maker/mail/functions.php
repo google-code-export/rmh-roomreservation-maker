@@ -490,14 +490,17 @@ function NewFamilyProfile($profileID)
 
 //function NewFamilyDeny
 
-
+/*
+* Random URL generation module for RMH-RoomReservationMaker. 
+* Generates a random URL which will be saved to a text file for later retrieval
+* while simultaneously returning the URL for use in the email
+* @param string $randString - generated URL for use
+* @param string $familyID - family ID passed in for text file writing
+* @author Tian Shen
+* @version 12/05/12
+*/
 function randURL($familyID)
 {
-    /*This piece of code should generate the random string to append to the URL link
-    * that will go in the email. 
-    * The contents of the email should contain webaddress.com/blah(append(.))rng url
-    * along with a message regarding the family reservation being made.
-    */ 
     $length=12; //need to set a length for the URL, currently at 12
     $characters='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     //the set of characters that can be chosen, should be 52.
@@ -511,6 +514,17 @@ function randURL($familyID)
     return $randString;
 }
 
+
+/*
+* Text file writing module for RMH-RoomReservationMaker. 
+* Takes the random URL that was generated and writes it to a text file after the
+* family ID.
+* @param string $randURL - generated URL for writing
+* @param string $familyID - family ID passed in for text file writing
+* @author Tian Shen
+* @version 12/05/12
+*/
+
 function urlToText($randURL,$familyID)
 {
     //stores the URL with the family ID in a text file
@@ -521,6 +535,17 @@ function urlToText($randURL,$familyID)
     fwrite($fh,$stringData);
     fclose($fh);
 }
+
+
+/*
+* Text file reading module for RMH-RoomReservationMaker. 
+* Takes the random URL that was grabbed from prereg.php and compares it to the
+* one in the text file and pulls up the family ID associated with the URL.
+* @param string $randURL - grabbed URL for reading
+* @param string $familyID - family ID associated with the URL in the text file
+* @author Tian Shen
+* @version 12/05/12
+*/
 
 function getFamilyIDFromURL($randURL)
 {
@@ -540,7 +565,7 @@ function getFamilyIDFromURL($randURL)
 
 function clearContents()
 {
-    //clears the entire file, eventually will end up clearing 1 entry. Probably.
+    //clears the entire file right now
     $URLFile="URLs.txt";
     $fh = fopen($URLFile, 'w') or die("can't open file");
     fclose($fh);
