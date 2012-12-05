@@ -1,5 +1,6 @@
 <?php
     include_once ('../mail/functions.php');
+    include_once ('../permissions.php');
 /*
  * This piece of code should get the randomly generated URL that is saved in the text file
  * (currently C:\wamp\www\rmh-reservation-maker\family) and get the connected family profile ID.
@@ -17,19 +18,18 @@ else
 {
     $randURL=-1;
 }
-$familyID=getFamilyIDFromURL($randURL);
-//currently does not work, but assume that it works and that it returns the family
-//ID that was matched to the randomly generated URL
+$familyID=getFamilyIDFromURL($randURL);//grabs the family ID associated with the URL
 if($familyID==-1)
 {
     header( "refresh:10;url=index.php" );
     echo "We're sorry. We could not find the form for you to fill out.<br/>";
     echo 'You\'ll be redirected in about 10 secs. If not, click <a href="../index.php">here</a>.'; 
 }
-//load stephon's form
-//fill the form using retrieve_FamilyProfile($FamilyProfileID)->get_parentlname(), etc.
-
-
-
+ else
+{
+    header("refresh:5;url=mailForm.php");
+    echo "You are being redirected to the form for you to fill out.<br/>";
+    echo 'If you do not get redirected in 5 seconds, click <a href="mailForm.php">here</a>.';
+}
 
 ?>
