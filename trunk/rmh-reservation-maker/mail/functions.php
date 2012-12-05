@@ -486,7 +486,7 @@ function NewFamilyProfile($profileID)
 
 
 
-  
+
 
 //function NewFamilyDeny
 
@@ -544,5 +544,10 @@ function clearContents()
     $URLFile="URLs.txt";
     $fh = fopen($URLFile, 'w') or die("can't open file");
     fclose($fh);
+}
+
+function vardumping($SWID){
+  $SW= retrieve_UserProfile_SW($SWID);
+  var_dump($SW[0]);
 }
 ?>
