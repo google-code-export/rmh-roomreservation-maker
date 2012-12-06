@@ -105,7 +105,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             if($familyProfile){
                 //$content = '<'.$familyProfile->get_familyProfileStatus().'</li>';
              
-                $content = '<li> Parent First Name: '.$familyProfile->get_parentfname().'</li>';
+                $content  = '<li> Parent First Name: '.$familyProfile->get_parentfname().'</li>';
                 $content .= '<li> Parent Last Name: '.$familyProfile->get_parentlname().'</li>';
                 $content .= '<li> Email: '.$familyProfile->get_parentemail().'</li>';
                 $content .= '<li> Phone Number 1: '.$familyProfile->get_parentphone1().'</li>';
@@ -162,10 +162,11 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             echo"&nbsp";
             echo"&nbsp";
             $buttonDelete = " <input class='formsubmit' id='php_button' type='submit' value='Delete' >";
+            $buttonCreateRoomReservation = "<a href='../referralForm.php' style='color: white' <input type='submit' name='CreateRoomReservation' class='formsubmit' /> Create Room Reservation </a>";
             if( isset( $content ) ){ echo "<font size = 4pt>$content</font>";
             echo $buttonEdit;
             echo $buttonDelete;
-            
+            echo $buttonCreateRoomReservation;
             
             } ?>
             <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/RoomRequest.php'" />
