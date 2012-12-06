@@ -19,7 +19,10 @@ session_cache_expire(30);
 
 $title = "EditReservation";
 
-include ('header.php');
+include ('../header.php');  //ROOT_DIR is defined in config.php, which is 
+                            //included in header.php, so we need to manually
+                            //point to where header is, and it's in the parent
+                            //directory...
 include_once (ROOT_DIR.'/domain/Reservation.php');
 include_once (ROOT_DIR.'/domain/UserProfile.php');
 include_once (ROOT_DIR.'/domain/Family.php');
