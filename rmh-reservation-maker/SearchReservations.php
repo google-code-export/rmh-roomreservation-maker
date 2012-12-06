@@ -280,11 +280,11 @@ $showReservation = false;
        
         <div style="margin-top: 60px" >
                
-           <input  style="margin-top: 40 px" type="submit" class="formsubmit" value="Edit" onclick="location.href='../reservation/EditReservation.php'" />
+           <input  style="margin-top: 40 px" type="submit" class="formsubmit" value="Edit" onclick="location.href='<?php echo BASE_DIR ?>/reservation/EditReservation.php'" />
                 <!-- Putting space between the two buttons -->
                 &nbsp &nbsp               
            <input class="formsubmit" type="submit" value="Delete" align="bottom"  />
-  
+           
         
 </div>
 <?php 
