@@ -38,7 +38,8 @@
         &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp;
         <!-- Adding the second button and linking it to SearchFamily Function -->
         <a href="SearchFamily.php" style="color: white" <input class="formsubmit"type="submit" name="modify" /> Search for Families</a>
-         </h2>
+         </h2><div > <h2 style= "margin-left: 150px; 
+   
       </body>
 </html>
 

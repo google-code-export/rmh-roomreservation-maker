@@ -154,11 +154,13 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
 
         
           
-          
+          <div style="margin-top: 60px" >  
             
             <?php 
-            
+                       
             $buttonEdit = "<a href='../family/EditFamilyProfile.php' style='color: white' <input type='submit' name='edit' class='formsubmit' /> Edit </a>";
+            echo"&nbsp";
+            echo"&nbsp";
             $buttonDelete = " <input class='formsubmit' id='php_button' type='submit' value='Delete' >";
             if( isset( $content ) ){ echo "<font size = 4pt>$content</font>";
             echo $buttonEdit;
@@ -166,20 +168,17 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             
             
             } ?>
-                                  
-               <div id="searchResults "style="margin-top: 30px" >
+            <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/RoomRequest.php'" />
+  
+          </div>    
+
                
-                <!-- Putting space between the two buttons -->
-                &nbsp &nbsp
-               
-            </div>
+            
             
 
             
         </div>
-        </br></br>
-        <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/RoomRequest.php'" />
-
+             
 
     </div>
     
