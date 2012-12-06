@@ -320,11 +320,11 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 //            $profileID = $current_activity->get_profileActivityId();
 //            NewFamilyProfile($profileID);
             
-            $_SESSION['familyID'] = $FamilyProfileID;
-            echo '
-                        <p><a href="' . BASE_DIR . '/referralForm.php">Create Room Reservation</a></p>
-                    </div>
-                </div>';
+           // $_SESSION['familyID'] = $FamilyProfileID;
+            //echo '
+            //            <p><a href="' . BASE_DIR . '/referralForm.php">Create Room Reservation</a></p>
+            //        </div>
+            //    </div>';
         }
     
 }//end of success validation of tokens
