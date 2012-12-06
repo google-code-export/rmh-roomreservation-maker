@@ -19,10 +19,7 @@ session_cache_expire(30);
 
 $title = "EditReservation";
 
-include ('../header.php');  //ROOT_DIR is defined in config.php, which is 
-                            //included in header.php, so we need to manually
-                            //point to where header is, and it's in the parent
-                            //directory...
+include ('header.php');
 include_once (ROOT_DIR.'/domain/Reservation.php');
 include_once (ROOT_DIR.'/domain/UserProfile.php');
 include_once (ROOT_DIR.'/domain/Family.php');
@@ -62,7 +59,6 @@ $message= array();
             $parentlname= $family->get_parentlname();
         }
         
-
 
 
 //if token works
@@ -219,18 +215,18 @@ if($showForm == true)
     <label for="endDate">End Date:</label>
         <input name="enddate" type="date">
     <br><br>
-    <label for="patientlname">Patient Last Name</label>
-         <input class="formt formtop" id="patientlname" type="text" name="PatientLastName" value="<?php echo htmlspecialchars($patientlname); ?>"/>
-         <label for="patientfname">Patient First Name</label>
-         <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="<?php echo htmlspecialchars($patientfname); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
-         <label for="patientdiagnosis">Patient Diagnosis</label>        
-         <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value=PatientDiagnosis onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
-         <label for="notes">Notes</label>         
-         <input class="formt" id="notes" type="text" name="Notes" value="<?php echo htmlspecialchars($patientnotes); ?>" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/>
-         <label for="parentlname">Parent Last Name</label>         
-         <input class="formt" id="parentlname" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($parentlname); ?>" onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/>
-         <label for="parentfirstname">Parent First Name</label>         
-         <input class="formt formbottom" id="parentfirstname" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($parentfname); ?>" onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/>
+         Patient Last Name<br>
+         <input class="formt formtop" id="patientlname" type="text" name="PatientLastName" value="<?php echo htmlspecialchars($patientlname); ?>"/><br>
+         Patient First Name<br>
+         <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="<?php echo htmlspecialchars($patientfname); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/><br>
+         Patient Diagnosis<br>        
+         <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value=PatientDiagnosis onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/><br>
+         Notes<br>         
+         <input class="formt" id="notes" type="text" name="Notes" value="<?php echo htmlspecialchars($patientnotes); ?>" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/><br>
+         Parent Last Name<br>         
+         <input class="formt" id="parentlname" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($parentlname); ?>" onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/><br>
+         Parent First Name<br>         
+         <input class="formt formbottom" id="parentfirstname" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($parentfname); ?>" onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/><br>
           
            
            <input class="formsubmit"type="submit" value="Submit" name="submit" />
@@ -252,16 +248,16 @@ sanitize($_POST['enddate']);
    
     
        //retrieves the sw, and gets id, firstname and lastname      
- //       $currentUser = getUserProfileID();
- //     $sw = retrieve_UserProfile_SW($currentUser);
- //       $swObject = current($sw);
- //       $sw_id = $swObject->get_swProfileId();
- //       $swFirstName = $swObject->get_swFirstName();
- //       $swLastName = $swObject->get_swLastName();
- //       $ActivityType ="Apply";
- //       $Status ="Unconfirmed";
- //       $swDateStatusSubmitted = date("Y-m-d");
- //       $userId = sanitize(getCurrentUser());
+        $currentUser = getUserProfileID();
+      $sw = retrieve_UserProfile_SW($currentUser);
+        $swObject = current($sw);
+        $sw_id = $swObject->get_swProfileId();
+        $swFirstName = $swObject->get_swFirstName();
+        $swLastName = $swObject->get_swLastName();
+        $ActivityType ="Modify";
+        $Status ="Unconfirmed";
+        $swDateStatusSubmitted = date("Y-m-d");
+        $userId = sanitize(getCurrentUser());
         
 
 

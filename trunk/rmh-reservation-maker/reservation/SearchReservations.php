@@ -144,7 +144,6 @@ $showReservation = false;
 
            <select class="formt formtop"name="searchType">
                <option value = "Select Search Type">Select Search Type</option>
-               <option value = "Request ID">Request ID</option>
                <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
                <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
                <option value = "Family (Last Name)">Family (Last Name)</option>
@@ -273,21 +272,40 @@ $showReservation = false;
         
         echo '</table>';
         }
+           
+           echo "<div size=18><br>Which one do you want to modify? (Choose by Request ID): <input  
+                       type='text' 
+                       name='ID' 
+                       placeholder='Request ID'
+                      /></div><br>";
+            
+          
+               if(isset($_POST['ID']))
+               {
+                    if(($_POST['ID'] == "")) echo "There is no reservation with this request ID";
+                    $ReqID = $_POST['ID'];
+                $found=0;
+                foreach($foundReservations as $reservation)
+                {
+                    $ID= $reservation->get_roomReservationRequestID();
+                    if ($ID == $ReqID) $found = 1;
+                }
+                if($found ==1) 
+                    $_SESSION['ReqID'] = $ReqID;
+                else echo "There is no reservation with this request ID";
+               }
+            $buttonEdit = "<a href='EditReservation.php' style='color: white' <input type='submit' name='edit' class='formsubmit' '/> Edit </a>";
+            $buttonDelete = " <input class='formsubmit' id='php_button' type='submit' value='Delete' >";
+    
+                    echo $buttonEdit;
+                    echo $buttonDelete;
+              
         }
+
         }
         
         ?>
        
-        <div style="margin-top: 60px" >
-               
-           <input  style="margin-top: 40 px" type="submit" class="formsubmit" value="Edit" onclick="location.href='<?php echo BASE_DIR ?>/reservation/EditReservation.php'" />
-                <!-- Putting space between the two buttons -->
-                &nbsp &nbsp               
-           <input class="formsubmit" type="submit" value="Delete" align="bottom"  />
-           
-        
-</div>
 <?php 
 include ('footer.php');
-?>
-
+?>b
