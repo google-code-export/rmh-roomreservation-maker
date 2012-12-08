@@ -114,7 +114,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
             isset($_POST['Email']) && 
 //            $_POST['Email'] != "E-Mail" && 
             $_POST['Email'] != "") {
-        $parentEmail = $_POST['Email'];
+        $parentemail = $_POST['Email'];
     } 
 
     
@@ -122,7 +122,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
             isset($_POST['Phone1']) && 
 //            $_POST['Phone1'] != "Phone # 1" && 
             $_POST['Phone1'] != "") {
-        $phone1 =$_POST['Phone1'];
+        $parentphone1 =$_POST['Phone1'];
     } 
 
     
@@ -130,7 +130,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
             isset($_POST['Phone2']) && 
 //            $_POST['Phone2'] != "Phone # 2" && 
             $_POST['Phone2'] != "") {
-        $phone2 = $_POST['Phone2'];
+        $parentphone2 = $_POST['Phone2'];
     } 
     else {
         $phone2 = "";
@@ -144,34 +144,34 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
     
    
     if (
-            isset($_POST['City']) && 
-//            $_POST['City'] != "City" && 
-            $_POST['City'] != "") {
-        $parentcity = $_POST['City'];
+            isset($_POST['parentcity']) && 
+//            $_POST['parentity'] != "parentity" && 
+            $_POST['parentcity'] != "") {
+        $parentcity = $_POST['parentcity'];
     } 
 
     
     if (
-            isset($_POST['State']) && 
-//            $_POST['State'] != "State" && 
-            $_POST['State'] != "") {
-        $parentstate = $_POST['State'];
+            isset($_POST['parentstate']) && 
+//            $_POST['parentstate'] != "parentstate" && 
+            $_POST['parentstate'] != "") {
+        $parentstate = $_POST['parentstate'];
     } 
 
     
     if (
-            isset($_POST['ZipCode']) && 
-//            $_POST['ZipCode'] != "Zip Code" && 
-            $_POST['ZipCode'] != "") {
-        $parentzip = $_POST['ZipCode'];
+            isset($_POST['parentzip']) && 
+//            $_POST['parentzip'] != "parentzip" && 
+            $_POST['parentzip'] != "") {
+        $parentzip = $_POST['parentzip'];
     } 
 
     
     if (
-            isset($_POST['Country']) && 
-//            $_POST['Country'] != "Country" && 
-            $_POST['Country'] != "") {
-        $parentcountry = $_POST['Country'];
+            isset($_POST['parentcountry']) && 
+//            $_POST['parentcountry'] != "parentcountry" && 
+            $_POST['parentcountry'] != "") {
+        $parentcountry = $_POST['parentcountry'];
     } 
     
     if (
@@ -238,9 +238,9 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
                 "Pending",                  //$familyProfileStatus, 
                 $parentFirstName, 
                 $parentLastName, 
-                $parentEmail, 
-                $phone1,              //
-                $phone2, 
+                $parentemail, 
+                $parentphone1,              //
+                $parentphone2, 
                 $parentAddr,
                 $parentcity, 
                 $parentstate, 
@@ -254,11 +254,11 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
                 $patientNote);
         
         //TODO: Insert familyProfile object.
-        if(insert_FamilyProfile($FamilyProfile)) 
+        if(update_FamilyProfile($FamilyProfile)) 
             echo '
-                <div id="container">
-                    <div id="content">
-                        <p>Family profile inserted successfully.</p>
+                <div id="container" >
+                    <div id="content" >
+                        <p align=center>Family profile inserted successfully.</p>
                     </div>
                 </div>';
         //TODO: Get familyProfileID from the familyProfile object.
@@ -289,9 +289,9 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
                 $profileActitivityStatus,   //
                 $parentFirstName,           //
                 $parentLastName,            //
-                $parentEmail,               //
-                $phone1,                    //
-                $phone2,                    //
+                $parentemail,               //
+                $parentphone1,                    //
+                $parentphone2,                    //
                 $parentAddr,                   //
                 $parentcity,                      //
                 $parentstate,                     //
@@ -311,11 +311,17 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
    
         if (insert_ProfileActivity($current_activity)) {
             echo '
-                <div id="container">
+                <div id="container" >
                     <div id="content">
+                 <form id="informationForm" style="visibility:hidden">
+                <div id="success" align=center>
                         <p>Successfully updated family profile.</p>
+                 </div>
+                 </form>
+                 </div>
+                </div>
                     ';
-
+          
 //            //if profileActivity is inserted, send the email to rmh approver
 //            $profileID = $current_activity->get_profileActivityId();
 //            NewFamilyProfile($profileID);
@@ -339,7 +345,7 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 
     <div id="content">
 
-        <form name ="EditFamilyProfile" method="post" action="EditFamilyProfile.php">
+        <form id="informationForm" name ="EditFamilyProfile" method="post" action="EditFamilyProfile.php">
 <?php echo generateTokenField(); ?>
 
             <div>                         
@@ -388,25 +394,25 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
                 <br>City:<br>
                 <input class="formt" 
                        type="text" 
-                       name="city" 
+                       name="parentcity" 
                         value="<?php echo htmlspecialchars($parentcity); ?>"
                        />
                 <br>State:<br>
                 <input class="formt" 
                        type="text" 
-                       name="state" 
+                       name="parentstate" 
                        value="<?php echo htmlspecialchars($parentstate); ?>"
                        />
                 <br>Zip Code:<br>
                 <input class="formt" 
                        type="text" 
-                       name="zip" 
+                       name="parentzip" 
                         value="<?php echo htmlspecialchars($parentzip); ?>"
                        />
                 <br>Country:<br>
                 <input class="formt"  
                        type="text" 
-                       name="country" 
+                       name="parentcountry" 
                         value="<?php echo htmlspecialchars($parentcountry); ?>"      
                        />
             
@@ -428,7 +434,7 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
                        name="PatientRelation" 
                       value="<?php echo htmlspecialchars($patientRelation); ?>"      
                        />
-                <br>Patient Date of Birthday:<br>
+                <br>Patient Date of Birthday: Year-Month-Date<br>
                 <input class="formt"
                        type="text"
                        name="PatientDOB"
@@ -458,7 +464,7 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 
         </form>
           
-
+    </div>
 </div>
 
 <?php
