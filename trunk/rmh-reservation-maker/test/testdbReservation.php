@@ -108,7 +108,7 @@ function test_insert_RoomReservationActivity($reservation){
     
     $ActivityType = $reservation->get_ActivityType();
     $retVal=insert_RoomReservationActivity($reservation);
-    if ($retVal == true)
+    if ($retVal > 0)
         echo "</br> Insert succeeded </br>";
     else
         echo "</br> Insert failed </br>";
