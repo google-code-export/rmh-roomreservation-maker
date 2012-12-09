@@ -35,7 +35,7 @@ session_cache_expire(30);
 
 $title = "Search Reservations";
 
-include('header.php');
+include('../header.php');
 include(ROOT_DIR.'/database/dbReservation.php');
 
 $showReservation = false;
@@ -307,5 +307,5 @@ $showReservation = false;
         ?>
        
 <?php 
-include ('footer.php');
-?>b
+include (ROOT_DIR .'/footer.php');
+?>
