@@ -106,9 +106,9 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
        
      //if ActivityType is set to Modify or Cancel (therefore it is an existing reservation) a record is saved recording the change
     else { 
-        $famprofid=$reservation->get_familyProfileId();
-        $query = "SELECT MAX(RoomReservationRequestID) FROM roomreservationactivity WHERE FamilyProfileID = ".
-            $famprofid;
+        $ActivityID=$reservation->get_roomReservationActivityID();
+        $query = "SELECT MAX(RoomReservationRequestID) FROM roomreservationactivity WHERE RoomReservationActivityID = ".
+            $ActivityID;
         $result= mysql_query($query);
     
     while($result_row=mysql_fetch_array($result)){
