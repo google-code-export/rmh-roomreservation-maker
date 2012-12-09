@@ -17,7 +17,7 @@
 */
 
 
-include_once ('../core/config.php');
+include_once (ROOT_DIR.'/core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 

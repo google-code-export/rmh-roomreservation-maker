@@ -153,7 +153,7 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
      if (! $reservation instanceof Reservation) {
                 //Print an error
                 echo ("Invalid argument for insert_RoomReservationActivity function call");
-                return false;
+                return -1;
         }
         
         /*
@@ -189,17 +189,21 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
                 $reservation->get_patientDiagnosis()."','".
                 $reservation->get_roomnote()."')";
 
-    $result = mysql_query($query);
+     $result = mysql_query($query);
+     $roomReservationKey= mysql_insert_id();
+
     //Check if successful
         if (!$result) {
                 //print the error
                 echo mysql_error()." >>>Unable to insert into Room Reservation Activity table. <br>";
                 mysql_close();   
-                return false;
+                //return -1 if false;
+                return -1;
     }
     //Success
     mysql_close();
-    return true;
+    //return room reservation key if true;
+    return $roomReservationKey;
 }
     
 /**
@@ -440,7 +444,7 @@ function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
         return $theReservations;
 }
 
-/* 
+/*
  * auxiliary function to build a Room Reservation Request from a row in the RoomReservationActivity table
  */
 

@@ -27,7 +27,7 @@ include_once (ROOT_DIR.'/database/dbReservation.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 //include_once (ROOT_DIR.'/database/ProfileActivity.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
-//include_once(ROOT_DIR .'/mail/functions.php');
+include_once (ROOT_DIR .'/mail/functions.php');
 /**
  * Submitted Form Actions if a token is set, and $_POST['submit'] ==
 "submit"
@@ -243,7 +243,7 @@ if($showForm == true)
 sanitize($_POST['begindate']);
             $newEndDate =
 sanitize($_POST['enddate']);
-            
+
             
 
    
@@ -271,6 +271,12 @@ sanitize($_POST['enddate']);
 
        if(empty($message))
       {
+        $currentreservation = new Reservation (0, 0, 0, $_SESSION['familyID'], $newParentLastName, 
+                $newParentFirstName, $sw_id, $swLastName, $swFirstName, 0, "",
+                "", $swDateStatusSubmitted, "", $ActivityType, $Status, $newBeginDate, $newEndDate,
+                $newPatientDiagnosis, $newNotes);
+        $roomReservationKey= insert_RoomReservationActivity($currentreservation);
+            
         echo '<p><font color="red">The reservation was made successfully made!</font></p><br/>';
         echo "The referral was made by : " .$userId. "<br>";
         echo "The Begin Date is : " .$newBeginDate. "<br>";
@@ -290,18 +296,20 @@ sanitize($_POST['enddate']);
             <table border = "2" cellspacing = "10" cellpadding = "6">';       
         echo '<thead>
             <tr>
-            <th>Status</th>
-            <th>Parent Last Name</th>
+           <th>Room Reservation Key</th>
+           <th>Status</th>
+           <th>Parent Last Name</th>
            <th>Parent First Name</th>
            <th>Social Worker Profile ID</th>
-           <th>Begin Date</th>
-           <th>End Date</th>
+           <th width="90">Begin Date</th>
+           <th width="90">End Date</th>
          
            
             </thead>
             <tbody>';
         
         echo '<tr>';
+        echo '<td>'.$roomReservationKey.'</td>';
         echo '<td>'.$Status.'</td>';
         echo '<td>'.$newParentLastName.'</td>';
         echo '<td>'.$newParentFirstName.'</td>';
@@ -309,13 +317,9 @@ sanitize($_POST['enddate']);
         echo '<td>'.$newBeginDate.'</td>';
         echo '<td>'.$newEndDate.'</td>';
        
-      
-        
-        $currentreservation = new Reservation (0, 0, $_SESSION['familyID'], $newParentLastName, 
-                $newParentFirstName, $sw_id, $swLastName, $swFirstName, 0, "",
-                "", $swDateStatusSubmitted, "", $ActivityType, $Status, $newBeginDate, $newEndDate,
-                $newPatientDiagnosis, $newNotes);
-            insert_RoomReservationActivity($currentreservation);
+
+        //send email to RMH approver about new room reservation request
+        newRequest($roomReservationKey, $swDateStatusSubmitted, $newBeginDate, $newEndDate);
           }
       
 
