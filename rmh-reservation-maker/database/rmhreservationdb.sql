@@ -197,12 +197,12 @@ CREATE TABLE IF NOT EXISTS `roomreservationactivity` (
 --
 
 INSERT INTO `roomreservationactivity` (`RoomReservationKey`, `RoomReservationActivityID`, `RoomReservationRequestID`, `FamilyProfileID`, `SocialWorkerProfileID`, `RMHStaffProfileID`, `SW_DateStatusSubmitted`, `RMH_DateStatusSubmitted`, `ActivityType`, `Status`, `BeginDate`, `EndDate`, `PatientDiagnosis`, `Notes`) VALUES
-(1, 1, 1, 1, 1, 1, '2012-02-17 10:33:28', '2012-02-18 13:22:20', 'Apply', 'Confirm', '2012-03-01 00:00:00', '2012-04-01 00:00:00', 'Pediatric Sarcomas', ''),
-(2, 1, 2, 1, 1, 1, '2012-02-19 12:33:19', '2012-02-20 20:24:22', 'Modify', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(3, 1, 3, 1, 1, 1, '2012-02-21 21:33:11', '2012-02-21 23:44:18', 'Cancel', 'Confirm', '2012-03-17 00:00:00', '2012-04-17 00:00:00', 'Pediatric Sarcomas', ''),
-(4, 2, 1, 2, 1, 1, '2012-03-01 23:44:22', '2012-03-01 23:44:44', 'Apply', 'Confirm', '2012-04-15 00:00:00', '2012-04-17 00:00:00', 'Pediatric Leukemias', 'beginning 04/29 avail.'),
-(5, 2, 2, 2, 1, NULL, '2012-03-02 15:44:22', NULL, 'Modify', 'Unconfirmed', '2012-04-29 00:00:00', '2012-05-01 00:00:00', 'Pediatric Leukemias', ''),
-(6, 3, 1, 3, 4, NULL, '2012-04-25 21:40:40', NULL, 'Apply', 'Unconfirmed', '2012-04-30 00:00:00', '2012-05-30 00:00:00', 'Pediatric Leukemias', '');
+(1,1,1,1,1,NULL,'2012-02-17 10:33:28','0000-00-00 00:00:00','Apply','Unconfirmed','2012-03-01 00:00:00','2012-04-01 00:00:00','Pediatric Sarcomas',''),
+(2,2,1,1,1,1,'2012-02-17 10:33:28','2012-02-18 13:22:20','Modify','Confirmed','2012-03-01 00:00:00','2012-04-01 00:00:00','Pediatric Sarcomas',NULL),
+(3,3,1,1,1,1,'2012-02-19 10:33:28','2012-02-18 13:22:20','Modify','Unconfirmed','2012-03-03 00:00:00','2012-04-01 00:00:00','Pediatric Sarcomas',NULL),
+(4,1,2,2,1,NULL,'2012-02-18 11:30:28','0000-00-00 00:00:00','Apply','Unconfirmed','2012-03-15 00:00:00','2012-03-17 00:00:00','Neuroblastoma',NULL),
+(5,2,2,2,1,1,'2012-02-18 11:30:28','2012-02-18 11:45:15','Modify','Confirmed','2012-03-15 00:00:00','2012-03-17 00:00:00','Neuroblastoma',NULL),
+(6,1,3,3,4,NULL,'2012-02-18 09:14:12','0000-00-00 00:00:00','Apply','Unconfirmed','2012-03-15 00:00:00','2012-03-20 00:00:00','retinoblastoma',NULL);
 
 -- --------------------------------------------------------
 

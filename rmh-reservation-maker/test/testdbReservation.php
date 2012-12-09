@@ -124,17 +124,4 @@ function test_insert_RoomReservationActivity($reservation){
     }
     }
 
-
-
-
-
-
-/*
-echo ">>>TESTING: insert_ReservationChange, ". "</br>";
-test_insert_ReservationChange(4);
-
-function test_insert_ReservationChange($roomReservationRequestID){
-    
-}
-*/
 ?>

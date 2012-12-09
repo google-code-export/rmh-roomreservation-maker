@@ -72,31 +72,33 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
 }*/
 
 /*
- * Retrieves the highest RoomReservationRequestID, depending on the status of the request, Apply (a new reservation) 
- * or Modify/Cancel (an existing reservation), and increments it providing the insert function with th emost current 
+ * Retrieves the highest RoomReservationRequestID, or RoomReservationActivityID, depending on the status of the request, Apply (a new reservation) 
+ * or Modify/Cancel (an existing reservation), and increments it providing the insert function with the most current 
  * copy of the record, while preserving a history of changes made.
+ * If this is a new request, the activityType should be "Apply", the request ID is incremented, and the activityID is set to 1. 
+ * If it is a modification to an existing request, the activityType should be "Modify", the request ID remains the same, and the activityID will be incremented. 
  * @param $reservation = the reservation being modified.
  * @author Chris Giglio
  */
 
-function generateNextRoomReservationRequestID($reservation){
+function generateNextRoomReservationID($reservation){ //this will be used for generating BOTH the appropriate activityID, and requestID
     
     connect();
     $status = $reservation->get_activityType();
      //if ActivityType is set to Apply (there fore it is a new reservation)
     if($status == "Apply"){ 
-        //Select the highest RoomReservationActivityID and increment it
-            $query = "SELECT MAX(RoomReservationActivityID) FROM roomreservationactivity";
+        //Select the highest RoomReservationRequestID and increment it
+            $query = "SELECT MAX(RoomReservationRequestID) FROM roomreservationactivity";
             $result = mysql_query($query);
            
             while($result_row=  mysql_fetch_array($result)){
                 
-                $reservationActID=$result_row['MAX(RoomReservationActivityID)'];
-                $reservationActID++;
+                $reservationReqID=$result_row['MAX(RoomReservationRequestID)'];
+                $reservationReqID++;
             }
-            //Activity ID receives new value, Request ID is set to 1, as this is a new request. 
-                $reservation->set_RoomReservationActivityID($reservationActID);
-                $reservation->set_RoomReservationRequestID(1);
+            //Request ID receives new value, Activity ID is set to 1, as this is a new request. 
+                $reservation->set_RoomReservationRequestID($reservationReqID);
+                $reservation->set_RoomReservationActivityID(1);
                 
                 
         
@@ -105,28 +107,28 @@ function generateNextRoomReservationRequestID($reservation){
      //if ActivityType is set to Modify or Cancel (therefore it is an existing reservation) a record is saved recording the change
     else { 
         $famprofid=$reservation->get_familyProfileId();
-        $query = "SELECT MAX(RoomReservationActivityID) FROM roomreservationactivity WHERE FamilyProfileID = ".
+        $query = "SELECT MAX(RoomReservationRequestID) FROM roomreservationactivity WHERE FamilyProfileID = ".
             $famprofid;
         $result= mysql_query($query);
     
     while($result_row=mysql_fetch_array($result)){
-        $ActivityID=$result_row['MAX(RoomReservationActivityID)'];
+        $RequestID=$result_row['MAX(RoomReservationRequestID)'];
         }
-        //activity id remains the same for an existing reservation.
-        $reservation->set_roomReservationActivityID($ActivityID);
+        //request id remains the same for an existing reservation.
+        $reservation->set_roomReservationRequestID($RequestID);
     
-        //Since this is an existing request, the request ID is increased by 1, and the activity ID remains the same
-        $query = "SELECT MAX(RoomReservationRequestID) FROM roomreservationactivity WHERE RoomReservationActivityID = ".
-            $ActivityID; //select the highest request id for the record with the matching activity id.
+        //Since this is an existing request, the activity ID is increased by 1, and the request ID remains the same
+        $query = "SELECT MAX(RoomReservationActivityID) FROM roomreservationactivity WHERE RoomReservationRequestID = ".
+            $RequestID; //select the highest request id for the record with the matching activity id.
     $result= mysql_query($query);
     
     while($result_row=mysql_fetch_array($result)){
         
-        $reservationReqID=$result_row['MAX(RoomReservationRequestID)'];
-        $reservationReqID++;
+        $reservationActID=$result_row['MAX(RoomReservationActivityID)'];
+        $reservationActID++;
         }
-        //increment the request id
-        $reservation->set_roomReservationRequestID($reservationReqID);
+        //increment the activity id
+        $reservation->set_roomReservationActivityID($reservationActID);
         
         
         
@@ -170,7 +172,7 @@ function generateNextRoomReservationRequestID($reservation){
          * 
          */
         
-     generateNextRoomReservationRequestID($reservation);
+     generateNextRoomReservationID($reservation);
      
      connect();
      //Now add it to the database
