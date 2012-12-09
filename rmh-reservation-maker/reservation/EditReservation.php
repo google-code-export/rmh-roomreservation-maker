@@ -19,7 +19,7 @@ session_cache_expire(30);
 
 $title = "EditReservation";
 
-include ('header.php');
+include ('../header.php');
 include_once (ROOT_DIR.'/domain/Reservation.php');
 include_once (ROOT_DIR.'/domain/UserProfile.php');
 include_once (ROOT_DIR.'/domain/Family.php');
@@ -270,7 +270,7 @@ sanitize($_POST['enddate']);
 
        if(empty($message))
       {
-        echo '<p><font color="red">The reservation was made successfully made!</font></p><br/>';
+        echo '<p><font color="red">The reservation was successfully made!</font></p><br/>';
         echo "The referral was made by : " .$userId. "<br>";
         echo "The Begin Date is : " .$newBeginDate. "<br>";
         echo "The End Date is : " .$newEndDate. "<br>";

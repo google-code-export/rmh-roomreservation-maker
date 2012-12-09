@@ -294,7 +294,7 @@ $showReservation = false;
                     $_SESSION['ReqID'] = $ReqID;
                 else echo "There is no reservation with this request ID";
                }
-            $buttonEdit = "<a href='EditReservation.php' style='color: white' <input type='submit' name='edit' class='formsubmit' '/> Edit </a>";
+            $buttonEdit = "<a href='../reservation/EditReservation.php' style='color: white' <input type='submit' name='edit' class='formsubmit' '/> Edit </a>";
             $buttonDelete = " <input class='formsubmit' id='php_button' type='submit' value='Delete' >";
     
                     echo $buttonEdit;
