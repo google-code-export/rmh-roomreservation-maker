@@ -258,7 +258,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
             echo '
                 <div id="container" >
                     <div id="content" >
-                        <p align=center>Family profile inserted successfully.</p>
+                        <p align=center>Family profile updated successfully.</p>
                     </div>
                 </div>';
         //TODO: Get familyProfileID from the familyProfile object.
