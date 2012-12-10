@@ -36,6 +36,8 @@ include('header.php'); //including this will further include (globalFunctions.ph
             
             <input id="searchActivity" type="submit" name="Search" value="Submit"/>
        </form>
+          <br><br>
+    <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='./help/approvefamilyprofilechange.php'" />
     </div>
 </div>
 <script>
