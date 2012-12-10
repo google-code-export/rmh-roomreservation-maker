@@ -17,28 +17,24 @@ include ('../header.php');
         <br/><br/>
     </head>
     <body>
-        <div align ="center"><h1><strong>Searching for Reservations</h1><br/>
-            <ol>
-                <li>Select <i>"New Referral"</i> from the left panel.</li>
-                <li>You will now see a long form with information like <i>"First Name</i>and<i>"Last Name"</i>
-                   to be filled in.</li>
-                <li>When you are finished, select the <b>Submit</b> button at the bottom of the page.</li>
-                <li>next step</li>
-            </ol>
-                <p><B>Step 1:</B>Select <i>"New Referral"</i>from the left panel.<BR><BR>
+        <div align ="left"><h1><strong>Searching Reservations</h1><br/>
+                <p>Select <i>"Search Reservations"</i> from the left panel.</p>
+                <p>You will now see a form with <i>"Select Search Type"</i> followed by a drop down list with possible search types</p>
+                <ol>
+                <p><b>Step 1:</b> Select the drop down arrow in the <i>"Select Search Type" </i> box.<BR><BR>
                     
-                <p><B>Step 2:</B>You will now see a long form with information like <i>"First Name</i>and<i>"Last Name"</i>
-                   to be filled in.<BR><BR>
-                
-                <p><B>Step 3:</B>When you are finished, select the <b>Submit</b> button at the bottom of the page.<Br><BR>
+                <p><B>Step 2:</B> Select which criteria you will search.<BR><BR>
                     
-                <p><B>Step 4:</B>If an error occurs you will be directed to go back and make the necessary corrections.<BR><BR>
+                <p><B>Step 3:</B> In the box below, enter the last name of the <i>Social Worker, Staff Approver or Family </i> or <i> Status </i> you are searching for.<BR><BR>
+                  
+                <p><B>Step 4:</B> Next, hit the <i> "Search" </i> button. <BR><BR>
                     
-                <p><B>Step 5:</B>If you have no errors, all entered information will be displayed for review.<BR><BR>
+                <p><B>Step 5:</B> If you have no errors, all entered information will be displayed for review.<BR><BR>
                     
-                <p><B>Step 6:</B>When you have finished you can return to any other function by selecting it on the navigation bar.<BR><BR>    
+                <p><B>Step 6:</B> When you have finished you can return to any other function by selecting it on the navigation bar on the left hand side of the page.<BR><BR>    
+                </ol>    
     </body>
-    <input type="submit" class="helpbutton" value="Back" align="bottom" onclick="location.href='../SearchReservations.php'" />
+    <input type="submit" class="helpbutton" value="Back" align="bottom" onclick="location.href='../reservation/SearchReservations.php'" />
         </div>
         </div>
 </html>
