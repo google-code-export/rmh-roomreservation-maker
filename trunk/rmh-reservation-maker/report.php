@@ -283,8 +283,11 @@ if($showForm == true)
             <input class="formt formbottom" type="text" name="hospital" value="Hospital" onfocus="if(this.value == 'Hospital') { this.value = ''; }"/>
     <br><br>
             <input class="formsubmit" type="submit" value="Submit" name="submit" />
+            
 </form>
-    
+<br><br>
+            <input class="helpbutton" type="submit" value="Help" align="bottom" onclick="location.href='./help/PatientReport.php'" />
+
     
     
 
