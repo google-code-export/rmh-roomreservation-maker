@@ -1,6 +1,6 @@
 <?PHP
 /*
- * Brian Harrison Charles Holenstein
+ * Brian Harrison Charles Holenstein Andrew Lucas
  */
 session_start();
 session_cache_expire(30);
@@ -17,27 +17,22 @@ include ('../header.php');
         <br/><br/>
     </head>
     <body>
-        <div align ="center"><h1><strong>Creating a new Family Profile</h1><br/>
-            <ol>
-                <li>Select <i>"New Referral"</i> from the left panel.</li>
-                <li>You will now see a long form with information like <i>"First Name</i>and<i>"Last Name"</i>
-                   to be filled in.</li>
-                <li>When you are finished, select the <b>Submit</b> button at the bottom of the page.</li>
-                <li>next step</li>
-            </ol>
-                <p><B>Step 1:</B>Select <i>"New Referral"</i>from the left panel.<BR><BR>
+        <div align ="left"><h1><strong>Creating a new Family Profile</h1><br/>
+                <p>Select <i>"Family Profile"</i> from the left panel.</p>
+                <p>Now Select <i>"Create Family Profile"</i></p>
+                <p>You will now see information such as <i>"Parent First Name"</i> and <i> "Parent Last Name" </i></p>
+                <ol>
+                <p><b>Step 1:</b> Enter in the required information for each field in the form then select <i> "Create New Profile"</i><BR><BR>
                     
-                <p><B>Step 2:</B>You will now see a long form with information like <i>"First Name</i>and<i>"Last Name"</i>
-                   to be filled in.<BR><BR>
-                
-                <p><B>Step 3:</B>When you are finished, select the <b>Submit</b> button at the bottom of the page.<Br><BR>
+                <p><B>Step 2:</B> When you are finished, select the <b>Submit</b> button at the bottom of the page. <BR><BR>
                     
-                <p><B>Step 4:</B>If an error occurs you will be directed to go back and make the necessary corrections.<BR><BR>
+                <p><B>Step 3:</B> If an error occurs you will be directed to go back and make the necessary corrections.<BR><BR>
                     
-                <p><B>Step 5:</B>If you have no errors, all entered information will be displayed for review.<BR><BR>
+                <p><B>Step 4:</B> If you have no errors, all entered information will be displayed for review.<BR><BR>
                     
-                <p><B>Step 6:</B>When you have finished you can return to any other function by selecting it on the navigation bar.<BR><BR>    
-    </body>
+                <p><B>Step 5:</B> When you have finished you can return to any other function by selecting it on the navigation bar on the left hand side of the page.<BR><BR>    
+                </ol>
+       </body>
     <input class="helpbutton" type="submit" value="Back" align="bottom" onclick="location.href='../family/newProfile.php'" />
         </div>
         </div>
