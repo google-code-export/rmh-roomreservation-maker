@@ -67,12 +67,14 @@ checkSession(); //check session if it has timed out or not
     $permission_array['CreatingFamilyProfile.php']=1; //Creating a new family profile help page
     $permission_array['SearchingFamilyProfile.php']=1; //Searching for a family profile
     $permission_array['RoomRequest.php'] = 1; //Giving the RoomRequest help page social worker permission
-
+    $permission_array['familyprofilemenuhelp.php'] = 1; //Giving family profilemenu help permission 
+    $permission_array['PatientReport.php']= 1; //Giving patient report help permission
     
     /* ============ pages RMH STAFF APPROVER and above can view ===============*/
     $permission_array['activity.php'] = 2; //approval page
     $permission_array['activityHandler.php'] = 2; //approval page handler
     $permission_array['searchProfileActivity.php'] = 2; //profile activity search page
+    $permission_array['approvefamilyprofilechange.php'] = 2; //Approving family profile change help
 
     
     /* ============ pages RMH ADMINISTRATOR can view ===============*/ 
