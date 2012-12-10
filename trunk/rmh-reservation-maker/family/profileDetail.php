@@ -161,12 +161,20 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             $buttonEdit = "<a href='../family/EditFamilyProfile.php' style='color: white' <input type='submit' name='edit' class='formsubmit' /> Edit </a>";
             $buttonDelete = " <input class='formsubmit' id='php_button' type='submit' value='Delete' >";
             $buttonCreateRoomReservation = "<a href='../referralForm.php' style='color: white' <input type='submit' name='CreateRoomReservation' class='formsubmit' /> Create Room Reservation </a>";
+            $space = "&nbsp";
+            $newparagraph = "<p>";
             if( isset( $content ) ){ echo "<font size = 4pt>$content</font>";
+            echo $newparagraph;
+            echo $newparagraph;
             echo $buttonEdit;
+            echo $space;
             echo $buttonDelete;
+            echo $space;
             echo $buttonCreateRoomReservation;
             
             } ?>
+              
+            &nbsp;
             <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/RoomRequest.php'" />
   
           </div>    
