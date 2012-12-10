@@ -159,6 +159,9 @@ $showReservation = false;
            <input class="formsubmit"type="submit" value="Search" name="enterSearch" />
            
        </form>
+        <br><br>
+         <input class="helpbutton" type="submit" value="Help" align="bottom" onclick="location.href='../help/Reservationsearch.php'" />
+    </div>
         <?php
         if ($showReservation == true)
         {
