@@ -56,7 +56,7 @@ else if($userAccess === 2)
     //Navigation for RMH reservation managers
  ?>
     <li><a href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</a></li>
-    <li><a href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Approve Family Profile Changes
+    <li><a href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Approve Family Profile Changes</a></li>
     
 <?php  
 }
@@ -74,7 +74,7 @@ if($userAccess > 0)
 {
 ?>
     <li><a href="<?php echo BASE_DIR.'/changeAccountSettings.php';?>">Manage Account</a></li>
-    <li><a href="javascript:logout_Of_Website();">Log Out</a></li>
+    <li><a href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</a></li>
     
 <?php
 } 
@@ -82,15 +82,3 @@ if($userAccess > 0)
     
 </ul>
 <?php include (ROOT_DIR. '/inc/back.php'); ?>
-
-<script>
-function logout_Of_Website()
-//logs the User out of the website
-{
-var c=confirm("Please confirm that you want to log out");
-if (c==true)
-  {
-  window.open('/rmh-reservation-maker/logout.php','_self');
-  }
-}
-</script>
