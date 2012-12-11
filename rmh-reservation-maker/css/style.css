@@ -616,7 +616,7 @@ z-index: 101;}
 
 #nav li {padding: 10px 5px 5px 0;
     font-family: Arial,sans-serif;
-    font-size: 15px;
+    font-size: 12px;
   border: solid #003366 1px;
   background: -webkit-gradient(linear, 0 0, 0 100%, from(#42aaff), to(#2c66a1));
   background: -moz-linear-gradient(top, #42aaff, #2c66a1);
@@ -627,7 +627,7 @@ box-shadow:         0px 4px 5px rgba(50, 50, 50, 0.75);
 text-shadow: 1px 1px 3px #666666;
 text-align: right;
     height:30px;
-    width: 200px;
+    width: 220px;
 }
 
 #nav li a:hover {
@@ -636,9 +636,16 @@ text-align: right;
     text-transform:none;
     font-weight:bolder;
     
+    
 }
 
-#nav li a {text-decoration: none; color:white; font-size:1.15em;}
+#nav li a {
+    text-decoration: none;
+    color:white;
+    font-size:1.15em;
+    display: block;
+    height: 40px
+    }
 
 #nav li:hover {
 background: #1e5799; /* Old browsers */
