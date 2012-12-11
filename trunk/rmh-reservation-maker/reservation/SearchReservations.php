@@ -144,6 +144,7 @@ $showReservation = false;
 
            <select class="formt formtop"name="searchType">
                <option value = "Select Search Type">Select Search Type</option>
+               <option value = "Request ID">Request ID</option>
                <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
                <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
                <option value = "Family (Last Name)">Family (Last Name)</option>
@@ -199,12 +200,12 @@ $showReservation = false;
         {
         $rmhRequestID= $foundReservations->get_roomReservationRequestID();
         $rmhSocialWorkerName = $foundReservations->get_swLastName().", ".$foundReservations->get_swFirstName();
-       $rmhStaffName = $foundReservations->get_rmhStaffLastName().", ".$foundReservations->get_rmhStaffFirstName();
+        $rmhStaffName = $foundReservations->get_rmhStaffLastName().", ".$foundReservations->get_rmhStaffFirstName();
         $rmhparentName= $foundReservations->get_parentLastName().", ".$foundReservations->get_parentFirstName();
-       $rmhDatasubmit = $foundReservations->get_rmhDateStatusSubmitted();
-       $rmhbeginDate=$foundReservations->get_beginDate();
-       $rmhEndDate=$foundReservations->get_endDate();
-       $rmhStatus = $foundReservations->get_status();
+        $rmhDatasubmit = $foundReservations->get_rmhDateStatusSubmitted();
+        $rmhbeginDate=$foundReservations->get_beginDate();
+        $rmhEndDate=$foundReservations->get_endDate();
+        $rmhStatus = $foundReservations->get_status();
        
        echo '<tr>';
        echo '<td>'.$rmhRequestID.'</td>';
