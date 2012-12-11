@@ -223,7 +223,7 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
             RR.Notes FROM rmhstaffprofile R RIGHT OUTER JOIN roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID
             INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE RR.RoomReservationRequestID =".$roomReservationRequestId;
+            WHERE RR.RoomReservationRequestID =".$roomReservationRequestId. " ORDER BY RoomReservationActivityID DESC LIMIT 1";
    
         $result = mysql_query($query);
         if (mysql_num_rows($result)!==1) {
@@ -231,10 +231,13 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
                 mysql_close();
                 return false;
         }
-        $result_row = mysql_fetch_assoc($result);
-        $theReservations = build_reservation($result_row);
-        mysql_close();
-        return $theReservations;  
+        $theReservations = array();
+         while ($result_row = mysql_fetch_assoc($result)) {
+         $theReservation = build_reservation($result_row);
+         $theReservations[] = $theReservation;
+         }
+         mysql_close();
+         return $theReservations; 
 }
 
 /**
@@ -482,13 +485,18 @@ function update_status_RoomReservationActivity($reservation){
     return true;
 }
 
+
+
 /**
  * Deletes a Room Reservation Request from the RoomReservationActivity table.
  * @param $roomReservationRequestId the id of the RoomReservationActivity to delete
  */
 
 function delete_RoomReservationActivity($roomReservationRequestId) {
-    
+    /*DO NOT USE THIS FUNCTION FOR CANCELING A REQUEST! 
+     * This function should only be used in extreme circumstances when an error is made to a request and it needs to be removed.
+     * To cancel an existing reservation request, call insert_RoomReservationActivity with the activityType set to "Cancel". 
+     */
  connect();
         
     $query="DELETE FROM roomreservationactivity WHERE RoomReservationRequestID=".$roomReservationRequestId;

@@ -12,6 +12,13 @@ test_retrieve_all_dbRoomReservationActivity_byHospitalAndDate("Memorial Sloan-Ke
 echo ">>>TESTING: retrieve_all_dbRoomReservationActivity_byHospitalAndDate, expect no Reservation to be found.". "</br>";
 test_retrieve_all_dbRoomReservationActivity_byHospitalAndDate("New York Hospital Queens", "2012-04-15", "2012-04-17");
 
+
+echo ">>>TESTING: retrieve_RoomReservationActivity_byRequestId, expect 1 record to be found."."</br>";
+
+test_retrieve_RoomReservationActivity_byRequestId("2");
+
+
+
 function test_retrieve_all_dbRoomReservationActivity_byHospitalAndDate($hospitalAffiliation, $beginDate, $endDate)
 {
     $reservations = retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffiliation, $beginDate, $endDate);
@@ -79,6 +86,27 @@ else
          display_reservation($reservation);
     }
 }
+}
+
+
+function test_retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId){
+    $reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);
+    
+    if ($reservations == false)
+    echo "</br>". "No Reservations were Found.". "</br></br></br>";
+  
+else
+{
+    
+    echo  "</br>". "Records Found:".  "</br>";
+   
+    foreach ($reservations as $reservation)
+    {
+         display_reservation($reservation);
+         
+    }
+}
+        
 }
 
 
