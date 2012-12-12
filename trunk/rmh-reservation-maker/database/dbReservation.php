@@ -305,13 +305,13 @@ function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLast
     
        connect();
        
-        $query = "SELECT RR.RoomReservationKey, RR.RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName,
+        $query = "SELECT RR.RoomReservationKey, MAX(RR.RoomReservationActivityID) AS RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName,
             F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, 
             R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, RR.RMH_DateStatusSubmitted, 
             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM rmhstaffprofile R RIGHT OUTER JOIN 
             roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN socialworkerprofile S 
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE S.LastName = '".$socialWorkerLastName."'";
+            WHERE S.LastName = '".$socialWorkerLastName."' GROUP BY RoomReservationRequestID";
         
         $result = mysql_query($query);
                 if(mysql_num_rows($result)< 1)
@@ -339,13 +339,13 @@ function retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
     
        connect();
        
-        $query = "SELECT RR.RoomReservationKey, RR.RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName, 
+        $query = "SELECT RR.RoomReservationKey, MAX(RR.RoomReservationActivityID) AS RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName, 
             F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, 
             R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, RR.RMH_DateStatusSubmitted, 
             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM rmhstaffprofile R RIGHT OUTER JOIN 
             roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN socialworkerprofile S 
             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE R.LastName = '".$rmhStaffLastName."'";
+            WHERE R.LastName = '".$rmhStaffLastName."' GROUP BY RoomReservationRequestID";
         
         $result = mysql_query($query);
                 if(mysql_num_rows($result)< 1)
