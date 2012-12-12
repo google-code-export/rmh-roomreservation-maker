@@ -104,9 +104,10 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             $familyProfile = retrieve_FamilyProfile ($familyID);
             if($familyProfile){
                 //$content = '<'.$familyProfile->get_familyProfileStatus().'</li>';
-             
-                $content  = '<li> Parent First Name: '.$familyProfile->get_parentfname().'</li>';
-                $content .= '<li> Parent Last Name: '.$familyProfile->get_parentlname().'</li>';
+                /*
+                $content = '<b><font size=\'5\'>Parent Information</font></b><br />';
+                $content .= '<li> <b>First Name:</b> '.$familyProfile->get_parentfname().'</li>';
+                $content .= '<li> Last Name: '.$familyProfile->get_parentlname().'</li>';
                 $content .= '<li> Email: '.$familyProfile->get_parentemail().'</li>';
                 $content .= '<li> Phone Number 1: '.$familyProfile->get_parentphone1().'</li>';
                 $content .= '<li> Phone Number 2:'.$familyProfile->get_parentphone2().'</li>';
@@ -115,12 +116,91 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
                 $content .= '<li> State: '.$familyProfile->get_parentstate().'</li>';
                 $content .= '<li> Zipcode: '.$familyProfile->get_parentzip().'</li>';
                 $content .= '<li> Country: '.$familyProfile->get_parentcountry().'</li>';
-                $content .= '<li> Patient First Name: '.$familyProfile->get_patientfname().'</li>';
-                $content .= '<li> Patient Last Name:'.$familyProfile->get_patientlname().'</li>';
-                $content .= '<li> Relationship to Patient: '.$familyProfile->get_patientRelation().'</li>';
-                $content .= '<li> Patient DOB: '.$familyProfile->get_patientdob().'</li>';
-                $content .= '<li> Patient Form: '.$familyProfile->get_patientformpdf().'</li>';
-                $content .= '<li> Patient Diagnosis: '.$familyProfile->get_patientnotes().'</li>';
+                 * 
+                 */
+                //SEPERATE PATIENT FROM PARENT
+                $content = "<b>Patient Information</b><br />    
+                    <table cellpadding=15 cellspacing=50>
+                            <tr>
+                                    <td><b>First Name</b></td>
+                                    <td>" . $familyProfile->get_parentfname() . "</td>
+                            </tr>
+                            <tr>
+                                    <td><b>Last Name</b></td>
+                                    <td>" . $familyProfile->get_parentlname() . "</td>
+                            </tr>
+                            <tr>
+                                    <td><b>Email</b></td>
+                                    <td>" . $familyProfile->get_parentemail() . "b</td>
+                            </tr>	
+                            <tr>
+                                    <td><b>Phone Number 1</b></td>
+                                    <td>" . $familyProfile->get_parentphone1() . "</td>
+                            </tr>	
+                            <tr>
+                                    <td><b>Phone Number 2</b></td>
+                                    <td>" . $familyProfile->get_parentphone2() . "</td>
+                            </tr>	
+                            <tr>
+                                    <td><b>Address</b></td>
+                                    <td>" . $familyProfile->get_parentaddress() . "</td>
+                            </tr>	
+                            <tr>
+                                    <td><b>City</b></td>
+                                    <td>" . $familyProfile->get_parentcity() . "</td>
+                            </tr>	
+                            <tr>
+                                    <td><b>State</b></td>
+                                    <td>" . $familyProfile->get_parentstate() . "</td>
+                            </tr>	
+                            <tr>
+                                    <td><b>Zipcode</b></td>
+                                    <td>" . $familyProfile->get_parentzip() . "</td>
+                            </tr>	
+                            <tr>
+                                    <td><b>Country</b></td>
+                                    <td>" . $familyProfile->get_parentcountry() . "</td>
+                            </tr>	
+
+                    </table>";
+                
+                $content.= "<br /><b>Patient Information</b><br />
+                    <table cellpadding=15>
+                            <tr>
+                                    <td>First Name</td>
+                                    <td>" . $familyProfile->get_patientfname() . "</td>
+                            </tr>
+                            <tr>
+                                    <td>Last Name</td>
+                                    <td>" . $familyProfile->get_patientlname() . "</td>
+                            </tr>
+                            <tr>
+                                    <td>Relationship to Patient</td>
+                                    <td>" . $familyProfile->get_patientrelation() . "</td>
+                            </tr>	
+                            <tr>
+                                    <td>DOB:</td>
+                                    <td>" . $familyProfile->get_patientdob() . "</td>
+                            </tr>	
+                            <tr>
+                                    <td>Form</td>
+                                    <td>" . $familyProfile->get_patientformpdf() . "</td>
+                            </tr>	
+                            <tr>
+                                    <td>Diagnosis</td>
+                                    <td>" . $familyProfile->get_patientnotes() . "</td>
+                            </tr>	
+                    </table>";
+                /*
+                $content .= '<br /> <b>Patient Information</b>';
+                $content .= '<li> First Name: '.$familyProfile->get_patientfname().'</li>';
+                $content .= '<li> Last Name:'.$familyProfile->get_patientlname().'</li>';
+                $content .= '<li> Parent\'s relationship to Patient: '.$familyProfile->get_patientRelation().'</li>';
+                $content .= '<li> DOB: '.$familyProfile->get_patientdob().'</li>';
+                $content .= '<li> Form: '.$familyProfile->get_patientformpdf().'</li>';
+                $content .= '<li> Diagnosis: '.$familyProfile->get_patientnotes().'</li>';
+                 */
+                
             //    $familyprofileID = $familyProfile->get_familyProfileId();
         
                // $content .= '<a href="'.BASE_DIR.'/family/profileChange.php?family='.$familyID.'">Modify Profile</a>';
