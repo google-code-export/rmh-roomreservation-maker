@@ -207,7 +207,7 @@ Our intended use is:
     </select> <br> <br> 
     
 A) Will you need transportation from a local airport, rail or bus terminal? 
-If Yes, please schedule arrangements with the Ronald McDonald House ahead of time. Thank You.
+If Yes, please schedule arrangements with the Ronald McDonald House ahead of time. Thank You!
     <select name="quesA" >
         <option>No</option>
         <option>Yes</option>
