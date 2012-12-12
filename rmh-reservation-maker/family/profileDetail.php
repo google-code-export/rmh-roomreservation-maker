@@ -131,7 +131,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
                             </tr>
                             <tr>
                                     <td><b>Email</b></td>
-                                    <td>" . $familyProfile->get_parentemail() . "b</td>
+                                    <td>" . $familyProfile->get_parentemail() . "</td>
                             </tr>	
                             <tr>
                                     <td><b>Phone Number 1</b></td>
