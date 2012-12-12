@@ -254,7 +254,8 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
                 $patientNote);
         
         //TODO: Insert familyProfile object.
-        if(update_FamilyProfile($FamilyProfile)) 
+        $RequestKey = update_FamilyProfile($FamilyProfile);
+        if($RequestKey)
             echo '
                 <div id="container" >
                     <div id="content" >
@@ -308,7 +309,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 
 
         // check if insert function returns true, then insert profileactivity                     
-   
+        
         if (insert_ProfileActivity($current_activity)) {
             echo '
                 <div id="container" >
@@ -321,6 +322,9 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
                  </div>
                 </div>
                     ';
+           
+            // sending email about Request the modification of the Profile
+//            newFamilyMod($RequestKey, $dateSubmit, $FamilyProfileID);
           
 //            //if profileActivity is inserted, send the email to rmh approver
 //            $profileID = $current_activity->get_profileActivityId();
