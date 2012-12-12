@@ -232,6 +232,7 @@ if ($showReservation == true) {
                <option value = "Request ID">Request ID</option> ';
 
         foreach ($foundReservations as $reservation) {
+        $rmhRequestID = $reservation->get_roomReservationRequestID();
             echo '    <option value = "'.$rmhRequestID.'">'.$rmhRequestID.'</option>';
         }
         echo'        </select>   <br><br>';
