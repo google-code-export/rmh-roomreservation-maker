@@ -42,7 +42,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['reset.php']=-1; //password reset page (available to everyone)
     $permission_array['accountmanage.php'] = -1; //managing your account help page
     $permission_array['prereg.php'] = -1;//the page for families to go to from their email link
-    $permission_araray['LoginHelp.php']=-1; //Login Help page
+    $permission_array['LoginHelp.php']=-1; //Login Help page
     
     /* ============ pages users with access level of FAMILY and above can view ===============*/
     $permission_array['index.php']=0;
