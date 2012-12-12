@@ -37,29 +37,20 @@ $showForm = false;
 $showReport = false;
 $message= array();
 
-
-        //get family values from database to fill into form
-        if(isset($_GET['family'])){
-        $familyID = sanitize($_GET['family']);
-        $family = retrieve_FamilyProfile($familyID);
-        $patientfname= $family->get_patientfname();
-        $patientlname= $family->get_patientlname();
-        $patientnotes= $family->get_patientnotes();
-        $parentfname= $family->get_parentfname();
-        $parentlname= $family->get_parentlname();
-        setFamilyID($familyID);
+          $ArrayRequestRoom = $_SESSION['ArrayRequestRoomChosen'];
+          $RequestID = $_SESSION['RequestID'];
+          
+          
+        if(($RequestID) == 'Request ID'){
+                $parentlname= "ParentLastName";
+                $parentfname= "ParentFirstName";        
         }
-        else
-        {
-            $family = retrieve_FamilyProfile($_SESSION['familyID']);
-            $patientfname= $family->get_patientfname();
-            $patientlname= $family->get_patientlname();
-            $patientnotes= $family->get_patientnotes();
-            $parentfname= $family->get_parentfname();
-            $parentlname= $family->get_parentlname();
-        }
-        
+        else{
+                $family = retrieve_FamilyProfile($IDFamily);
 
+                $parentfname= $ArrayRequestRoom->get_parentFirstName();
+                $parentlname= $ArrayRequestRoom->get_parentLastName();
+            }
 
 //if token works
     if(isset($_POST['form_token']) && validateTokenField($_POST))
@@ -207,7 +198,7 @@ if($showForm == true)
 {
     //FORM
     ?>
-<form name ="NewReferralForm" method="POST" action="referralForm.php">
+<form name ="Edit Reservation" method="POST" action="EditReservation.php">
             <?php echo generateTokenField(); ?>
     <label for="BeginDate">Begin Date:</label>
         <input name="begindate" type="date">
@@ -216,20 +207,20 @@ if($showForm == true)
         <input name="enddate" type="date">
     <br><br>
          Patient Last Name<br>
-         <input class="formt formtop" id="patientlname" type="text" name="PatientLastName" value="<?php echo htmlspecialchars($patientlname); ?>"/><br>
+         <input class="formt formtop" id="patientlname" type="text" name="PatientLastName" value="Patient Last Name"onfocus="if(this.value == 'Patient Last Name'){ this.value = ''; }"/><br>
          Patient First Name<br>
-         <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="<?php echo htmlspecialchars($patientfname); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/><br>
+         <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="Patient First Name" onfocus="if(this.value == 'Patient First Name'){ this.value = ''; }"/><br>
          Patient Diagnosis<br>        
          <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value=PatientDiagnosis onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/><br>
          Notes<br>         
-         <input class="formt" id="notes" type="text" name="Notes" value="<?php echo htmlspecialchars($patientnotes); ?>" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/><br>
+         <input class="formt" id="notes" type="text" name="Notes" value="Notes" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/><br>
          Parent Last Name<br>         
          <input class="formt" id="parentlname" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($parentlname); ?>" onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/><br>
          Parent First Name<br>         
          <input class="formt formbottom" id="parentfirstname" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($parentfname); ?>" onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/><br>
           
            
-           <input class="formsubmit"type="submit" value="Submit" name="submit" />
+           <input class="formsubmit"type="submit" value="Save" name="submit" />
        </form>            
 
      <?php
@@ -249,7 +240,7 @@ sanitize($_POST['enddate']);
     
        //retrieves the sw, and gets id, firstname and lastname      
         $currentUser = getUserProfileID();
-      $sw = retrieve_UserProfile_SW($currentUser);
+        $sw = retrieve_UserProfile_SW($currentUser);
         $swObject = current($sw);
         $sw_id = $swObject->get_swProfileId();
         $swFirstName = $swObject->get_swFirstName();
@@ -258,63 +249,19 @@ sanitize($_POST['enddate']);
         $Status ="Unconfirmed";
         $swDateStatusSubmitted = date("Y-m-d");
         $userId = sanitize(getCurrentUser());
+                         
         
-
-
-            }
-            
-   
-     
- 
-  
-
-       if(empty($message))
-      {
-        echo '<p><font color="red">The reservation was successfully made!</font></p><br/>';
-        echo "The referral was made by : " .$userId. "<br>";
-        echo "The Begin Date is : " .$newBeginDate. "<br>";
-        echo "The End Date is : " .$newEndDate. "<br>";
-        echo "The Patient's Diagnosis is : " .$newPatientDiagnosis."<br>";
-        echo "Notes on the referral are : " .$newNotes."<br>";
-        echo "The Parent's Last name is : ".$newParentLastName."<br>";
-        echo "The Parent's First name is : ".$newParentFirstName."<br>";
-        echo "The Referral Request currently has a Status of :
-".$Status."<br>";
-        echo "Date submitted is : " .$swDateStatusSubmitted."<br>";
-        
-        
-         echo '<br>';
-        
-        echo '<br><br>
-            <table border = "2" cellspacing = "10" cellpadding = "6">';       
-        echo '<thead>
-            <tr>
-            <th>Status</th>
-            <th>Parent Last Name</th>
-           <th>Parent First Name</th>
-           <th>Social Worker Profile ID</th>
-           <th>Begin Date</th>
-           <th>End Date</th>
-         
-           
-            </thead>
-            <tbody>';
-        
-        echo '<tr>';
-        echo '<td>'.$Status.'</td>';
-        echo '<td>'.$newParentLastName.'</td>';
-        echo '<td>'.$newParentFirstName.'</td>';
-        echo '<td>'.$sw_id.'</td>';
-        echo '<td>'.$newBeginDate.'</td>';
-        echo '<td>'.$newEndDate.'</td>';
-       
-      
-        
-        $currentreservation = new Reservation (0, 0, 0, $newParentLastName, 
+        $currentreservation = new Reservation (0, $RequestID, 0, $newParentLastName, 
                 $newParentFirstName, $sw_id, $swLastName, $swFirstName, 0, "",
                 "", $swDateStatusSubmitted, "", $ActivityType, $Status, $newBeginDate, $newEndDate,
                 $newPatientDiagnosis, $newNotes);
-            insert_RoomReservationActivity($currentreservation);
+        if($RequestID != 'Request ID')
+        {
+            update_status_RoomReservationActivity($currentreservation);
+            echo "Room Reservation Updated!";
+        }
+        else
+            echo"Could not update the Room Reservation because the Request ID was not chosen, go back to Search Reservation and try again!";
        }
       
 
