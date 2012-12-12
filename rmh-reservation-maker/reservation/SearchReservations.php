@@ -111,6 +111,7 @@ function searchForReservations() {
 
             <select class="formt formtop"name="searchType">
                 <option value = "Select Search Type">Select Search Type</option>
+                <option value = "Request ID">Request ID</option>
                 <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
                 <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
                 <option value = "Family (Last Name)">Family (Last Name)</option>
@@ -253,10 +254,7 @@ if ($showReservation == true) {
         $buttonCancel = "<a href='../reservation/CancelReservation.php?id=$IDchosen' style='color: white' <input class='formsubmit' type='submit' name='Cancel' '/> Cancel</a>";
 
         //$_SESSION['RequestID']= $IDchosen; //passing by SESSION
-        
-  
-
-         
+               
             echo $buttonEdit;
             echo $buttonCancel;
         

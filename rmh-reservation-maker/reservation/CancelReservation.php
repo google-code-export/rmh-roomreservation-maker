@@ -31,6 +31,8 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
     {   //gets the Requestid passed down by the SearchReservation.php
             $RequestID = sanitize( $_GET['id'] );           //USING DYNAMIC LINK
     }
+    else
+            $RequestID = 'Request ID';
         
        //retrieves the sw, and gets id, firstname and lastname      
         $currentUser = getUserProfileID();
