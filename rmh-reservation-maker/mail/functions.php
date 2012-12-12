@@ -563,6 +563,13 @@ function getFamilyIDFromURL($randURL)
     return -1;
 }
 
+/*
+* Text file clearing module for RMH-RoomReservationMaker. 
+* Clears the entire text file, unused since families might take more than one
+* try to finish the mail form.
+* @author Tian Shen
+* @version 12/05/12
+*/
 function clearContents()
 {
     //clears the entire file right now
