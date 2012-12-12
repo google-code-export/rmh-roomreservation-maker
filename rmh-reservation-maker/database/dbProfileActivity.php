@@ -233,13 +233,13 @@ function retrieve_ProfileActivity_byFamilyProfileID($familyProfileID){
     
     connect();
     
-    $query = "SELECT MAX(P.ProfileActivityRequestID), P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
+    $query = "SELECT P.ProfileActivityID, P.ProfileActivityRequestID, F.FamilyProfileID, S.SocialWorkerProfileID, S.LastName AS SW_LastName, 
         S.FirstName AS SW_FirstName, R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
        P.SW_DateStatusSubmitted, P.RMH_DateStatusSubmitted, P.ActivityType, P.Status, P.ParentFirstName, P.ParentLastName, 
        P.Email, P.Phone1, P.Phone2, P.Address, P.City, P.State, P.ZipCode, P.Country, P.PatientFirstName,P.PatientLastName, 
        P.PatientRelation, P.PatientDateOfBirth, P.FormPDF, P.FamilyNotes, P.ProfileActivityNotes FROM rmhstaffprofile R RIGHT OUTER JOIN profileactivity P ON R.RMHStaffProfileID = P.RMHStaffProfileID
        INNER JOIN socialworkerprofile S ON P.SocialWorkerProfileID = S.SocialWorkerProfileID
-       INNER JOIN familyprofile F ON P.FamilyProfileID = F.FamilyProfileID WHERE P.FamilyProfileID = ".$familyProfileID;
+       INNER JOIN familyprofile F ON P.FamilyProfileID = F.FamilyProfileID WHERE P.FamilyProfileID = ".$familyProfileID." ORDER BY ProfileActivityID DESC LIMIT 1";
     
     $result = mysql_query($query);
                 if(mysql_num_rows($result)!==1)
@@ -248,8 +248,11 @@ function retrieve_ProfileActivity_byFamilyProfileID($familyProfileID){
                  mysql_close();
                  return false;
                 }
-        $result_row = mysql_fetch_assoc($result);
-        $theProfileActivities = build_profileActivity($result_row);
+        $theProfileActivities = array();    
+        while($result_row = mysql_fetch_assoc($result)){
+        $theProfileActivity = build_profileActivity($result_row);
+        $theProfileActivities[] = $theProfileActivity;
+        }
         mysql_close();
         return $theProfileActivities;
     

@@ -156,21 +156,7 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
                 return -1;
         }
         
-        /*
-        //Connect to the database
-                connect();
         
-        $query = "CALL GetRequestKeyNumber('RoomReservationRequestID')";
-    $result = mysql_query ($query)or die(mysql_error());
-        if (mysql_num_rows($result)!=0) {
-            
-                $result_row = mysql_fetch_assoc($result); //gets the first row
-                $reservation->set_roomReservationRequestID($result_row['@ID := RoomReservationRequestID']);     
-    }   
-        
-     mysql_close(); 
-         * 
-         */
         
      generateNextRoomReservationID($reservation);
      
