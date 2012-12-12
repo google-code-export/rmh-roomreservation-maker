@@ -7,8 +7,10 @@
 <?php
 
     session_start();
+    include_once ('../core/globalFunctions.php');
     include_once ('../mail/functions.php');
-    include_once ('../permissions.php');
+    include_once ('../database/dbFamilyProfile.php');
+
 /*
  * This piece of code should get the randomly generated URL that is saved in the text file
  * (currently C:\wamp\www\rmh-reservation-maker\family) and get the connected family profile ID.
