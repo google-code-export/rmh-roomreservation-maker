@@ -119,8 +119,8 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
                  * 
                  */
                 //SEPERATE PATIENT FROM PARENT
-                $content = "<b>Parent Information</b><br />    
-                    <table cellpadding=15 cellspacing=50>
+                $content = "<b><font size='6'><u><div style='margin-top:-45px;'>Parent Information</div></u></font></b>    
+                    <table style cellpadding=15 cellspacing=50>
                             <tr>
                                     <td><b>First Name</b></td>
                                     <td>" . $familyProfile->get_parentfname() . "</td>
@@ -164,30 +164,30 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
 
                     </table>";
                 
-                $content.= "<br /><b>Patient Information</b><br />
+                $content.= "<br /><b><font size='6'><u>Patient Information</u></font></b><br />
                     <table cellpadding=15>
                             <tr>
-                                    <td>First Name</td>
+                                    <td><b>First Name</b></td>
                                     <td>" . $familyProfile->get_patientfname() . "</td>
                             </tr>
                             <tr>
-                                    <td>Last Name</td>
+                                    <td><b>Last Name</b></td>
                                     <td>" . $familyProfile->get_patientlname() . "</td>
                             </tr>
                             <tr>
-                                    <td>Relationship to Patient</td>
+                                    <td><b>Relationship to Patient</b></td>
                                     <td>" . $familyProfile->get_patientrelation() . "</td>
                             </tr>	
                             <tr>
-                                    <td>DOB:</td>
+                                    <td><b>DOB</b></td>
                                     <td>" . $familyProfile->get_patientdob() . "</td>
                             </tr>	
                             <tr>
-                                    <td>Form</td>
+                                    <td><b>Form</b></td>
                                     <td>" . $familyProfile->get_patientformpdf() . "</td>
                             </tr>	
                             <tr>
-                                    <td>Diagnosis</td>
+                                    <td><b>Diagnosis</b></td>
                                     <td>" . $familyProfile->get_patientnotes() . "</td>
                             </tr>	
                     </table>";
