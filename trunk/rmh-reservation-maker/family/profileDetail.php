@@ -46,7 +46,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         {
         //TODO: start table with tags
             $table = "\n<table cellpadding='20' style=\"margin-left:250px;\">\n<thead>\n<tr>\n";
-            $table .= "<th>Name</th><th>City</th><th>Date Of Birth</th>\n</tr></thead>";
+            $table .= "<th>Patient Name</th><th>Parent Name</th><th>Parent City</th><th>Patient Date Of Birth</th><th>Patient Diagnosis</th>\n</tr></thead>";
             $numFamilies = 1;
             //create an array, 
         foreach( $families as $family )
@@ -62,15 +62,22 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
            $table .= "<tr>\n\t<td><a style = 'color:blue; font-weight:bold;' href=\"?id=";//TODO: DYNAMIC LINK CREATION
            $table .= $family->get_familyProfileId();
            $table .= "\">";
-           $table .= $family->get_parentlname();
+           $table .= $family->get_patientlname();
            $table .= ", ";
-           $table .= $family->get_parentfname();
+           $table .= $family->get_patientfname();
            $table .= "</a></td>";
            $table .= "<td>";
-           $table .= $family->get_parentcity();
+           $table .= $family->get_parentlname() . ", " . $family->get_parentfname();
+           $table .= "</td>";
+           $table .= "<td>";
+           $table .= $family->get_parentcity(); 
            $table .= "</td>";
            $table .= "<td>";
            $table .= $family->get_patientdob(); // TODO : Get rid of birthday time
+           $table .= "</td>";
+           $table .= "<td>";
+           $table .= $family->get_patientnotes();
+           $table .= "</td>";
            $table .= "</td>\n</tr>";
             // TODO : put familyProfileId into the elements of the array created above
             //var_dump($family);
