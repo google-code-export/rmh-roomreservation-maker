@@ -17,7 +17,7 @@
 */
 
 
-include_once (ROOT_DIR.'/core/config.php');
+include_once ('../core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 
@@ -393,6 +393,8 @@ function newReservationMod($RequestKey, $DateSubmitted, $FamilyProfileID)
     };
 }
 
+
+
 /*
 * E-Mail module for RMH-RoomReservationMaker. 
 
@@ -508,7 +510,7 @@ function randURL($familyID)
     for ($i = 0; $i < $length; $i++) {
     //chooses one character from the entire set of available characters in characters
     //this continues until it fills up the length.
-       $randString .= $characters[mt_rand(0, strlen($characters))];
+       $randString .= $characters[rand(0, strlen($characters)-1)];
     }
     urlToText($randString,$familyID);
     return $randString;
@@ -581,5 +583,24 @@ function clearContents()
 function vardumping($SWID){
   $SW= retrieve_UserProfile_SW($SWID);
   var_dump($SW[0]);
+}
+
+/*
+* Email module for RMH-RoomReservationMaker. 
+* Emails the family that their room request has been confirmed 
+* @David Elias
+* @version 12/08/12
+*/
+function FamilyConfirm($familyID,$StartDate,$EndDate,$tempURL){
+    
+    
+  $family=  retrieve_FamilyProfile($familyID);
+  $familyname=$family->get_parentlname();
+  $subject="The  Room request for $familyname has been confimred ";
+  $message="Your request has been confirmed for $StartDate-$EndDate, go to $tempURL for more details";
+  $to=$family->get_parentemail();
+  
+  email($to,$subject,$message);
+  
 }
 ?>
