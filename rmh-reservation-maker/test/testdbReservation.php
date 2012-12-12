@@ -17,7 +17,11 @@ echo ">>>TESTING: retrieve_RoomReservationActivity_byRequestId, expect 1 record 
 
 test_retrieve_RoomReservationActivity_byRequestId("2");
 
+echo ">>>TESTING: retrieve_RoomReservationActivity_byStatus, expect 3 records to be found. (Unconfirmed)"."</br>";
+test_retrieve_RoomReservationActivity_byStatus("Unconfirmed");
 
+echo ">>>TESTING: retrieve_FamilyLastName_RoomReservationActivity, expect 1 record to be found. (Miller)"."</br>";
+test_retrieve_FamilyLastName_RoomReservationActivity("Miller");
 
 function test_retrieve_all_dbRoomReservationActivity_byHospitalAndDate($hospitalAffiliation, $beginDate, $endDate)
 {
@@ -88,6 +92,42 @@ else
 }
 }
 
+
+function test_retrieve_RoomReservationActivity_byStatus($status){
+    $reservations = retrieve_RoomReservationActivity_byStatus($status);
+    
+    if ($reservations == false)
+        echo "</br>"."No Reservations were found.". "</br></br></br>";
+    
+    else
+    {
+        
+        echo "</br>". "Records Found:".  "</br>";
+   
+    foreach ($reservations as $reservation)
+    {
+         display_reservation($reservation);
+    }
+    }
+}
+
+function test_retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
+    $reservations = retrieve_FamilyLastName_RoomReservationActivity($parentLastName);
+    
+    if ($reservations == false)
+        echo "</br>"."No Reservations were found.". "</br></br></br>";
+    
+    else
+    {
+        
+        echo "</br>". "Records Found:".  "</br>";
+   
+    foreach ($reservations as $reservation)
+    {
+         display_reservation($reservation);
+    }
+    }
+}
 
 function test_retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId){
     $reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);
