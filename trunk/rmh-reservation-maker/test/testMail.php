@@ -1,5 +1,7 @@
 <?php
-include_once('../mail/functions.php');    
+include_once('../mail/functions.php'); 
+
+
 //This won't work because you need to use forward slashes not back slashes.
 //include_once('..\mail\functionsWithPEAR.php');  
 
@@ -8,8 +10,14 @@ include_once('../mail/functions.php');
 //newRequest($RequestKey, $DateSubmitted, $BeginDate, $EndDate)
 //newRequest(100,'2012-12-12','2012-12-22','2012-12-30');
 
-echo"TESTING VARDUMP";
-vardumping(2);
+echo"TESTING VARDUMP<br>";
+
+for ( $i=0;$i<=8;$i++){
+    echo"testing $i";
+vardumping($i);
+}
+
+
 
 echo "<p>testing email, expect email attempt to be successful<p>";
 email('david.elias09@stjohns.edu', 'sub Request', 'mess');//to me
@@ -40,7 +48,7 @@ RequestAccept(7,'3/2', '3/3', 2, 2);
 echo"<p>Testing RequesDeny<p>";
 RequestDeny(7,'3/2', '3/3', 2, 2);
 
-echo"testing FamilyModConfirm";
+echo"testing FamilyModConfirm<p>";
 FamilyModConfirm(7, 2, 2);
 
 echo"<p>Testing FamilyModAccept<p>";
@@ -52,14 +60,17 @@ FamilyModDeny(7,2,2);
 echo"<p>Testing newRequest<p>";
 newRequest(123, '3/1', '3/2', '3/3');
 
-echo"<p>Testing NewReservationMod";
+echo"<p>Testing NewReservationMod<p>";
 newReservationMod(1234, '3/1', 2);
 
-echo"<p>Testing NewCancel";
+echo"<p>Testing NewCancel<p>";
 newCancel(1321321321, '3/1', 2);
 
 echo"<p>Testing newFamilyMod</br>";
 newFamilyMod(1321321321, '3/1', 2);
+
+echo"<p>testing family confirm<p>";
+ FamilyConfirm(2,'3/1','3/2','nsdjasdjad');
 
 
 
@@ -112,7 +123,9 @@ else
 }
 
 
-
-
+echo"<p>Testing RandURL<p>";
+$string1=randURL(2);
+echo"$string1";
+error_reporting(E_ALL);
 
 ?>
