@@ -26,7 +26,7 @@
 session_start();
 session_cache_expire(30);
 
-$title = "Family Profile in detail"; 
+$title = "Family Profile in Detail"; 
 
 include('../header.php'); 
 include(ROOT_DIR .'/domain/Family.php');
