@@ -1,5 +1,10 @@
-
-        <?php
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+    </head>
+    <body>
+<?php
 session_start();
 session_cache_expire(30);
 
@@ -8,8 +13,25 @@ $title = "Cancel Reservation";
 include('../header.php');
 include(ROOT_DIR . '/database/dbReservation.php');
 
-        $ArrayRequestRoom = $_SESSION['ArrayRequestRoomChosen'];
-        $RequestID = $_SESSION['RequestID'];  
+$showReservation = false;
+
+if (isset($_POST['form_token']) && validateTokenField($_POST)) {
+    $showReservation = true;
+} else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
+
+    echo('The request could not be completed: security check failed!');
+} else {
+    
+}
+
+        
+     //   $RequestID = $_SESSION['RequestID'];        //USING DYNAMIC LINK
+        
+ if(isset($_GET['id']) )
+    {   //gets the Requestid passed down by the SearchReservation.php
+            $RequestID = sanitize( $_GET['id'] );           //USING DYNAMIC LINK
+    }
+        
        //retrieves the sw, and gets id, firstname and lastname      
         $currentUser = getUserProfileID();
         $sw = retrieve_UserProfile_SW($currentUser);
@@ -22,11 +44,12 @@ include(ROOT_DIR . '/database/dbReservation.php');
         $swDateStatusSubmitted = date("Y-m-d");
         $userId = sanitize(getCurrentUser());
         
-        $newParentLastName = $ArrayRequestRoom->get_parentLastName();
-        $newParentFirstName = $ArrayRequestRoom->get_parentFirstName();
-        $newBeginDate = $ArrayRequestRoom->get_beginDate();
-        $newEndDate = $ArrayRequestRoom->get_endDate();
-        $newPatientDiagnosis = $ArrayRequestRoom->get_status();
+        $informationroom = retrieve_RoomReservationActivity_byRequestId($RequestID); 
+        $newParentLastName = $informationroom->get_parentLastName();
+        $newParentFirstName = $informationroom->get_parentFirstName();
+        $newBeginDate = $informationroom->get_beginDate();
+        $newEndDate = $informationroom->get_endDate();
+        $newPatientDiagnosis = $informationroom->get_patientDiagnosis();
         $newNotes = "";
                          
         
@@ -45,6 +68,7 @@ include(ROOT_DIR . '/database/dbReservation.php');
             echo "Could not Cancel the Room Reservation because the Request ID was not chosen, go back to Search Reservation and try again!";
         }
   ?>
+
 <div id="container">
 
     <div id="content">
@@ -59,3 +83,6 @@ include(ROOT_DIR . '/database/dbReservation.php');
         <?php
         include (ROOT_DIR . '/footer.php');
         ?>
+
+     </body>
+</html>       
