@@ -53,7 +53,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['EditFamilyProfile.php']=1;
     $permission_array['referralForm.php']=1;
     $permission_array['newProfile.php']=1;
-    $permission_array['CancelReservation']=1;
+    $permission_array['CancelReservation.php']=1;
     $permission_array['EditFamilyProfile.php']=1;
     $permission_array['SearchReservations.php']=1;
     $permission_array['EditReservation.php']=1;
