@@ -38,12 +38,12 @@ $family = retrieve_FamilyProfile($familyID);
             }
         var minute=today.getMinutes();
         var display=document.getElementsByID("displayDate");
-        display.innerHTML=month + ' ' + date + ', ' + year + ' at ' + hour + ':' + minute + ' ' + ampm;
+        var fixedDate=month + ' ' + date + ', ' + year + ' at ' + hour + ':' + minute + ' ' + ampm;
+        return fixedDate;
 }
     </script>
     </head>
     <body>
-<!--line 56, 80, 90-->
      
         <h1 class=heading>Introduction</h1>
 <br/>
@@ -72,7 +72,8 @@ $family = retrieve_FamilyProfile($familyID);
 <p>You may have additional forms to fill out. The person assisting you during your check-in will let you know based on your needs.</p>
 
 <!--needs some sort of agreement acceptance button or something-->
-
+<!--Call the function date() and save the returned string to a session variable
+So like: $_SESSION['fixedDate']=date();-->
 
 
 
