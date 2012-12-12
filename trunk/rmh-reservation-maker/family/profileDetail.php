@@ -45,7 +45,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         if( is_array( $families ) )
         {
         //TODO: start table with tags
-            $table = "\n<table style=\"margin-left: 250px; margin-top: 23px;\">\n<thead>\n<tr>\n";
+            $table = "\n<table cellpadding='20' style=\"margin-left:250px;\">\n<thead>\n<tr>\n";
             $table .= "<th>Name</th><th>City</th><th>Date Of Birth</th>\n</tr></thead>";
             $numFamilies = 1;
             //create an array, 
@@ -59,7 +59,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
           // TODO : Create array for familyProfileId
           //
           //create a row with a td for lname, fname, town, dob
-           $table .= "<tr>\n\t<td><a href=\"?id=";//TODO: DYNAMIC LINK CREATION
+           $table .= "<tr>\n\t<td><a style = 'color:blue; font-weight:bold;' href=\"?id=";//TODO: DYNAMIC LINK CREATION
            $table .= $family->get_familyProfileId();
            $table .= "\">";
            $table .= $family->get_parentlname();
