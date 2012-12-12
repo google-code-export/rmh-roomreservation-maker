@@ -121,7 +121,7 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
     </div>
     <?php include('footer.php');
     
-    echo '<td>Lost your Password?  <a href="reset.php">Password Reset</a></td>';
+    echo '<td>Lost your Password?  <a href="changeAccountSettings.php">Password Reset</a></td>';
     
     
 function retrieveCurrentUserProfile()
