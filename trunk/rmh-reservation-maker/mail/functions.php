@@ -603,4 +603,42 @@ function FamilyConfirm($familyID,$StartDate,$EndDate,$tempURL){
   email($to,$subject,$message);
   
 }
+
+/* This function is to save the data from the forms the families fill out and
+ * saves the information in a text file with their family ID as the name.
+ * @param $familyID is the family ID number.
+ * @params $q1 to $q9 are the answers to the questions on wellness
+ * @params $child1 to $child4 are the names of the children. Each child after the first
+ * is automatically set to na if there is no data coming in regarding them.
+ * @params $age1 to $age4 are the ages of the respective children.
+ * @author Tian Shen/Stephon Chapman
+ * @version 12/12/12
+ */
+  
+  function formToText($familyID,$q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9,$child1,$age1,$child2="na",$age2="na",$child3="na",$age3="na",$child4="na",$age4="na")
+{
+    //stores the textual data from the family form with the family ID in a text file
+    //the text file is in the wamp folder in the family folder.
+    $familyFile='../family/'.$familyID.'.txt';
+    $fh = fopen($familyFile, 'w') or die();
+    
+    $stringData.="The family Id is ".$familyID."\r";
+    $stringData.="The answer to question 1 is ".$q1."\r";
+    $stringData.="The answer to question 2 is ".$q1."\r";
+    $stringData.="The answer to question 3 is ".$q1."\r";
+    $stringData.="The answer to question 4 is ".$q1."\r";
+    $stringData.="The answer to question 5 is ".$q1."\r";
+    $stringData.="The answer to question 6 is ".$q1."\r";
+    $stringData.="The answer to question 7 is ".$q1."\r";
+    $stringData.="The answer to question 8 is ".$q1."\r";
+    $stringData.="The answer to question 9 is ".$q1."\r";
+    $stringData.="Child 1's name is ".$child1." and his/her age is ".$age1."\r";
+    $stringData.="Child 2's name is ".$child2." and his/her age is ".$age2."\r";
+    $stringData.="Child 3's name is ".$child3." and his/her age is ".$age3."\r";
+    $stringData.="Child 4's name is ".$child4." and his/her age is ".$age4."\r";    
+    fwrite($fh,$stringData);
+    fclose($fh);
+}
+
+
 ?>
