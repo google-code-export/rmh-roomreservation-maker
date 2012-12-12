@@ -37,7 +37,10 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             $ln = "";
        
         $families = retrieve_FamilyProfileByName($fn, $ln);//calls db receives an array of family objs
-       
+        if($families)
+            echo "";
+        else
+            die("<div style='margin-left:260px; margin-top:30px;'><font color='red'><b>ERROR: Family not found, however, you may <a href='./newProfile.php'>create one.</a></b></font></div>");
         $familyprofileID=NULL; 
          $_SESSION['familyID']= $familyprofileID;
          
@@ -94,6 +97,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
     {
         //if the security validation failed. display/store the error:
         //'The request could not be completed: security check failed!'
+        echo "<div style='margin-left:260px; margin-top:30px;'><font color='red'><b>ERROR: Security check failed, please go back and try again.</b></font></div>";
 
     }
     else
