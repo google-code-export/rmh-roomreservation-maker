@@ -149,10 +149,11 @@ if ($showReservation == true) {
            <th>Reservation creation date </th>
            <th>Begin Date</th>
            <th>End Date</th>
-           <th>Status</th>
-           <th>Modify</th>
+           <th>Status</th>';
+           if (getUserAccessLevel() > 1)
+               echo '<th>Modify</th>';
            
-            </thead>
+            '</thead>
             <tbody>';
 
         if ($type == "Request ID") {
