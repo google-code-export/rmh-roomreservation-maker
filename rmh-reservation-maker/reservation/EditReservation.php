@@ -1,19 +1,22 @@
 <?php
 /*
-*Copyright 2012 by Gregorie Sylvester and Bonnie MacKellar .
-* This program is part of RMH-RoomReservationMaker, which is free software,
-* inspired by the RMH Homeroom Project.
-* It comes with absolutely no warranty.  You can redistribute and/or
-* modify it under the terms of the GNU Public License as published
-* by the Free Software Foundation (see <http://www.gnu.org/licenses/).
-*/
- 
-/*
-* Referral From module for RMH-RoomReservationMaker. 
-* Displays a form for the user to enter data to make a new reservation
-* @author Gregorie Sylvester
-* @version May 02, 2012
-*/
+ * @author Bruno Constantino
+ * @author Kristen Gentle
+ * 
+ * @version December 12, 2012
+ *
+ * Edit Reservations
+ * 
+ * This page allows SW to modify a room reservation.
+ * 
+ * two options are given to the SW:
+ * 
+ * 1. Edit text boxes.
+ * 2. Save.
+  * 
+ */
+
+
 session_start();
 session_cache_expire(30);
 
@@ -25,13 +28,8 @@ include_once (ROOT_DIR.'/domain/UserProfile.php');
 include_once (ROOT_DIR.'/domain/Family.php');
 include_once (ROOT_DIR.'/database/dbReservation.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
-//include_once (ROOT_DIR.'/database/ProfileActivity.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 //include_once(ROOT_DIR .'/mail/functions.php');
-/**
- * Submitted Form Actions if a token is set, and $_POST['submit'] ==
-"submit"
-*/
 
 $showForm = false;
 $showReport = false;

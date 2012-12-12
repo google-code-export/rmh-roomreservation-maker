@@ -1,11 +1,32 @@
 
 
-        <?php
-        // put your code here
+ <?php
+ /*
+ * @author Bruno Constantino
+ * @author Kristen Gentle
+ * 
+ * @version December 12, 2012
+ *
+ * Family Profile Menu
+ * 
+ * This page allows SW to choose between creating family profile or 
+  *searching family profile.
+ * If the SW chooses create family profile button, they will be able to create a
+  * new family profile.
+  * If the SW chooses search, they will be able to update, delete or create a new family
+  * profile.
+ * two options are given to the SW:
+ * 
+ * 1. Create New Profile.
+ * 2. Search for Families.
+  * 
+ */
+        
+        
         session_start();
         session_cache_expire(30);
 
-        $title = "Family Profile Menu"; //This should be the title for the page, included in the <title></title>
+        $title = "Family Profile Menu"; //Title for the page
 
         include('../header.php');
         include_once(ROOT_DIR .'/domain/UserProfile.php');

@@ -1,4 +1,27 @@
 <?php
+/*
+ * @current author Bruno Constantino
+ * @current author Kristen Gentle
+ * 
+ * @past author Jessica Cheong
+ * @past co-author William Lodise
+ * 
+ * current authors modidied past authors code
+ * 
+ * @version December 12, 2012
+ *
+ * Search Family
+ * 
+ * This page allows SW to search a family profile by First Name or Last Name.
+ * If the SW chooses to search by First Name, The family with the name requested is displayed.
+ * Like wise happen if the SW choosees so search by Last Name.
+ * 
+ * two options are given to the SW:
+ * 
+ * 1. Search First Name.
+ * 2. Search Last Name.
+  * 
+ */
 
 session_start();
 session_cache_expire(30);
@@ -23,22 +46,10 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         
         if( is_array( $families ) )
         {
-        //TODO: start table with tags
-          //  $table = "\n<table style=\"margin-left: 250px; margin-top: 23px;\">\n<thead>\n<tr>\n";
-          // $table .= "<th>Name</th><th>City</th><th>DOB</th>\n</tr></thead>";
-        //    $numFamilies = 1;
-            //create an array, 
-        foreach( $families as $family )
+          foreach( $families as $family )
         {
-          
-          //echo "<script type=\"text/javascript\">document.getElementById(\"searchResults\").innerHTML = \"A family has been returned\";</script>"; 
-          //echo "<script type=\"text/javascript\">$(\"#searchResults\").html(\"A family is returned!\");</script>";
-          //echo "<script type=\"text/javascript\">alert(\"OMG\");</script>";//This works
-          //
-          // TODO : Create array for familyProfileId
-          //
-          //create a row with a td for lname, fname, town, dob
-           $table .= "<tr>\n\t<td><a href=\"?id=";//TODO: DYNAMIC LINK CREATION
+           //create a row with a td for lname, fname, town, dob
+           $table .= "<tr>\n\t<td><a href=\"?id=";// DYNAMIC LINK CREATION
            $table .= $family->get_familyProfileId();
            $table .= "\">";
            $table .= $family->get_parentlname();
@@ -49,11 +60,9 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
            $table .= $family->get_parentcity();
            $table .= "</td>";
            $table .= "<td>";
-           $table .= $family->get_patientdob(); // TODO : Get rid of birthday time
+           $table .= $family->get_patientdob(); 
            $table .= "</td>\n</tr>";
-            // TODO : put familyProfileId into the elements of the array created above
-            //var_dump($family);
-            
+                     
            $numFamilies++;
         }
         $table .= "</table>";
@@ -71,32 +80,13 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         //there was no POST DATA  
     }
     
-    //
-   // function displayProfile( $familyProfile )//should this be pass by ref and set as const?
-    if(isset($_GET['id']) )
+        if(isset($_GET['id']) )
     {   //gets the familyid passed down by the family profile search and when the profile is selected(clicked)
             $familyID = sanitize( $_GET['id'] );
-            //echo $familyID;
             
             $familyProfile = retrieve_FamilyProfile ($familyID);
             if($familyProfile){
-                //$content = '<li>'.$familyProfile->get_parentfname().'</li>';
-                //$content .= '<li>'.$familyProfile->get_parentlname().'</li>';
-                //$content .= '<li>'.$familyProfile->get_parentemail().'</li>';
-                //$content .= '<li>'.$familyProfile->get_parentphone1().'</li>';
-                //$content .= '<li>'.$familyProfile->get_parentphone2().'</li>';
-                //$content .= '<li>'.$familyProfile->get_parentcity().'</li>';
-                //$content .= '<li>'.$familyProfile->get_parentstate().'</li>';
-                //$content .= '<li>'.$familyProfile->get_parentzip().'</li>';
-                //$content .= '<li>'.$familyProfile->get_parentcountry().'</li>';
-                //$content .= '<li>'.$familyProfile->get_patientfname().'</li>';
-                //$content .= '<li>'.$familyProfile->get_patientlname().'</li>';
-                //$content .= '<li>'.$familyProfile->get_patientRelation().'</li>';
-                //$content .= '<li>'.$familyProfile->get_patientdob().'</li>';
-                //$content .= '<li>'.$familyProfile->get_patientformpdf().'</li>';
-                //$content .= '<li>'.$familyProfile->get_patientnotes().'</li>';
-        
-
+     
             }
             else 
             {
