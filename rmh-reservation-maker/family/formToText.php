@@ -3,30 +3,21 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Takes mailForm data and outputs it to a textfile
+ * Code errrors
  */
 
+function formToText()
 
 
-/*function formToText()
+$formFile='formFile.txt';
 
-$textFile='./ / formFile.txt';
-$formHandle = fopen($textFile, 'a') or else (" Destination notreachable")
-$stringData=$textFile . " ");
+$formHandle = fopen(../family/mailform.php, 'a') else (" Destination not reachable")
+    
+$stringData= ../family/mailForm.php . " ");
+
 fwrite($formHandle, $stringData);
+
 fclose($formHandle);
 ?>
 
-function urlToText($randURL,$familyID)
-{
-    //stores the URL with the family ID in a text file
-    //the text file is in the wamp folder
-    $URLFile='../mail/URLs.txt';
-    $fh = fopen($URLFile, 'a') or die("can't open file");
-    $stringData=$randURL . " " . $familyID . " ";
-    fwrite($fh,$stringData);
-    fclose($fh);
-}
- * 
- */
