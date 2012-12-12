@@ -21,6 +21,26 @@ $family = retrieve_FamilyProfile($familyID);
             p.small {font-size:14px;text-align:center;}
             span.red {color:red;text-decoration:underline;}
         </style>
+        <script type="text/javascript">
+        function date()
+{
+	var today=new Date();
+        var month=today.getMonth();
+        var date=today.getDate();
+        var year=today.getFullYear();
+        var hour=today.getHours();
+        var ampm="am";
+        if(hour>12)
+            {
+            hour=hour-12;
+            ampm="pm";
+            }
+        var minute=today.getMinutes();
+        var display=document.getElementsByID("displayDate");
+        var fixedDate=month + ' ' + date + ', ' + year + ' at ' + hour + ':' + minute + ' ' + ampm;
+        return fixedDate;
+}
+    </script>
     </head>
     <body>
         
@@ -40,7 +60,8 @@ Our intended use is:
 
 <!--Requires the agreement and the form for the child data.
 Session variables as always.-->
-
+<!--Call the function date() and save the returned string to a session variable
+So like: $_SESSION['fixedDate2']=date();-->
 
     </body>
 </html>
