@@ -121,14 +121,33 @@ $statuses = array('approve'=>'Confirm', 'deny'=>'Deny'); //Status info that is s
     {
        //if there were errors, set it as session message
        setSessionMessage($errors, true);
+      if ($requestType == 'reservation')
+       {
        header('Location: '.BASE_DIR.'/SearchReservations.php');
+       }
+      
+     else  if ($requestType == 'profile')
+       {
+       header('Location: '.BASE_DIR.'./SearchProfileActivity.php');
+       }
     }
     else
     {
         //if there werer no errors, set the success message as session message.
        setSessionMessage($messages);
+    
+       if ($requestType == 'reservation')
+       {
        $requestId = sanitize($_POST['requestID']);
        $url = "/reservation/activity.php?type=reservation&request=".$requestId;
        header('Location: '.BASE_DIR.$url);
-    }
+       }
+      
+         else  if ($requestType == 'profile')
+       {
+       $requestId = sanitize($_POST['requestID']);
+       $url = "/reservation/activity.php?type=profile&request=".$requestId;
+       header('Location: '.BASE_DIR.$url);
+       }
+      }
 ?>
