@@ -229,8 +229,7 @@ if($showForm == true)
          <label for="parentfirstname">Parent First Name</label>         
          <input class="formt formbottom" id="parentfirstname" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($parentfname); ?>" onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/>
           
-           
-           <input class="formsubmit"type="submit" value="Submit" name="submit" />
+         <input class="formsubmit"type="submit" value="Submit" name="submit" />
        </form>            
 
      <?php

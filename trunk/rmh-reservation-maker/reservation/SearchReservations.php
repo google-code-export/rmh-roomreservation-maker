@@ -24,9 +24,9 @@
  * Searches through Reservations table for specified terms and displays
  * them in a table format
 
- * @author Michael Pagliuca, Yue Li
+ * @author Kristen Gentle, Bruno Constantino
 
- * @version May 2, 2012
+ * @version December 12, 2012
 
  */
 
@@ -224,7 +224,7 @@ if ($showReservation == true) {
 
             echo '</table>';
         }
-
+     
 // list to SW choose with Reservation he want to change    
         echo '<br><br>Choose an Request ID that you desire to modify or delete: <br>';
 

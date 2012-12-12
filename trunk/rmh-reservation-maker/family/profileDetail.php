@@ -1,19 +1,26 @@
 <?php
 /*
- * @author Jessica Cheong
- * @co-author William Lodise
+ * @current author Bruno Constantino
+ * @current author Kristen Gentle
  * 
- * @version May 1, 2012
+ * @past author Jessica Cheong
+ * @past co-author William Lodise
+ * 
+ * current authors modidied past authors code
+ * 
+ * @version December 12, 2012
  *
- * Family Search / New Room Request module for RMH-RoomReservationMaker.
+ *  Family Profile Detail
  * 
- * This page allows SW to search families by name, and select the correct family (from a list if more than one result)
- * When the family is selected, their profile information is displayed and
+ * This page allows SW to search a family profile by First Name or Last Name.
+ * If the SW chooses to search by First Name, The family with the name requested is displayed.
+ * Like wise happen if the SW choosees so search by Last Name.
+ * 
  * two options are given to the SW:
  * 
- * 1. modify the profile.
- * 2. continue with the room reservation with the selected family profile.
- * 
+ * 1. Search First Name.
+ * 2. Search Last Name.
+  * 
  */
 
 session_start();
