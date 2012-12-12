@@ -37,7 +37,7 @@ $message = array();
 
 
 //if (isset($_POST['requestid']) && isset($_POST['familyid'])) {   //gets the Requestid passed down by the SearchReservation.php
-    $RequestID = $_POST['requestid'];
+    $RequestID = $_GET['id'];
 //}
 
 if (($RequestID) == 'Request ID') {
@@ -47,7 +47,7 @@ if (($RequestID) == 'Request ID') {
     $informationroom = retrieve_RoomReservationActivity_byRequestId($RequestID);
     $parentfname = $informationroom->get_parentFirstName();
     $parentlname = $informationroom->get_parentLastName();
-    $patientDiagnosis = $informationroom->get_patientDiagnosis();
+    //$patientDiagnosis = $informationroom->get_patientDiagnosis();
 }
 
 //if token works
@@ -186,7 +186,7 @@ if ($showForm == true) {
         Patient First Name<br>
         <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="Patient First Name" onfocus="if(this.value == 'Patient First Name'){ this.value = ''; }"/><br>
         Patient Diagnosis<br>        
-        <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value="<?php echo htmlspecialchars($patientDiagnosis); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/><br>
+        <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value="Diagnosis" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/><br>
         Notes<br>         
         <input class="formt" id="notes" type="text" name="Notes" value="Notes" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/><br>
         Parent Last Name<br>         
