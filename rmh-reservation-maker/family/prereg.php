@@ -1,4 +1,12 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Welcome to the reservation maker</title>
+    </head>
+    <body>
 <?php
+
+    session_start();
     include_once ('../mail/functions.php');
     include_once ('../permissions.php');
 /*
@@ -19,6 +27,7 @@ else
     $randURL=-1;
 }
 $familyID=getFamilyIDFromURL($randURL);//grabs the family ID associated with the URL
+$_SESSION['ID']=$familyID;
 if($familyID==-1)
 {
     header( "refresh:10;url=index.php" );
@@ -33,3 +42,5 @@ if($familyID==-1)
 }
 
 ?>
+    </body>
+</html>
