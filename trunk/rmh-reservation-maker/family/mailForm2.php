@@ -13,7 +13,7 @@ $family = retrieve_FamilyProfile($familyID);
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FORM</title>
+        <title>Step 1</title>
         <style>
             body {font-family:sans-serif, Arial, Centaur;font-size:17px;text-align:left;}
             h1.heading {font-size:24px;font-weight:bold;text-align:center;text-decoration: underline;}
@@ -21,6 +21,26 @@ $family = retrieve_FamilyProfile($familyID);
             p.small {font-size:14px;text-align:center;}
             span.red {color:red;text-decoration:underline;}
         </style>
+        <script type="text/javascript">
+        function date()
+{
+	var today=new Date();
+        var month=today.getMonth();
+        var date=today.getDate();
+        var year=today.getFullYear();
+        var hour=today.getHours();
+        var ampm="am";
+        if(hour>12)
+            {
+            hour=hour-12;
+            ampm="pm";
+            }
+        var minute=today.getMinutes();
+        var display=document.getElementsByID("displayDate");
+        var fixedDate=month + ' ' + date + ', ' + year + ' at ' + hour + ':' + minute + ' ' + ampm;
+        return fixedDate;
+}
+</script>
     </head>
     <body>
         
@@ -47,7 +67,8 @@ This agreement is entered between the parties with the intention to mitigate the
 <p>Smoking includes inhaling, exhaling, breathing, carrying, or possession of any lighted cigarette, cigar, pipe, other product containing any amount of tobacco or other similar lighted product. <span class="red">If the above agreement is breached, I {we} agree to pay a fine of $250 US Dollars.</span> I {we} also agree to indemify the entire risk of loss with respect to any damage, destruction, loss, or theft of the Equipment and any Placed Item, whether insured or not, whether such loss is partial or complete and from any cause at all, whether or not through any default or neglect of Ronald McDonald House.</p>
 
 <!--Some sort of agreement button-->
-
-
+<!--Call the function date() and save the returned string to a session variable
+So like: $_SESSION['fixedDate']=date();-->
+<a href="mailForm3.php">Temporary button</a>
     </body> 
 </html>

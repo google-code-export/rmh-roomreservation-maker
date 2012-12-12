@@ -84,7 +84,7 @@ form action='mailForm.php' method='post'>
 //links mailform.php to mailform2.php
 */
 
-$link=$_POST['mailform2.php'];
+$link='mailform2.php';
 echo "<a href='".$link."'>Lets get started</a>"
 
 ?>
