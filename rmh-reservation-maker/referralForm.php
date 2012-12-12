@@ -109,7 +109,7 @@ else
        }
     }
             //patient last name is not set
-            if( isset( $_POST['PatientLastName'] )&& !empty($_POST['PatientLastName'])){
+            if( isset( $_POST['PatientLastName'] )&& !empty($_POST['PatientLastName'])&& ($_POST['PatientLastName']!= 'Patient\'s Last Name')){
             $newPatientLastName = sanitize( $_POST['PatientLastName'] );
              }
              else{
@@ -118,7 +118,7 @@ else
                   
              }
              //patient first name is not set
-             if( isset( $_POST['PatientFirstName'] )&& !empty($_POST['PatientFirstName'])){
+             if( isset( $_POST['PatientFirstName'] )&& !empty($_POST['PatientFirstName'])&& ($_POST['PatientFirstName']!= 'Patient\'s First Name')){
             $newPatientFirstName = sanitize( $_POST['PatientFirstName'] );
              }
              else{
@@ -127,19 +127,19 @@ else
                   
              }         
             //patient diagnosis is not set
-            if( isset( $_POST['PatientDiagnosis'] ) && !empty($_POST['PatientDiagnosis'])){
+            if( isset( $_POST['PatientDiagnosis'] ) && !empty($_POST['PatientDiagnosis'])&& ($_POST['PatientDiagnosis']!= 'Patient Diagnosis and Reason for Stay')){
             $newPatientDiagnosis = sanitize( $_POST['PatientDiagnosis'] );
             }
             else { 
-                $message['PatientDiagnosis'] = '<p><font color="red">You must enter the Patient Diagnosis.</font></p>';
+                $message['PatientDiagnosis'] = '<p><font color="red">You must enter the Patient Diagnosis and Reason for Stay.</font></p>';
                 $showForm = true;
                 
             }
-            if( isset( $_POST['Notes'] )){
+            if( isset( $_POST['Notes'] ) && ($_POST['Notes']!='Notes')){
             $newNotes = sanitize( $_POST['Notes'] );
             }
             //parent last name is not set
-            if( isset( $_POST['ParentLastName'] )&& !empty($_POST['ParentLastName'])){
+            if( isset( $_POST['ParentLastName'] )&& !empty($_POST['ParentLastName']) && ($_POST['ParentLastName']!= 'Parent\'s Last Name')){
             $newParentLastName = sanitize( $_POST['ParentLastName'] );
              }
              else {
@@ -147,7 +147,7 @@ else
                   $showForm = true;  
              }
              //parent first name is not set
-            if( isset( $_POST['ParentFirstName'] ) && !empty($_POST['ParentFirstName'])){
+            if( isset( $_POST['ParentFirstName'] ) && !empty($_POST['ParentFirstName']) && ($_POST['ParentFirstName']!= 'Parent\'s First Name')){
             $newParentFirstName = sanitize( $_POST["ParentFirstName"] );
             }
             else {
@@ -217,17 +217,17 @@ if($showForm == true)
         <input name="enddate" type="date">
     <br><br>
     <label for="patientlname">Patient Last Name</label>
-         <input class="formt formtop" id="patientlname" type="text" name="PatientLastName" value="<?php echo htmlspecialchars($patientlname); ?>"/>
+         <input class="formt formtop" id="patientlname" type="text" name="PatientLastName" value="<?php echo htmlspecialchars($patientlname); ?>" onblur="if(this.value == '') { this.value = 'Patient\'s Last Name'; }" onfocus="if(this.value == 'Patient\'s Last Name'){ this.value = ''; }"/>
          <label for="patientfname">Patient First Name</label>
-         <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="<?php echo htmlspecialchars($patientfname); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/>
+         <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="<?php echo htmlspecialchars($patientfname); ?>" onblur="if(this.value == '') { this.value = 'Patient\'s First Name'; }" onfocus="if(this.value == 'Patient\'s First Name'){ this.value = ''; }"/>
          <label for="patientdiagnosis">Patient Diagnosis and Reason for Stay</label>        
-         <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" placeholder="Patient's diagnosis and reason for stay" <?php isset($newPatientDiagnosis) ? print ("value=\"$newPatientDiagnosis\"") : print("");?>/>
+         <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value="Patient Diagnosis and Reason for Stay" onblur="if(this.value == '') { this.value = 'Patient Diagnosis and Reason for Stay'; }" onfocus="if(this.value == 'Patient Diagnosis and Reason for Stay'){ this.value = ''; }"/>
          <label for="notes">Notes</label>         
-         <input class="formt" id="notes" type="text" name="Notes" placeholder="Notes" <?php isset($patientnotes) ? print ("value=\"$patientnotes\"") : print("");?> />
+         <input class="formt" id="notes" type="text" name="Notes" <?php isset($patientnotes) ? print ("value=\"$patientnotes\"") : print("Notes");?> onblur="if(this.value == '') { this.value = 'Notes'; }" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/>
          <label for="parentlname">Parent Last Name</label>         
-         <input class="formt" id="parentlname" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($parentlname); ?>" onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/>
+         <input class="formt" id="parentlname" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($parentlname); ?>" onblur="if(this.value == '') { this.value = 'Parent\'s Last Name'; }" onfocus="if(this.value == 'Parent\'s Last Name'){ this.value = ''; }"/> 
          <label for="parentfirstname">Parent First Name</label>         
-         <input class="formt formbottom" id="parentfirstname" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($parentfname); ?>" onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/>
+         <input class="formt formbottom" id="parentfirstname" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($parentfname); ?>" onblur="if(this.value == '') { this.value = 'Parent\'s First Name'; }" onfocus="if(this.value == 'Parent\'s First Name'){ this.value = ''; }"/>
           
          <input class="formsubmit"type="submit" value="Submit" name="submit" />
        </form>            
