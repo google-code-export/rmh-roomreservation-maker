@@ -135,25 +135,25 @@ $messages = array();
         <p>Please use this page to change your default password, if you haven't already done so.</p>
        <form method="post" action="<?php echo BASE_DIR; ?>/changeAccountSettings.php">
            <div>
-                        <label  for="edit_old_pass">Old Password</label>
-                        <input class="formt formtop" id="edit_old_pass" type="password" name="edit_old_pass" onfocus="if(this.value == 'Old Password') { this.value = ''; }" value="" />
+                        <label  for="edit_old_pass"></label>
+                        <input class="formt formtop" id="edit_old_pass" type="password" name="edit_old_pass" placeholder="Old Password" />
                         <?php echo generateTokenField();
                         ?>
                      
                  </div>
                  <div>
-                        <label  for="edit_new_pass">New Password</label>
-                        <input class="formt" id="edit_new_pass" type="password" name="edit_new_pass"  onfocus="if(this.value == 'New Password') { this.value = ''; }" value="" />
+                        <label  for="edit_new_pass"></label>
+                        <input class="formt" id="edit_new_pass" type="password" name="edit_new_pass" placeholder="New Password"/>
                  </div>
                  <div>
-                        <label for="edit_verify_pass">Verify Password</label>
-                        <input class="formt formbottom" id="edit_verify_pass" type="password" name="edit_verify_pass"  onfocus="if(this.value == 'Verify Password') { this.value = ''; }"  value=""/>
+                        <label for="edit_verify_pass"></label>
+                        <input class="formt formbottom" id="edit_verify_pass" type="password" name="edit_verify_pass"  placeholder="Verify Password"/>
                  </div>
                 
-                <p><input class="fomsubmit" type="submit" name="Submit" value="Submit" /></p>
+                <p><input class="formsubmit" type="submit" name="Submit" value="Submit" /></p>
                 
         </form>
-        </br></br>
+        <br>
     <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='./help/accountmanage.php'" />
         <?php 
             }
