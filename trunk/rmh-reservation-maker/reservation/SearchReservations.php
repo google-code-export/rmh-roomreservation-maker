@@ -231,9 +231,14 @@ if ($showReservation == true) {
         echo '   <select name="Request">
                <option value = "Request ID">Request ID</option> ';
 
+        $requestIDArray = array();
         foreach ($foundReservations as $reservation) {
-        $rmhRequestID = $reservation->get_roomReservationRequestID();
-            echo '    <option value = "'.$rmhRequestID.'">'.$rmhRequestID.'</option>';
+        $requestIDArray[] = $reservation->get_roomReservationRequestID();}
+
+        $rmhRequestID= array_values(array_unique($requestIDArray));
+        
+        foreach ($rmhRequestID as $reservation){
+            echo '    <option value = "'.$reservation.'">'.$reservation.'</option>';
         }
         echo'        </select>   <br><br>';
 
