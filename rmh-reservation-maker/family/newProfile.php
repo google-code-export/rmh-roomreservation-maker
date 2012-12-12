@@ -345,119 +345,120 @@ if (!empty($message)) {
                 <input class="formtop formt" 
                        type="text" 
                        name="ParentFirstName" 
-                       placeholder="Parent first name"
+                       onfocus="if(this.value == 'Parent First Name') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Parent First Name'; }"
+                       value ="Parent First Name"
                        <?php isset($parentFirstName) ? print ("value=\"$parentFirstName\"") : print("");?>
                        />
             
                 <input class="formt" 
                        type="text" 
                        name="ParentLastName" 
-                       placeholder="Parent last name"
-                       <?php isset($parentLastName) ? print ("value=\"$parentLastName\"") : print("");?>
+                        onfocus="if(this.value == 'Parent Last Name') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Parent Last Name'; }" value="Parent Last Name"                       <?php isset($parentLastName) ? print ("value=\"$parentLastName\"") : print("");?>
                        />
             
                 <input class="formt" 
                        type="text" 
                        name="Email" 
-                       placeholder="Parent's email address"
+                       onfocus="if(this.value == 'Parent Email Address') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Parent Email Address'; }" value="Parent Email Address"
                        <?php isset($parentEmail) ? print ("value=\"$parentEmail\"") : print("");?>            
                        />
                 
                 <input class="formt" 
                        type="text" 
                        name="Phone1" 
-                       placeholder="Parent's primary phone number"
+                       onfocus="if(this.value == 'Parent\'s Primary Phone Number') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Parent\'s Primary Phone Number'; }" value="Parent's Primary Phone Number"
                        <?php isset($phone1) ? print ("value=\"$phone1\"") : print("");?>
                        />
                 
                 <input class="formt" 
                        type="text" 
                        name="Phone2" 
-                       placeholder="Parent's secondary phone number"
+                       onfocus="if(this.value == 'Parent\'s Secondary Phone Number') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Parent\'s Secondary Phone Number'; }" value="Parent's Secondary Phone Number"
                        <?php isset($phone2) ? print ("value=\"$phone2\"") : print("");?>
                        />
             
                 <input class="formt" 
                        type="text" 
                        name="Address" 
-                       placeholder="Address"
+                       onfocus="if(this.value == 'Address') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Address'; }" value="Address"
                        <?php isset($address) ? print ("value=\"$address\"") : print("");?>
                        />
                 
                 <input class="formt" 
                        type="text" 
                        name="City" 
-                       placeholder="City"
+                       onfocus="if(this.value == 'City') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'City'; }" value="City"
                        <?php isset($city) ? print ("value=\"$city\"") : print("");?>
                        />
                 
                 <input class="formt" 
                        type="text" 
                        name="State" 
-                       placeholder="State"
+                       onfocus="if(this.value == 'State') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'State'; }" value="State"
                        <?php isset($state) ? print ("value=\"$state\"") : print("");?>
                        />
                 
                 <input class="formt"  
                        type="text" 
                        name="ZipCode" 
-                       placeholder="ZipCode"
+                       onfocus="if(this.value == 'Zipcode') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Zipcode'; }" value="Zipcode"
                        <?php isset($zip) ? print ("value=\"$zip\"") : print("");?>        
                        />
             
                 <input class="formt" 
                        type="text" 
                        name="Country" 
-                       placeholder="Country"
+                       onfocus="if(this.value == 'Country') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Country'; }" value="Country"
                        <?php isset($country) ? print ("value=\"$country\"") : print("");?>
                        />
 
                 <input class="formt" 
                        type="text" 
                        name="PatientFirstName" 
-                       placeholder="Patient's first name"
+                       onfocus="if(this.value == 'Patient\'s First Name') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Patient\'s First Name'; }" value="Patient's First Name"
                        <?php isset($patientFirstName) ? print ("value=\"$patientFirstName\"") : print("");?>
                        />
 
                 <input class="formt" 
                        type="text" 
                        name="PatientLastName" 
-                       placeholder="Patient's last name"
+                       onfocus="if(this.value == 'Patient\'s Last Name') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Patient\'s Last Name'; }" value="Patient's Last Name"
                        <?php isset($patientLastName) ? print ("value=\"$patientLastName\"") : print("");?>
                        />
 
                 <input class="formt"  
                        type="text" 
                        name="PatientRelation" 
-                       placeholder="Parent's relationship toward patient"
+                       onfocus="if(this.value == 'Patient\'s Relationship Toward Parent') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Patient\'s Relationship Toward Parent'; }" value="Patient's Relationship Toward Parent"
                        <?php isset($patientRelation) ? print ("value=\"$patientRelation\"") : print("");?>                    
                        />
 
                 <input class="formt"
                        type="date"
                        name="PatientDOB"
-                       placeholder="Patient's date of birth"
+                       onfocus="if(this.value == 'Patient\'s Date of Birth') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Patient\'s Date of Birth'; }" value="Patient\'s Date of Birth"
                        <?php // isset($patientDateOfBirth) ? print ("value=\"$patientDateOfBirth\"") : print("");?>
                        />
 
                 <input class="formt" 
                        type="text" 
                        name="PatientDiagnosis" 
-                       placeholder="Patient's current diagnosis"
+                       onfocus="if(this.value == 'Patient\'s Current Diagnosis') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Patient\'s Current Diagnosis'; }" value="Patient's Current Diagnosis"
                        <?php isset($patientFormPDF) ? print ("value=\"$patientFormPDF\"") : print("");?>
                        />
 
                 <input class="formt" 
                        type="text" 
                        name="PatientNote" 
-                       placeholder="Notes on patient"
+                       onfocus="if(this.value == 'Notes on Patient') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Notes on Patient'; }" value="Notes on Patient"
                        <?php isset($patientNote) ? print ("value=\"$patientNote\"") : print("");?>
                        />
 
                 <input class="formt formbottom" 
                        type="text" 
                        name="swNote" 
-                       placeholder="Anything you would like to note"
+                       onfocus="if(this.value == 'Anything you would like to note') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Anything you would like to note'; }" value="Anything you would like to note"
+
                        <?php isset($profileActityNotes) ? print ("value=\"$profileActityNotes\"") : print("");?>
                        />
             </div>
