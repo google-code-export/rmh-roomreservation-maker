@@ -107,7 +107,7 @@ function searchForReservations() {
     <div id="content">
 
         <form name="SearchReservations" method="post" action="SearchReservations.php">
-<?php echo generateTokenField(); ?>
+            <?php echo generateTokenField(); ?>
 
             <select class="formt formtop"name="searchType">
                 <option value = "Select Search Type">Select Search Type</option>
@@ -127,142 +127,124 @@ function searchForReservations() {
             <input class="formsubmit"type="submit" value="Search" name="enterSearch" />
 
         </form>
-<?php
-if ($showReservation == true) {
-    $type = $_POST['searchType'];
-    $foundReservations = searchForReservations();
+        <?php
+        if ($showReservation == true) {
+            $type = $_POST['searchType'];
+            $foundReservations = searchForReservations();
 
-    if (empty($foundReservations)) {
-        echo "<br>No data matches your selections ";
-    } else {
+            if (empty($foundReservations)) {
+                echo "<br>No data matches your selections ";
+            } else {
 
-        echo '<br>';
+                echo '
+            <table border = "2" cellspacing = "10" cellpadding = "10">
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Social Worker  Name</th>
+                        <th>Staff  Name</th>
+                        <th>Parent  Name</th>
+                        <th>Reservation creation date </th>
+                        <th>Begin Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Modify</th>
+                    </tr>
+                </thead>
+                <tbody>';
 
-        echo '<br><br>
-            <table border = "2" cellspacing = "10" cellpadding = "10">';
-        echo '<thead>
-            <tr>
-            <th>Request ID</th>
-            <th>Social Worker  Name</th>
-            <th>Staff  Name</th>
-            <th>Parent  Name</th>
-           <th>Reservation creation date </th>
-           <th>Begin Date</th>
-           <th>End Date</th>
-           <th>Status</th>
-           <th>Modify</th>
-           
-            </thead>
-            <tbody>';
+                if ($type == "Request ID") {
+                    $rmhRequestID = $foundReservations->get_roomReservationRequestID();
+                    $rmhSocialWorkerName = $foundReservations->get_swLastName() . ", " . $foundReservations->get_swFirstName();
+                    $rmhStaffName = $foundReservations->get_rmhStaffLastName() . ", " . $foundReservations->get_rmhStaffFirstName();
+                    $rmhparentName = $foundReservations->get_parentLastName() . ", " . $foundReservations->get_parentFirstName();
+                    $rmhDatasubmit = $foundReservations->get_rmhDateStatusSubmitted();
+                    $rmhbeginDate = $foundReservations->get_beginDate();
+                    $rmhEndDate = $foundReservations->get_endDate();
+                    $rmhStatus = $foundReservations->get_status();
 
-        if ($type == "Request ID") {
-            $rmhRequestID = $foundReservations->get_roomReservationRequestID();
-            $rmhSocialWorkerName = $foundReservations->get_swLastName() . ", " . $foundReservations->get_swFirstName();
-            $rmhStaffName = $foundReservations->get_rmhStaffLastName() . ", " . $foundReservations->get_rmhStaffFirstName();
-            $rmhparentName = $foundReservations->get_parentLastName() . ", " . $foundReservations->get_parentFirstName();
-            $rmhDatasubmit = $foundReservations->get_rmhDateStatusSubmitted();
-            $rmhbeginDate = $foundReservations->get_beginDate();
-            $rmhEndDate = $foundReservations->get_endDate();
-            $rmhStatus = $foundReservations->get_status();
+                    echo
+                    '<tr>
+                    <td>' . $rmhRequestID . '</td>
+                    <td>' . $rmhSocialWorkerName . '</td>
+                    <td>' . $rmhStaffName . '</td>
+                    <td>' . $rmhparentName . '</td>
+                    <td>' . $rmhDatasubmit . '</td>
+                    <td>' . $rmhbeginDate . '</td>
+                    <td>' . $rmhEndDate . '</td>
+                    <td>' . $rmhStatus . '</td>';
+                    if (getUserAccessLevel() > 1) {
+                        //if the user is an approver, let the user modify the status
+                        $link = '<a href="' . BASE_DIR . '/reservation/activity.php?type=reservation&request=' . $rmhRequestID . '">' . "Change Status" . '</a>';
+                        echo '<td>' . $link . '</td>';
+                    } else {
+                        echo '<td>' . $rmhStatus . '</td>';
+                    }
+                    echo '</tr>';
+                } else {
 
-            echo '<tr>';
-            echo '<td>' . $rmhRequestID . '</td>';
-            echo '<td>' . $rmhSocialWorkerName . '</td>';
-            echo '<td>' . $rmhStaffName . '</td>';
-            echo '<td>' . $rmhparentName . '</td>';
-            echo '<td>' . $rmhDatasubmit . '</td>';
-            echo '<td>' . $rmhbeginDate . '</td>';
-            echo '<td>' . $rmhEndDate . '</td>';
-            echo '<td>' . $rmhStatus . '</td>';
-            if (getUserAccessLevel() > 1) {
-                //if the user is an approver, let the user modify the status
-                $link = '<a href="' . BASE_DIR . '/reservation/activity.php?type=reservation&request=' . $rmhRequestID . '">' . "Change Status" . '</a>';
+                    foreach ($foundReservations as $reservation) {
 
-                echo '<td>' . $link . '</td>';
-            }
-            else
-                echo '<td>' . $rmhStatus . '</td>';
-
-
-
-            echo '</tr>';
-        }
-        else {
-
-            foreach ($foundReservations as $reservation) {
-
-                $rmhRequestID = $reservation->get_roomReservationRequestID();
-                $rmhSocialWorkerName = $reservation->get_swLastName() . ", " . $reservation->get_swFirstName();
-                $rmhStaffName = $reservation->get_rmhStaffLastName() . ", " . $reservation->get_rmhStaffFirstName();
-                $rmhparentName = $reservation->get_parentLastName() . ", " . $reservation->get_parentFirstName();
-                $rmhDatasubmit = $reservation->get_rmhDateStatusSubmitted();
-                $rmhbeginDate = $reservation->get_beginDate();
-                $rmhEndDate = $reservation->get_endDate();
-                $rmhStatus = $reservation->get_status();
+                        $rmhRequestID = $reservation->get_roomReservationRequestID();
+                        $rmhSocialWorkerName = $reservation->get_swLastName() . ", " . $reservation->get_swFirstName();
+                        $rmhStaffName = $reservation->get_rmhStaffLastName() . ", " . $reservation->get_rmhStaffFirstName();
+                        $rmhparentName = $reservation->get_parentLastName() . ", " . $reservation->get_parentFirstName();
+                        $rmhDatasubmit = $reservation->get_rmhDateStatusSubmitted();
+                        $rmhbeginDate = $reservation->get_beginDate();
+                        $rmhEndDate = $reservation->get_endDate();
+                        $rmhStatus = $reservation->get_status();
 
 
-                echo '<tr>';
-                echo '<td>' . $rmhRequestID . '</td>';
-                echo '<td>' . $rmhSocialWorkerName . '</td>';
-                echo '<td>' . $rmhStaffName . '</td>';
-                echo '<td>' . $rmhparentName . '</td>';
-                echo '<td>' . $rmhDatasubmit . '</td>';
-                echo '<td>' . $rmhbeginDate . '</td>';
-                echo '<td>' . $rmhEndDate . '</td>';
+                        echo '<tr>';
+                        echo '<td>' . $rmhRequestID . '</td>';
+                        echo '<td>' . $rmhSocialWorkerName . '</td>';
+                        echo '<td>' . $rmhStaffName . '</td>';
+                        echo '<td>' . $rmhparentName . '</td>';
+                        echo '<td>' . $rmhDatasubmit . '</td>';
+                        echo '<td>' . $rmhbeginDate . '</td>';
+                        echo '<td>' . $rmhEndDate . '</td>';
+                        echo '<td>' . $rmhStatus . '</td>';
 
-                if (getUserAccessLevel() > 1) {
-                    //if the user is an approver, let the user modify the status
-                    $link = '<a href="' . BASE_DIR . '/reservation/activity.php?type=reservation&request=' . $rmhRequestID . '">' . $rmhStatus . '</a>';
 
-                    echo '<td>' . $link . '</td>';
+
+                        if (getUserAccessLevel() > 1) {
+                            //if the user is an approver, let the user modify the status
+                            $link = '<a href="' . BASE_DIR . '/reservation/activity.php?type=reservation&request=' . $rmhRequestID . '">' . $rmhStatus . '</a>';
+
+                            echo '<td>' . $link . '</td>';
+                        } else {
+                            echo '<td>'
+                            . '<form   action="' . BASE_DIR . '/reservation/EditReservation.php"'
+                            . '      method="post"'
+                            . '      style="color: white" >'
+                            . '  <input  type="hidden" '
+                            . '          name="requestid"'
+                            . '          value=' . $rmhRequestID
+                            . '  />'
+                            . '  <input  type="hidden" '
+                            . '          name="familiyid"'
+                            . '          value=' . $reservation->get_familyProfileId()
+                            . '  />'
+                            . '  <input  type="submit" '
+                            . '          value="Edit" '
+                            . '          class="formsubmit"'
+                            . '  />'
+                            . '</form>'
+                            . '</td>';
+                        }
+
+
+                        echo '</tr>';
+                    }
+
+                    echo '</table>';
                 }
-                else
-                    echo '<td>' . $rmhStatus . '</td>';
 
-
-                echo '</tr>';
+                $buttonCancel = "<a href='../reservation/SearchReservations.php' style='color: white' <input class='formsubmit' type='submit' name='Cancel' '/> Cancel</a>";
+                echo $buttonCancel;
             }
-
-            echo '</table>';
         }
-     
-// list to SW choose with Reservation he want to change    
-        echo '<br><br>Choose an Request ID that you desire to modify or delete: <br>';
-
-        echo '   <select name="Request">
-               <option value = "Request ID">Request ID</option> ';
-
-        $requestIDArray = array();
-        foreach ($foundReservations as $reservation) {
-        $requestIDArray[] = $reservation->get_roomReservationRequestID();}
-
-        $rmhRequestID= array_values(array_unique($requestIDArray));
-        
-        foreach ($rmhRequestID as $reservation){
-            echo '    <option value = "'.$reservation.'">'.$reservation.'</option>';
-        }
-        echo'        </select>   <br><br>';
-
-
-     
-        //ERROR:   Here I am not getting the Request!!!
-        if (isset($_POST['Request'])){
-        $IDchosen = $_POST['Request'];
-        }
-        else $IDchosen = "Request ID";
-        
-        $buttonEdit = "<a href='../reservation/EditReservation.php?id=$IDchosen' style='color: white' <input type='submit' name='Edit' class='formsubmit' '/> Edit </a>";
-        $buttonCancel = "<a href='../reservation/CancelReservation.php?id=$IDchosen' style='color: white' <input class='formsubmit' type='submit' name='Cancel' '/> Cancel</a>";
-
-        
-        $_SESSION['RequestID']= $IDchosen;
-         
-            echo $buttonEdit;
-            echo $buttonCancel;
-        
-    }
-}
-?>
+        ?>
 
         <?php
         include (ROOT_DIR . '/footer.php');
