@@ -32,9 +32,10 @@ include('header.php'); //including this will further include (globalFunctions.ph
             <?php echo generateTokenField(); ?>
                                     
             <label for="search_request_id">Enter request ID: </label>
-            <input type="text" name="search_request_id" id="search_request_id" />
-            
-            <input id="searchActivity" type="submit" name="Search" value="Submit"/>
+            <br>
+            <input class="formsingle formt" type="text" name="search_request_id" id="search_request_id" />
+            <br><br>
+            <input id="searchActivity" class="formsubmit" type="submit" name="Search" value="Submit"/>
        </form>
           <br><br>
     <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='./help/approvefamilyprofilechange.php'" />
