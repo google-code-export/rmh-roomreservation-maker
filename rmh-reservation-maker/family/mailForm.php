@@ -73,88 +73,7 @@ $family = retrieve_FamilyProfile($familyID);
 
 <!--needs some sort of agreement acceptance button or something-->
 
-<h1 class="heading">Step 1</h1>
 
-
-<p class="small">Please read the statement below, type in your last name, and click on the button at the bottom to continue.</p>
-<p class="intro">Acknowledgement of Status as Transient / Guest</p>
-
-<p>It is hereby acknowledged and understood that during my {our} stay at the Ronald McDonald House, my {our} status is nothing more than a guest or transient occupant of the Ronald McDonald House. I {we} am not a tenant or resident nor do I {we} make any such claim. <span class="red">I {we} understand that my reservation begins with the check in date my {our} social worker gives and ends with the date my {our} social worker gives. My {our} social worker must extend me {us} if medically needed. I {we} have made my {our} travel arrangements according to my {our} medical visits.</span> Any payments made by me {us} to the Ronald McDonald House in connection with my {our} stay here is not to be construed as rent but is merely intended to help defray the cost of the Ronald McDonald House in extending temporary quarters to me {us} occasioned by the treatment of me or a member of my {our} family at a nearby hospital. The length of my {our} stay at the Ronald McDonald House shall be determined by the Ronald McDonald House in its sole and absolute discretion and such determination shall be final and absolute. At the conclusion of my {our} stay, as determined by the Ronald McDonald House, I {we} agree to vacate the premises in accordance with the instructions issued by the Ronald McDonald House. It is expressly understood and agreed that if I {we} fail to so vacate, the Ronald McDonald House has the absolute right to remove me {us} and our possessions from the premises forthwith without resort to any legal proceedings whatsoever. I {we} agree to indemnify and hold harmless the Ronald McDonald House for any and all liability and expenses including attorneys fees, for which the Ronald McDonald House may become liable occasioned by my {our} failure to vacate when instructed to do so. I hereby agree that Management reserves the right to check all occupied rooms at any given time, to abide by the rules and regulations above, and to acknowledge my status as transient/guest.</p>
-
-<p class="intro">Smoking/Damage Agreement</p>
-
-<p>In addition to the above agreement, it is hereby acknowledged and understood that during my {our} stay at the Ronald McDonald House New York (“Ronald McDonald House”), smoking is prohibited in all areas of the Ronald McDonald House, including all guest rooms, hallways, and terraces. I {we} agree to inform guest or visitors about the no smoking rule and shall promptly give notice to the owner/agent about any incident of violation of the no smoking rule.</p>
-
-This agreement is entered between the parties with the intention to mitigate the following risks:
-<list>
-<ul>· Smoking increases the risk of fire</ul>
-<ul>· Smoking is likely to damage the premises</ul>
-<ul>· Adverse health effects of Secondhand smoke</ul>
-<ul>· Secondhand smoke is likely to drift from one unit to another</ul>
-<ul>· The increased maintenance and cleaning costs of smoking</ul>
-</list>
-<p>Smoking includes inhaling, exhaling, breathing, carrying, or possession of any lighted cigarette, cigar, pipe, other product containing any amount of tobacco or other similar lighted product. <span class="red">If the above agreement is breached, I {we} agree to pay a fine of $250 US Dollars.</span> I {we} also agree to indemify the entire risk of loss with respect to any damage, destruction, loss, or theft of the Equipment and any Placed Item, whether insured or not, whether such loss is partial or complete and from any cause at all, whether or not through any default or neglect of Ronald McDonald House.</p>
-
-<!--Some sort of agreement button and the name info here-->
-
-<h1 class="heading">Step 2</h1>
-
-<p class="intro">Guest Wellness Profile</p>
-
-<p>To ensure all of guests have a sick free stay, please take a minute to answer the following questions while you check in. Please check the appropriate box if it applies to you or anyone in your party who will be staying with you during this visit to the house.
-
-<p>Thank you!</p>
-
-<!--Wellness fill-ins go here, as well as a submission-->
-
-<h1 class="heading">Step 3</h1>
-
-<p class="intro">Image and Audio Release Agreement</p>
-
-<p>This consent form gives permission to the Ronald McDonald House New York to use the likeness, image, and audio of the undersigned to distribute and display in video, audio, web-site and printed form for promotional purposes</p>
-
-Our intended use is:
-<list><ul>In house orientation.</ul>
-<ul>Inform and promote Ronald McDonald House New York to corporate and individual sponsors through in-house and public events.</ul>
-<ul>Inform and promote Ronald McDonald House New York through television, cable, radio, web site and printed publications.</ul>
-</list>
-
-<p>I hereby give permission to Ronald McDonald House New York to use my likeness, image, and audio for the above stated purposes. Further, as a parent or gardian to the listed children under the age of 18 years, I extend this permission for the above stated purposes. </p>
-
-
-
-<h1 class="heading">Step 4</h1>
-
-<p class="intro">Review Information</p>
-
-<p>You are almost there! Please review the information below and resolve any red text! If everything is green, please type in your name, sign your name with your finger, and click on the button at the bottom of this page!</p>
-
-<fieldset>
-    <p class="intro">Acknowledgement of Status as Guest Form</p>
-        <p>You have accepted to this acknowledgement on <span id="displayDate"></span></p>
-</fieldset>
-<br/>
-<fieldset>
-    <p class="intro">Guest Wellness Profile Form</p>
-        You have indicated that someone in your party <?php if(isset($_SESSION['q1'])) { if($_SESSION['q1']==1) { echo 'DOES'; } else { echo 'DOES NOT'; }} ?> have a fever.
-        <br/>You have indicated that someone in your party DOES have a headache.
-        <br/>You have indicated that someone in your party DOES have muscle aches.
-        <br/>You have indicated that someone in your party DOES have tiredness & weakness.
-        <br/>You have indicated that someone in your party DOES have extreme exhaustion.
-        <br/>You have indicated that someone in your party DOES have stuffy nose & sneezing.
-        <br/>You have indicated that someone in your party DOES have a sore throat.
-        <br/>You have indicated that someone in your party DOES have a sore throat.
-        <br/>You have indicated that someone in your party HAS HAD CONTACT with someone that has/had the influenza, H1N1 influenza, measles, chicken pox, etc.
-    <br/>Go Back to This Form!
-</fieldset>
-<br/>
-<fieldset>
-    Image and Audio Release Agreement Form
-        You have accepted to this agreement on <!--onload this portion for the date. Call date()-->
-    <br/>Go Back to This Form!
-</fieldset>
-
-    First and last name
 
 
 
@@ -226,19 +145,7 @@ If Yes, please schedule arrangements with the Ronald McDonald House ahead of tim
     <br/>
     <br/> <input type="submit" value="Submit">
        </form>
-<?php   
-  function formToText($randURL,$familyID)
-{
-    //stores the URL with the family ID in a text file
-    //the text file is in the wamp folder
-    $URLFile='../mail/URLs.txt';
-    $fh = fopen($URLFile, 'a') or die("can't open file");
-    $stringData=$randURL . " " . $familyID . " ";
-    fwrite($fh,$stringData);
-    fclose($fh);
-}
 
-?>
              
   <!--<?php
      
