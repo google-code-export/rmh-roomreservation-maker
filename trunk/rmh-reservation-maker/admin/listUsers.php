@@ -73,7 +73,7 @@ function displayUsersTable($allUsers)
             echo '<tr>';
                 echo '<td>'.$user->get_usernameId().'</td>';
                 echo '<td><a class="viewUser" href="#" data-user="'.$user->get_userProfileId().'" data-group="'.$user->get_UserCategory().'">View</a></td>';
-                echo '<td>Edit</td>';
+                echo '<td><a class="editUser" href="#" data-user="'.$user->get_userProfileId().'" data-group="'.$user->get_UserCategory().'">Edit</a></td>';
                 echo '<td>Delete</td>';
             echo '</tr>';
         }
@@ -127,6 +127,23 @@ function displayUsersTable($allUsers)
            var user = $(this).data('user');
            var group = $(this).data('group');
            var url = '<?php echo BASE_DIR;?>/admin/userActionHandler.php?view=' + user + '&group=' + group;
+           $.ajax({
+                    type: "POST",
+                    url: url
+                    }).success(function(data){
+                        $('.modalBox').html(data);
+                        $('.overlay').fadeIn();
+                    }).error(function(error){
+                        $('.modalBox').html(error.responseText);
+                    });
+          });
+          
+        $('.editUser').click(function(evt){
+           evt.preventDefault();
+           evt.stopImmediatePropagation();
+           var user = $(this).data('user');
+           var group = $(this).data('group');
+           var url = '<?php echo BASE_DIR;?>/admin/userEditor.php?view=' + user + '&group=' + group;
            $.ajax({
                     type: "POST",
                     url: url

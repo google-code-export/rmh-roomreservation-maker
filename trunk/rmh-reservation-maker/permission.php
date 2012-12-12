@@ -63,7 +63,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['profileDetail.php']=1;
     $permission_array['report.php']=1; //reporting
     $permission_array['SearchReservations.php']=1;
-    $permission_array['changeAccountSettings.php'] = 1; //password change page (could be enhanced to a user information change page
+    $permission_array['changeAccountSettings.php'] = -1; //password change page (could be enhanced to a user information change page
     $permission_array['Reservationsearch.php']=1; //Reservation Search help page
     $permission_array['CreatingFamilyProfile.php']=1; //Creating a new family profile help page
     $permission_array['SearchingFamilyProfile.php']=1; //Searching for a family profile
@@ -84,7 +84,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['userActionHandler.php'] = 3;
     $permission_array['ViewUserHelp.php'] = 3; //Adding View User help page to admin's permissions
     $permission_array['AddaUser.php'] = 3; //Added permission for the adding a user help page
-
+    $permission_array['userEditor.php'] = 3;
     $current_page = getCurrentPage(); //current page
     
     //Log-in security
