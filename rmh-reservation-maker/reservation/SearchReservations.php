@@ -111,6 +111,7 @@ function searchForReservations() {
 
             <select class="formt formtop"name="searchType">
                 <option value = "Select Search Type">Select Search Type</option>
+                <option value = "Request ID ">Request ID</option>
                 <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
                 <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
                 <option value = "Family (Last Name)">Family (Last Name)</option>
@@ -243,25 +244,18 @@ if ($showReservation == true) {
         echo'        </select>   <br><br>';
 
 
-        $buttonEdit = "<a href='../reservation/EditReservation.php' style='color: white' <input type='submit' name='Edit' class='formsubmit' '/> Edit </a>";
-        $buttonCancel = "<a href='../reservation/CancelReservation.php' style='color: white' <input class='formsubmit' type='submit' name='Cancel' '/> Cancel</a>";
-
+     
         //ERROR:   Here I am not getting the Request!!!
         if (isset($_POST['Request'])){
         $IDchosen = $_POST['Request'];
         }
         else $IDchosen = "Request ID";
         
+        $buttonEdit = "<a href='../reservation/EditReservation.php?id=$IDchosen' style='color: white' <input type='submit' name='Edit' class='formsubmit' '/> Edit </a>";
+        $buttonCancel = "<a href='../reservation/CancelReservation.php?id=$IDchosen' style='color: white' <input class='formsubmit' type='submit' name='Cancel' '/> Cancel</a>";
+
+        
         $_SESSION['RequestID']= $IDchosen;
-        foreach ($foundReservations as $reservation)
-        {
-            if ($IDchosen == $reservation->get_roomReservationRequestID())
-            {
-                $_SESSION['ArrayRequestRoomChosen'] = $reservation;
-            }
-            else 
-                $_SESSION['ArrayRequestRoomChosen'] = "";
-        }
          
             echo $buttonEdit;
             echo $buttonCancel;

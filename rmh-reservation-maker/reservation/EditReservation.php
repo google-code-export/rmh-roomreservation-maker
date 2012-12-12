@@ -35,21 +35,25 @@ $showForm = false;
 $showReport = false;
 $message= array();
 
-          $ArrayRequestRoom = $_SESSION['ArrayRequestRoomChosen'];
-          $RequestID = $_SESSION['RequestID'];
-          
-          
+         
+      //   $RequestID = $_SESSION['RequestID'];      //using SESSION 
+      
+ if(isset($_GET['id']) )
+    {   //gets the Requestid passed down by the SearchReservation.php
+            $RequestID = sanitize( $_GET['id'] );           //USING DYNAMIC LINK
+    }
+   //  $RequestID =2;
         if(($RequestID) == 'Request ID'){
                 $parentlname= "ParentLastName";
                 $parentfname= "ParentFirstName";        
         }
         else{
-                $family = retrieve_FamilyProfile($IDFamily);
-
-                $parentfname= $ArrayRequestRoom->get_parentFirstName();
-                $parentlname= $ArrayRequestRoom->get_parentLastName();
+                $informationroom = retrieve_RoomReservationActivity_byRequestId($RequestID); 
+                $parentfname= $informationroom->get_parentFirstName();
+                $parentlname= $informationroom->get_parentLastName();
+                $patientDiagnosis = $informationroom->get_patientDiagnosis();
             }
-
+       
 //if token works
     if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
@@ -209,7 +213,7 @@ if($showForm == true)
          Patient First Name<br>
          <input class="formt" id="patientfname" type="text" name="PatientFirstName" value="Patient First Name" onfocus="if(this.value == 'Patient First Name'){ this.value = ''; }"/><br>
          Patient Diagnosis<br>        
-         <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value=PatientDiagnosis onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/><br>
+         <input class="formt" id="patientdiagnosis" type="text" name="PatientDiagnosis" value="<?php echo htmlspecialchars($patientDiagnosis); ?>" onfocus="if(this.value == 'PatientDiagnosis'){ this.value = ''; }"/><br>
          Notes<br>         
          <input class="formt" id="notes" type="text" name="Notes" value="Notes" onfocus="if(this.value == 'Notes'){ this.value = ''; }"/><br>
          Parent Last Name<br>         
