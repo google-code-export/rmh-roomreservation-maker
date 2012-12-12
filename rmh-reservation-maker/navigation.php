@@ -48,14 +48,14 @@ else if($userAccess === 1)
  ?>
     <li><a href="<?php echo BASE_DIR.'/family/FamilyProfileMenu.php';?>">Family Profile</a></li>
     <li><a href="<?php echo BASE_DIR.'/report.php';?>">Report</a></li> 
-    <li><a href="<?php echo BASE_DIR.'/SearchReservations.php';?>">Search Reservations</a></li>
+    <li><a href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</a></li>
 <?php  
 }
 else if($userAccess === 2)
 {
     //Navigation for RMH reservation managers
  ?>
-    <li><a href="<?php echo BASE_DIR.'/SearchReservations.php';?>">Search Reservations</a></li>
+    <li><a href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</a></li>
     <li><a href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Approve Family Profile Changes</a></li>
     
 <?php  
