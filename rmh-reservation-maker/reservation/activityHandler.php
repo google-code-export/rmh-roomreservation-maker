@@ -123,10 +123,10 @@ $statuses = array('approve'=>'Confirm', 'deny'=>'Deny'); //Status info that is s
        setSessionMessage($errors, true);
       if ($requestType == 'reservation')
        {
-       header('Location: '.BASE_DIR.'/SearchReservations.php');
+       header('Location: '.BASE_DIR.'/reservation/SearchReservations.php');
        }
       
-     else  if ($requestType == 'profile')
+     else if ($requestType == 'profile')
        {
        header('Location: '.BASE_DIR.'./SearchProfileActivity.php');
        }
@@ -143,11 +143,11 @@ $statuses = array('approve'=>'Confirm', 'deny'=>'Deny'); //Status info that is s
        header('Location: '.BASE_DIR.$url);
        }
       
-         else  if ($requestType == 'profile')
+       else if ($requestType == 'profile')
        {
        $requestId = sanitize($_POST['requestID']);
        $url = "/reservation/activity.php?type=profile&request=".$requestId;
        header('Location: '.BASE_DIR.$url);
        }
-      }
+     }
 ?>
