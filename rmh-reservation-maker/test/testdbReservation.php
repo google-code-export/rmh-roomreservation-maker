@@ -23,6 +23,12 @@ test_retrieve_RoomReservationActivity_byStatus("Unconfirmed");
 echo ">>>TESTING: retrieve_FamilyLastName_RoomReservationActivity, expect 1 record to be found. (Miller)"."</br>";
 test_retrieve_FamilyLastName_RoomReservationActivity("Miller");
 
+echo ">>>TESTING: retrieve_SocialWorkerLastName_RoomReservationActivity, expect 2 to be found. (Tove)"."</br>";
+test_retrieve_SocialWorkerLastName_RoomReservationActivity("Tove");
+
+echo ">>>TESTING: retrieve_RMHStaffLastName_RoomReservationActivity, expect 2 to be found. (Bermudez)"."</br>";
+test_retrieve_RMHStaffLastName_RoomReservationActivity("Bermudez");
+
 function test_retrieve_all_dbRoomReservationActivity_byHospitalAndDate($hospitalAffiliation, $beginDate, $endDate)
 {
     $reservations = retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffiliation, $beginDate, $endDate);
@@ -92,6 +98,24 @@ else
 }
 }
 
+function test_retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
+    $reservations=retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName);
+    
+    if ($reservations == false)
+    echo "</br>". "No Reservations were Found.". "</br></br></br>";
+  
+else
+{
+    
+    echo  "</br>". "Records Found:".  "</br>";
+   
+    foreach ($reservations as $reservation)
+    {
+         display_reservation($reservation);
+    }
+}
+}
+
 
 function test_retrieve_RoomReservationActivity_byStatus($status){
     $reservations = retrieve_RoomReservationActivity_byStatus($status);
@@ -127,6 +151,25 @@ function test_retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
          display_reservation($reservation);
     }
     }
+}
+
+function test_retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName){
+    $reservations = retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName);
+    
+    if ($reservations == false)
+    echo "</br>". "No Reservations were Found.". "</br></br></br>";
+  
+else
+{
+    
+    echo  "</br>". "Records Found:".  "</br>";
+   
+    foreach ($reservations as $reservation)
+    {
+         display_reservation($reservation);
+         
+    }
+}
 }
 
 function test_retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId){
