@@ -13,7 +13,7 @@ $family = retrieve_FamilyProfile($familyID);
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FORM</title>
+        <title>step 3</title>
         <style>
             body {font-family:sans-serif, Arial, Centaur;font-size:17px;text-align:left;}
             h1.heading {font-size:24px;font-weight:bold;text-align:center;text-decoration: underline;}
@@ -62,6 +62,7 @@ Our intended use is:
 Session variables as always.-->
 <!--Call the function date() and save the returned string to a session variable
 So like: $_SESSION['fixedDate2']=date();-->
+<a href="mailForm5.php">Temporary button</a>
 
     </body>
 </html>

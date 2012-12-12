@@ -13,7 +13,7 @@ $family = retrieve_FamilyProfile($familyID);
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FORM</title>
+        <title>Step 2</title>
         <style>
             body {font-family:sans-serif, Arial, Centaur;font-size:17px;text-align:left;}
             h1.heading {font-size:24px;font-weight:bold;text-align:center;text-decoration: underline;}
@@ -33,9 +33,8 @@ $family = retrieve_FamilyProfile($familyID);
 <p>Thank you!</p>
 
 <!--Wellness fill-ins go here, as well as a submission button.
-Remember to save the information in a session variable $_SESSION['ques1']=1 (or 0), etc.
--->
-
+Remember to save the information in a session variable $_SESSION['ques1']=1 (or 0), etc.-->
+<a href="mailForm4.php">Temporary button</a>
 
     </body>
 </html>
