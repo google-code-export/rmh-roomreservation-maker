@@ -72,9 +72,22 @@ $family = retrieve_FamilyProfile($familyID);
 <p>You may have additional forms to fill out. The person assisting you during your check-in will let you know based on your needs.</p>
 
 <!--needs some sort of agreement acceptance button or something-->
-<!--Call the function date() and save the returned string to a session variable
-So like: $_SESSION['fixedDate']=date();-->
+<?php
+/*
+header("Location: family/mailForm2.php");
+/*
+form action='mailForm.php' method='post'>
+<input type='text' name='link'>
+<input type='submit' value='mailForm.php'>
+</form>
 
+//links mailform.php to mailform2.php
+*/
+
+$link=$_POST['mailform2.php'];
+echo "<a href='".$link."'>Lets get started</a>"
+
+?>
 
 
 
@@ -84,14 +97,22 @@ So like: $_SESSION['fixedDate']=date();-->
     <br>     
     Middle Initial<input type= "text" name= "Middle Initial" value="m" size="2" />
     <br>
-    Last Name:<input type = "text" name = "Last Name" value = "<?php if(isset($family)){ echo $family->get_patientlname(); }else echo 'fname';?>" size = "14" />
+    Last Name:<input type = "text" name = "Last Name" value = "
+        
+    <?php if(isset($family)){ echo $family->get_patientlname(); }else echo 'fname';?>" size = "14" />
     <br> <br>
     
     
     #1. Does anyone with you have any fevers, headaches? <select name="ques1" >
         <option>No</option>
-        <option>Yes</option>
-    </select> <br> <br>
+        <option>Yes</option> 
+        <? 
+        if(yes)
+            ;
+        else
+            return 0;
+        ?>
+    </select> <br> <br> 
     #2. Do you or anyone in your party currently have a headache? <select name="ques2" >
         <option>No</option>
         <option>Yes</option>
