@@ -119,7 +119,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
                  * 
                  */
                 //SEPERATE PATIENT FROM PARENT
-                $content = "<b>Patient Information</b><br />    
+                $content = "<b>Parent Information</b><br />    
                     <table cellpadding=15 cellspacing=50>
                             <tr>
                                     <td><b>First Name</b></td>
