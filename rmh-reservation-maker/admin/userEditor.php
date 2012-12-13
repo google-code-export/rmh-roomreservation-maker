@@ -145,31 +145,6 @@ else
     $errors['invalid_request'] = 'Unknown request';
 }
 
-if(empty($errors))
-{
-    echo "<h2>User Detail</h2>";
-    echo '<table cellpadding="3">';
-    /*foreach($profile as $title=>$value)
-    {
-        echo '<tr>
-                <td style="text-align:right; padding-right: 10px;">
-                    <strong>'.$title.'</strong>
-                </td>
-
-                <td>'
-                    .$value.
-                '</td>
-                </tr>';
-    }*/
-    echo '</table>';
-}
-else
-{
-    echo "Error";
-    echo '<div style="color: #ff3300;">';
-        echo implode('<br />', $errors);
-    echo '</div>';
-}
 
 function adminUpdate()
 {
@@ -178,24 +153,22 @@ function adminUpdate()
 {
             $profileObjArray = retrieve_UserProfile_RMHAdmin($user_profile_id);
             $profileObj = is_array($profileObjArray) ? current($profileObjArray) : false;
-            if($profileObj)
+      if($profileObj)
             {               
              $profileObj->set_usernameId($_POST["Admin_Username"]);
              $profileObj->set_userCategory($_POST["Admin_Category"]);
              $profileObj->set_userEmail($_POST["Admin_Email"]);
              
-             $profileObjArray1 = update_UserProfile($user_profile_id);
-             $profileObj1 = is_array($profileObjArray1) ? current($profileObjArray1) : false;
-             if($profileObj1)
+             $ReturnValue = update_UserProfile($user_profile_id);
+        if($ReturnValue)
              {
              $profileObj->set_rmhStaffTitle($_POST["Admin_Title"]);
              $profileObj->set_rmhStaffFirstName($_POST["Admin_FirstName"]);
              $profileObj->set_rmhStaffLastName($_POST["Admin_LastName"]);
              $profileObj->set_rmhStaffPhone($_POST["Admin_Phone"]);
              
-             $profileObjArray2 = update_RMHStaffProfile($user_profile_id);
-             $profileObj2 = is_array($profileObjArray2) ? current($profileObjArray2) : false;
-             if($profileObj2)
+             $ReturnValue1 = update_RMHStaffProfile($user_profile_id);
+             if($ReturnValue1)
              {
                  header('Location: admin/listUsers.php');
              }
@@ -205,13 +178,13 @@ function adminUpdate()
              }
              }
              
-             else
+        else
              {
                  $errors['invalid_profile'] = "Could not update admin information";
              }
              
             }
-            else
+   else
             {
                 $errors['invalid_profile'] = "Could not update profile information";
             }
@@ -232,18 +205,16 @@ function RMHstaffApproverUpdate()
              $profileObj->set_userCategory($_POST["App_Category"]);
              $profileObj->set_userEmail($_POST["App_Email"]);
              
-             $profileObjArray1 = update_UserProfile($user_profile_id);
-             $profileObj1 = is_array($profileObjArray1) ? current($profileObjArray1) : false;
-             if($profileObj1)
+             $ReturnValue = update_UserProfile($user_profile_id);
+             if($ReturnValue)
              {
              $profileObj->set_rmhStaffTitle($_POST["App_Title"]);
              $profileObj->set_rmhStaffFirstName($_POST["App_FirstName"]);
              $profileObj->set_rmhStaffLastName($_POST["App_LastName"]);
              $profileObj->set_rmhStaffPhone($_POST["App_Phone"]);
              
-             $profileObjArray2 = update_RMHStaffProfile($user_profile_id);
-             $profileObj2 = is_array($profileObjArray2) ? current($profileObjArray2) : false;
-             if($profileObj2)
+             $ReturnValue1 = update_RMHStaffProfile($user_profile_id);
+             if($ReturnValue1)
              {
                  header('Location: admin/listUsers.php');
              }
@@ -261,7 +232,9 @@ function RMHstaffApproverUpdate()
             }
             else
             {
-                $errors['invalid_profile'] = "Could not update profile information";
+            echo  "Could not update profile"; 
+            $errors['invalid_profile'] = "Could not update profile information";
+            
             }
 }
 }
@@ -280,18 +253,16 @@ function S_WorkerUpdate()
              $profileObj->set_userCategory($_POST["SW_Category"]);
              $profileObj->set_userEmail($_POST["SW_Email"]);
              
-             $profileObjArray1 = update_UserProfile($user_profile_id);
-             $profileObj1 = is_array($profileObjArray1) ? current($profileObjArray1) : false;
-             if($profileObj1)
+             $ReturnValue = update_UserProfile($user_profile_id);
+             if($ReturnValue)
              {
              $profileObj->set_swTitle($_POST["SW_Title"]);
              $profileObj->set_swFirstName($_POST["SW_FirstName"]);
              $profileObj->set_swLastName($_POST["SW_LastName"]);
              $profileObj->set_swPhone($_POST["SW_Phone"]);
              
-             $profileObjArray2 = update_SocialWorkerProfile($user_profile_id);
-             $profileObj2 = is_array($profileObjArray2) ? current($profileObjArray2) : false;
-             if($profileObj2)
+             $ReturnValue1 = update_SocialWorkerProfile($user_profile_id);
+             if($ReturnValue1)
              {
                  header('Location: admin/listUsers.php');
              }
@@ -314,4 +285,29 @@ function S_WorkerUpdate()
 }
 }
 
+if(empty($errors))
+{
+    echo "<h2>User Detail</h2>";
+    echo '<table cellpadding="3">';
+    foreach($profileObj as $title=>$value)
+    {
+        echo '<tr>
+                <td style="text-align:right; padding-right: 10px;">
+                    <strong>'.$title.'</strong>
+                </td>
+
+                <td>'
+                    .$value.
+                '</td>
+                </tr>';
+    }
+    echo '</table>';
+}
+else
+{
+    echo "Error";
+    echo '<div style="color: #ff3300;">';
+        echo implode('<br />', $errors);
+    echo '</div>';
+}
 ?>
