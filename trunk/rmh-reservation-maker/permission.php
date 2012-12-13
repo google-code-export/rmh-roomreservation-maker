@@ -42,6 +42,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['reset.php']=-1; //password reset page (available to everyone)
     $permission_array['accountmanage.php'] = -1; //managing your account help page
     $permission_array['prereg.php'] = -1;//the page for families to go to from their email link
+    $permission_array['changeAccountSettings.php'] = -1; //password change page (could be enhanced to a user information change page
     $permission_array['LoginHelp.php']=-1; //Login Help page
     
     /* ============ pages users with access level of FAMILY and above can view ===============*/
@@ -63,7 +64,6 @@ checkSession(); //check session if it has timed out or not
     $permission_array['profileDetail.php']=1;
     $permission_array['report.php']=1; //reporting
     $permission_array['SearchReservations.php']=1;
-    $permission_array['changeAccountSettings.php'] = -1; //password change page (could be enhanced to a user information change page
     $permission_array['Reservationsearch.php']=1; //Reservation Search help page
     $permission_array['CreatingFamilyProfile.php']=1; //Creating a new family profile help page
     $permission_array['SearchingFamilyProfile.php']=1; //Searching for a family profile
