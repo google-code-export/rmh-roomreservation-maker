@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
  <?php
-
+//Stephon Chapman fall 2012
+ 
 /*
 * Takes mailForm data and outputs it to a textfile
 * Code errrors

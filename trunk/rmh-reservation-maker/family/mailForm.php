@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-
 <?php 
+
+//Stephon Chapman fall 2012
+//
+//
 //connects to the session to retrieve the family profile ID
 //also connects to the database to retrieve user information.
 session_start();
