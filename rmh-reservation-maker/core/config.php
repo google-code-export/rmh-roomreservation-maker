@@ -36,8 +36,10 @@ define('DS', '/');
 //define the root directory of our application
 define('ROOT_DIR', str_replace('\\','/',dirname(dirname(__FILE__))));
 
-//define the document root, excluding the full path
-$basePath = str_replace($_SERVER['DOCUMENT_ROOT'],'', ROOT_DIR);
+//define the document root, excluding the full path --> for client side inclusions
+//$basePath = str_replace($_SERVER['DOCUMENT_ROOT'],'', ROOT_DIR);
+$basePath = basename(dirname(dirname(__FILE__)));
+
 if(strpos($basePath, '/') !== 0)
 {
     //make sure the base path starts with / (For windows/*nix consistency)
