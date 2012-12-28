@@ -71,6 +71,25 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
     return true;
 }*/
 
+// these are constants used in the retrieve functions
+define ('SELECT_RES_CLAUSE', "SELECT RR.RoomReservationKey, RR.RoomReservationActivityID AS RoomReservationActivityID, RR.RoomReservationRequestID,
+            RR.SW_DateStatusSubmitted, 
+            RR.RMH_DateStatusSubmitted, 
+            RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, 
+            F.FamilyProfileID, F.ParentLastName, 
+            F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, 
+            RR.RMHStaffProfileID, 
+            R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
+             RR.SW_DateStatusSubmitted, 
+           RR.PatientDiagnosis, 
+            RR.Notes ");
+
+// this SELECT clause returns the highest activity id for each request id
+// this is used in most of the retrieve queries to join with the full request table so that
+// we always return the most recent record for a request
+define ('MAX_ACTIVITY_ID_TABLE',"(SELECT RR.RoomReservationRequestID, MAX(RR.RoomReservationActivityID) as maxid
+            FROM RoomReservationActivity RR
+            GROUP BY RR.RoomReservationRequestID)");
 /*
  * Retrieves the highest RoomReservationRequestID, or RoomReservationActivityID, depending on the status of the request, Apply (a new reservation) 
  * or Modify/Cancel (an existing reservation), and increments it providing the insert function with the most current 
@@ -99,9 +118,7 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
             //Request ID receives new value, Activity ID is set to 1, as this is a new request. 
                 $reservation->set_RoomReservationRequestID($reservationReqID);
                 $reservation->set_RoomReservationActivityID(1);
-                
-                
-        
+    
      }
        
      //if ActivityType is set to Modify or Cancel (therefore it is an existing reservation) a record is saved recording the change
@@ -129,12 +146,7 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
         }
         //increment the activity id
         $reservation->set_roomReservationActivityID($reservationActID);
-        
-        
-        
-        
-        
-        
+             
     } 
     
       
@@ -194,6 +206,10 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
     
 /**
  * Retrieves a Room Reservation from the RoomReservationActivity table by Request Id
+ * NOTE: In the table, a room reservation may consist of multiple records, each
+ * record representing a state change (from pending to accepted, for example)
+ * This function always returns the most recent record for a room reservation.
+ * This function returns FALSE if no room reservation record is found
  * @param $roomReservationRequestId 
  * @return the Room Reservation corresponding to roomReservationRequestId, or false if not in the table.
  */
@@ -202,18 +218,18 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
         //Connects to the the database
         connect();
         //Retrieve the entry
-        $query = "SELECT RR.RoomReservationKey, MAX(RR.RoomReservationActivityID) AS RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName, 
-            F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, 
-            R.RMHStaffProfileID, R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, 
-            RR.RMH_DateStatusSubmitted, RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, 
-            RR.Notes FROM rmhstaffprofile R RIGHT OUTER JOIN roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID
-            INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
+        $query = SELECT_RES_CLAUSE.
+        "FROM ".MAX_ACTIVITY_ID_TABLE.
+           "as result INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID 
+                AND result.maxid = RR.RoomReservationActivityID
+             INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE RR.RoomReservationRequestID =".$roomReservationRequestId. " GROUP BY RoomReservationRequestID";
-   
-        $result = mysql_query($query);
+           LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
+           WHERE RR.RoomReservationRequestID=".$roomReservationRequestId;                        
+            
+        $result = mysql_query($query) or die(mysql_error());
+        error_log("num rows retrieved =  ".mysql_num_rows($result));
         if (mysql_num_rows($result)!==1) {
-            echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                 mysql_close();
                 return false;
         }
@@ -228,6 +244,10 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
 
 /**
  * Retrieves Room Reservation from the RoomReservationActivity table by Status ('Unconfirmed', 'Confirm', 'Deny')
+ *  NOTE: In the table, a room reservation may consist of multiple records, each
+ * record representing a state change (from pending to accepted, for example)
+ * This function always returns the most recent record for a given room reservation.
+ * It returns FALSE if no record was retrieved
  * @param $status
  * @return the Room Reservation corresponding to status, or false if not in the table.
  */
@@ -236,19 +256,17 @@ function retrieve_RoomReservationActivity_byStatus($status){
     
         connect();
         
-        $query = "SELECT RR.RoomReservationKey, MAX(RR.RoomReservationActivityID) AS RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName, F.ParentFirstName, 
-            S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, 
-            R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, RR.RMH_DateStatusSubmitted, 
-            RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM rmhstaffprofile R RIGHT OUTER JOIN 
-            roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID 
+        $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
+           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
             INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
-            INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID 
-            WHERE RR.Status ='".$status."' GROUP BY RR.RoomReservationRequestID";
+            INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
+          LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
+      WHERE RR.Status ='".$status."'";
+       
         
-         $result = mysql_query($query);
+         $result = mysql_query($query) or die(mysql_error());
                 if(mysql_num_rows($result)< 1)
                 {
-                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -263,6 +281,10 @@ function retrieve_RoomReservationActivity_byStatus($status){
     
 /**
  * Retrieves Room Reservation from the RoomReservationActivity table for a specific Family
+ *  NOTE: In the table, a room reservation may consist of multiple records, each
+ * record representing a state change (from pending to accepted, for example)
+ * This function always returns the most recent record for a room reservation.
+ * It returns FALSE if no record was retrieved
  * @param $parentLastName
  * @return the Room Reservation corresponding to the Parent's Last Name, or false if not in the table.
  */
@@ -270,19 +292,18 @@ function retrieve_RoomReservationActivity_byStatus($status){
 function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
     
        connect();
-       
-        $query = "SELECT RR.RoomReservationKey, MAX(RR.RoomReservationActivityID) AS RoomReservationActivityID, RR.RoomReservationRequestID,F.FamilyProfileID, F.ParentLastName, 
-            F.ParentFirstName,S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, 
-            R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, RR.RMH_DateStatusSubmitted, 
-            RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM rmhstaffprofile R RIGHT OUTER JOIN 
-            roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN socialworkerprofile S 
-            ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE F.ParentLastName = '".$parentLastName."' GROUP BY RR.RoomReservationRequestID";
+        $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
+           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID 
+               AND result.maxid = RR.RoomReservationActivityID
+            INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
+            INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
+          LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
+      WHERE F.ParentLastName ='".$parentLastName."'";
+  
         
-        $result = mysql_query($query);
+        $result = mysql_query($query)or die(mysql_error());
                 if(mysql_num_rows($result)< 1)
                 {
-                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -297,6 +318,10 @@ function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
     
 /**
  * Retrieves Room Reservation from the RoomReservationActivity table by Social Worker's Last Name
+ *   NOTE: In the table, a room reservation may consist of multiple records, each
+ * record representing a state change (from pending to accepted, for example)
+ * This function always returns the most recent record for a room reservation.
+ * It returns FALSE if no record was retrieved
  * @param $socialWorkerLastName
  * @return the Room Reservation corresponding to Social Worker's Last Name, or false if not in the table.
  */
@@ -304,19 +329,17 @@ function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
 function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName){
     
        connect();
-       
-        $query = "SELECT RR.RoomReservationKey, MAX(RR.RoomReservationActivityID) AS RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName,
-            F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, 
-            R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, RR.RMH_DateStatusSubmitted, 
-            RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM rmhstaffprofile R RIGHT OUTER JOIN 
-            roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN socialworkerprofile S 
-            ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE S.LastName = '".$socialWorkerLastName."' GROUP BY RoomReservationRequestID";
+        $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
+           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+            INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
+            INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
+          LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
+      WHERE S.LastName ='".$socialWorkerLastName."'";
+ 
         
-        $result = mysql_query($query);
+        $result = mysql_query($query)or die(mysql_error());
                 if(mysql_num_rows($result)< 1)
                 {
-                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -331,6 +354,10 @@ function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLast
     
 /**
  * Retrieves Room Reservation from the RoomReservationActivity table by an RMH Staff Approver's Last Name
+ *  NOTE: In the table, a room reservation may consist of multiple records, each
+ * record representing a state change (from pending to accepted, for example)
+ * This function always returns the most recent record for a room reservation.
+ * It returns FALSE if no record was retrieved
  * @param $rmhStaffLastName
  * @return the Room Reservation corresponding to and RMH Staff's Last Name, or false if not in the table.
  */
@@ -338,19 +365,17 @@ function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLast
 function retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
     
        connect();
-       
-        $query = "SELECT RR.RoomReservationKey, MAX(RR.RoomReservationActivityID) AS RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName, 
-            F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, 
-            R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, RR.RMH_DateStatusSubmitted, 
-            RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM rmhstaffprofile R RIGHT OUTER JOIN 
-            roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN socialworkerprofile S 
-            ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
-            WHERE R.LastName = '".$rmhStaffLastName."' GROUP BY RoomReservationRequestID";
+        $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
+           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+            INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
+            INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
+          LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
+      WHERE R.LastName ='".$rmhStaffLastName."'";
+  
         
-        $result = mysql_query($query);
+        $result = mysql_query($query) or die(mysql_error());
                 if(mysql_num_rows($result)< 1)
                 {
-                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -365,6 +390,11 @@ function retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
     
  /*
   * Retrieves for a selected Hospital Affiliation, and all Room Reservations that were made between Begin Date and End Date, inclusive 
+  * It will return the record whether unconfirmed or confirmed
+  *  NOTE: In the table, a room reservation may consist of multiple records, each
+ * record representing a state change (from pending to accepted, for example)
+ * This function always returns the most recent record for a room reservation.
+  * It returns FALSE if no record is retrieved
   * @param $hospitalAffiliation, $beginDate, $endDate
   * @return the Room Reservation corresponding to Hospital Affiliation, Begin Date, End Date, or false if not in the table. 
   */
@@ -372,20 +402,18 @@ function retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
 function retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffiliation, $beginDate, $endDate){
     
         connect();
-        
-         $query = "SELECT RR.RoomReservationKey, RR.RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName,
-             F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, 
-             R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, RR.RMH_DateStatusSubmitted, 
-             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM rmhstaffProfile R RIGHT OUTER JOIN 
-             roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN socialworkerprofile S 
-             ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
-             WHERE S.HospitalAffiliation = '".$hospitalAffiliation."' AND RR.BeginDate >= '".$beginDate."' AND RR.EndDate <= '".$endDate."' 
+         $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
+           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+            INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
+            INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
+          LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
+      WHERE S.HospitalAffiliation = '".$hospitalAffiliation."' AND RR.BeginDate >= '".$beginDate."' AND RR.EndDate <= '".$endDate."' 
              ORDER BY RR.SW_DateStatusSubmitted";
+
       
-        $result = mysql_query($query);
+        $result = mysql_query($query)or die(mysql_error());
                 if(mysql_num_rows($result)< 1)
                 {
-                 echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
                  mysql_close();
                  return false;
                 }
@@ -400,6 +428,11 @@ function retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffilia
 
 /*
  * Retrieves all Room Reservations that were made between $begindate and $enddate, inclusive
+ * It will return the record whether unconfirmed or confirmed
+ *  NOTE: In the table, a room reservation may consist of multiple records, each
+ * record representing a state change (from pending to accepted, for example)
+ * This function always returns the most recent record for a room reservation.
+ * It returns FALSE if no record is retrieved
  * @param $beginDate, $endDate
  * @return the Room Reservation corresponding to Begin Date and End Date, or false if not in the table. 
  */
@@ -407,20 +440,18 @@ function retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffilia
 function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
     
         connect();
-    
-        $query = "SELECT RR.RoomReservationKey, RR.RoomReservationActivityID, RR.RoomReservationRequestID, F.FamilyProfileID, F.ParentLastName, 
-            F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, R.RMHStaffProfileID, 
-            R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName, RR.SW_DateStatusSubmitted, RR.RMH_DateStatusSubmitted, 
-            RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, RR.PatientDiagnosis, RR.Notes FROM rmhstaffprofile R RIGHT OUTER JOIN 
-            roomreservationactivity RR ON R.RMHStaffProfileID = RR.RMHStaffProfileID INNER JOIN socialworkerprofile S 
-            ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID 
-            WHERE RR.BeginDate >= '".$beginDate."' AND RR.EndDate <= '".$endDate."' 
+        $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
+           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+            INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
+            INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
+          LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
+         WHERE  RR.BeginDate >= '".$beginDate."' AND RR.EndDate <= '".$endDate."' 
             ORDER BY RR.SW_DateStatusSubmitted";
+   
  
-      $result = mysql_query($query);
+      $result = mysql_query($query)or die(mysql_error());
           if(mysql_num_rows($result)< 1)
           {
-           echo mysql_error()." >>>Unable to retrieve from Room Reservation Activity table. <br>";
            mysql_close();
            return false;
           }  

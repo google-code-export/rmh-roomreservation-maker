@@ -6,18 +6,22 @@ include_once (ROOT_DIR.'/database/dbReservation.php');
 echo ">>>DIRECTORY: ".ROOT_DIR.'/database/dbReservation.php <br><br>';
 //retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffiliation, $beginDate, $endDate)
 echo "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////"."</br>";
-echo ">>>TESTING: retrieve_all_dbRoomReservationActivity_byHospitalAndDate, expect one Reservation to be found.". "</br>";
-test_retrieve_all_dbRoomReservationActivity_byHospitalAndDate("Memorial Sloan-Kettering Cancer Center", "2012-04-15", "2012-04-17");
 
-echo ">>>TESTING: retrieve_all_dbRoomReservationActivity_byHospitalAndDate, expect no Reservation to be found.". "</br>";
-test_retrieve_all_dbRoomReservationActivity_byHospitalAndDate("New York Hospital Queens", "2012-04-15", "2012-04-17");
+echo ">>>TESTING: retrieve_all_dbRoomReservationActivity_byDate, 2012-03-01 to 2012-04-17". "</br>";
+test_retrieve_all_dbRoomReservationActivity_byDate("2012-03-01", "2012-04-17");
+
+echo ">>>TESTING: retrieve_all_dbRoomReservationActivity_byHospitalAndDate, Memorial Sloan-Kettering Cancer Center 2012-03-01 to 2012-04-17.". "</br>";
+test_retrieve_all_dbRoomReservationActivity_byHospitalAndDate("Memorial Sloan-Kettering Cancer Center", "2012-03-01", "2012-04-17");
+
+echo ">>>TESTING: retrieve_all_dbRoomReservationActivity_byHospitalAndDate, New York Hospital Queens 2012-03-01 to 2012-04-17 .". "</br>";
+test_retrieve_all_dbRoomReservationActivity_byHospitalAndDate("New York Hospital Queens", "2012-03-01", "2012-04-17");
 
 
 echo ">>>TESTING: retrieve_RoomReservationActivity_byRequestId, expect 1 record to be found."."</br>";
 
 test_retrieve_RoomReservationActivity_byRequestId("2");
 
-echo ">>>TESTING: retrieve_RoomReservationActivity_byStatus, expect 3 records to be found. (Unconfirmed)"."</br>";
+echo ">>>TESTING: retrieve_RoomReservationActivity_byStatus. (Unconfirmed)"."</br>";
 test_retrieve_RoomReservationActivity_byStatus("Unconfirmed");
 
 echo ">>>TESTING: retrieve_FamilyLastName_RoomReservationActivity, expect 1 record to be found. (Miller)"."</br>";
@@ -72,12 +76,6 @@ function display_reservation($reservation)
     echo "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////"."</br></br>";
     
 }
-echo "////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////"."</br></br>";
-echo ">>>TESTING: retrieve_all_dbRoomReservationActivity_byDate, expect five Reservations to be found.". "</br>";
-test_retrieve_all_dbRoomReservationActivity_byDate("2012-03-01", "2012-05-01");
-
-echo ">>>TESTING: retrieve_all_dbRoomReservationActivity_byDate, expect no Reservations to be found.". "</br>";
-test_retrieve_all_dbRoomReservationActivity_byDate("2012-06-01", "2012-07-01");
 
 function test_retrieve_all_dbRoomReservationActivity_byDate($beginDate, $endDate)
 {
@@ -193,7 +191,7 @@ else
 }
 
 
-echo"////////////////////////////////////////////////////////////////////////////////////////////////////"."</br>";
+/*echo"////////////////////////////////////////////////////////////////////////////////////////////////////"."</br>";
 echo ">>>TESTING: insert_RoomReservationActivity, expect success"."</br>";
 
 $reservation = new Reservation(1, 1, 1, 4, "Jones", "John", 1, "Tove", "Mary", 1, "Shen", "Tian", 
@@ -209,7 +207,7 @@ test_insert_RoomReservationActivity($reservation);
 $reservation = new Reservation(1, 1, 1, 4, "Jones", "John", 1, "Tove", "Mary", 1, "Shen", "Tian", 
         "2012-11-27 18:22:43", "2012-01-12 17:22:43", "Modify", "Confirmed", "2012-11-27 16:22:12", 
         "2012-11-30 12:00:00", "Leukemia", "Allergic to Cats" );
-test_insert_RoomReservationActivity($reservation);
+test_insert_RoomReservationActivity($reservation);  */
 
 
 

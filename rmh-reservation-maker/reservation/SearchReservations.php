@@ -55,7 +55,9 @@ function searchForReservations() {
     if ($type == "Select Search Type") {
         echo ("Please choose what you're searching for from the drop down menu below.");
     } else if ($type == "Request ID") {
+        
         $roomReservationRequestId = ($_POST["searchParam"]);
+        error_log("searching  by request id = ".$roomReservationRequestId);
         $Reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);
         return $Reservations;
 
@@ -134,6 +136,7 @@ if ($showReservation == true) {
 
     if (empty($foundReservations)) {
         echo "<br>No data matches your selections ";
+        error_log("no records found");
     } else {
 
         echo '<br>';
@@ -156,39 +159,7 @@ if ($showReservation == true) {
             '</thead>
             <tbody>';
 
-        if ($type == "Request ID") {
-            $rmhRequestID = $foundReservations->get_roomReservationRequestID();
-            $rmhSocialWorkerName = $foundReservations->get_swLastName() . ", " . $foundReservations->get_swFirstName();
-            $rmhStaffName = $foundReservations->get_rmhStaffLastName() . ", " . $foundReservations->get_rmhStaffFirstName();
-            $rmhparentName = $foundReservations->get_parentLastName() . ", " . $foundReservations->get_parentFirstName();
-            $rmhDatasubmit = $foundReservations->get_rmhDateStatusSubmitted();
-            $rmhbeginDate = $foundReservations->get_beginDate();
-            $rmhEndDate = $foundReservations->get_endDate();
-            $rmhStatus = $foundReservations->get_status();
-
-            echo '<tr>';
-            echo '<td>' . $rmhRequestID . '</td>';
-            echo '<td>' . $rmhSocialWorkerName . '</td>';
-            echo '<td>' . $rmhStaffName . '</td>';
-            echo '<td>' . $rmhparentName . '</td>';
-            echo '<td>' . $rmhDatasubmit . '</td>';
-            echo '<td>' . $rmhbeginDate . '</td>';
-            echo '<td>' . $rmhEndDate . '</td>';
-            echo '<td>' . $rmhStatus . '</td>';
-            if (getUserAccessLevel() > 1) {
-                //if the user is an approver, let the user modify the status
-                $link = '<a href="' . BASE_DIR . '/reservation/activity.php?type=reservation&request=' . $rmhRequestID . '">' . "Change Status" . '</a>';
-
-                echo '<td>' . $link . '</td>';
-            }
-            else
-                echo '<td>' . $rmhStatus . '</td>';
-
-
-
-            echo '</tr>';
-        }
-        else {
+   
 
             foreach ($foundReservations as $reservation) {
 
@@ -249,8 +220,10 @@ if ($showReservation == true) {
         //ERROR:   Here I am not getting the Request!!!
         if (isset($_POST['Request'])){
         $IDchosen = $_POST['Request'];
+       
         }
         else $IDchosen = "Request ID";
+         error_log("Request is $IDchosen");   //TODO -fix this - the selected request id does not get set
         $buttonEdit = "<a href='../reservation/EditReservation.php?id=$IDchosen' style='color: white' <input type='submit' name='Edit' class='formsubmit' '/> Edit </a>";
         $buttonCancel = "<a href='../reservation/CancelReservation.php?id=$IDchosen' style='color: white' <input class='formsubmit' type='submit' name='Cancel' '/> Cancel</a>";
 
@@ -259,7 +232,7 @@ if ($showReservation == true) {
             echo $buttonEdit;
             echo $buttonCancel;
         
-    }
+ //   }
 }
 ?>
 
