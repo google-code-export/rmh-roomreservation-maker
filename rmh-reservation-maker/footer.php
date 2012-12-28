@@ -18,6 +18,7 @@
 * @version May 1, 2012
 */
 ?>
+<?php /* include this somewhere:
 <script>
 $(function(){
     $('.session_message').click(function(evt){
@@ -25,5 +26,11 @@ $(function(){
     });
 })
 </script>
-</body>
+*/
+?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+    </body>
 </html>

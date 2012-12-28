@@ -24,61 +24,65 @@ if(!defined('PARENT'))
 
 $userAccess = getUserAccessLevel();
 ?>
-<div id="pad"></div>
-<ul id="nav">
+<nav class="navpane">
+	<ul>
    
-<!--navigation links available to all members -->
-<li><a href="<?php echo BASE_DIR.'/index.php';?>">Home</a></li>
-<?php
-if($userAccess === 0)
-{
-   //Navigation for family members
- ?>
-    <li><a href="<?php echo BASE_DIR.'/index.php';?>">Family Nav1</a></li>
-    <li><a href="<?php echo BASE_DIR.'/index.php';?>">Family Nav2</a></li>
-    <li><a href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</a></li>
-    
-
-    
-<?php  
-}
-else if($userAccess === 1)
-{
-    //Navigation for social workers
- ?>
-    <li><a href="<?php echo BASE_DIR.'/family/FamilyProfileMenu.php';?>">Family Profile</a></li>
-    <li><a href="<?php echo BASE_DIR.'/report.php';?>">Report</a></li> 
-    <li><a href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</a></li>
-<?php  
-}
-else if($userAccess === 2)
-{
-    //Navigation for RMH reservation managers
- ?>
-    <li><a href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</a></li>
-    <li><a href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Approve Family Profile Changes</a></li>
-    
-<?php  
-}
-else if($userAccess === 3)
-{
-    //Navigation for admins
- ?>
-    <li><a href="<?php echo BASE_DIR.'/admin/listUsers.php';?>">View Users</a></li>
-    <li><a href="<?php echo BASE_DIR.'/admin/addUser.php';?>">Add New User</a></li>
-
-<?php  
-}
-//Navigation that appears for everyone (excluding family members)
-if($userAccess > 0)
-{
+		<!--navigation links available to all members -->
+		<li><a href="<?php echo BASE_DIR.'/index.php';?>">Home</a></li>
+	<?php
+	if($userAccess === 0)
+	{
+	   //Navigation for family members
+	 ?>
+	    <li><a href="<?php echo BASE_DIR.'/index.php';?>">Family Nav1</a></li>
+	    <li><a href="<?php echo BASE_DIR.'/index.php';?>">Family Nav2</a></li>
+	    <li><a href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</a></li>
+	    
+	
+	    
+	<?php  
+	}
+	else if($userAccess === 1)
+	{
+	    //Navigation for social workers
+	 ?>
+	    <li><a href="<?php echo BASE_DIR.'/family/FamilyProfileMenu.php';?>">Family Profile</a></li>
+	    <li><a href="<?php echo BASE_DIR.'/report.php';?>">Report</a></li> 
+	    <li><a href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</a></li>
+	<?php  
+	}
+	else if($userAccess === 2)
+	{
+	    //Navigation for RMH reservation managers
+	 ?>
+	    <li><a href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</a></li>
+	    <li><a href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Approve Family Profile Changes</a></li>
+	    
+	<?php  
+	}
+	else if($userAccess === 3)
+	{
+	    //Navigation for admins
+	 ?>
+	    <li><a href="<?php echo BASE_DIR.'/admin/listUsers.php';?>">View Users</a></li>
+	    <li><a href="<?php echo BASE_DIR.'/admin/addUser.php';?>">Add New User</a></li>
+	
+	<?php  
+	}
+	//Navigation that appears for everyone (excluding family members)
+	if($userAccess > 0)
+	{
+	?>
+	    <li><a href="<?php echo BASE_DIR.'/changeAccountSettings.php';?>">Manage Account</a></li>
+	    <li><a href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</a></li>
+	    
+	<?php
+	} 
+	?>
+	</ul>
+</nav>
+<?php 
+//TODO: Is the following include necessary??? Other alternatives? Or remove this, most probably.
+/*include (ROOT_DIR. '/inc/back.php');
+*/
 ?>
-    <li><a href="<?php echo BASE_DIR.'/changeAccountSettings.php';?>">Manage Account</a></li>
-    <li><a href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</a></li>
-    
-<?php
-} 
-?>
-    
-</ul>
-<?php include (ROOT_DIR. '/inc/back.php'); ?>
