@@ -29,26 +29,51 @@
     include('permission.php');
 ?>
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
-        <title><?php echo (isset($title) ? $title : 'Welcome') . ' | RMH Room Reservation Maker'; ?> </title>
         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title><?php echo (isset($title) ? $title : 'Welcome') . ' | RMH Room Reservation Maker'; ?></title>
         <meta name="description" content="">
-        <meta name="author" content="">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link rel="stylesheet" href="<?php echo CSS_DIR;?>/style.css"/>
-        <script src="<?php echo JS_DIR;?>/libs/jquery-1.7.2.min.js"></script>
-        <script src="<?php echo JS_DIR;?>/form.js"></script>
-        <link rel="javascript" href="<?php echo JS_DIR;?>/libs/jquery.simplemodal.1.4.2.min.js"/>
-        <link rel="javascript" href="<?php echo JS_DIR;?>/libs/jquery-1.6.2.min.js"/>
-    </head>
-<body class="<?php // $_ENV['/**browser **/'] ?>">
+        <meta name="viewport" content="width=device-width">
 
-<div id="header">
-    <h1><?php echo $title; ?></h1>
-</div>
-        <?php
-            //show session messages
-            showSessionMessage();
-        ?>
-<?php if(isset($_SESSION['logged_in'])) include_once (ROOT_DIR.'/navigation.php'); ?>
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="<?php echo CSS_DIR;?>/normalize.css">
+        <link rel="stylesheet" href="<?php echo CSS_DIR;?>/style.css">
+        <!-- Custom fonts go here, linked directly from google fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Advent+Pro:400,200|Cuprum:400,700' rel='stylesheet' type='text/css'>
+        <script src="<?php echo JS_DIR;?>/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+     <header class="topbar">
+        	<h1>RMH Room Reservation Maker</h1>
+        	<?php 
+        	//Show the menu toggle button only if the user is logged in
+        	if(isset($_SESSION['logged_in'])){
+        	?><div class="navbutton">
+        		<a class="btn btn-navbar" data-toggle="expand">
+        	        <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+    	        </a>
+            </div>
+            <?php 
+            }
+            ?>
+    </header>
+<?php 
+//TODO: session message should go here somewhere? using showSessionMessage() function
+
+if(isset($_SESSION['logged_in'])){
+	include_once(ROOT_DIR.'/navigation.php');
+}
+?>
