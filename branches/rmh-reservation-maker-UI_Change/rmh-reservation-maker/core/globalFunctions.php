@@ -131,4 +131,14 @@ function isAjax()
           return false;
       }
   }
+  
+  /**
+   * cst function allows us to use constants within the heredoc notation
+   * 
+   * from php.net comment #100449 on define
+   */
+  $cst = 'cst';
+  function cst($constant){
+  	return $constant;
+  }
 ?>
