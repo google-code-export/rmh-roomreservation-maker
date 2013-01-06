@@ -36,7 +36,7 @@ $userAccess = getUserAccessLevel();
 	 ?>
 	    <li data-href="<?php echo BASE_DIR.'/index.php';?>">Family Nav1</li>
 	    <li data-href="<?php echo BASE_DIR.'/index.php';?>">Family Nav2</li>
-	    <li data-href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</li>
+	    <li data-href="<?php echo BASE_DIR. '/logout.php';?>">Log Out</li>
 	    
 	
 	    
