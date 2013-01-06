@@ -28,15 +28,15 @@ $userAccess = getUserAccessLevel();
 	<ul>
    
 		<!--navigation links available to all members -->
-		<li><a href="<?php echo BASE_DIR.'/index.php';?>">Home</a></li>
+		<li data-href="<?php echo BASE_DIR.'/index.php';?>">Home</li>
 	<?php
 	if($userAccess === 0)
 	{
 	   //Navigation for family members
 	 ?>
-	    <li><a href="<?php echo BASE_DIR.'/index.php';?>">Family Nav1</a></li>
-	    <li><a href="<?php echo BASE_DIR.'/index.php';?>">Family Nav2</a></li>
-	    <li><a href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</a></li>
+	    <li data-href="<?php echo BASE_DIR.'/index.php';?>">Family Nav1</li>
+	    <li data-href="<?php echo BASE_DIR.'/index.php';?>">Family Nav2</li>
+	    <li data-href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</li>
 	    
 	
 	    
@@ -46,17 +46,17 @@ $userAccess = getUserAccessLevel();
 	{
 	    //Navigation for social workers
 	 ?>
-	    <li><a href="<?php echo BASE_DIR.'/family/FamilyProfileMenu.php';?>">Family Profile</a></li>
-	    <li><a href="<?php echo BASE_DIR.'/report.php';?>">Report</a></li> 
-	    <li><a href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</a></li>
+	    <li data-href="<?php echo BASE_DIR.'/family/FamilyProfileMenu.php';?>">Family Profile</li>
+	    <li data-href="<?php echo BASE_DIR.'/report.php';?>">Report</li> 
+	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</li>
 	<?php  
 	}
 	else if($userAccess === 2)
 	{
 	    //Navigation for RMH reservation managers
 	 ?>
-	    <li><a href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</a></li>
-	    <li><a href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Approve Family Profile Changes</a></li>
+	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</li>
+	    <li data-href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Approve Family Profile Changes</li>
 	    
 	<?php  
 	}
@@ -64,8 +64,8 @@ $userAccess = getUserAccessLevel();
 	{
 	    //Navigation for admins
 	 ?>
-	    <li><a href="<?php echo BASE_DIR.'/admin/listUsers.php';?>">View Users</a></li>
-	    <li><a href="<?php echo BASE_DIR.'/admin/addUser.php';?>">Add New User</a></li>
+	    <li data-href="<?php echo BASE_DIR.'/admin/listUsers.php';?>">View Users</li>
+	    <li data-href="<?php echo BASE_DIR.'/admin/addUser.php';?>">Add New User</li>
 	
 	<?php  
 	}
@@ -73,13 +73,14 @@ $userAccess = getUserAccessLevel();
 	if($userAccess > 0)
 	{
 	?>
-	    <li><a href="<?php echo BASE_DIR.'/changeAccountSettings.php';?>">Manage Account</a></li>
-	    <li><a href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</a></li>
+	    <li data-href="<?php echo BASE_DIR.'/changeAccountSettings.php';?>">Manage Account</li>
+	    <li data-href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</li>
 	    
 	<?php
 	} 
 	?>
 	</ul>
+	<div class="leftArrow"></div>
 </nav>
 <?php 
 //TODO: Is the following include necessary??? Other alternatives? Or remove this, most probably.
