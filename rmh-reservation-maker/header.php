@@ -59,7 +59,15 @@
         	<?php 
         	//Show the menu toggle button only if the user is logged in
         	if(isset($_SESSION['logged_in'])){
-        	?><div class="navbutton">
+        	?>
+        	<?php 
+        		if(isset($helpPage)){
+			?>
+        			<a class="helpbutton" href="<?php echo BASE_DIR."/help/".$helpPage;?>">?</a>
+        		<?php
+        			}
+        		?>
+        		<div class="navbutton">
         		<a class="btn btn-navbar" data-toggle="expand">
         	        <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
