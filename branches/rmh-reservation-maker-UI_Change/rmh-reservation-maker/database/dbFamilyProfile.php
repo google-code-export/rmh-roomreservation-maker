@@ -133,9 +133,9 @@ function insert_FamilyProfile ($family){
         $result = mysql_query($query);
    
        if (!$result) {
-        echo (mysql_error()."<br>". "Unable to insert into FamilyProfile.");
-        mysql_close();
-        return false;
+         echo (mysql_error()."<br>". "Unable to insert into FamilyProfile.");
+          mysql_close();
+         return false;
     }
     mysql_close();
     return true;
@@ -143,6 +143,7 @@ function insert_FamilyProfile ($family){
    
 /**
  * Retrieves a Family Profile from the FamilyProfile table by familyProfileId
+ * returns false if no family profile could be retrieved or if somehow more than 1 is retrieved
  * @param $familyProfileId 
  * @return the Family Profile corresponding to familyProfileId, or false if not in the table.
  */
@@ -154,7 +155,7 @@ function retrieve_FamilyProfile ($familyProfileId)
     $result = mysql_query($query) or die(mysql_error());
     
     if (mysql_num_rows($result) !== 1){
-    	mysql_close();
+        mysql_close();
         return false;
     }
     
@@ -180,6 +181,7 @@ function build_family($result_row){
 
 /*  Return an array of family profiles  from the FamilyProfile table
  * The first name and last name of the parent is used as the search key
+ * returns a NULL array if no profiles could be retrieved
 * $fname = parent first name (String)
  * $lname = parent last name (String)
    *@return an array of Family objects
@@ -237,6 +239,7 @@ function retrieve_FamilyProfileByName($fname, $lname)
 /**
  * Function to retrieve an array of Family Profiles from the family profile table 
  * Family Status is the search field
+ * returns a NULL array if no profiles can be retrieved
  * @param status
  * @author Chris Giglio
  */
@@ -359,9 +362,9 @@ function update_FamilyProfile($family)
  $result=mysql_query($query);
    	
     if(!$result) {
-		echo mysql_error() . "Error updating FamilyProfile table. <br>";
+               echo mysql_error() . "Error updating FamilyProfile table. <br>";
                 mysql_close();
-	    return false;
+                return false;
     }
     mysql_close();
     return true;

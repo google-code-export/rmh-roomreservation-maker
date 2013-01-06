@@ -193,10 +193,12 @@ function adminUpdate()
 
 function RMHstaffApproverUpdate()
 {
+    error_log("RMHstaffApproverUpdate");
     $user_profile_id = sanitize($_GET['view']);
     
     if (isset($_POST['go']))
 {
+           error_log("go is set");
             $profileObjArray = retrieve_UserProfile_RMHAdmin($user_profile_id);
             $profileObj = is_array($profileObjArray) ? current($profileObjArray) : false;
             if($profileObj)
@@ -216,27 +218,31 @@ function RMHstaffApproverUpdate()
              $ReturnValue1 = update_RMHStaffProfile($user_profile_id);
              if($ReturnValue1)
              {
+                 error_log("update returned success");
                  header('Location: admin/listUsers.php');
              }
              else
              {
+                 error_log("could not update RMHStaffProfile");
                  $errors['invalid_profile'] = "Could not complete request";
              }
              }
              
              else
              {
+                 error_log("Could not update admin information");
                  $errors['invalid_profile'] = "Could not update admin information";
              }
              
             }
             else
             {
-            echo  "Could not update profile"; 
+            error_log("Could not update profile"); 
             $errors['invalid_profile'] = "Could not update profile information";
             
             }
 }
+else error_log("go not set");
 }
 
 function S_WorkerUpdate()
