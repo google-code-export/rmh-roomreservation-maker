@@ -21,6 +21,7 @@ session_start();
 session_cache_expire(30);
 
 $title = "Add New User"; //This should be the title for the page, included in the <title></title>
+$helpPage = "AddaUser.php"; //help page for this view; should go before header
 
 include('../header.php'); //including this will further include (globalFunctions.php and config.php)
 include_once(ROOT_DIR.'/domain/UserProfile.php');
@@ -209,8 +210,8 @@ else
 }
 ?>
 
-<div id="container">
-    <div id="content"> 
+<section class="content">
+    <div> 
         <?php
             if(!empty($errors))
             {
@@ -228,58 +229,50 @@ else
             {
         ?>
         <div class="notice">Note: Password is automatically set as the combination of user's first name and last four digits of their phone number, all lowercase.</div>
-        <form method="post" action="<?php echo BASE_DIR; ?>/admin/addUser.php">
-              
-                        <label class="noshow non" for="userGroup">User Category</label>
-                        <select class="formtop formt" id="userGroup" name="userGroup">
-                            <option value="admin" <?php echo($userType == 'admin' ? ' selected="selected"' : null) ?>>RMH Administrator</option>
-                            <option value="rmhstaff" <?php echo($userType == 'rmhstaff' ? ' selected="selected"' : null) ?>>RMH Staff Approver</option>
-                            <option value="socialworker" <?php echo($userType == 'socialworker' ? ' selected="selected"' : null) ?>>Social Worker</option>
-                        </select>
+        <form class="generic addForm" method="post" action="<?php echo BASE_DIR; ?>/admin/addUser.php">
+              			<div class="formRow">
+	                        <label for="userGroup">User Category</label>
+	                        <select class="formtop formt" id="userGroup" name="userGroup">
+	                            <option value="admin" <?php echo($userType == 'admin' ? ' selected="selected"' : null) ?>>RMH Administrator</option>
+	                            <option value="rmhstaff" <?php echo($userType == 'rmhstaff' ? ' selected="selected"' : null) ?>>RMH Staff Approver</option>
+	                            <option value="socialworker" <?php echo($userType == 'socialworker' ? ' selected="selected"' : null) ?>>Social Worker</option>
+	                        </select>
+                        </div>
                         <?php echo generateTokenField();
                         ?>
-                       
-                
-                
-                <div>   
-                        <label class="noshow non" for="add_title">Title</label>
-                        <input class="formt" id="add_title" type="text" name="add_title" onfocus="if(this.value == 'Title') { this.value = ''; }" value="Title" />
-                </div>   
-                <div>   
-                       
-                        <label class="noshow non" for="add_fname">First name</label>
-                        <input class="formt" id="add_fname" type="text" name="add_fname" onfocus="if(this.value == 'First Name') { this.value = ''; }" value="First Name" />
-                </div>   
-                <div>   
-                        <label class="noshow non" for="add_lname">Last name</label>
-                        <input class="formt" id="add_lname" type="text" name="add_lname" onfocus="if(this.value == 'Last Name') { this.value = ''; }" value="Last Name" />
-                </div>   
-                <div>   
-                        <label class="noshow non" for="add_phone">Phone</label>
-                        <input class="formt" id="add_phone" type="text" name="add_phone" onfocus="if(this.value == 'Phone #') { this.value = ''; }" value="Phone #" />
-                </div>   
-                <div>   
-                        <label class="noshow non" for="add_username">Username</label>
-                        <input class="formt" id="add_username" type="text" name="add_username" onfocus="if(this.value == 'username') { this.value = ''; }" value="username" />
-                       
-                </div>   
-                <div>   
-                       <label class="noshow non" for="add_email">Email</label>
-                       <input class="formt" id="add_email" type="text" name="add_email" onfocus="if(this.value == 'E-mail Address') { this.value = ''; }" value="E-mail Address" />
-                </div>   
+ 						<div class="formRow">
+                        	<label for="add_title">Title</label>
+                       		<input id="add_title" type="text" name="add_title"/>
+                       	</div>
+                       	<div class="formRow">
+                        	<label for="add_fname">First name</label>
+                        	<input id="add_fname" type="text" name="add_fname"/>
+ 						</div>
+                       	<div class="formRow">
+                        	<label for="add_lname">Last name</label>
+                        	<input id="add_lname" type="text" name="add_lname"/>
+						</div>
+                       	<div class="formRow">
+                        	<label for="add_phone">Phone</label>
+                        	<input id="add_phone" type="text" name="add_phone"/>
+                        </div>
+                       	<div class="formRow">
+	                    	<label for="add_username">Username</label>
+                        	<input id="add_username" type="text" name="add_username"/>
+                       	</div>
+                       	<div class="formRow">   
+                      		<label for="add_email">Email</label>
+                       		<input id="add_email" type="text" name="add_email"/>   
+                       	</div>
                 <?php
                 if(isset($userType) && $userType == 'socialworker')
                 {
-                ?>
-                <div>   
-                       
-                        <label class="noshow non" for="add_hospital">Hospital Affiliation</label>
-
-                        <input class="formt formbottom" id="add_hospital" type="text" name="add_hospital" onfocus="if(this.value == 'Hospital Affiliation') { this.value = ''; }" value="Hospital Affiliation" />
-                       
-                </div>   
-                <br />
-                <div style="padding-top:10px;">
+                ?> 
+                       	<div class="formRow">
+                        	<label for="add_hospital">Hospital Affiliation</label>
+                        	<input id="add_hospital" type="text" name="add_hospital"/>
+						</div>
+                <div class="formRow">
                        
                        
                         <label for="add_notify">Email Notification</label>
@@ -295,40 +288,25 @@ else
                 <?php
                 }
                 ?>
-                
-</table>
-                <p><input type="submit" name="Submit" value="Submit" /></p>
+                <div class="formRow">
+          			<input class="btn" type="submit" name="Submit" value="Submit" />
+          		</div>
 </form>
-        </br></br>
-    <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/AddaUser.php'" />
-    
         <?php } //end else if for messages
         ?>
 </div>
     
-</div>
+</section>
 <script>
+<?php 
+$pageJavaScript = <<<EOF
 $(function(){
     $('#userGroup').change(function(){
             var userType = $(this).children('option:selected').val();
-            window.location = '<?php echo BASE_DIR; ?>/admin/addUser.php?type='+userType;
+            window.location = '{$cst(BASE_DIR)}/admin/addUser.php?type='+userType;
               });
-    
-    $('#add_phone, #add_fname, #add_lname').focusout(function(){
-        var fname = $.trim($('#add_fname').val());
-        var lname = $.trim($('#add_lname').val());
-        var phone = $.trim($('#add_phone').val());
-        if(fname != '' && lname != '' && phone)
-        {
-            var username = fname.slice(0,1) + lname.slice(0,4) + phone.slice(-4);
-           $('#add_username').val(username.toLowerCase());
-        }
-    });
-                                                                                                         });
-                                                                                                         
-                                                                                       
-                                                                                                                    </script>
-                                                                                                                    <?php
-                                                                                                                    include (ROOT_DIR . '/footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
-                                                                                                                    ?>
+});
+EOF;
+ include (ROOT_DIR . '/footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
+ ?>
 

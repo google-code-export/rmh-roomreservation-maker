@@ -20,6 +20,7 @@ session_start();
 session_cache_expire(30);
 
 $title = "User List"; //This should be the title for the page, included in the <title></title>
+$helpPage = "ViewUserHelp.php"; //help page for this view
 
 include('../header.php'); //including this will further include (globalFunctions.php and config.php)
 
@@ -84,13 +85,13 @@ function displayUsersTable($allUsers)
 
 ?>
 
-<div id="container">
+<section class="content">
 
-    <div id="content" style="margin-left: 250px; margin-top: 23px;">
+    <div>
         
         <!-- ALL YOUR HTML CONTENT GOES HERE -->
-        <div>
-            <label for="filterUsers">Show users:</label>
+        <div class="formRow">
+            <label style="float:left; margin-right: 1em;" for="filterUsers">Show users:</label>
             <select id="filterUsers" name="filterUsers">
                 <option value="all" <?php echo($userType=='all' ? ' selected="selected"':null) ?>>All</option>
                 <option value="admins" <?php echo($userType=='admins' ? ' selected="selected"':null) ?>>RMH Administrators</option>
@@ -103,22 +104,21 @@ function displayUsersTable($allUsers)
             displayUsersTable($allUsers);
         ?> 
         </div>
-        </br></br>
-    <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/ViewUserHelp.php'" />
     </div>
     
-</div>
+</section>
 <div class="overlay" style="display:none; background: url('<?php echo BASE_DIR;?>/images/bars.png') repeat; width: 100%; height: 100%; position: fixed;left:0; top:0; z-index: 999;">
     <div class="modalBox" style="position: relative; background: none #FFFFFF; width: 400px; margin:150px auto; border-radius: 5px; padding: 5px;">
         test
     </div>
     
 </div>
-<script type="text/javascript">
+<?php 
+	$pageJavaScript = <<<EOF
     $(function(){
        $('#filterUsers').change(function(){
           var userType = $(this).children('option:selected').val();
-          window.location = '<?php echo BASE_DIR;?>/admin/listUsers.php?type='+userType;
+          window.location = '{$cst(BASE_DIR)}/admin/listUsers.php?type='+userType;
        });
        
        $('.viewUser').click(function(evt){
@@ -126,9 +126,9 @@ function displayUsersTable($allUsers)
            evt.stopImmediatePropagation();
            var user = $(this).data('user');
            var group = $(this).data('group');
-           var url = '<?php echo BASE_DIR;?>/admin/userActionHandler.php?view=' + user + '&group=' + group;
+           var url = '{$cst(BASE_DIR)}/admin/userActionHandler.php?view=' + user + '&group=' + group;
            $.ajax({
-                    type: "POST",
+                    type: 'POST',
                     url: url
                     }).success(function(data){
                         $('.modalBox').html(data);
@@ -143,7 +143,7 @@ function displayUsersTable($allUsers)
            evt.stopImmediatePropagation();
            var user = $(this).data('user');
            var group = $(this).data('group');
-           var url = '<?php echo BASE_DIR;?>/admin/userEditor.php?view=' + user + '&group=' + group;
+           var url = '{$cst(BASE_DIR)}/admin/userEditor.php?view=' + user + '&group=' + group;
            $.ajax({
                     type: "POST",
                     url: url
@@ -161,7 +161,6 @@ function displayUsersTable($allUsers)
                 return true;
           })       
     });
-</script>
-<?php 
+EOF;
 include (ROOT_DIR.'/footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
 ?>
