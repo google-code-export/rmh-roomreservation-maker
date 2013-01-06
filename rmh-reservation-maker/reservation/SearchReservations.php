@@ -104,14 +104,15 @@ function searchForReservations() {
 }
 ?>
 
-<div id="container">
+<section class="content">
 
-    <div id="content">
+    <div>
 
-        <form name="SearchReservations" method="post" action="SearchReservations.php">
-<?php echo generateTokenField(); ?>
-
-            <select class="formt formtop"name="searchType">
+        <form class="generic" name="SearchReservations" method="post" action="SearchReservations.php">
+		<?php echo generateTokenField(); ?>
+			<div class="formRow">
+			<label for="searchType">Search Type</label>
+            <select id="searchType" name="searchType">
                 <option value = "Select Search Type">Select Search Type</option>
                 <option value = "Request ID">Request ID</option>
                 <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
@@ -119,15 +120,16 @@ function searchForReservations() {
                 <option value = "Family (Last Name)">Family (Last Name)</option>
                 <option value = "Status">Status</option>
             </select>
+			</div>
+			
+			<div class="formRow">
+			<label for="searchParam">Search Parameter</label>
+            <input id="searchParam" type="text" name="searchParam" value="" size="10" />
+			</div>
 
-            <input class="formt formbottom"  onfocus="if(this.value == '') { this.value = ''; }"type="text" name="searchParam" value="" size="10" />
-
-
-            <br>
-            <br>
-
-            <input class="formsubmit"type="submit" value="Search" name="enterSearch" />
-
+			<div class="formRow">
+            	<input class="btn" type="submit" value="Search" name="enterSearch" />
+			</div>
         </form>
 <?php
 if ($showReservation == true) {
@@ -235,7 +237,8 @@ if ($showReservation == true) {
  //   }
 }
 ?>
-
-        <?php
-        include (ROOT_DIR . '/footer.php');
-        ?>
+	</div>
+</section>
+<?php
+include (ROOT_DIR . '/footer.php');
+?>
