@@ -128,7 +128,7 @@ $statuses = array('approve'=>'Confirm', 'deny'=>'Deny'); //Status info that is s
       
      else if ($requestType == 'profile')
        {
-       header('Location: '.BASE_DIR.'./SearchProfileActivity.php');
+       header('Location: '.BASE_DIR.'/searchProfileActivity.php');
        }
     }
     else

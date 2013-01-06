@@ -53,9 +53,9 @@ include_once(ROOT_DIR .'database/dbUserProfile.php');
     //DISPLAY THE ENTIRE FAMILY PROFILE TO SW
 ?>
 
-<div id="container">
+<section class="content">
 
-    <div id="content">
+    <div>
         
         <!-- ALL YOUR HTML CONTENT GOES HERE -->
         
@@ -118,7 +118,7 @@ include_once(ROOT_DIR .'database/dbUserProfile.php');
        </form>
 
     </div>
-</div>
+</section>
 
 <?php 
 include ('footer.php'); 
