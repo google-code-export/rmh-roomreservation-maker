@@ -1,22 +1,54 @@
 $(document).ready(function(){
 	var offsetTop = 80; //for nav selector offset
+	if($('nav.navpane li.selected').size() > 0){
+		$('nav .leftArrow').css('top', $('nav.navpane li.selected').position().top + offsetTop);
+	}
 	
-	$('nav .leftArrow').css('top', $('nav.navpane li.selected').position().top + offsetTop);
+	//hash change ajax
+	var newHash = '';
+
+	$(window).bind('hashchange', function(){
+		newHash = window.location.hash.substring(1);
+		if(newHash)
+		{
+			$('nav.navpane li').removeClass('selected')
+			$('nav.leftmenu li[data-href="'+newHash+'"]').addClass('selected');
+				//newHash = newHash.replace('-','/');
+		}
+	});
 	
+	$(window).trigger('hashchange'); 
+	
+	//ajax load tracker
+	var ajaxLoading = false;
+	
+	//ajax load for navigation
 	$('nav.navpane li').click(function(e){
-		$('nav.navpane li.selected').removeClass('selected');
-		$(this).addClass('selected');
-		$('nav .leftArrow').css('top', $(this).position().top + offsetTop);
+		//window.location.hash = $(this).data('href');
+		window.location = $(this).data('href');
 	});
-	
-	$('h1').click(function(e){
-		$.ajax({
-			url: 'form.html',
-			success: function(data){
-				$('section.content').html(data);
-			}
+
+	function loadAjaxURL(URL){
+		if(ajaxLoading)
+			return;
+		$('<div id="loading">Loading</div>').appendTo('body').fadeIn('slow', function(){
+				$.ajax({
+				url: URL,
+				type: 'POST',
+				data:{'requestType': 'ajax'},
+				timeout: 5000,
+				done: function(data){
+					$('#loading').remove();
+					$('section.content').html(data);
+				},
+				always: function(){
+					alert("hell");
+				}
+				
+			})
 		});
-	});
+		
+	}
 	
 	$('.btn-navbar').click(function(e){
 		e.preventDefault();
