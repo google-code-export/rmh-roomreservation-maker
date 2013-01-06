@@ -21,42 +21,47 @@ if(!defined('PARENT'))
 {
     die('Restricted access');
 }
-
 $userAccess = getUserAccessLevel();
+
+//Navigation items are set automatically based on the page name. It can be overriden by assigning the page name to $navItem
+//So for pages that are linked from the navigation menu, their $navItem is set automatically. But pages that are child pages of
+//a menu item, which doesn't have a direct link from the navigation, their $navItem has to be set to one of the pages in the left menu
+//this is done to highlight the current selected page
+if(!isset($navItem)){
+	$navItem = basename($_SERVER['PHP_SELF']);
+}
+
 ?>
 <nav class="navpane">
 	<ul>
    
 		<!--navigation links available to all members -->
-		<li data-href="<?php echo BASE_DIR.'/index.php';?>">Home</li>
+		<li data-href="<?php echo BASE_DIR.'/index.php';?>" <?php echo ($navItem == "index.php") ? 'class="selected"' : '';?>>Home</li>
 	<?php
 	if($userAccess === 0)
 	{
 	   //Navigation for family members
 	 ?>
-	    <li data-href="<?php echo BASE_DIR.'/index.php';?>">Family Nav1</li>
-	    <li data-href="<?php echo BASE_DIR.'/index.php';?>">Family Nav2</li>
+	    <li data-href="<?php echo BASE_DIR.'/index.php';?>" <?php echo ($navItem == "index.php") ? 'class="selected"' : '';?>>Family Nav1</li>
+	    <li data-href="<?php echo BASE_DIR.'/index.php';?>" <?php echo ($navItem == "index.php") ? 'class="selected"' : '';?>>Family Nav2</li>
 	    <li data-href="<?php echo BASE_DIR. '/logout.php';?>">Log Out</li>
-	    
-	
-	    
 	<?php  
 	}
 	else if($userAccess === 1)
 	{
 	    //Navigation for social workers
 	 ?>
-	    <li data-href="<?php echo BASE_DIR.'/family/FamilyProfileMenu.php';?>">Family Profile</li>
-	    <li data-href="<?php echo BASE_DIR.'/report.php';?>">Report</li> 
-	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</li>
+	    <li data-href="<?php echo BASE_DIR.'/family/FamilyProfileMenu.php';?>" <?php echo ($navItem == "FamilyProfileMenu.php") ? 'class="selected"' : '';?>>Family Profile</li>
+	    <li data-href="<?php echo BASE_DIR.'/report.php';?>" <?php echo ($navItem == "report.php") ? 'class="selected"' : '';?>>Report</li> 
+	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>" <?php echo ($navItem == "SearchReservations.php") ? 'class="selected"' : '';?>>Search Reservations</li>
 	<?php  
 	}
 	else if($userAccess === 2)
 	{
 	    //Navigation for RMH reservation managers
 	 ?>
-	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>">Search Reservations</li>
-	    <li data-href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>">Approve Family Profile Changes</li>
+	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>" <?php echo ($navItem == "SearchReservations.php") ? 'class="selected"' : '';?>>Search Reservations</li>
+	    <li data-href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>" <?php echo ($navItem == "searchProfileActivity.php") ? 'class="selected"' : '';?>>Approve Family Profile Changes</li>
 	    
 	<?php  
 	}
@@ -64,8 +69,8 @@ $userAccess = getUserAccessLevel();
 	{
 	    //Navigation for admins
 	 ?>
-	    <li data-href="<?php echo BASE_DIR.'/admin/listUsers.php';?>">View Users</li>
-	    <li data-href="<?php echo BASE_DIR.'/admin/addUser.php';?>">Add New User</li>
+	    <li data-href="<?php echo BASE_DIR.'/admin/listUsers.php';?>" <?php echo ($navItem == "listUsers.php") ? 'class="selected"' : '';?>>View Users</li>
+	    <li data-href="<?php echo BASE_DIR.'/admin/addUser.php';?>" <?php echo ($navItem == "addUser.php") ? 'class="selected"' : '';?>>Add New User</li>
 	
 	<?php  
 	}
@@ -73,8 +78,8 @@ $userAccess = getUserAccessLevel();
 	if($userAccess > 0)
 	{
 	?>
-	    <li data-href="<?php echo BASE_DIR.'/changeAccountSettings.php';?>">Manage Account</li>
-	    <li data-href="<?php echo BASE_DIR. '/logout.php';?>" onClick="return confirm('Are you sure you want to logout?');">Log Out</li>
+	    <li data-href="<?php echo BASE_DIR.'/changeAccountSettings.php';?>" <?php echo ($navItem == "changeAccountSettings.php") ? 'class="selected"' : '';?>>Manage Account</li>
+	    <li data-href="<?php echo BASE_DIR. '/logout.php';?>">Log Out</li>
 	    
 	<?php
 	} 
