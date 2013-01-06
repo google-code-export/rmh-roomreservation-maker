@@ -7,6 +7,17 @@ There are few things that you will have to follow in order for the whole Session
 
 Please refer to the `template.php` file in the repository for an example page. You can save it as your new page and continue there forward.
 
+== File naming convention ==
+
+In order to be consistent throughout our code base, we will be using camel case (with lowercase first letter) to name our files. 
+
+Example:
+ * thisIsATestFile.php
+ * anotherLongNameForFile.php
+ * template.php
+
+Note: Any existing file that have this inconsistency will be renamed to follow this convention.
+
 
 = Details =
  * When you are done saving the `template.php` file as your new page, you will need to modify the `header.php` file to include the required access level. 
