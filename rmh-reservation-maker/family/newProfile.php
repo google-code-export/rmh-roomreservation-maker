@@ -320,6 +320,7 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 }
 ?>
 <section class="content">
+<?php ErrorHandler::displayErrors();?>
 	<div>
 	<h2>New Family Profile</h2>
 	<div>
@@ -348,17 +349,17 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 			</div>
 			<div class="formRow">
 				<label for="Email">Parent Email Address</label>
-				<input type="text" name="Email" id="Email"
+				<input type="email" name="Email" id="Email"
 					<?php isset($parentEmail) ? print ("value=\"$parentEmail\"") : print("");?> />
 			</div>
 			<div class="formRow">
 				<label for="Phone1">Parent's Primary Phone</label>
-				<input type="text" name="Phone1" id="Phone1"
+				<input type="tel" name="Phone1" id="Phone1"
 					<?php isset($phone1) ? print ("value=\"$phone1\"") : print("");?> />
 			</div>
 			<div class="formRow">
 				<label for="Phone2">Parent's Secondary Phone</label>
-				<input type="text" name="Phone2" id="Phone2"
+				<input type="tel" name="Phone2" id="Phone2"
 					<?php isset($phone2) ? print ("value=\"$phone2\"") : print("");?> />
 			</div>
 			<div class="formRow">	
@@ -378,7 +379,7 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 			</div>
 			<div class="formRow">
 				<label for="ZipCode">Zip Code</label>
-				<input type="text" name="ZipCode" id="ZipCode"
+				<input type="number" name="ZipCode" id="ZipCode"
 					<?php isset($zip) ? print ("value=\"$zip\"") : print("");?> /> 
 			</div>
 			<div class="formRow">
@@ -425,7 +426,7 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 			</div>
 			<div class="formRow">
 				<input class="btn" type="submit" name="submit"
-					value="Create New Profile" />
+					value="Create" />
 			</div>
 		</form>
 	</div>
