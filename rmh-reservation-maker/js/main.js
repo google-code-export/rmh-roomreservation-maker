@@ -80,4 +80,9 @@ $(document).ready(function(){
 		}
 		
 	});
+	
+	/*session message click*/
+	$('.session_message').click(function(e){
+		$(this).slideUp();
+	});
 });

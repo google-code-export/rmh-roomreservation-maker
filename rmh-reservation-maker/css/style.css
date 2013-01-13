@@ -102,6 +102,7 @@ header.topbar{
 	height: 4.2em;
 	color: #FFFFFF;
 	width: 100%;
+	position: relative;
 }
 header.topbar h1{
 	font-family: 'Advent Pro', sans-serif;
@@ -195,6 +196,16 @@ section.content h2{
 	margin-top: 0;
 }
 
+/*session message*/
+div.session_message{
+	/*margin-left: 16em; could not click the left menu, hide it overall*/
+	background-color: #00BB00;
+	color: #FFFFFF;
+	padding: 0.83em 0.5em;
+	text-align: center;
+	cursor: pointer;
+}
+
 /*forms*/
 section.content label{
 	display:block;
@@ -253,6 +264,12 @@ div.formRow input[type="submit"]:first-child:nth-last-child(1) {
 div.formRow input[type="submit"]:first-child:nth-last-child(2),
 div.formRow input[type="submit"]:first-child:nth-last-child(2) ~ div.formRow input[type="submit"] {
     float: left;
+}
+
+div.formRow span.error{
+	font-size: 0.8em;
+	color: #FF0000;
+	float: right;
 }
 
 
@@ -479,7 +496,7 @@ a.helpbutton{
     	padding: 3em 5em;
     }
     section.content{
-    	top:4.2em;
+    	/*top:4.2em;*/
     }
     
     /*Forms and form elements*/
@@ -499,6 +516,12 @@ a.helpbutton{
 	div.formRow input[type="submit"]:first-child:nth-last-child(2),
 	div.formRow input[type="submit"]:first-child:nth-last-child(2) ~ div.formRow input[type="submit"] {
 	    float: left;
+	}
+	
+	div.formRow span.error{
+		float: left;
+		width: 24.9em;
+		text-align: right;
 	}
 }
 
@@ -559,6 +582,15 @@ a.helpbutton{
 	/*header buttons*/
 	a.helpbutton{
 		right: 4em;
+	}
+	div.formRow span.error{
+		float: left;
+		width: 21.1em;
+		text-align: right;
+	}
+	
+	div.session_message{
+		margin-left: 0;
 	}
 }
 
