@@ -104,7 +104,9 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
 </section>        
 
 
-<?php 
+<?php
+include('footer.php');
+
 /* The following code needs to be incorporated:
  * 	- a link to help page
  *  - a link to forgot password/username page
