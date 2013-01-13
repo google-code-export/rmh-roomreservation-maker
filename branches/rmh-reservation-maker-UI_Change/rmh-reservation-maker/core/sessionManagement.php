@@ -73,14 +73,11 @@ function getUserAccessLevel()
  */
 function setSessionMessage($message, $error=false)
 {
-    if($error)
-    {
-        $_SESSION['message_error'] = $message;
-    }
-    else
-    {
-        $_SESSION['message_normal'] = $message;
-
+	$type = ($error) ? 'message_error' : 'message_normal';
+    if(!is_array($message)){
+       	isset($_SESSION[$type]) ? array_push($_SESSION[$type], $message) : $_SESSION[$type] = array($message);
+    }else{
+    	$_SESSION[$type] = isset($_SESSION[$type]) ? array_merge($_SESSION[$type], $message) : $message;
     }
 }
 
@@ -88,15 +85,19 @@ function showSessionMessage()
 {
     if(isset($_SESSION['message_error']))
     {
-        echo '<div class="session_message" style="color:#FF3300;">';
-        echo implode('<br />',$_SESSION['message_error']);
+        echo '<div class="session_message" style="background-color:#FF3300;">';
+        echo '<div>';
+        	echo implode('</div><div>',$_SESSION['message_error']);
+        echo '</div>';
         echo '</div>';
         unset($_SESSION['message_error']);
     }
     else if(isset($_SESSION['message_normal']))
     {
-        echo '<div class="session_message" style="color:#00BB00;">';
-        echo implode('<br />', $_SESSION['message_normal']);
+        echo '<div class="session_message">';
+		echo '<div>';
+        	echo implode('</div><div>',$_SESSION['message_normal']);
+        echo '</div>';        
         echo '</div>';
         unset($_SESSION['message_normal']);
     }
