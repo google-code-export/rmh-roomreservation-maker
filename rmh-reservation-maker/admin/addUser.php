@@ -27,7 +27,6 @@ include('../header.php'); //including this will further include (globalFunctions
 include_once(ROOT_DIR.'/domain/UserProfile.php');
 include_once(ROOT_DIR.'/database/dbUserProfile.php');
 include_once(ROOT_DIR.'/core/class/FormHelper.php');
-include_once(ROOT_DIR.'/core/validationRules.php');
 include_once(ROOT_DIR.'/core/class/DataValidator.php');
 $errors = array();
 $messages = array();
@@ -41,6 +40,21 @@ if(isset($_POST['form_token']))
 {
 	$userType = sanitize($_POST['userGroup']);
 	try{
+		
+		//form validation rules. should have all the fields included
+		$addUserValidationRules = array(
+				'userGroup'=>array('notempty'),
+				'title'=>array('alpha','allow'=>array('.')),
+				'fname'=>array('alpha'),
+				'lname'=>array('alpha'),
+				'phone'=>array('number','allow'=>array('-','(',')','.')),
+				'username'=>array('alphanumeric'),
+				'email'=>array('email'),
+				'hospital'=>array('notempty'),//this might not be available for admin, how to check that?
+				'notify'=>array('notempty'),
+				'submit'=>array('ignore')
+		);
+		
 		$validator = new DataValidator($_POST,$addUserValidationRules);
 		$data = $validator->getData();
 		if($validator->isValid()){
