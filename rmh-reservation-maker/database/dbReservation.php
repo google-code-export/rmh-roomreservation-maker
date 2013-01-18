@@ -88,7 +88,7 @@ define ('SELECT_RES_CLAUSE', "SELECT RR.RoomReservationKey, RR.RoomReservationAc
 // this is used in most of the retrieve queries to join with the full request table so that
 // we always return the most recent record for a request
 define ('MAX_ACTIVITY_ID_TABLE',"(SELECT RR.RoomReservationRequestID, MAX(RR.RoomReservationActivityID) as maxid
-            FROM RoomReservationActivity RR
+            FROM roomreservationactivity RR
             GROUP BY RR.RoomReservationRequestID)");
 /*
  * Retrieves the highest RoomReservationRequestID, or RoomReservationActivityID, depending on the status of the request, Apply (a new reservation) 
@@ -220,13 +220,13 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
         //Retrieve the entry
         $query = SELECT_RES_CLAUSE.
         "FROM ".MAX_ACTIVITY_ID_TABLE.
-           "as result INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID 
+           "as result INNER JOIN roomreservationactivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID 
                 AND result.maxid = RR.RoomReservationActivityID
              INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
            LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
            WHERE RR.RoomReservationRequestID=".$roomReservationRequestId;                        
-            
+           echo $query;
         $result = mysql_query($query) or die(mysql_error());
         error_log("num rows retrieved =  ".mysql_num_rows($result));
         if (mysql_num_rows($result)!==1) {
