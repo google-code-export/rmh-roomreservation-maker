@@ -1,195 +1,179 @@
 <?php
 /*
-* Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
+ * Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
 * This program is part of RMH-RoomReservationMaker, which is free software,
 * inspired by the RMH Homeroom Project.
 * It comes with absolutely no warranty.  You can redistribute and/or
 * modify it under the terms of the GNU Public License as published
 * by the Free Software Foundation (see <http://www.gnu.org/licenses/).
 */
- 
+
 /**
-* Account Management script for RMH-RoomReservationMaker. 
-* This page includes account settings. For now it is limited to password change, as the default password should be changed for all the users.
-* @author Prayas Bhattarai
-* @version May 1, 2012
-*/
+ * Account Management script for RMH-RoomReservationMaker.
+ * This page includes account settings. For now it is limited to password change, as the default password should be changed for all the users.
+ * @author Prayas Bhattarai
+ * @version May 1, 2012
+ */
 
 //start the session and set cache expiry
 session_start();
 session_cache_expire(30);
 
 $title = "Account Management"; //This should be the title for the page, included in the <title></title>
+$helpPage = "accountmanage.php"; //help page for this view
 
 include('header.php'); //including this will further include (globalFunctions.php and config.php)
 include(ROOT_DIR.'/database/dbUserProfile.php');
+include_once(ROOT_DIR.'/core/class/FormHelper.php');
+include_once(ROOT_DIR.'/core/class/DataValidator.php');
 
 $errors = array();
 $messages = array();
+$data = array(); 
 
-    if(isset($_POST['form_token']) && validateTokenField($_POST))
-    {
-        //the security validation was successful, perform required operation here below.
-        
-        //validate data
-        if(isset($_POST['edit_new_pass']) && !empty($_POST['edit_new_pass']) && strlen(trim($_POST['edit_new_pass'])) > 7)
-        {
-           $newPass = getHashValue($_POST['edit_new_pass']);
-            
-           if(isset($_POST['edit_verify_pass']) && !empty($_POST['edit_verify_pass']))
-            {
-               $verifyPass = getHashValue($_POST['edit_verify_pass']);
-               
-               //verify if the new password and verify password match
-               if($newPass === $verifyPass)
-               {
-                   //continue with validation, check if the old password was correct
-                   if(isset($_POST['edit_old_pass']) && !empty($_POST['edit_old_pass']))
-                    {
-                        $oldPass = getHashValue($_POST['edit_old_pass']);
-                        $username = getCurrentUser();
+if(isset($_POST['form_token']))
+{
+	try{
+		//form validation rules
+		$accountSettingsRules = array(
+				'title'=>array('alpha','allow'=>array('.')),
+				'old_pass'=>array('password'),
+				'new_pass'=>array('password'), //we should add validation for minimum length too
+				'verify_pass'=>array('password','notempty'), //password should not be sanitized!
+				'submit'=>array('ignore')
+		);
 
-                        if(retrieve_UserByAuth($username, $oldPass))
-                        {
-                            //old password is valid, continue with password change
-                            //retrieve the userprofile
-                            $userProfile = retrieveCurrentUserProfile();
-                            
-                            if($userProfile)
-                            {
-                                //make changes in the user profile regarding password, then update the database. This assumes that only the UserProfile table is being modified, not the corresponding detailed profile table
-                                $userProfile->set_password($newPass);
-                                
-                                //update the user profile table
-                                if(update_UserProfile($userProfile))
-                                {
-                                    $messages['change_successful'] = 'Your password has been successfully changed. For security reasons, it is recommended that you <a href="'.BASE_DIR.'/logout.php">logout</a> and login with the new password';
-                                }
-                                else
-                                {
-                                    $errors['change_failed'] = "The password could not be changed";
-                                }
-                                
-                            }
-                            else
-                            {
-                                $errors['retrieve_failed'] = 'Cannot retrieve current user information';
-                            }
-                        }
-                        else
-                        {
-                            //invalid password
-                            $errors['invalid_password'] = 'Invalid old password';
-                        }
+		$validator = new DataValidator($_POST, $accountSettingsRules);
+		$data = $validator->getData();
 
-                    }
-                    else
-                    {
-                        $errors['old_pass_empty'] = 'Please enter a valid password';
-                    }
-               }
-               else
-               {
-                   $errors['password_mismatch'] = 'New password and verify password do not match';
-               }
-            }
-            else
-            {
-                $errors['verify_pass_empty'] = 'Please enter a valid password.';
-            }
-        }
-        else
-        {
-            $errors['new_pass_empty'] = "Please enter a valid password. Your new password should be a minimum of 8 characters long";
-        }
-        
-    }
-    else if(isset($_POST['form_token']) && !validateTokenField($_POST))
-    {
-        //if the security validation failed. display/store the error:
-        $errors['security_check_failed'] = 'The request could not be completed: security check failed!';
+		if($validator->isValid()){
+			//validation successful
+			$newPass = getHashValue($data['new_pass']);
+			$verifyPass = getHashValue($data['verify_pass']);
+			$oldPass = getHashValue($data['old_pass']);
+			$title = $data['title'];
+				
+			$username = getCurrentUser();
+				
+			//TODO we could add this check in the validator?
+			if($newPass === $verifyPass){
+				if(retrieve_UserByAuth($username, $oldPass)){
+					//verify password and new password match AND the user with the old password exists
 
-    }
+					//retrieve user profile:
+					$userProfile = retrieveCurrentUserProfile();
+
+					if($userProfile){
+						//change the password
+						$userProfile->set_password($newPass);
+						//TODO set the user title too. But isn't that included in profile change?
+							
+						//update the user profile table
+						if(update_UserProfile($userProfile)){
+							//set session message
+							setSessionMessage("Your password has been successfully changed. You should log out and log in again for security reasons.");
+							$data = array();
+							$dataErrors = array();
+						
+							//TODO Logout the user here
+						}else{
+							ErrorHandler::error('Could not update user profile');
+						}
+					}else{
+						ErrorHandler::error("Cannot retrieve current user information");
+					}
+				}
+				else{
+					//report as validation error that old password is incorrect
+					$validator->setError('old_pass','Invalid old password');
+				}
+			}else{
+				//report as validation error that verify pass doesn't match
+				$validator->setError('verify_pass','New password and verify password do not match');
+			}
+		}
+
+	}catch(SecurityException $e){
+		ErrorHandler::error($e->getMessage());
+	}
+}
 ?>
+<section class="content">
+<?php ErrorHandler::displayErrors();?>
+	<div>
+		<h2>
+			<?php echo getCurrentUser();?>
+		</h2>
+		<p>Please use this page to change your default password, if you
+			haven't already done so.</p>
+			
+		<?php 
+			$dataErrors = isset($validator) ? $validator->getErrors() : array();
+			
+			$form = new FormHelper($data, $dataErrors);
+			$form->create(array('class'=>array('generic', 'editform'),
+								'name'=>'changeAccountSettingsForm',
+								'method'=>'post',
+								'action'=>BASE_DIR.'/changeAccountSettings.php'				
+								));
+			
+			$form->input(array(
+								'input'=>array('id'=>'title'),
+								'label'=>array('value'=>'Title')					
+							));
+			$form->input(array(
+					'input'=>array('id'=>'old_pass',
+									'type'=>'password'),
+					'label'=>array('value'=>'Old Password')
+			));
+			
+			$form->input(array(
+					'input'=>array('id'=>'new_pass',
+									'type'=>'password'),
+					'label'=>array('value'=>'New Password')
+			));
 
-<div id="container">
-    <div id="content">
-        <h2><?php echo getCurrentUser();?></h2>
-        <?php
-            if(!empty($errors))
-            {
-                echo '<div style="color:#FF3300;">';
-                echo implode('<br />', $errors);
-                echo '</div>';
-            }
-            if(!empty($messages))
-            {
-                echo '<div style="color:#00BB00;">';
-                echo implode('<br />', $messages);
-                echo '</div>';
-            }
-            else
-            {
-        ?>
-        
-        <p>Please use this page to change your default password, if you haven't already done so.</p>
-       <form method="post" action="<?php echo BASE_DIR; ?>/changeAccountSettings.php">
-           <div>
-                        <label  for="edit_old_pass"></label>
-                        <input class="formt formtop" id="edit_old_pass" type="password" name="edit_old_pass" placeholder="Old Password" />
-                        <?php echo generateTokenField();
-                        ?>
-                     
-                 </div>
-                 <div>
-                        <label  for="edit_new_pass"></label>
-                        <input class="formt" id="edit_new_pass" type="password" name="edit_new_pass" placeholder="New Password"/>
-                 </div>
-                 <div>
-                        <label for="edit_verify_pass"></label>
-                        <input class="formt formbottom" id="edit_verify_pass" type="password" name="edit_verify_pass"  placeholder="Verify Password"/>
-                 </div>
-                
-                <p><input class="formsubmit" type="submit" name="Submit" value="Submit" /></p>
-                
-        </form>
-        <br>
-    <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='./help/accountmanage.php'" />
-        <?php 
-            }
-            ?>
-    </div>
-    
-</div>
+			$form->input(array(
+					'input'=>array('id'=>'verify_pass',
+									'type'=>'password'
+									),
+					'label'=>array('value'=>'Verify Password')
+			));
+
+			$form->button();
+			
+			$form->generate();
+		?>
+	</div>
+</section>
 <?php 
 include (ROOT_DIR.'/footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
 
 function retrieveCurrentUserProfile()
 {
-    //since access level is stored in the session, use that to find the user category
-    //1 is for social worker
-    //2 is for staff approver
-    //3 is for admin
-    //if there is a db function available for this, this function is not needed
-    $accessLevel = getUserAccessLevel();
-    $userProfileId = getUserProfileID();
-    
-    switch($accessLevel)
-    {
-        case 1:
-           return retrieve_UserProfile_SW_OBJ($userProfileId);
-           break;
-        case 2:
-            return retrieve_UserProfile_RMHApprover_OBJ($userProfileId);
-            break;
-        case 3:
-            $userProfile = retrieve_UserProfile_RMHAdmin($userProfileId);
-            return is_array($userProfile) ? current($userProfile) : false;
-            break;
-        default:
-            return false;
-            break;
-    }
+	//since access level is stored in the session, use that to find the user category
+	//1 is for social worker
+	//2 is for staff approver
+	//3 is for admin
+	//if there is a db function available for this, this function is not needed
+	$accessLevel = getUserAccessLevel();
+	$userProfileId = getUserProfileID();
+
+	switch($accessLevel)
+	{
+		case 1:
+			return retrieve_UserProfile_SW_OBJ($userProfileId);
+			break;
+		case 2:
+			return retrieve_UserProfile_RMHApprover_OBJ($userProfileId);
+			break;
+		case 3:
+			$userProfile = retrieve_UserProfile_RMHAdmin($userProfileId);
+			return is_array($userProfile) ? current($userProfile) : false;
+			break;
+		default:
+			return false;
+			break;
+	}
 }
 ?>
-

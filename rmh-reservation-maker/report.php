@@ -18,6 +18,7 @@ session_start();
 session_cache_expire(30);
 
 $title = "Report Generation";
+$helpPage = "PatientReport.php";
 
 include ('header.php');
 include_once (ROOT_DIR.'/domain/Reservation.php');
@@ -100,38 +101,39 @@ else
     $showForm = true;
 }
 
-echo '<div id="container">';
-        echo '<div id="content" style="margin-left: 250px; margin-top: 23px;">';
+echo '<section class="content">';
+        echo '<div>';
 
 //if $showForm = true, display form to enter data
 if($showForm == true)
 {
     if ($message =="")
     {
-        echo "Please select the data for your report<br><br>";
+        echo "Please select the data for your report";
     }
     else
     {
-        echo '<div class="notice">'.$message.'</div><br><br>';   
+        echo '<div class="notice">'.$message.'</div>';   
     }
     
     //FORM
     ?>
-<form name="reportForm" action="report.php" method="POST">
+<form class="generic" name="reportForm" action="report.php" method="POST">
     <?php echo generateTokenField(); 
     
+    //TODO use a better validation
     if ($beginDateError==true)
     {
-        echo '<div class="formt formtop" style="background:rgba(255, 255, 122, .7); color: red; border:thin solid red; padding-top:7px;">';
+        echo '<div class="formRow"';
     }
  else 
     {
-       echo '<div class="formt formtop" style="background:#FFF; padding-top:7px;">'; 
+       echo '<div class="formRow">'; 
     }
     
     ?>
-    <label for="beginDate">Start Date:</label>
-        <select name="beginMonth">
+    <label for="beginMonth">Start Date</label>
+        <select name="beginMonth" id="beginMonth">
             <option value="">Month</option>
             <option value="01" <?php if($_POST['beginMonth']=='01') echo "selected='selected'";?> >January</option>
             <option value="02" <?php if($_POST['beginMonth']=='02') echo "selected='selected'";?> > February</option>
@@ -197,21 +199,20 @@ if($showForm == true)
             <option value="2012" <?php if($_POST['beginYear']=='2012') echo "selected='selected'";?> >2012</option>
             <option value="2013" <?php if($_POST['beginYear']=='2013') echo "selected='selected'";?> >2013</option>
 	    </select>
-    <br><br>
     </div>
     
     <?php
     if ($endDateError==true)
     {
-        echo '<div class="formt" style="background:rgba(255, 255, 122, .7); padding-top:7px; color: red; border-top:thin solid red;">';
+        echo '<div class="formRow" style="background:rgba(255, 255, 122, .7); padding-top:7px; color: red; border-top:thin solid red;">';
     }
     else 
     {
-       echo '<div class="formt" style="background:#FFF; padding-top:7px; border-top:thin solid black;">'; 
+       echo '<div class="formRow" style="background:#FFF; padding-top:7px;">'; 
     }
     ?>
        
-    <label for="endDate">End Date:</label>
+    <label for="endDate">End Date</label>
         <select name="endMonth">
             <option value="">Month</option>
             <option value="01" <?php if($_POST['endMonth']=='01') echo "selected='selected'";?> >January</option>
@@ -278,19 +279,15 @@ if($showForm == true)
             <option value="2012" <?php if($_POST['endYear']=='2012') echo "selected='selected'";?> >2012</option>
             <option value="2013" <?php if($_POST['endYear']=='2013') echo "selected='selected'";?> >2013</option>
 	</select>
-    <br><br></div>
-    <label for="hospital" class="noShow non">Hospital (optional):</label>
-            <input class="formt formbottom" type="text" name="hospital" value="Hospital" onfocus="if(this.value == 'Hospital') { this.value = ''; }"/>
-    <br><br>
-            <input class="formsubmit" type="submit" value="Submit" name="submit" />
-            
+	</div>
+	<div class="formRow">
+    <label for="hospital">Hospital (optional)</label>
+            <input id="hospital" type="text" name="hospital" />
+   	</div>
+   	<div class="formRow">
+            <input class="btn" type="submit" value="Submit" name="submit" />
+    </div>        
 </form>
-<br><br>
-            <input class="helpbutton" type="submit" value="Help" align="bottom" onclick="location.href='./help/PatientReport.php'" />
-
-    
-    
-
 <?php
 }
 //if $showReport = true, display report
@@ -388,9 +385,8 @@ else if($showReport == true)
 }
 }
 
-include (ROOT_DIR. '/inc/back.php');
         echo '</div>';
-echo '</div>';
+echo '</section>';
 
 include ('footer.php');
 
