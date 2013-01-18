@@ -24,150 +24,127 @@ $helpPage = "accountmanage.php"; //help page for this view
 
 include('header.php'); //including this will further include (globalFunctions.php and config.php)
 include(ROOT_DIR.'/database/dbUserProfile.php');
+include_once(ROOT_DIR.'/core/class/FormHelper.php');
+include_once(ROOT_DIR.'/core/class/DataValidator.php');
 
 $errors = array();
 $messages = array();
+$data = array(); 
 
-if(isset($_POST['form_token']) && validateTokenField($_POST))
+if(isset($_POST['form_token']))
 {
-	//the security validation was successful, perform required operation here below.
+	try{
+		//form validation rules
+		$accountSettingsRules = array(
+				'title'=>array('alpha','allow'=>array('.')),
+				'old_pass'=>array('password'),
+				'new_pass'=>array('password'), //we should add validation for minimum length too
+				'verify_pass'=>array('password','notempty'), //password should not be sanitized!
+				'submit'=>array('ignore')
+		);
 
-	//validate data
-	if(isset($_POST['edit_new_pass']) && !empty($_POST['edit_new_pass']) && strlen(trim($_POST['edit_new_pass'])) > 7)
-	{
-		$newPass = getHashValue($_POST['edit_new_pass']);
+		$validator = new DataValidator($_POST, $accountSettingsRules);
+		$data = $validator->getData();
 
-		if(isset($_POST['edit_verify_pass']) && !empty($_POST['edit_verify_pass']))
-		{
-			$verifyPass = getHashValue($_POST['edit_verify_pass']);
-			 
-			//verify if the new password and verify password match
-			if($newPass === $verifyPass)
-			{
-				//continue with validation, check if the old password was correct
-				if(isset($_POST['edit_old_pass']) && !empty($_POST['edit_old_pass']))
-				{
-					$oldPass = getHashValue($_POST['edit_old_pass']);
-					$username = getCurrentUser();
+		if($validator->isValid()){
+			//validation successful
+			$newPass = getHashValue($data['new_pass']);
+			$verifyPass = getHashValue($data['verify_pass']);
+			$oldPass = getHashValue($data['old_pass']);
+			$title = $data['title'];
+				
+			$username = getCurrentUser();
+				
+			//TODO we could add this check in the validator?
+			if($newPass === $verifyPass){
+				if(retrieve_UserByAuth($username, $oldPass)){
+					//verify password and new password match AND the user with the old password exists
 
-					if(retrieve_UserByAuth($username, $oldPass))
-					{
-						//old password is valid, continue with password change
-						//retrieve the userprofile
-						$userProfile = retrieveCurrentUserProfile();
+					//retrieve user profile:
+					$userProfile = retrieveCurrentUserProfile();
 
-						if($userProfile)
-						{
-							//make changes in the user profile regarding password, then update the database. This assumes that only the UserProfile table is being modified, not the corresponding detailed profile table
-							$userProfile->set_password($newPass);
-
-							//update the user profile table
-							if(update_UserProfile($userProfile))
-							{
-								$messages['change_successful'] = 'Your password has been successfully changed. For security reasons, it is recommended that you <a href="'.BASE_DIR.'/logout.php">logout</a> and login with the new password';
-							}
-							else
-							{
-								$errors['change_failed'] = "The password could not be changed";
-							}
-
+					if($userProfile){
+						//change the password
+						$userProfile->set_password($newPass);
+						//TODO set the user title too. But isn't that included in profile change?
+							
+						//update the user profile table
+						if(update_UserProfile($userProfile)){
+							//set session message
+							setSessionMessage("Your password has been successfully changed. You should log out and log in again for security reasons.");
+							$data = array();
+							$dataErrors = array();
+						
+							//TODO Logout the user here
+						}else{
+							ErrorHandler::error('Could not update user profile');
 						}
-						else
-						{
-							$errors['retrieve_failed'] = 'Cannot retrieve current user information';
-						}
+					}else{
+						ErrorHandler::error("Cannot retrieve current user information");
 					}
-					else
-					{
-						//invalid password
-						$errors['invalid_password'] = 'Invalid old password';
-					}
-
 				}
-				else
-				{
-					$errors['old_pass_empty'] = 'Please enter a valid password';
+				else{
+					//report as validation error that old password is incorrect
+					$validator->setError('old_pass','Invalid old password');
 				}
-			}
-			else
-			{
-				$errors['password_mismatch'] = 'New password and verify password do not match';
+			}else{
+				//report as validation error that verify pass doesn't match
+				$validator->setError('verify_pass','New password and verify password do not match');
 			}
 		}
-		else
-		{
-			$errors['verify_pass_empty'] = 'Please enter a valid password.';
-		}
-	}
-	else
-	{
-		$errors['new_pass_empty'] = "Please enter a valid password. Your new password should be a minimum of 8 characters long";
-	}
 
-}
-else if(isset($_POST['form_token']) && !validateTokenField($_POST))
-{
-	//if the security validation failed. display/store the error:
-	$errors['security_check_failed'] = 'The request could not be completed: security check failed!';
-
+	}catch(SecurityException $e){
+		ErrorHandler::error($e->getMessage());
+	}
 }
 ?>
-
 <section class="content">
+<?php ErrorHandler::displayErrors();?>
 	<div>
 		<h2>
 			<?php echo getCurrentUser();?>
 		</h2>
-		<?php
-		if(!empty($errors))
-		{
-			echo '<div style="color:#FF3300;">';
-			echo implode('<br />', $errors);
-			echo '</div>';
-		}
-		if(!empty($messages))
-		{
-			echo '<div style="color:#00BB00;">';
-			echo implode('<br />', $messages);
-			echo '</div>';
-		}
-		else
-		{
-			?>
-
 		<p>Please use this page to change your default password, if you
 			haven't already done so.</p>
-		<form method="post" class="generic editform" action="<?php echo BASE_DIR; ?>/changeAccountSettings.php">
-			<?php echo generateTokenField(); ?>
-			<div class="formRow">
-				<label for="add_title">Title</label>
-				<input id="add_title" type="text" name="add_title" />
-			</div>
 			
-			<div class="formRow">
-				<label for="edit_old_pass">Old Password</label>
-				<input id="edit_old_pass" type="password" name="edit_old_pass" />	
-			</div>
-
-			<div class="formRow">
-				<label for="edit_new_pass">New Password</label>
-				<input id="edit_new_pass" type="password" name="edit_new_pass" />
-			</div>
-			
-			<div class="formRow">
-				<label for="edit_verify_pass">Verify New Password</label>
-				<input id="edit_verify_pass" type="password" name="edit_verify_pass" />
-			</div>
-			
-			<div class="formRow">
-				<input class="btn" type="submit" name="Submit" value="Submit" />
-			</div>
-		</form>
 		<?php 
-		}
+			$dataErrors = isset($validator) ? $validator->getErrors() : array();
+			
+			$form = new FormHelper($data, $dataErrors);
+			$form->create(array('class'=>array('generic', 'editform'),
+								'name'=>'changeAccountSettingsForm',
+								'method'=>'post',
+								'action'=>BASE_DIR.'/changeAccountSettings.php'				
+								));
+			
+			$form->input(array(
+								'input'=>array('id'=>'title'),
+								'label'=>array('value'=>'Title')					
+							));
+			$form->input(array(
+					'input'=>array('id'=>'old_pass',
+									'type'=>'password'),
+					'label'=>array('value'=>'Old Password')
+			));
+			
+			$form->input(array(
+					'input'=>array('id'=>'new_pass',
+									'type'=>'password'),
+					'label'=>array('value'=>'New Password')
+			));
+
+			$form->input(array(
+					'input'=>array('id'=>'verify_pass',
+									'type'=>'password'
+									),
+					'label'=>array('value'=>'Verify Password')
+			));
+
+			$form->button();
+			
+			$form->generate();
 		?>
 	</div>
-
 </section>
 <?php 
 include (ROOT_DIR.'/footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
@@ -200,4 +177,3 @@ function retrieveCurrentUserProfile()
 	}
 }
 ?>
-

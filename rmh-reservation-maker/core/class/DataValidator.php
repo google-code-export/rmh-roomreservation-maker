@@ -32,8 +32,14 @@ class DataValidator{
 	}
 	
 	private function checkField($value, $rules){
+		if(in_array('ignore', $rules))
+			return array('data'=>$value);
+		
 		//sanitize the prevalidation data so that it can be returned as safe
-		$value = $this->sanitize($value);
+		//but avoid it for passwords, instead hash it
+		if(in_array('password', $rules) === false){
+			$value = $this->sanitize($value);
+		}
 		$retVal = array();
 		$retVal['data'] = $value;
 		
@@ -83,7 +89,9 @@ class DataValidator{
 						return array_merge($retVal,array('message'=>'Valid email is required'));
 				break;
 				
-				case 'ignore':
+				case 'password':
+					if(!$this->password($value))
+						return array_merge($retVal, array('message'=>'Password must be at least 8 characters long with no spaces'));
 				break;
 				
 				default:
@@ -116,6 +124,10 @@ class DataValidator{
 		//from php_filter_validate_email
 		$pattern = '/^(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){255,})(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){65,}@)(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22))(?:\\.(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\\]))$/iD';
 		return preg_match($pattern, $value);
+	}
+	
+	private function password($value){
+		return (!strstr($value,' ') && strlen($value) >= 8);
 	}
 	
 	public function getData(){
