@@ -27,6 +27,7 @@ session_start();
 session_cache_expire(30);
 
 $title = "Family Profile in Detail"; 
+$helpPage = "RoomRequest.php";
 
 include('../header.php'); 
 include(ROOT_DIR .'/domain/Family.php');
@@ -35,7 +36,7 @@ include(ROOT_DIR . '/database/dbFamilyProfile.php');
 
 if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST['firstName'] ) || isset( $_POST['lastName'] ) ) )
     {
-       
+       //Write a better code to all these validations!!!
         $fn = ( (isset( $_POST['firstName'] ) )?sanitize( $_POST['firstName']):""); //if firstName isset, sanitize it, else empty string
         if($fn == "First Name" )
             $fn = "";
@@ -47,7 +48,10 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         if($families)
             echo "";
         else
-            die("<div style='margin-left:260px; margin-top:30px;'><font color='red'><b>ERROR: Family not found, however, you may <a href='./newProfile.php'>create one.</a></b></font></div>");
+            echo("<div style='margin-left:260px; margin-top:30px;'><font color='red'><b>ERROR: Family not found, however, you may <a href='./newProfile.php'>create one.</a></b></font></div>"); //DON'T DIE!! Messes up the layout!!
+        
+        //TODO: BAD idea to just output errors wherever you want!!!! Organize this better. Use an error class or something!
+        
         $familyprofileID=NULL; 
          $_SESSION['familyID']= $familyprofileID;
          
@@ -233,7 +237,6 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         
         
 ?>
-</p>
 
 <div id="container">    
     
@@ -255,7 +258,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
           <div style="margin-top: 60px" >  
             
             <?php 
-                       
+            //TODO looks crazy make it organized -.-           
             $buttonEdit = "<a href='../family/EditFamilyProfile.php' style='color: white' <input type='submit' name='edit' class='formsubmit' /> Edit </a>";
             $buttonDelete = " <input class='formsubmit' id='php_button' type='submit' value='Delete' >";
             $buttonCreateRoomReservation = "<a href='../referralForm.php' style='color: white' <input type='submit' name='CreateRoomReservation' class='formsubmit' /> Create Room Reservation </a>";
@@ -272,8 +275,6 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             
             } ?>
               
-            &nbsp;
-            <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='../help/RoomRequest.php'" />
   
           </div>    
 

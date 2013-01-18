@@ -22,36 +22,37 @@ session_start();
 session_cache_expire(30);
 
 $title = "Search Profile Activity"; //This should be the title for the page, included in the <title></title>
+$helpPage = "approvefamilyprofilechange.php";
 
 include('header.php'); //including this will further include (globalFunctions.php and config.php)
 ?>
 
-<div id="container">
-    <div id="content"> 
-        <form method="post" action="<?php echo BASE_DIR;?>/searchProfileActivity.php">
+<section class="content">
+    <div> 
+        <form class="generic" method="post" action="<?php echo BASE_DIR;?>/searchProfileActivity.php">
             <?php echo generateTokenField(); ?>
-                                    
-            <label for="search_request_id">Enter request ID: </label>
-            <br>
-            <input class="formsingle formt" type="text" name="search_request_id" id="search_request_id" />
-            <br><br>
-            <input id="searchActivity" class="formsubmit" type="submit" name="Search" value="Submit"/>
+            <div class="formRow">                     
+            	<label for="search_request_id">Enter request ID: </label>
+            	<input class="formsingle formt" type="text" name="search_request_id" id="search_request_id" />
+            </div>
+            <div class="formRow">
+            	<input id="searchActivity" class="btn" type="submit" name="Search" value="Search"/>
+            </div>
        </form>
-          <br><br>
-    <input type="submit" class="helpbutton" value="Help" align="bottom" onclick="location.href='./help/approvefamilyprofilechange.php'" />
     </div>
-</div>
-<script>
-    $(function(){
-        $('#searchActivity').click(function(evt){
-            evt.preventDefault();
-            
-            var requestID = $.trim($('#search_request_id').val());
-            window.location = '<?php echo BASE_DIR;?>/reservation/activity.php?type=profile&request='+requestID;
-        });
-    })
-</script>
-<?php
+</section>
+   <?php 
+$pageJavaScript = <<<EOF
+	   	$(function(){
+	        $('#searchActivity').click(function(evt){
+	            evt.preventDefault();
+	            
+	            var requestID = $.trim($('#search_request_id').val());
+	            window.location = '{$cst(BASE_DIR)}/reservation/activity.php?type=profile&request='+requestID;
+	        });
+	    });
+EOF;
+	
 include (ROOT_DIR . '/footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
 ?>
 

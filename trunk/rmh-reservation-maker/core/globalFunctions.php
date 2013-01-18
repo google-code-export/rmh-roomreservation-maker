@@ -23,6 +23,8 @@
 */
 
 include_once('config.php');
+require_once('class/ErrorHandler.php');
+require_once('class/CoreExceptions.php');
 
 /**
  * sanitize function that filters out harmful characters from being processed. This function should be worked on.
@@ -39,7 +41,7 @@ function sanitize($data, $mysql=false)
     }
     else
     {
-        $sanitized = htmlspecialchars(trim($data));
+        $sanitized = htmlspecialchars(trim($data),ENT_QUOTES);
     }
 
     return $sanitized;
@@ -123,12 +125,22 @@ function isAjax()
           }
           else
           {
-              return false;
+          		throw new SecurityException("Invalid token");
           }
       }
       else
       {
-          return false;
+      		throw new SecurityException("Token not set");
       }
+  }
+  
+  /**
+   * cst function allows us to use constants within the heredoc notation
+   * 
+   * from php.net comment #100449 on define
+   */
+  $cst = 'cst';
+  function cst($constant){
+  	return $constant;
   }
 ?>

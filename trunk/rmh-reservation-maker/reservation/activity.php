@@ -106,15 +106,15 @@ if(isset($_GET['type']) && !empty($_GET['type']) && isset($_GET['request']) && i
 }
     else
     {
-        //there was no POST DATA
+        //there was no GET DATA
         $errors['invalid_request'] = "The request you made is not allowed";
     }
         
 
 ?>
 
-<div id="container">
-    <div id="content">
+<section class="content">
+    <div>
         <?php
         if(!empty($errors))
         {
@@ -140,23 +140,29 @@ if(isset($_GET['type']) && !empty($_GET['type']) && isset($_GET['request']) && i
             }
             echo '</table>';
         ?>
-        <form method="post" action="<?php echo BASE_DIR;?>/reservation/activityHandler.php">
+        <form class="generic" method="post" action="<?php echo BASE_DIR;?>/reservation/activityHandler.php">
             <?php echo generateTokenField(); ?>
+            
             <input type="hidden" name="activityType" value="<?php echo $requestType;?>"/>
             <input type="hidden" name="requestID" value="<?php echo $requestId;?>"/>
-            <input type="radio" id="approve" name="status" checked="true" value="approve" />
-            <label for="approve">Approve</label>
-            <input type="radio" id="deny" name="status" value="deny" />
-            <label for="deny">Deny</label>
-            <br />
-            <input type="submit" name="Submit" value="Submit"/>
+            <div class="formRow">
+            	<label for="approve">Approve</label>
+            	<input type="radio" id="approve" name="status" checked="true" value="approve" />
+			</div>
+			<div class="formRow">
+            	<label for="deny">Deny</label>
+            	<input type="radio" id="deny" name="status" value="deny" />
+            </div>
+            <div class="formRow">
+            	<input type="submit" name="Submit" value="Submit"/>
+            </div>
        </form>
         <?php
         }
         ?>
         
     </div>
-</div>
+</section>
 <?php 
 include (ROOT_DIR.'/footer.php'); //include the footer file, this contains the proper </body> and </html> ending tag.
 ?>

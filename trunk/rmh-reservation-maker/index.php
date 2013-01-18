@@ -3,12 +3,12 @@ session_start();
 session_cache_expire(30);
 $title = "Welcome";
 include('header.php');?>
-		<div id="container">
-			<div id="content" style="margin-left: 250px; margin-top: 23px;">
+		<section class="content">
+			<div>
 				Welcome to RMH Room Reservation Maker<br />
 				<p>When you are finished, please remember to <a href="logout.php">logout</a>.</p>
 
-				<?PHP
+				<?php
                                 //|| $_SESSION['logged_in'] is added for test purpose, can be removed later
 				if (isset($person) || (isset($_SESSION['logged_in']) && $_SESSION['logged_in']))
                                     { 
@@ -47,13 +47,12 @@ include('header.php');?>
 
 				//We have an admin authenticated	 
 				if($_SESSION['access_level']==3) {
-					echo("Welcome admin");
-				    
+					echo("Welcome admin");				    
 				}
 
 				}
 				?>
 				
 			</div>
-		</div>
+		</section>
   <?php include ('footer.php');?>

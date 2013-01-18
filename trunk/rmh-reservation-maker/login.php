@@ -19,7 +19,7 @@ session_cache_expire(30);
 $title = 'Login';
 include('header.php');
 
-//Alter the content class based on user's login status
+//Alter the content class based on user's login status ----> WHY IS THIS EVEN NECESSARY??!
 if(isset($_SESSION['logged_in']))
     $classAdd = 'content' ; 
 else $classAdd = 'contentLogin';
@@ -32,7 +32,7 @@ else $classAdd = 'contentLogin';
                         'RMH Administrator'=>3
                         );
     
-$error = array(); //variable that sstores all the errors that occur in the login process
+$error = array(); //variable that stores all the errors that occur in the login process
 //if data is submitted then do the following:
 //validate the token
 //if token validates, check for user and add session variables
@@ -74,54 +74,51 @@ else if(isset($_POST['form_token']) && !validateTokenField($_POST))
     $error['csrf'] = 'The request could not be completed: security check failed!';
 }
 ?>
-<div id="pad"></div>
-<div id="container">
-    <div id="<?php echo $classAdd; ?>">
-        <?PHP
-        if(!empty($error))
+<?php 
+/*How should errors be displayed:
+ * if(!empty($error))
         {
             echo '<div style="color:#f00;">';
             echo implode('<br />', $error);
             echo '</div>';
         }
         ?>
+ */
+?>
+<section>
+	<div class="mainLogo"></div>
+    <div class="boxHolder">
+        <p class="notice" style="top:1em;">You must be a Ronald McDonald House staff member or social worker to access this system.</p>
+        <div class="loginbox">        		
+	    	<form class="loginForm" method="post" action="login.php">
+	    	<?php echo generateTokenField(); ?>
+	        	<label for="username">Username</label>
+	        	<input type="text" name="username" id="username" />
+	        	<label for="password">Password</label>
+	        	<input type="password" name="password" id="password" />
+	        	<input class="btn submitButton" type="submit" name="login" value="Login"/>
+	        </form>
+	        <div class="clearfix"></div>
+		</div>
+ 	</div>
+</section>        
 
 
-        <div id="loginforms">
-            <div><center>
-                    <p><img src="images/rmdh.gif" alt="Ronald McDonald House New York" width="70%" />
-                              <br />  <br />
-                    </p>
-                    <p STYLE="COLOR:RED;">Access to <i>Room reservation maker</i> requires a Username and a Password.
-                      
-                    </p>
-                    <ul class="hometext">
-                            <li>You must be a Ronald McDonald House <i>staff member</i> or <i>social worker</i> to access this system.</li>
-                            <!--<li>If you do not remember your Password, <a href="reset.php">click here to reset it.</a></li>-->
-                    </ul>
-                    <div>
-                            <form class="loginForm"method="post" action="login.php">
-                                    <?php echo generateTokenField(); ?>
-                                    <div>
-                                            <label class="noShow non" for="username">Username</label><input class="formtop formt" type="text" name="username" id="username" placeholder="username"/>
-                                    </div>
-                                    <div>
-                                            <label class="noShow non"for="password"></label><input class="formbottom formt" type="password" name="password" id="password" placeholder="password"/>
-                                    </div>
-                                    <div>
-                                            <input class="formsubmit" type="submit" name="Login" value="Login"/>
-                                    </div>
-                            </form>
-                    </div>
-            </div>
-            
-	</div></center>
-                <input class="helpbutton" type="submit" value="Help" align="bottom" onclick="location.href='./help/LoginHelp.php'" />
+<?php
+include('footer.php');
+
+/* The following code needs to be incorporated:
+ * 	- a link to help page
+ *  - a link to forgot password/username page
+ */
+/* Current implementation:
+  <input class="helpbutton" type="submit" value="Help" align="bottom" onclick="location.href='./help/LoginHelp.php'" />
                 </br></br>
     </div>
     <?php include('footer.php');
     
     echo '<td>Lost your Password?  <a href="changeAccountSettings.php">Password Reset</a></td>';
+ */
     
     
 function retrieveCurrentUserProfile()
