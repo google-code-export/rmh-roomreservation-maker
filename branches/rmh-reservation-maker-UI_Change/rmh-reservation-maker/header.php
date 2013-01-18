@@ -76,9 +76,6 @@
             }
             ?>
     </header>
-    <?php 
-	     showSessionMessage();
-     ?>
 <?php
 if(isset($_SESSION['logged_in'])){
 	include_once(ROOT_DIR.'/navigation.php');

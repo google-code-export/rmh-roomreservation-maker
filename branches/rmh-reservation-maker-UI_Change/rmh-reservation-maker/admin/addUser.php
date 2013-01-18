@@ -172,23 +172,6 @@ else if(isset($_GET['type']))
 <section class="content">
 	<?php ErrorHandler::displayErrors();?>
 	<div>
-		<?php
-		if(!empty($errors))
-		{
-			echo '<div style="color:#FF3300;">';
-			echo implode('<br />', $errors);
-			echo '</div>';
-		}
-		if(!empty($messages))
-		{
-			echo '<div style="color:#00BB00;">';
-			echo implode('<br />', $messages);
-			echo '</div>';
-		}
-		else
-		{
-
-			?>
 		<div class="notice">Note: Password is automatically set as the
 			combination of user's first name and last four digits of their phone
 			number, all lowercase.</div>
@@ -310,7 +293,6 @@ else if(isset($_GET['type']))
 		}
 		$form->button();
 		$form->generate();
-	 } //end else if for messages
 ?>
 	</div>
 </section>
