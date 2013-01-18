@@ -11,7 +11,7 @@
 
 /**
  * Functions to create, retrieve, update, and delete information from the
- * RoomReservationActivity table in the database. This table is used with the reservation class.  
+ * roomreservationactivity table in the database. This table is used with the reservation class.  
  * @version April 23, 2012
  * @author Linda Shek 
  */
@@ -19,8 +19,8 @@
 include_once (ROOT_DIR.'/domain/Reservation.php');
 include_once (ROOT_DIR.'/database/dbinfo.php');
 /**
- * Creates a RoomReservationActivity table with the following fields:
- * RoomReservationActivityID: primary key of the RoomReservationActivity table.
+ * Creates a roomreservationactivity table with the following fields:
+ * RoomReservationActivityID: primary key of the roomreservationactivity table.
  * RoomReservationRequestID: request key number for the room reservation activity
  * FamilyProfileID: id of the family
  * SocialWorkerProfileID: id of the social worker 
@@ -40,9 +40,9 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
     //Connect to the server
     connect();
     //Check if the table exists already
-    mysql_query("DROP TABLE IF EXISTS RoomReservationActivity");
+    mysql_query("DROP TABLE IF EXISTS roomreservationactivity");
     //Create the table and store the result
-    $result=mysql_query("CREATE TABLE RoomReservationActivity (
+    $result=mysql_query("CREATE TABLE roomreservationactivity (
         RoomReservationActivityID` int NOT NULL AUTO_INCREMENT,
         RoomReservationRequestID` int NOT NULL,
         FamilyProfileID int NOT NULL,
@@ -63,7 +63,7 @@ include_once (ROOT_DIR.'/database/dbinfo.php');
     //Check if the creation was successful
     if(!$result) {
                 //Print an error
-                echo mysql_error(). ">>>Error creating RoomReservationActivity table. <br>";
+                echo mysql_error(). ">>>Error creating roomreservationactivity table. <br>";
                 mysql_close();
                 return false;
     }
@@ -155,7 +155,7 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
 }
 
 /**
- * Inserts a new Room Reservation Request into the RoomReservationActivity table. This function
+ * Inserts a new Room Reservation Request into the roomreservationactivity table. This function
  * will be utilized by the social worker. 
  * @param $reservation = the reservation to insert
  */
@@ -205,7 +205,7 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
 }
     
 /**
- * Retrieves a Room Reservation from the RoomReservationActivity table by Request Id
+ * Retrieves a Room Reservation from the roomreservationactivity table by Request Id
  * NOTE: In the table, a room reservation may consist of multiple records, each
  * record representing a state change (from pending to accepted, for example)
  * This function always returns the most recent record for a room reservation.
@@ -226,7 +226,6 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
            LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
            WHERE RR.RoomReservationRequestID=".$roomReservationRequestId;                        
-           echo $query;
         $result = mysql_query($query) or die(mysql_error());
         error_log("num rows retrieved =  ".mysql_num_rows($result));
         if (mysql_num_rows($result)!==1) {
@@ -243,7 +242,7 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
 }
 
 /**
- * Retrieves Room Reservation from the RoomReservationActivity table by Status ('Unconfirmed', 'Confirm', 'Deny')
+ * Retrieves Room Reservation from the roomreservationactivity table by Status ('Unconfirmed', 'Confirm', 'Deny')
  *  NOTE: In the table, a room reservation may consist of multiple records, each
  * record representing a state change (from pending to accepted, for example)
  * This function always returns the most recent record for a given room reservation.
@@ -257,7 +256,7 @@ function retrieve_RoomReservationActivity_byStatus($status){
         connect();
         
         $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
-           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+           "as result   INNER JOIN roomreservationactivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
             INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
           LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
@@ -280,7 +279,7 @@ function retrieve_RoomReservationActivity_byStatus($status){
       }
     
 /**
- * Retrieves Room Reservation from the RoomReservationActivity table for a specific Family
+ * Retrieves Room Reservation from the roomreservationactivity table for a specific Family
  *  NOTE: In the table, a room reservation may consist of multiple records, each
  * record representing a state change (from pending to accepted, for example)
  * This function always returns the most recent record for a room reservation.
@@ -293,7 +292,7 @@ function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
     
        connect();
         $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
-           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID 
+           "as result   INNER JOIN roomreservationactivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID 
                AND result.maxid = RR.RoomReservationActivityID
             INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
@@ -317,7 +316,7 @@ function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
       }
     
 /**
- * Retrieves Room Reservation from the RoomReservationActivity table by Social Worker's Last Name
+ * Retrieves Room Reservation from the roomreservationactivity table by Social Worker's Last Name
  *   NOTE: In the table, a room reservation may consist of multiple records, each
  * record representing a state change (from pending to accepted, for example)
  * This function always returns the most recent record for a room reservation.
@@ -330,7 +329,7 @@ function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLast
     
        connect();
         $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
-           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+           "as result   INNER JOIN roomreservationactivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
             INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
           LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
@@ -353,7 +352,7 @@ function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLast
       }
     
 /**
- * Retrieves Room Reservation from the RoomReservationActivity table by an RMH Staff Approver's Last Name
+ * Retrieves Room Reservation from the roomreservationactivity table by an RMH Staff Approver's Last Name
  *  NOTE: In the table, a room reservation may consist of multiple records, each
  * record representing a state change (from pending to accepted, for example)
  * This function always returns the most recent record for a room reservation.
@@ -366,7 +365,7 @@ function retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName){
     
        connect();
         $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
-           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+           "as result   INNER JOIN roomreservationactivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
             INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
           LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
@@ -403,7 +402,7 @@ function retrieve_all_RoomReservationActivity_byHospitalAndDate($hospitalAffilia
     
         connect();
          $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
-           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+           "as result   INNER JOIN roomreservationactivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
             INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
           LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
@@ -441,7 +440,7 @@ function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
     
         connect();
         $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
-           "as result   INNER JOIN RoomReservationActivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+           "as result   INNER JOIN roomreservationactivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
             INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
             INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
           LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
@@ -465,7 +464,7 @@ function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
 }
 
 /*
- * auxiliary function to build a Room Reservation Request from a row in the RoomReservationActivity table
+ * auxiliary function to build a Room Reservation Request from a row in the roomreservationactivity table
  */
 
 function build_reservation($result_row) {
@@ -478,9 +477,9 @@ function build_reservation($result_row) {
 }
 
 /**
- * Updates the status, rmhStaffProfileId, and RMH_DateStatusSubmitted of a Reservation in the RoomReservationActivity table.
+ * Updates the status, rmhStaffProfileId, and RMH_DateStatusSubmitted of a Reservation in the roomreservationactivity table.
  * This function is utilized by the RMH Staff who confirms or denies a room request that is made by the social worker. 
- * @param $reservation the RoomReservationActivity to update
+ * @param $reservation the roomreservationactivity to update
  */
 
 function update_status_RoomReservationActivity($reservation){
@@ -505,8 +504,8 @@ function update_status_RoomReservationActivity($reservation){
 
 
 /**
- * Deletes a Room Reservation Request from the RoomReservationActivity table.
- * @param $roomReservationRequestId the id of the RoomReservationActivity to delete
+ * Deletes a Room Reservation Request from the roomreservationactivity table.
+ * @param $roomReservationRequestId the id of the roomreservationactivity to delete
  */
 
 function delete_RoomReservationActivity($roomReservationRequestId) {
