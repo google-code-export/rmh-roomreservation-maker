@@ -40,107 +40,23 @@ include(ROOT_DIR . '/database/dbReservation.php');
 
 $showReservation = false;
 
+// the user has filled out the first form and hit submit
+// need to search for matching reservations and display
+// as long as the token is valid (security check)
 if (isset($_POST['form_token']) && validateTokenField($_POST)) {
-    $showReservation = true;
-} else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
+    error_log("form token is set and valid");
+//    $showReservation = true;
 
-    echo('The request could not be completed: security check failed!');
-} else {
-    
-}
-
-function searchForReservations() {
-    $type = ($_POST['searchType']);
-
-    if ($type == "Select Search Type") {
-        echo ("Please choose what you're searching for from the drop down menu below.");
-    } else if ($type == "Request ID") {
-        
-        $roomReservationRequestId = ($_POST["searchParam"]);
-        error_log("searching  by request id = ".$roomReservationRequestId);
-        $Reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);
-        return $Reservations;
-
-        if (!$Reservations) {
-            echo ("No reservations found! Try entering your search again.");
-        }
-    } else if ($type == "Social Worker (Last Name)") {
-        $socialWorkerLastName = ($_POST["searchParam"]);
-        $Reservations = array();
-        $Reservations = (retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName));
-        return $Reservations;
-
-        if (!$Reservations) {
-            echo ("No reservations found! Try entering your search again.");
-        }
-    } else if ($type == "Staff Approver (Last Name)") {
-        $rmhStaffLastName = ($_POST["searchParam"]);
-        $Reservations = array();
-        $Reservations = (retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName));
-        return $Reservations;
-
-        if (!$Reservations) {
-            echo ("No reservations found! Try entering your search again.");
-        }
-    } else if ($type == "Family (Last Name)") {
-        $parentLastName = ($_POST["searchParam"]);
-        $Reservations = array();
-        $Reservations = (retrieve_FamilyLastName_RoomReservationActivity($parentLastName));
-        return $Reservations;
-
-        if (!$Reservations) {
-            echo ("No reservations found! Try entering your search again.");
-        }
-    } else if ($type == "Status") {
-        $status = ($_POST["searchParam"]);
-        $Reservations = array();
-        $Reservations = (retrieve_RoomReservationActivity_byStatus($status));
-        return $Reservations;
-
-        if (!$Reservations) {
-            echo ("No reservations found! Try entering your search again.");
-        }
-    }
-}
-?>
-
-<section class="content">
-
-    <div>
-
-        <form class="generic" name="SearchReservations" method="post" action="SearchReservations.php">
-		<?php echo generateTokenField(); ?>
-			<div class="formRow">
-			<label for="searchType">Search Type</label>
-            <select id="searchType" name="searchType">
-                <option value = "Select Search Type">Select Search Type</option>
-                <option value = "Request ID">Request ID</option>
-                <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
-                <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
-                <option value = "Family (Last Name)">Family (Last Name)</option>
-                <option value = "Status">Status</option>
-            </select>
-			</div>
-			
-			<div class="formRow">
-			<label for="searchParam">Search Parameter</label>
-            <input id="searchParam" type="text" name="searchParam" value="" size="10" />
-			</div>
-
-			<div class="formRow">
-            	<input class="btn" type="submit" value="Search" name="enterSearch" />
-			</div>
-        </form>
-<?php
-if ($showReservation == true) {
-    $type = $_POST['searchType'];
+   // $type = $_POST['searchType'];
     $foundReservations = searchForReservations();
 
-    if (empty($foundReservations)) {
-        echo "<br>No data matches your selections ";
-        error_log("no records found");
-    } else {
-
+   if (empty($foundReservations)) {     
+         displayErrorMsg('No data matches your selections');
+    } 
+    // display matching reservations
+    else {
+        echo '<section class="content">';
+        echo '<div>';
         echo '<br>';
 
         echo '<br><br>
@@ -154,6 +70,7 @@ if ($showReservation == true) {
            <th>Reservation creation date </th>
            <th>Begin Date</th>
            <th>End Date</th>
+           <th>Latest Activity</th>
            <th>Status</th>';
            if (getUserAccessLevel() > 1)
                echo '<th>Modify</th>';
@@ -172,6 +89,7 @@ if ($showReservation == true) {
                 $rmhDatasubmit = $reservation->get_rmhDateStatusSubmitted();
                 $rmhbeginDate = $reservation->get_beginDate();
                 $rmhEndDate = $reservation->get_endDate();
+                $rmhActivity = $reservation->get_activityType();
                 $rmhStatus = $reservation->get_status();
 
 
@@ -183,7 +101,7 @@ if ($showReservation == true) {
                 echo '<td>' . $rmhDatasubmit . '</td>';
                 echo '<td>' . $rmhbeginDate . '</td>';
                 echo '<td>' . $rmhEndDate . '</td>';
-
+                echo '<td>'.$rmhActivity. '</td>';
                 if (getUserAccessLevel() > 1) {
                     //if the user is an approver, let the user modify the status
                     $link = '<a href="' . BASE_DIR . '/reservation/activity.php?type=reservation&request=' . $rmhRequestID . '">' . $rmhStatus . '</a>';
@@ -198,13 +116,75 @@ if ($showReservation == true) {
             }
 
             echo '</table>';
+            echo '</div>';
+            
+            displayChooseRequestIDDropDown($foundReservations);
         }
      
-// list to SW choose with Reservation he want to change    
-        echo '<br><br>Choose an Request ID that you desire to modify or delete: <br>';
 
-        echo '   <select name="Request">
-               <option value = "Request ID">Request ID</option> ';
+
+} else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
+
+    displayErrorMsg('The request could not be completed: security check failed!');
+} 
+else {
+    // only display the search form if the reservations are not being displayed
+
+    error_log("this is the empty else branch");
+    ?>
+
+<section class="content">
+    <div>
+
+        <form class="generic" name="SearchReservations" method="post" action="SearchReservations.php">
+		<?php echo generateTokenField(); ?>
+			<div class="formRow">
+			<label for="searchType">Search Type</label>
+            <select id="searchType" name="searchType">
+                <option value = "Select Search Type">Select Search Type</option>
+                <option value = "Request ID">Request ID</option>
+                <option value = "Social Worker (Last Name)">Social Worker (Last Name)</option>
+                <option Value = "Staff Approver (Last Name)">Staff Approver (Last Name)</option>
+                <option value = "Family (Last Name)">Family (Last Name)</option>
+                <option value = "Status">Status</option>
+                <option value=  "Last Activity">Last Activity For Record</option>
+            </select>
+			</div>
+			
+			<div class="formRow">
+			<label for="searchParam">Search Parameter</label>
+            <input id="searchParam" type="text" name="searchParam" value="" size="10" />
+			</div>
+
+			<div class="formRow">
+            	<input class="btn" type="submit" value="Search" name="enterSearch" />
+			</div>
+        </form>
+        
+        
+
+	</div>
+</section>
+
+
+<?php
+} // end main else
+
+// this lets the user choose a particular reservation and an action to take on the reservation
+// hitting submit takes us to a different script
+function displayChooseRequestIDDropDown($foundReservations)
+{
+    ?>
+<section class="content">
+<div>
+  <br><br>Choose an Request ID that you desire to modify or delete: <br>
+  <form class="generic" name="ChooseReservation" method="post" action="ProcessEditOrCancel.php">
+<div class="formRow">
+  <select name="Request">
+               <option value = "Request ID">Request ID</option>
+               
+  <?php 
+    
 
         $requestIDArray = array();
         foreach ($foundReservations as $reservation) {
@@ -215,30 +195,88 @@ if ($showReservation == true) {
         foreach ($rmhRequestID as $reservation){
             echo '    <option value = "'.$reservation.'">'.$reservation.'</option>';
         }
-        echo'        </select>   <br><br>';
-
-
-   
-        //ERROR:   Here I am not getting the Request!!!
-        if (isset($_POST['Request'])){
-        $IDchosen = $_POST['Request'];
-       
-        }
-        else $IDchosen = "Request ID";
-         error_log("Request is $IDchosen");   //TODO -fix this - the selected request id does not get set
-        $buttonEdit = "<a href='../reservation/EditReservation.php?id=$IDchosen' style='color: white' <input type='submit' name='Edit' class='formsubmit' '/> Edit </a>";
-        $buttonCancel = "<a href='../reservation/CancelReservation.php?id=$IDchosen' style='color: white' <input class='formsubmit' type='submit' name='Cancel' '/> Cancel</a>";
-
-        //$_SESSION['RequestID']= $IDchosen; //passing by SESSION
-               
-            echo $buttonEdit;
-            echo $buttonCancel;
-        
- //   }
+        echo' </select>   
+            <br>
+            <input type="radio" name="actionChoice" value="edit" /> Edit Reservation
+            <br>
+            <input type="radio" name="actionChoice" value="cancel" /> Cancel Reservation
+            <br>
+            <input class="btn" type="submit" value= "Submit" name="chooseRequestID" />
+            </form>
+            <br><br> </div> </section>';
 }
-?>
-	</div>
-</section>
-<?php
+
+// this routine returns an array of reservation activity records
+// or FALSE if something goes wrong
+function searchForReservations() {
+    $type = ($_POST['searchType']);
+  
+    if ($type == "Select Search Type") {
+        echo ("Please choose what you're searching for from the drop down menu below.");
+    } else if ($type == "Request ID") {
+        
+        $roomReservationRequestId = ($_POST["searchParam"]);
+        error_log("searching  by request id = ".$roomReservationRequestId);
+        $Reservation = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);
+        // retrieval routine returns just one reservation, so return an array consisting of one record
+         if (!$Reservation)
+         {       
+             error_log("retrieve_RoomReservationActivity_byRequestID returned false");
+             $Reservations = false;
+         }
+         else
+         {
+          $Reservations = array();
+          $Reservations[] = $Reservation;
+         }
+        return $Reservations;
+
+     /*   if (!$Reservations) {
+            echo ("No reservations found! Try entering your search again.");
+        } */
+    } else if ($type == "Social Worker (Last Name)") {
+        $socialWorkerLastName = ($_POST["searchParam"]);
+      //  $Reservations = array();
+        $Reservations = (retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName));
+        return $Reservations;
+
+     /*   if (!$Reservations) {
+            echo ("No reservations found! Try entering your search again.");
+        } */
+    } else if ($type == "Staff Approver (Last Name)") {
+        $rmhStaffLastName = ($_POST["searchParam"]);
+     //   $Reservations = array();
+        $Reservations = (retrieve_RMHStaffLastName_RoomReservationActivity($rmhStaffLastName));
+        return $Reservations;
+
+     /*   if (!$Reservations) {
+            echo ("No reservations found! Try entering your search again.");
+        } */
+    } else if ($type == "Family (Last Name)") {
+        $parentLastName = ($_POST["searchParam"]);
+    
+        $Reservations = (retrieve_FamilyLastName_RoomReservationActivity($parentLastName));
+        return $Reservations;
+    } else if ($type == "Status") {
+        $status = ($_POST["searchParam"]);
+        $Reservations = (retrieve_RoomReservationActivity_byStatus($status));
+        return $Reservations;
+    } else if ($type == "Last Activity") {
+        $activity = ($_POST["searchParam"]);
+         $Reservations = (retrieve_RoomReservationActivity_byLastActivity($activity));
+        return $Reservations;
+    }
+}
+
+function displayErrorMsg($error)
+{
+         echo '<section class="content">';
+        echo '<div>';
+        echo $error;
+        echo '</div>';
+        echo '</section>';
+}
+
+
 include (ROOT_DIR . '/footer.php');
 ?>

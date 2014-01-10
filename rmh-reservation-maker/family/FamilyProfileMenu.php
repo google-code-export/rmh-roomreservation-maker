@@ -33,7 +33,8 @@
     <div>
     <ul>
        <li><a href="<?php echo BASE_DIR;?>/family/newProfile.php">Create new profile</a></li>
-       <li><a href="<?php echo BASE_DIR;?>/family/SearchFamily.php">Search for families</a></li>
+         <li><a href="<?php echo BASE_DIR;?>/family/SearchFamily.php?act=RES">Create new reservation</a></li>
+       <li><a href="<?php echo BASE_DIR;?>/family/SearchFamily.php?act=SEARCH">Search for families</a></li>
     </ul> 
 	</div>
 </section>

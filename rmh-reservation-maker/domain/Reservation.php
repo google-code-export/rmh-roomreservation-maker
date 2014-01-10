@@ -10,6 +10,8 @@
  
 /*
 * Reservation Domain Object for RMH-RoomReservationMaker. 
+ * This is a combination of information from the ReservationActivity table
+ * the Family table, and the socialworkerprofile table
 * Specifies attributes needed to create and modify a room request
 * @author Gergana Stoykova
 * @version 5/2/2012
@@ -25,6 +27,8 @@ class Reservation  {
     private $familyProfileId;
     private $parentLastName;
     private $parentFirstName;
+    private $patientLastName;
+    private $patientFirstName;
     private $socialWorkerProfileId;
     private $swLastName;
     private $swFirstName;
@@ -42,7 +46,7 @@ class Reservation  {
     
       
     function __construct($roomReservationKey, $roomReservationActivityID, $roomReservationRequestID, $familyProfileId, $parentLastName, 
-                $parentFirstName, $socialWorkerProfileId, $swLastName, $swFirstName, $rmhStaffProfileId, $rmhStaffLastName,
+                $parentFirstName, $patientLastName, $patientFirstName,  $socialWorkerProfileId, $swLastName, $swFirstName, $rmhStaffProfileId, $rmhStaffLastName,
                 $rmhStaffFirstName, $swDateStatusSubmitted, $rmhDateStatusSubmitted, $activityType, $status, $beginDate, $endDate,
                 $patientDiagnosis, $roomnote){
         
@@ -52,14 +56,18 @@ class Reservation  {
             $this->familyProfileId = $familyProfileId;
             $this->parentLastName = $parentLastName;
             $this->parentFirstName = $parentFirstName;
+            $this->patientLastName = $patientLastName;
+            $this->patientFirstName = $patientFirstName;
             $this->socialWorkerProfileId = $socialWorkerProfileId;
             $this->swLastName = $swLastName;
             $this->swFirstName = $swFirstName;
             $this->rmhStaffProfileId = $rmhStaffProfileId;
+           
             $this->rmhStaffLastName = $rmhStaffLastName;
             $this->rmhStaffFirstName = $rmhStaffFirstName;
             $this->swDateStatusSubmitted = $swDateStatusSubmitted;
             $this->rmhDateStatusSubmitted = $rmhDateStatusSubmitted;
+          
             $this->activityType = $activityType;
             $this->status = $status;
             $this->beginDate = $beginDate;
@@ -90,6 +98,14 @@ class Reservation  {
     
     function get_parentFirstName(){
         return $this->parentFirstName;
+    }
+    
+     function get_patientLastName(){
+        return $this->patientLastName;
+    }
+    
+    function get_patientFirstName(){
+        return $this->patientFirstName;
     }
     
     function get_socialWorkerProfileId(){
@@ -173,6 +189,13 @@ class Reservation  {
         $this->parentFirstName = $parFname;
     }
     
+    function set_patientLastName($parLname){
+        $this->patientLastName = $patLname;
+    }
+    
+    function set_patientFirstName($parFname){
+        $this->patientFirstName = $patFname;
+    }
     function set_socialWorkerProfileId($sid){
         $this->socialWorkerProfileId = $sid;
     }

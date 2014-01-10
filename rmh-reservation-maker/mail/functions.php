@@ -17,7 +17,7 @@
 */
 
 
-include_once ('../core/config.php');
+//include_once (ROOT_DIR.'/core/config.php');
 include_once (ROOT_DIR.'/database/dbUserProfile.php');
 include_once (ROOT_DIR.'/database/dbFamilyProfile.php');
 
@@ -357,6 +357,7 @@ function FamilyModDeny($requestID,$familyID, $SWID)
 */
 function newRequest($RequestKey, $DateSubmitted, $BeginDate, $EndDate)
 {
+    error_log("in mail newRequest");
     $subject = "Reservation Request made on $DateSubmitted";
     $message = "A new room reservation request has been made for the timeframe 
                 from $BeginDate to $EndDate.\r\n\r\nThe request ID is: $RequestKey";
@@ -364,6 +365,7 @@ function newRequest($RequestKey, $DateSubmitted, $BeginDate, $EndDate)
     for($i = 0; $i < count($Approver); $i++)
     {
         $to = $Approver[$i]->get_userEmail();
+        error_log("will send to $to");
         email($to, $subject, $message);
     };
 }

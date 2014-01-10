@@ -125,6 +125,9 @@ function isAjax()
           }
           else
           {
+                                     $form_token =  $postData['form_token'];
+                                     $token = $_SESSION['_token'];
+                                      error_log("post data form_token is  $form_token token is $token");
           		throw new SecurityException("Invalid token");
           }
       }

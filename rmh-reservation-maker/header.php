@@ -1,4 +1,5 @@
 <?php
+error_log("in header.php");
 /*
 * Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
 * This program is part of RMH-RoomReservationMaker, which is free software,

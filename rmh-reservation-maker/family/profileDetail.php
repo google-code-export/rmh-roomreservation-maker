@@ -52,8 +52,8 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         
         //TODO: BAD idea to just output errors wherever you want!!!! Organize this better. Use an error class or something!
         
-        $familyprofileID=NULL; 
-         $_SESSION['familyID']= $familyprofileID;
+  //      $familyprofileID=NULL; 
+ //        $_SESSION['familyID']= $familyprofileID;
          
         
         if( is_array( $families ) )
@@ -66,12 +66,6 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         foreach( $families as $family )
         {
           
-          //echo "<script type=\"text/javascript\">document.getElementById(\"searchResults\").innerHTML = \"A family has been returned\";</script>"; 
-          //echo "<script type=\"text/javascript\">$(\"#searchResults\").html(\"A family is returned!\");</script>";
-          //echo "<script type=\"text/javascript\">alert(\"OMG\");</script>";//This works
-          //
-          // TODO : Create array for familyProfileId
-          //
           //create a row with a td for lname, fname, town, dob
            $table .= "<tr>\n\t<td><a style = 'color:blue; font-weight:bold;' href=\"?id=";//TODO: DYNAMIC LINK CREATION
            $table .= $family->get_familyProfileId();
@@ -116,7 +110,8 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         //there was no POST DATA  
     }
     
-    //
+    // if the user clicked on the patient name in the table of family profiles, then a new request
+    // is sent with $id set to the family profile id, and this section of code is invoked
    // function displayProfile( $familyProfile )//should this be pass by ref and set as const?
     if(isset($_GET['id']) )
     {   //gets the familyid passed down by the family profile search and when the profile is selected(clicked)
@@ -237,10 +232,10 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         
         
 ?>
-
+<section class="content">
 <div id="container">    
-    
-    <div id="content" style="margin-left: 250px; margin-top: 13px;">
+   <?php error_log("in main form for profileDetail"); ?>
+   <!--  <div id="content" style="margin-left: 250px; margin-top: 13px;"> -->
         
         <div id="searchForm"> <!--this div should be hidden when search results are displayed-->
         
@@ -259,19 +254,19 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
             
             <?php 
             //TODO looks crazy make it organized -.-           
-            $buttonEdit = "<a href='../family/EditFamilyProfile.php' style='color: white' <input type='submit' name='edit' class='formsubmit' /> Edit </a>";
+          //  $buttonEdit = "<a href='../family/EditFamilyProfile.php' style='color: white' <input type='submit' name='edit' class='formsubmit' /> Edit </a>";
             $buttonDelete = " <input class='formsubmit' id='php_button' type='submit' value='Delete' >";
-            $buttonCreateRoomReservation = "<a href='../referralForm.php' style='color: white' <input type='submit' name='CreateRoomReservation' class='formsubmit' /> Create Room Reservation </a>";
+         //   $buttonCreateRoomReservation = "<a href='../referralForm.php' style='color: white' <input type='submit' name='CreateRoomReservation' class='formsubmit' /> Create Room Reservation </a>";
             $space = "&nbsp";
             $newparagraph = "<p>";
             if( isset( $content ) ){ echo "<font size = 4pt>$content</font>";
             echo $newparagraph;
             echo $newparagraph;
-            echo $buttonEdit;
+          //  echo $buttonEdit;
             echo $space;
             echo $buttonDelete;
             echo $space;
-            echo $buttonCreateRoomReservation;
+          //  echo $buttonCreateRoomReservation;
             
             } ?>
               
