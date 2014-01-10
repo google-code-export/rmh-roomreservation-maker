@@ -36,6 +36,7 @@ $statuses = array('approve'=>'Confirm', 'deny'=>'Deny'); //Status info that is s
         $requestType = sanitize($_POST['activityType']); //the activity type, whether it was a profile change, or reservation
         
         $status = sanitize($_POST['status']); //whether the status was approved or denied
+        error_log("in activity handler, status is  $status");
 
         //since the activity tables uses RMH Staff profile ID, the current RMH profile needs to be retrieved. Maybe this kind of information can be stored in the SESSION?
         $rmhProfile = retrieve_UserProfile_RMHApprover_OBJ(getUserProfileID());
@@ -87,12 +88,13 @@ $statuses = array('approve'=>'Confirm', 'deny'=>'Deny'); //Status info that is s
         }
         else if($requestType == 'reservation')
         {
+            error_log("in activity_handler, will update reservation status");
             $resActivity = retrieve_RoomReservationActivity_byRequestId($requestId);
             
             $resActivity->set_rmhStaffProfileId($rmhStaffProfileId);
             $resActivity->set_rmhDateStatusSubmitted(date("Y-m-d H:i:s"));
             $resActivity->set_status($statuses[$status]);
-            
+            error_log("in activity handler, status is $statuses[$status]");
             $updateReservation = update_status_RoomReservationActivity($resActivity);
             
             if($updateReservation)

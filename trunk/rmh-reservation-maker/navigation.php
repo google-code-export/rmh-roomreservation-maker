@@ -22,7 +22,7 @@ if(!defined('PARENT'))
     die('Restricted access');
 }
 $userAccess = getUserAccessLevel();
-
+error_log("in navigation.php, user access level is $userAccess");
 //Navigation items are set automatically based on the page name. It can be overriden by assigning the page name to $navItem
 //So for pages that are linked from the navigation menu, their $navItem is set automatically. But pages that are child pages of
 //a menu item, which doesn't have a direct link from the navigation, their $navItem has to be set to one of the pages in the left menu
@@ -36,7 +36,7 @@ if(!isset($navItem)){
 	<ul>
    
 		<!--navigation links available to all members -->
-		<li data-href="<?php echo BASE_DIR.'/index.php';?>" <?php echo ($navItem == "index.php") ? 'class="selected"' : '';?>>Home</li>
+		<li data-href="<?php echo BASE_DIR.'/index.php';?>" <?php echo ($navItem == BASE_DIR."index.php") ? 'class="selected"' : '';?>>Home</li>
 	<?php
 	if($userAccess === 0)
 	{

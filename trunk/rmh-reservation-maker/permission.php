@@ -57,6 +57,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['CancelReservation.php']=1;
     $permission_array['EditFamilyProfile.php']=1;
     $permission_array['SearchReservations.php']=1;
+    $permission_array['ProcessEditOrCancel.php']=1;
     $permission_array['EditReservation.php']=1;
     $permission_array['FamilyProfileMenu.php']=1;
     $permission_array['SearchFamily.php']=1;    
@@ -64,6 +65,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['profileDetail.php']=1;
     $permission_array['report.php']=1; //reporting
     $permission_array['SearchReservations.php']=1;
+    $permission_array['newReservation.php']=1;
     $permission_array['Reservationsearch.php']=1; //Reservation Search help page
     $permission_array['CreatingFamilyProfile.php']=1; //Creating a new family profile help page
     $permission_array['SearchingFamilyProfile.php']=1; //Searching for a family profile
@@ -76,6 +78,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['activityHandler.php'] = 2; //approval page handler
     $permission_array['searchProfileActivity.php'] = 2; //profile activity search page
     $permission_array['approvefamilyprofilechange.php'] = 2; //Approving family profile change help
+    
 
     
     /* ============ pages RMH ADMINISTRATOR can view ===============*/ 

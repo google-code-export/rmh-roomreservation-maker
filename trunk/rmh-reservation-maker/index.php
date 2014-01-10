@@ -43,8 +43,13 @@ include('header.php');?>
 				/*echo('<div class="infobox"><p class="notes"><strong>Notes to/from the manager:</strong><br />');
 				echo($person->get_mgr_notes().'</div></p>');*/
 
-				// we have a family authenticated
-
+				// we have a social worker authenticated
+                                                                             if ($_SESSION['access_level'] == 1) {
+                                                                                 echo ("Welcome Social Worker");
+                                                                             }
+                                                                             if ($_SESSION['access_level'] == 2) {
+                                                                                 echo ("Welcome RMH Staff");
+                                                                             }
 				//We have an admin authenticated	 
 				if($_SESSION['access_level']==3) {
 					echo("Welcome admin");				    

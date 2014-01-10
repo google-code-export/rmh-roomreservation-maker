@@ -77,7 +77,7 @@ define ('SELECT_RES_CLAUSE', "SELECT RR.RoomReservationKey, RR.RoomReservationAc
             RR.RMH_DateStatusSubmitted, 
             RR.ActivityType, RR.Status, RR.BeginDate, RR.EndDate, 
             F.FamilyProfileID, F.ParentLastName, 
-            F.ParentFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, 
+            F.ParentFirstName, F.PatientLastName, F.PatientFirstName, S.SocialWorkerProfileID, S.LastName AS SW_LastName, S.FirstName AS SW_FirstName, 
             RR.RMHStaffProfileID, 
             R.LastName AS RMH_Staff_LastName, R.FirstName AS RMH_Staff_FirstName,
              RR.SW_DateStatusSubmitted, 
@@ -175,13 +175,16 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
      connect();
      //Now add it to the database
      $query="INSERT INTO roomreservationactivity (RoomReservationActivityID, RoomReservationRequestID, FamilyProfileID, SocialWorkerProfileID, 
-         SW_DateStatusSubmitted, ActivityType, BeginDate, EndDate, PatientDiagnosis, Notes) VALUES(".
+         RMHStaffProfileID, SW_DateStatusSubmitted, RMH_DateStatusSubmitted, ActivityType, Status, BeginDate, EndDate, PatientDiagnosis, Notes) VALUES(".
                 $reservation->get_roomReservationActivityID().",".
                 $reservation->get_roomReservationRequestID().",".
                 $reservation->get_familyProfileId().",".     
-                $reservation->get_socialWorkerProfileId().",'".
+                $reservation->get_socialWorkerProfileId().",".
+                $reservation->get_rmhStaffProfileId().",'".
                 $reservation->get_swDateStatusSubmitted()."','".
+                $reservation->get_rmhDateStatusSubmitted()."','".
                 $reservation->get_activityType()."','".
+                $reservation->get_status()."','".
                 $reservation->get_beginDate()."','".
                 $reservation->get_endDate()."','".
                 $reservation->get_patientDiagnosis()."','".
@@ -228,27 +231,28 @@ function retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId)
            WHERE RR.RoomReservationRequestID=".$roomReservationRequestId;                        
         $result = mysql_query($query) or die(mysql_error());
         error_log("num rows retrieved =  ".mysql_num_rows($result));
+        
+        // there should only be one result
         if (mysql_num_rows($result)!==1) {
                 mysql_close();
                 return false;
         }
-        $theReservations = array();
-         while ($result_row = mysql_fetch_assoc($result)) {
+
+         $result_row = mysql_fetch_assoc($result);
          $theReservation = build_reservation($result_row);
-         $theReservations[] = $theReservation;
-         }
+     
          mysql_close();
-         return $theReservations; 
+         return $theReservation; 
 }
 
 /**
- * Retrieves Room Reservation from the roomreservationactivity table by Status ('Unconfirmed', 'Confirm', 'Deny')
+ * Retrieves Room Reservations from the roomreservationactivity table by Status ('Unconfirmed', 'Confirm', 'Deny')
  *  NOTE: In the table, a room reservation may consist of multiple records, each
  * record representing a state change (from pending to accepted, for example)
  * This function always returns the most recent record for a given room reservation.
  * It returns FALSE if no record was retrieved
  * @param $status
- * @return the Room Reservation corresponding to status, or false if not in the table.
+ * @return the Room Reservations corresponding to status, or false if not in the table.
  */
       
 function retrieve_RoomReservationActivity_byStatus($status){
@@ -278,14 +282,51 @@ function retrieve_RoomReservationActivity_byStatus($status){
          return $theReservations;
       }
     
+      /**
+ * Retrieves Room Reservations from the roomreservationactivity table by last activity (Cancel or Modify,for example)
+ *  NOTE: In the table, a room reservation may consist of multiple records, each
+ * record representing a state change (from pending to accepted, for example)
+ * This function always returns the most recent record for a given room reservation.
+ * It returns FALSE if no record was retrieved
+ * @param $status
+ * @return the Room Reservations corresponding to status, or false if not in the table.
+ */
+      
+function retrieve_RoomReservationActivity_byLastActivity($activityType){
+    
+        connect();
+        
+        $query = SELECT_RES_CLAUSE.   "FROM ".MAX_ACTIVITY_ID_TABLE.
+           "as result   INNER JOIN roomreservationactivity RR ON result.RoomReservationRequestID = RR.RoomReservationRequestID AND result.maxid = RR.RoomReservationActivityID
+            INNER JOIN socialworkerprofile S ON RR.SocialWorkerProfileID = S.SocialWorkerProfileID
+            INNER JOIN familyprofile F ON RR.FamilyProfileID = F.FamilyProfileID
+          LEFT OUTER  JOIN rmhstaffprofile R ON RR.RMHStaffProfileID = R.RMHStaffProfileID
+      WHERE RR.ActivityType ='".$activityType."'";
+       
+        
+         $result = mysql_query($query) or die(mysql_error());
+                if(mysql_num_rows($result)< 1)
+                {
+                 mysql_close();
+                 return false;
+                }
+         $theReservations = array();
+         while ($result_row = mysql_fetch_assoc($result)) {
+         $theReservation = build_reservation($result_row);
+         $theReservations[] = $theReservation;
+         }
+         mysql_close();
+         return $theReservations;
+      }
+      
 /**
- * Retrieves Room Reservation from the roomreservationactivity table for a specific Family
+ * Retrieves Room Reservations from the roomreservationactivity table for a specific Family
  *  NOTE: In the table, a room reservation may consist of multiple records, each
  * record representing a state change (from pending to accepted, for example)
  * This function always returns the most recent record for a room reservation.
  * It returns FALSE if no record was retrieved
  * @param $parentLastName
- * @return the Room Reservation corresponding to the Parent's Last Name, or false if not in the table.
+ * @return the Room Reservations corresponding to the Parent's Last Name, or false if not in the table.
  */
     
 function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
@@ -316,13 +357,13 @@ function retrieve_FamilyLastName_RoomReservationActivity($parentLastName){
       }
     
 /**
- * Retrieves Room Reservation from the roomreservationactivity table by Social Worker's Last Name
+ * Retrieves Room Reservations from the roomreservationactivity table by Social Worker's Last Name
  *   NOTE: In the table, a room reservation may consist of multiple records, each
  * record representing a state change (from pending to accepted, for example)
  * This function always returns the most recent record for a room reservation.
  * It returns FALSE if no record was retrieved
  * @param $socialWorkerLastName
- * @return the Room Reservation corresponding to Social Worker's Last Name, or false if not in the table.
+ * @return the Room Reservations corresponding to Social Worker's Last Name, or false if not in the table.
  */
 
 function retrieve_SocialWorkerLastName_RoomReservationActivity($socialWorkerLastName){
@@ -468,12 +509,13 @@ function retrieve_all_RoomReservationActivity_byDate ($beginDate, $endDate) {
  */
 
 function build_reservation($result_row) {
-    $theReservations = new reservation($result_row['RoomReservationKey'], $result_row['RoomReservationActivityID'], $result_row['RoomReservationRequestID'], $result_row['FamilyProfileID'],$result_row['ParentLastName'],
-    $result_row['ParentFirstName'], $result_row['SocialWorkerProfileID'],$result_row['SW_LastName'], $result_row['SW_FirstName'],$result_row['RMHStaffProfileID'], $result_row['RMH_Staff_LastName'], $result_row['RMH_Staff_FirstName'],
+   
+    $theReservation = new Reservation($result_row['RoomReservationKey'], $result_row['RoomReservationActivityID'], $result_row['RoomReservationRequestID'], $result_row['FamilyProfileID'],$result_row['ParentLastName'],
+    $result_row['ParentFirstName'], $result_row['PatientLastName'], $result_row['PatientFirstName'], $result_row['SocialWorkerProfileID'],$result_row['SW_LastName'], $result_row['SW_FirstName'],$result_row['RMHStaffProfileID'], $result_row['RMH_Staff_LastName'], $result_row['RMH_Staff_FirstName'],
     $result_row['SW_DateStatusSubmitted'], $result_row['RMH_DateStatusSubmitted'], $result_row['ActivityType'], $result_row['Status'], 
     $result_row['BeginDate'], $result_row['EndDate'], $result_row['PatientDiagnosis'], $result_row['Notes']);
                         
-    return $theReservations;
+    return $theReservation;
 }
 
 /**

@@ -1,4 +1,5 @@
 <?php
+error_log("in config.php");
 /*
 * Copyright 2012 by Prayas Bhattarai and Bonnie MacKellar.
 * This program is part of RMH-RoomReservationMaker, which is free software,
@@ -40,6 +41,9 @@ define('ROOT_DIR', str_replace('\\','/',dirname(dirname(__FILE__))));
 //$basePath = str_replace($_SERVER['DOCUMENT_ROOT'],'', ROOT_DIR);
 $basePath = basename(dirname(dirname(__FILE__)));
 
+//error_log("basepath is $basePath");
+$basePath = str_replace('C:/wamp/www/','', ROOT_DIR);
+//error_log("now, basepath is $basePath");
 if(strpos($basePath, '/') !== 0)
 {
     //make sure the base path starts with / (For windows/*nix consistency)

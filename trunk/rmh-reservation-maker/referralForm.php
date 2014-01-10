@@ -37,6 +37,7 @@ $showForm = false;
 $showReport = false;
 $message= array();
 
+error_log("in referralForm");
 
         //get family values from database to fill into form
         if(isset($_GET['family'])){
@@ -58,16 +59,10 @@ $message= array();
             $parentfname= $family->get_parentfname();
             $parentlname= $family->get_parentlname();
         }
-        
-
-
-
+       
 //if token works
     if(isset($_POST['form_token']) && validateTokenField($_POST))
     {
-
-        
-    
    //startDate is not set
     if ((empty($_POST['begindate'])))
    {
@@ -243,10 +238,7 @@ sanitize($_POST['begindate']);
             $newEndDate =
 sanitize($_POST['enddate']);
 
-            
-
-   
-    
+               
        //retrieves the sw, and gets id, firstname and lastname      
         $currentUser = getUserProfileID();
         $sw = retrieve_UserProfile_SW($currentUser);
@@ -262,17 +254,14 @@ sanitize($_POST['enddate']);
 
 
             }
-            
-   
-     
- 
-  
+             
 
        if(empty($message))
       {
+           // RMH staff fields are null because this is a new reservation
         $currentreservation = new Reservation (0, 0, 0, $_SESSION['familyID'], $newParentLastName, 
-                $newParentFirstName, $sw_id, $swLastName, $swFirstName, 0, "",
-                "", $swDateStatusSubmitted, "", $ActivityType, $Status, $newBeginDate, $newEndDate,
+                $newParentFirstName, $newPatientLastName, $newPatientFirstName, $sw_id, $swLastName, $swFirstName, 'NULL', 'NULL',
+                'NULL', $swDateStatusSubmitted, 'NULL', $ActivityType, $Status, $newBeginDate, $newEndDate,
                 $newPatientDiagnosis, $newNotes);
         $roomReservationKey= insert_RoomReservationActivity($currentreservation);
             

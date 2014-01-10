@@ -33,7 +33,7 @@ include(ROOT_DIR .'/domain/Family.php');
 include(ROOT_DIR . '/database/dbFamilyProfile.php');
 
 
-if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST['firstName'] ) || isset( $_POST['lastName'] ) ) )
+/*if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST['firstName'] ) || isset( $_POST['lastName'] ) ) )
 {
 	$fn = ( (isset( $_POST['firstName'] ) )?sanitize( $_POST['firstName']):""); //if firstName isset, sanitize it, else empty string
 	if($fn == "first name" )
@@ -80,7 +80,7 @@ else
 	//there was no POST DATA
 }
 
-if(isset($_GET['id']) )
+/*if(isset($_GET['id']) )
 {   //gets the familyid passed down by the family profile search and when the profile is selected(clicked)
 $familyID = sanitize( $_GET['id'] );
 
@@ -91,17 +91,27 @@ if($familyProfile){
 else
 {
 	$content = "not found";
+} 
+
+}//end function  */
+
+if (isset($_GET['act']))
+{
+    $act = $_GET['act'];
+    error_log("action is $act");
+    if ($act == "RES")
+        $nextScript = '/family/newReservation.php';
+    else
+        $nextScript = '/family/profileDetail.php';
 }
-
-}//end function
-
-
 ?>
 <section class="content">
 	<div>
+               <?php error_log("in main form for searchFamily"); ?>
+                    <?php error_log("The next script is $nextScript"); ?>
 		<!--this div should be hidden when search results are displayed-->
-		<form class="generic" name="searchForm" method="POST"
-			action="<?php echo BASE_DIR;?>/family/profileDetail.php">
+		<form class="generic" name="searchForm" method="POST" 
+                                                        action="<?php echo BASE_DIR.$nextScript;?>">
 			<?php echo generateTokenField(); ?>
 			<div class="formRow">
 				<label for="firstName">First Name</label>

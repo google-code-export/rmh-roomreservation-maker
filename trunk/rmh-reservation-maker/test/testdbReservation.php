@@ -59,6 +59,8 @@ function display_reservation($reservation)
     echo " Family Profile ID is: " . $reservation->get_familyProfileId().  "</br>";
     echo " Parent Last Name is: " . $reservation->get_parentLastName() . "</br>";
     echo " Parent First Name is: " . $reservation->get_parentFirstName() .  "</br>";
+    echo " Patient Last Name is: " . $reservation->get_patientLastName() . "</br>";
+    echo " Patient First Name is: " . $reservation->get_patientFirstName() .  "</br>";
     echo " Social Worker Profile ID is: " . $reservation->get_socialWorkerProfileId().  "</br>";
     echo " Social Worker Last Name is: " . $reservation->get_swLastName().  "</br>";
     echo " Social Worker First Name is: " . $reservation->get_swFirstName() . "</br>";
@@ -171,9 +173,9 @@ else
 }
 
 function test_retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId){
-    $reservations = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);
+    $reservation = retrieve_RoomReservationActivity_byRequestId($roomReservationRequestId);
     
-    if ($reservations == false)
+    if ($reservation == false)
     echo "</br>". "No Reservations were Found.". "</br></br></br>";
   
 else
@@ -181,11 +183,11 @@ else
     
     echo  "</br>". "Records Found:".  "</br>";
    
-    foreach ($reservations as $reservation)
-    {
+  //  foreach ($reservations as $reservation)
+ //   {
          display_reservation($reservation);
          
-    }
+ //   }
 }
         
 }

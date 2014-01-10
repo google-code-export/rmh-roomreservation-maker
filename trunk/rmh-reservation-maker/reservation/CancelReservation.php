@@ -1,90 +1,66 @@
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
-    </head>
-    <body>
+
 <?php
+
+
 session_start();
 session_cache_expire(30);
 
 $title = "Cancel Reservation";
 
-include('../header.php');
-include(ROOT_DIR . '/database/dbReservation.php');
+include ('../header.php');
+include_once (ROOT_DIR . '/domain/Reservation.php');
+include_once (ROOT_DIR . '/domain/UserProfile.php');
+include_once (ROOT_DIR . '/domain/Family.php');
+include_once (ROOT_DIR . '/database/dbReservation.php');
+include_once (ROOT_DIR . '/database/dbUserProfile.php');
+include_once (ROOT_DIR . '/database/dbFamilyProfile.php');
 
-$showReservation = false;
+// the first time the site is visited
+if (isset($_SESSION['RequestID'])) {
+    $idChosen = $_SESSION['RequestID'];
 
-if (isset($_POST['form_token']) && validateTokenField($_POST)) {
-    $showReservation = true;
-} else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
+    error_log("in cancelReservation, request id is $idChosen");
 
-    echo('The request could not be completed: security check failed!');
-} else {
+    $informationroom = retrieve_RoomReservationActivity_byRequestId($idChosen);
     
-}
-
-        
-     //   $RequestID = $_SESSION['RequestID'];        //USING DYNAMIC LINK
-        
- if(isset($_GET['id']) )
-    {   //gets the Requestid passed down by the SearchReservation.php
-            $RequestID = sanitize( $_GET['id'] );           //USING DYNAMIC LINK
-    }
-    else
-            $RequestID = 'Request ID';
-        
+  
        //retrieves the sw, and gets id, firstname and lastname      
         $currentUser = getUserProfileID();
         $sw = retrieve_UserProfile_SW($currentUser);
         $swObject = current($sw);
-        $sw_id = $swObject->get_swProfileId();
-        $swFirstName = $swObject->get_swFirstName();
-        $swLastName = $swObject->get_swLastName();
-        $ActivityType ="Cancel";
-        $Status ="Unconfirmed";
-        $swDateStatusSubmitted = date("Y-m-d");
-        $userId = sanitize(getCurrentUser());
-        
-        $informationroom = retrieve_RoomReservationActivity_byRequestId($RequestID); 
-        $newParentLastName = $informationroom->get_parentLastName();
-        $newParentFirstName = $informationroom->get_parentFirstName();
-        $newBeginDate = $informationroom->get_beginDate();
-        $newEndDate = $informationroom->get_endDate();
-        $newPatientDiagnosis = $informationroom->get_patientDiagnosis();
-        $newNotes = "";
-                         
-        
-        $currentreservation = new Reservation (0, $RequestID, 0, $newParentLastName, 
-                $newParentFirstName, $sw_id, $swLastName, $swFirstName, 0, "",
-                "", $swDateStatusSubmitted, "", $ActivityType, $Status, $newBeginDate, $newEndDate,
-                $newPatientDiagnosis, $newNotes);
-
-        if($RequestID != 'Request ID')
-        {
-            update_status_RoomReservationActivity($currentreservation);
-            echo "Room Reservation Updated!";
-        }
-        else
-        {
-            echo "Could not Cancel the Room Reservation because the Request ID was not chosen, go back to Search Reservation and try again!";
-        }
-  ?>
-
-<div id="container">
-
-    <div id="content">
-
-        <form name="CancelReservation" method="post" action="CancelReservation">
-<?php echo generateTokenField(); ?>
-
-
-
-        </form>    
+       
+    $informationroom->set_socialWorkerProfileId($swObject->get_swProfileId());
+    $informationroom->set_swFirstName($swObject->get_swFirstName());
+    $informationroom->set_swLastName($swObject->get_swLastName());
+    $informationroom->set_activityType("Cancel");
+    $informationroom->set_status("Unconfirmed");
+    $informationroom->set_swDateStatusSubmitted(date("Y-m-d H:i:s"));
+    $rmhStaffProfileId = $informationroom->get_rmhStaffProfileId();
+    
+    // if the request has never been approved, the rmh staff id will
+    // still be null
+    // need to make sure it goes back into the DB as a database null
+    if (is_null($rmhStaffProfileId))
+    {
+        error_log("rmhStaffProfileId is null");
+        $informationroom->set_rmhStaffProfileId('NULL');
+    }
+   
+   // we don't remove the reservation record when cancelling.
+    // we insert a new activity record with an activity type of "cancel" and status of "unconfirmed"
+    // the RMH staff will have to confirm the cancellation
+              $retval = insert_RoomReservationActivity ($informationroom);
+              echo '<div id="content" style="margin-left: 300px; margin-top: 23px;">';
+              if ($retval == -1) 
+                      echo"Could not update the Room Reservation";
+             else
+             echo "Update was successful";
+          
       
-        <?php
-        include (ROOT_DIR . '/footer.php');
-        ?>
+}
 
-     </body>
-</html>       
+
+include (ROOT_DIR . '/footer.php');
+?>
+
+
