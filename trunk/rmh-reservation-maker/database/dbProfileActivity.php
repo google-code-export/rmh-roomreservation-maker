@@ -110,7 +110,7 @@ include_once(ROOT_DIR.'/database/dbinfo.php');
 function generateNextProfileActivityRequestId($profileActivity){
       
     connect();
-
+   error_log('in generateNextProfileActivityRequestId, family profile id is ' . $profileActivity->get_familyProfileId());
     $query = "SELECT MAX(ProfileActivityRequestID) FROM profileactivity WHERE FamilyProfileID = ".
             $profileActivity->get_familyProfileId();
     $result= mysql_query($query);
@@ -142,14 +142,17 @@ function insert_ProfileActivity($profileActivity){
                 return false;
         }
    
- generateNextProfileActivityRequestId($profileActivity);
- 
+     generateNextProfileActivityRequestId($profileActivity);
+    error_log('generated profile activity request id is' . $profileActivity->get_profileActivityRequestId());
+    
      connect();
         // Now add it to the database
-        if($profileActivity->get_rmhStaffProfileId()!=0) {  
+  //      if($profileActivity->get_rmhStaffProfileId()!=0) {  
+     //       error_log("inserting new iteration of a profile activity record");
             //if it is a current record, an RMHStaffProfileID is inserted into database
             //@author Chris Giglio 
-            
+             error_log("inserting new profile activity record");
+             error_log('activity type is '. $profileActivity->get_activityType());
             $query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID, 
                 RMHStaffProfileID, SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
                 Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, 
@@ -178,16 +181,19 @@ function insert_ProfileActivity($profileActivity){
                         $profileActivity->get_formPdf()."','".
                         $profileActivity->get_familyNotes()."','".               
                         $profileActivity->get_profileActivityNotes()."')";
-        }
-        else {  //new record, has no RMH Staff Member associated to record, RMHStaffProfileID set to NULL
-            $query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID, 
+     //   }
+   /*     else {  //new record, has no RMH Staff Member associated to record, RMHStaffProfileID set to NULL
+            error_log("inserting new profile activity record");
+             error_log('activity type is '. $profileActivity->get_activityType());
+            $query="INSERT INTO profileactivity (ProfileActivityRequestID, FamilyProfileID, SocialWorkerProfileID, RMHStaffProfileID,
                 SW_DateStatusSubmitted, ActivityType, Status, ParentFirstName, ParentLastName, Email, 
                 Phone1, Phone2, Address, City, State, ZipCode, Country, PatientFirstName, 
                 PatientLastName, PatientRelation, PatientDateOfBirth, FormPDF, FamilyNotes, ProfileActivityNotes) VALUES(".
                         $profileActivity->get_profileActivityRequestId().",".
                         $profileActivity->get_familyProfileId().",". 
                         $profileActivity->get_socialWorkerProfileId().",'".
-                        $profileActivity->get_swDateStatusSubm()."','".                           
+                         NULL."','".
+                        $profileActivity->get_swDateStatusSubm()."','".      
                         $profileActivity->get_activityType()."','".
                         $profileActivity->get_profileActivityStatus()."','".                        
                         $profileActivity->get_parentFirstName()."','".
@@ -207,7 +213,7 @@ function insert_ProfileActivity($profileActivity){
                         $profileActivity->get_formPdf()."','".
                         $profileActivity->get_familyNotes()."','".               
                         $profileActivity->get_profileActivityNotes()."')";
-        }
+        }  */
             
                                 
         $result=mysql_query($query);

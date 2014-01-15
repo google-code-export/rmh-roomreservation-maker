@@ -32,77 +32,14 @@ include('../header.php');
 include(ROOT_DIR .'/domain/Family.php');
 include(ROOT_DIR . '/database/dbFamilyProfile.php');
 
-
-/*if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST['firstName'] ) || isset( $_POST['lastName'] ) ) )
-{
-	$fn = ( (isset( $_POST['firstName'] ) )?sanitize( $_POST['firstName']):""); //if firstName isset, sanitize it, else empty string
-	if($fn == "first name" )
-		$fn = "";
-	$ln = ( (isset( $_POST['lastName'] ) )?sanitize( $_POST['lastName']):"");
-	if($ln == "last name" )
-		$ln = "";
-
-	$families = retrieve_FamilyProfileByName($fn, $ln);//calls db receives an array of family objs
-
-	if( is_array( $families ) )
-	{
-		foreach( $families as $family )
-		{
-			//create a row with a td for lname, fname, town, dob
-			$table .= "<tr>\n\t<td><a href=\"?id=";// DYNAMIC LINK CREATION
-			$table .= $family->get_familyProfileId();
-			$table .= "\">";
-			$table .= $family->get_parentlname();
-			$table .= ", ";
-			$table .= $family->get_parentfname();
-			$table .= "</a></td>";
-			$table .= "<td>";
-			$table .= $family->get_parentcity();
-			$table .= "</td>";
-			$table .= "<td>";
-			$table .= $family->get_patientdob();
-			$table .= "</td>\n</tr>";
-
-			$numFamilies++;
-		}
-		$table .= "</table>";
-		echo $table;
-	}//end if is_array
-}
-else if(isset($_POST["form_token"]) && !validateTokenField($_POST))
-{
-	//if the security validation failed. display/store the error:
-	//'The request could not be completed: security check failed!'
-
-}
-else
-{
-	//there was no POST DATA
-}
-
-/*if(isset($_GET['id']) )
-{   //gets the familyid passed down by the family profile search and when the profile is selected(clicked)
-$familyID = sanitize( $_GET['id'] );
-
-$familyProfile = retrieve_FamilyProfile ($familyID);
-if($familyProfile){
-
-}
-else
-{
-	$content = "not found";
-} 
-
-}//end function  */
-
+// this is done because $act is set to the orginating action - is the user trying to
+// make a reservation or just look at a family profile record?
+// the value will be passed to the next script as well
 if (isset($_GET['act']))
 {
     $act = $_GET['act'];
     error_log("action is $act");
-    if ($act == "RES")
-        $nextScript = '/family/newReservation.php';
-    else
-        $nextScript = '/family/profileDetail.php';
+      $nextScript = "/family/profileDetail.php?act=$act";
 }
 ?>
 <section class="content">

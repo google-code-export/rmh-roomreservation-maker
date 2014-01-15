@@ -25,11 +25,11 @@ class ProfileActivity {
     private $profileActivityRequestId; //request key number for the profile activity table
     private $familyProfileId; //family id for the family whose profile is being created or changed
     private $socialWorkerProfileId; //social worker id for the social worker who is making the change
-    private $swLastName;
-    private $swFirstName; 
+  //  private $swLastName;
+ //   private $swFirstName; 
     private $rmhStaffProfileId; //rmh staff id for the rmh staff who is making the change
-    private $rmhStaffLastName;
-    private $rmhStaffFirstName;
+ //   private $rmhStaffLastName;
+//    private $rmhStaffFirstName;
     private $swDateStatusSubm; //date of profile change request by the social worker
     private $rmhDateStatusSubm;  //date of profile change request by the rmh staff 
     private $activityType; //string: utilized by the social worker for the profile activity request: 'Apply','Modify','Cancel'
@@ -55,19 +55,19 @@ class ProfileActivity {
     /**
          * constructor for profile activity
          */
-    function __construct($profileActivityId, $profileActivityRequestId, $familyProfileId, $socialWorkerProfileId, $swLastName, $swFirstName,         
- $rmhStaffProfileId, $rmhStaffLastName, $rmhStaffFirstName, $swDateStatusSubm, $rmhDateStatusSubm, $activityType, $profileActivityStatus,
+    function __construct($profileActivityId, $profileActivityRequestId, $familyProfileId, $socialWorkerProfileId,          
+ $rmhStaffProfileId,  $swDateStatusSubm, $rmhDateStatusSubm, $activityType, $profileActivityStatus,
  $parentFirstName, $parentLastName, $parentEmail, $parentPhone1, $parentPhone2, $parentAddress, $parentCity, $parentState, $parentZip, 
  $parentCountry, $patientFirstName, $patientLastName, $patientRelation, $patientDOB, $formPdf, $familyNotes, $profileActivityNotes){                
         $this->profileActivityId = $profileActivityId;
         $this->profileActivityRequestId = $profileActivityRequestId;
+        $this->familyProfileId=$familyProfileId;
         $this->socialWorkerProfileId = $socialWorkerProfileId;  
-        $this->swLastName = $swLastName;
-        $this->swFirstName = $swFirstName; 
+    //    $this->swLastName = $swLastName;
+    //    $this->swFirstName = $swFirstName; 
         $this->rmhStaffProfileId = $rmhStaffProfileId; 
-        $this->rmhStaffLastName = $rmhStaffLastName;
-        $this->rmhStaffFirstName = $rmhStaffFirstName;
-        $this->familyProfileId = $familyProfileId;
+    //    $this->rmhStaffLastName = $rmhStaffLastName;
+   //     $this->rmhStaffFirstName = $rmhStaffFirstName;
         $this->swDateStatusSubm= $swDateStatusSubm; 
         $this->rmhDateStatusSubm = $rmhDateStatusSubm;
         $this->activityType = $activityType;  
@@ -108,25 +108,25 @@ class ProfileActivity {
         return $this->socialWorkerProfileId;
     }
     
-    function get_swLastName(){ 
+  /*  function get_swLastName(){ 
         return $this->swLastName;
     }
     
     function get_swFirstName(){
         return $this->swFirstName;   
-    }
+    }  */
     
     function get_rmhStaffProfileId(){
         return $this->rmhStaffProfileId;
     }
     
-    function get_rmhStaffLastName(){
+  /*  function get_rmhStaffLastName(){
         return $this->rmhStaffLastName;
     }
    
     function get_rmhStaffFirstName(){
         return $this->rmhStaffFirstName;
-    }
+    } */
     
     function get_swDateStatusSubm(){
         return $this->swDateStatusSubm;
@@ -230,25 +230,25 @@ class ProfileActivity {
         $this->socialWorkerProfileId = $sId;
     }
     
-    function set_swLastName($sLname){ 
+ /*   function set_swLastName($sLname){ 
         $this->swLastName = $sLname;
     }
     
     function set_swFirstName($sFname){
         $this->swFirstName = $sFname;   
-    }
+    } */
     
     function set_rmhStaffProfileId($rId){
         $this->rmhStaffProfileId = $rId;
     }
     
-    function set_rmhStaffLastName($rLname){
+ /*   function set_rmhStaffLastName($rLname){
         $this->rmhStaffLastName = $rLname;
     }
    
     function set_rmhStaffFirstName($rFname){
         $this->rmhStaffFirstName = $rFname;
-    }
+    } */
     
     function set_swDateStatusSubm($swDateStatSubm){
         $this->swDateStatusSubm = $swDateStatSubm;

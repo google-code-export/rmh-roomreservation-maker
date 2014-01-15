@@ -27,6 +27,7 @@ include_once(ROOT_DIR . '/mail/functions.php');
 
 $message = array();
 
+$taskFinished = FALSE;
 if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	$activityType = "Create";
 	$profileActitivityStatus = "Unconfirmed";
@@ -37,14 +38,12 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	//print_r($sw);
 	$swObject = current($sw);
 	$sw_id = $swObject->get_swProfileId();
-	$sw_fname = $swObject->get_swFirstName();
-	$sw_lname = $swObject->get_swLastName();
+	//$sw_fname = $swObject->get_swFirstName();
+	//$sw_lname = $swObject->get_swLastName();
 	$dateSubmit = date("Y-m-d");
 
 	if (
-			isset($_POST['ParentFirstName']) &&
-			//            $_POST['ParentFirstName'] != "Parent First Name" &&
-			$_POST['ParentFirstName'] != "") {
+		isset($_POST['ParentFirstName']) && $_POST['ParentFirstName'] != "") {
 		$parentFirstName = $_POST['ParentFirstName'];
 	}
 	else {
@@ -52,20 +51,15 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	}
 
 	if (
-			isset($_POST['ParentLastName']) &&
-			//            $_POST['ParentLastName'] != "Parent Last Name" &&
-			$_POST['ParentLastName'] != "") {
+		isset($_POST['ParentLastName']) && $_POST['ParentLastName'] != "") {
 		$parentLastName = $_POST['ParentLastName'];
 	}
 	else {
 		$message['ParentLastName'] = '<p><font color="red">You must enter the Parent Last Name.</font></p>';
-		// print_r($message);
 	}
 
 	if (
-			isset($_POST['Email']) &&
-			//            $_POST['Email'] != "E-Mail" &&
-			$_POST['Email'] != "") {
+		isset($_POST['Email']) && $_POST['Email'] != "") {
 		$parentEmail = $_POST['Email'];
 	}
 	else {
@@ -73,30 +67,24 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	}
 
 	if (
-			isset($_POST['Phone1']) &&
-			//            $_POST['Phone1'] != "Phone # 1" &&
-			$_POST['Phone1'] != "") {
+		isset($_POST['Phone1']) && $_POST['Phone1'] != "") {
 		$phone1 =$_POST['Phone1'];
 	}
 	else {
 		$message['Phone1'] = '<p><font color="red">You must enter the Parent Primary Phone Number</font></p>';
-		//print_r($message);
+		
 	}
 
 	if (
-			isset($_POST['Phone2']) &&
-			//            $_POST['Phone2'] != "Phone # 2" &&
-			$_POST['Phone2'] != "") {
+		isset($_POST['Phone2']) && $_POST['Phone2'] != "") {
 		$phone2 = $_POST['Phone2'];
 	}
-	else {
+	else {  // phone2 is optional
 		$phone2 = "";
 	}
 
 	if (
-			isset($_POST['Address']) &&
-			//            $_POST['Address'] != "Address" &&
-			$_POST['Address'] != "") {
+		isset($_POST['Address']) && $_POST['Address'] != "") {
 		$address = $_POST['Address'];
 	}
 	else {
@@ -104,9 +92,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	}
 
 	if (
-			isset($_POST['City']) &&
-			//            $_POST['City'] != "City" &&
-			$_POST['City'] != "") {
+		isset($_POST['City']) && $_POST['City'] != "") {
 		$city = $_POST['City'];
 	}
 	else {
@@ -114,9 +100,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	}
 
 	if (
-			isset($_POST['State']) &&
-			//            $_POST['State'] != "State" &&
-			$_POST['State'] != "") {
+		isset($_POST['State']) && $_POST['State'] != "") {
 		$state = $_POST['State'];
 	}
 	else {
@@ -124,9 +108,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	}
 
 	if (
-			isset($_POST['ZipCode']) &&
-			//            $_POST['ZipCode'] != "Zip Code" &&
-			$_POST['ZipCode'] != "") {
+		isset($_POST['ZipCode']) && $_POST['ZipCode'] != "") {
 		$zip = $_POST['ZipCode'];
 	}
 	else {
@@ -134,18 +116,14 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	}
 
 	if (
-			isset($_POST['Country']) &&
-			//            $_POST['Country'] != "Country" &&
-			$_POST['Country'] != "") {
+		isset($_POST['Country']) && $_POST['Country'] != "") {
 		$country = $_POST['Country'];
 	} else {
 		$message['Country'] = '<p><font color="red">You must enter the Country.</font></p>';
 	}
 
 	if (
-			isset($_POST['PatientFirstName']) &&
-			//            $_POST['PatientFirstName'] != "Patient First Name" &&
-			$_POST['PatientFirstName'] != "") {
+		isset($_POST['PatientFirstName']) && $_POST['PatientFirstName'] != "") {
 		$patientFirstName = $_POST['PatientFirstName'];
 	}
 	else {
@@ -153,9 +131,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	}
 
 	if (
-			isset($_POST['PatientLastName']) &&
-			//            $_POST['PatientLastName'] != "Patient Last Name" &&
-			$_POST['PatientLastName'] != "") {
+		isset($_POST['PatientLastName']) && $_POST['PatientLastName'] != "") {
 		$patientLastName = $_POST['PatientLastName'];
 	}
 	else {
@@ -163,67 +139,50 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 	}
 
 	if (
-			isset($_POST['PatientRelation']) &&
-			//            $_POST['PatientRelation'] != "Patient Relation" &&
-			$_POST['PatientRelation'] != "") {
+		isset($_POST['PatientRelation']) && $_POST['PatientRelation'] != "") {
 		$patientRelation = $_POST['PatientRelation'];
 	} else {
 		$message['PatientRelation'] = '<p><font color="red">You must enter the Patient Relation.</font></p>';
 	}
 
 	if (
-			isset($_POST['PatientDOB']) &&
-			//            $_POST['PatientDOB'] != "Patient Date Of Birth" &&
-			$_POST['PatientDOB'] != "") {
+		isset($_POST['PatientDOB']) && $_POST['PatientDOB'] != "") {
 		$patientDateOfBirth = $_POST['PatientDOB'];
 	} else {
 		$message['PatientDOB'] = '<p><font color="red">You must enter the Patient Date of Birth.</font></p>';
 	}
 
 	if (
-			isset($_POST['PatientDiagnosis']) &&
-			//            $_POST['PatientDiagnosis'] != "Patient Diagnosis" &&
-			$_POST['PatientDiagnosis'] != "") {
-		$patientFormPDF = $_POST['PatientDiagnosis'];
+		isset($_POST['patientFormPDF']) && $_POST['patientFormPDF'] != "") {
+		$patientFormPDF = $_POST['patientFormPDF'];
 	} else {
-		$patientFormPDF = "";
+		$patientFormPDF = "";  // this field is optional
 	}
 
 	if (
-			isset($_POST['PatientNote']) &&
-			//            $_POST['PatientNote'] != "Patient's Notes" &&
-			$_POST['PatientNote'] != "") {
+		isset($_POST['PatientNote']) && $_POST['PatientNote'] != "") {
 		$patientNote = $_POST['PatientNote'];
 	} else {
-		$patientNote = "";
+		$patientNote = "";  // this field is optional
 	}
 
 	if (
-			isset($_POST['swNote']) &&
-			//            $_POST['swNote'] != "Notes from Social Worker" &&
-			$_POST['swNote'] != "") {
+		isset($_POST['swNote']) && $_POST['swNote'] != "") {
 		$profileActityNotes = $_POST['swNote'];
 	} else {
-		$profileActityNotes = "";
+		$profileActityNotes = "";  // this field is optional
 	}
-	//                      print_r($message);
-	//                      var_dump($message);
-
-	if (!empty($message)) {
-		//            echo "Cannot create New Profile" . "<br/>";
-		//
-		//            foreach ($message as $messages){
-		//                echo $messages . "<br/>";
-		//            }
-	} else if (empty($message)) {
-		//TODO: Create familyProfile object.
+	
+                  // there were no input errors in the form, so proceed with database inserts
+	if (empty($message)) {
+		// the family profile id is 0, but a real one will be generated while doing the insert
 		$temporaryFamilyProfile = new Family(
 				0,                          //$familyProfileId,
 				"Pending",                  //$familyProfileStatus,
 				$parentFirstName,
 				$parentLastName,
 				$parentEmail,
-				$phone1,              //
+				$phone1,              
 				$phone2,
 				$address,
 				$city,
@@ -237,79 +196,61 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 				$patientFormPDF,
 				$patientNote);
 
-		//TODO: Insert familyProfile object.
 		if(insert_FamilyProfile($temporaryFamilyProfile))
-			echo '
-					<div id="container">
-					<div id="content">
-					<p>Temporary family profile inserted successfully.</p>
-					</div>
-					</div>';
-		//TODO: Get familyProfileID from the familyProfile object.
-
+		
+		//Get generated familyProfileID from the familyProfile object.
 		$results = retrieve_FamilyProfileByName($temporaryFamilyProfile->get_parentfname(), $temporaryFamilyProfile->get_parentlname());
 		$resultsFamily = $results[0];
 		$temporaryFamilyProfileID = $resultsFamily->get_familyProfileId();
 
-		//TODO: Set the profileActivity to the familyprofile's values.
-		//no error messages
-		//create profile activity object
 
+		//create profile activity object
 		$current_activity = new ProfileActivity(
 				0,                          //$profileActivityId
 				0,                          //$profileActivityRequestId
 				$temporaryFamilyProfileID,    //$familyProfileId
 				//requestID set to 0 as placeholders.
 				//TODO: change this!
-				$sw_id,                     //
-				$sw_lname,                  //
-				$sw_fname,                  //
-				0,                          //$rmhStaffProfileId
-				"",                         //$rmhStaffLastName
-				"",                         //$rmhStaffFirstName
+				$sw_id,                     
+				//$sw_lname,                  
+				//$sw_fname,                  
+				'NULL',                          //$rmhStaffProfileId
+			//	"",                         //$rmhStaffLastName
+			//	"",                         //$rmhStaffFirstName
 				$dateSubmit,                //$swDateStatusSubm
-				0,                          //$rmhDateStatusSubm
-				$activityType,              //
-				$profileActitivityStatus,   //
-				$parentFirstName,           //
-				$parentLastName,            //
-				$parentEmail,               //
-				$phone1,                    //
-				$phone2,                    //
-				$address,                   //
-				$city,                      //
-				$state,                     //
-				$zip,                       //
-				$country,                   //
-				$patientFirstName,          //
-				$patientLastName,           //
-				$patientRelation,           //
-				$patientDateOfBirth,        //
-				$patientFormPDF,            //
-				$patientNote,               //
-				$profileActityNotes         //
+				'NULL',                          //$rmhDateStatusSubm
+				$activityType,              
+				$profileActitivityStatus,   
+				$parentFirstName,           
+				$parentLastName,            
+				$parentEmail,               
+				$phone1,                    
+				$phone2,                    
+				$address,                   
+				$city,                      
+				$state,                     
+				$zip,                       
+				$country,                   
+				$patientFirstName,          
+				$patientLastName,           
+				$patientRelation,           
+				$patientDateOfBirth,        
+				$patientFormPDF,            
+				$patientNote,               
+				$profileActityNotes         
 		);
 
-		//            print_r($message);
-		//            var_dump($message);
+	
 		// check if insert function returns true, then insert profileactivity
-
 		if (insert_ProfileActivity($current_activity)) {
-			echo '
-					<div id="container">
-					<div id="content">
-					<p>Successfully inserted a profile activity request.</p>
-					';
+                                                         $taskFinished = TRUE;
+			
 
 			//            //if profileActivity is inserted, send the email to rmh approver
 			//            $profileID = $current_activity->get_profileActivityId();
 			//            NewFamilyProfile($profileID);
 
-			$_SESSION['familyID'] = $temporaryFamilyProfileID;
-			echo '
-					<p><a href="' . BASE_DIR . '/referralForm.php">Create Room Reservation</a></p>
-							</div>
-							</div>';
+		
 		}
 	}
 }//end of success validation of tokens
@@ -320,18 +261,24 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 }
 ?>
 <section class="content">
-<?php ErrorHandler::displayErrors();?>
+<?php //ErrorHandler::displayErrors();?>
 	<div>
 	<h2>New Family Profile</h2>
 	<div>
 				<?php
-				//Write a better error handler
+			
 				if (!empty($message)) {
    					 echo "Cannot create New Profile: " . "</br>";
    					 foreach ($message as $messages) {
         					echo $messages;
    				 			}
 					}
+                                                                           if ($taskFinished) {
+                                                                                  echo '<p>Temporary family profile inserted successfully.</p>';
+                                                                                  echo '<p>Successfully inserted a profile activity request.</p>';
+                                                                                  echo '<p> These records will be finalized upon RMH approval</p>';
+                                                                                   echo '<p> If you want to create a reservation for this family, go back to the Family Profile page </p>';
+                                                                           }
 ?>
 	</div>
 		<form class="generic" name="newProfileForm" method="post" action="newProfile.php">
@@ -408,8 +355,8 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 					<?php isset($patientDateOfBirth) ? print ("value=\"$patientDateOfBirth\"") : print("");?> />
 			</div>
 			<div class="formRow">	
-				<label for="PatientDiagnosis">Patient's Current Diagnosis</label>
-				<input type="text" name="PatientDiagnosis" id="PatientDiagnosis"
+				<label for="PatientFormPDF">Patient Form PDF</label>
+				<input type="text" name="patientFormPDF" id="PatientFormPDF"
 					<?php isset($patientFormPDF) ? print ("value=\"$patientFormPDF\"") : print("");?> />
 			</div>
 			<div class="formRow">
@@ -424,10 +371,10 @@ else if (isset($_POST['form_token']) && !validateTokenField($_POST)) {
 				<input type="text" name="swNote" id="swNote"
 					<?php isset($profileActityNotes) ? print ("value=\"$profileActityNotes\"") : print("");?> />
 			</div>
-			<div class="formRow">
-				<input class="btn" type="submit" name="submit"
-					value="Create" />
-			</div>
+                    <?php if ($taskFinished == FALSE)
+			echo '<div class="formRow"><input class="btn" type="submit" name="submit" value="Create" />';
+		?>	
+                        </div>
 		</form>
 	</div>
 </section>
