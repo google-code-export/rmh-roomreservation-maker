@@ -30,7 +30,7 @@ include_once (ROOT_DIR.'/database/dbUserProfile.php');
 
 
 $showForm = false;
-$showReport = false;
+$showResult = false;
 $beginDateError = false;
 $endDateError = false;
 
@@ -70,7 +70,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST))
        }
        else
        {
-           $showReport = true;
+           $showResult = true;
        }
    }
 }
@@ -291,7 +291,7 @@ if($showForm == true)
 <?php
 }
 //if $showReport = true, display report
-else if($showReport == true)
+else if($showResult == true)
 {
     //Initialize form data
     $userId = sanitize(getCurrentUser());

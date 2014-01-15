@@ -34,14 +34,14 @@ include_once (ROOT_DIR .'/mail/functions.php');
 */
 
 $showForm = false;
-$showReport = false;
+$showResult = false;
 $message= array();
 
 error_log("in referralForm");
 
         //get family values from database to fill into form
-        if(isset($_GET['family'])){
-        $familyID = sanitize($_GET['family']);
+        if(isset($_GET['id'])){
+        $familyID = sanitize($_GET['id']);
         $family = retrieve_FamilyProfile($familyID);
         $patientfname= $family->get_patientfname();
         $patientlname= $family->get_patientlname();
@@ -100,7 +100,7 @@ else
        }
        else
        {
-           $showReport = true;
+           $showResult = true;
        }
     }
             //patient last name is not set
@@ -203,6 +203,7 @@ if($showForm == true)
 {
     //FORM
     ?>
+<section class="content">
 <form name ="NewReferralForm" method="POST" action="referralForm.php">
             <?php echo generateTokenField(); ?>
     <label for="BeginDate">Begin Date:</label>
@@ -226,12 +227,12 @@ if($showForm == true)
           
          <input class="formsubmit"type="submit" value="Submit" name="submit" />
        </form>            
-
+</section>
      <?php
 
 }
 
-     else if($showReport == true)
+     else if($showResult == true)
             {
             $newBeginDate =
 sanitize($_POST['begindate']);
@@ -264,7 +265,7 @@ sanitize($_POST['enddate']);
                 'NULL', $swDateStatusSubmitted, 'NULL', $ActivityType, $Status, $newBeginDate, $newEndDate,
                 $newPatientDiagnosis, $newNotes);
         $roomReservationKey= insert_RoomReservationActivity($currentreservation);
-            
+         echo '<section class="content">';
         echo '<p><font color="red">The reservation was made successfully made!</font></p><br/>';
         echo "The referral was made by : " .$userId. "<br>";
         echo "The Begin Date is : " .$newBeginDate. "<br>";
@@ -304,10 +305,10 @@ sanitize($_POST['enddate']);
         echo '<td>'.$sw_id.'</td>';
         echo '<td>'.$newBeginDate.'</td>';
         echo '<td>'.$newEndDate.'</td>';
-       
+       echo '</section>';
 
         //send email to RMH approver about new room reservation request
-        newRequest($roomReservationKey, $swDateStatusSubmitted, $newBeginDate, $newEndDate);
+ //       newRequest($roomReservationKey, $swDateStatusSubmitted, $newBeginDate, $newEndDate);
           }
       
 

@@ -37,7 +37,7 @@ include_once (ROOT_DIR . '/database/dbFamilyProfile.php');
 //include_once(ROOT_DIR .'/mail/functions.php');
 
 $showForm = false;
-$showReport = false;
+$showResult = false;
 $message = array();
 
 // the first time the site is visited
@@ -63,29 +63,29 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
     error_log("will process the edit form");
     
    $informationroom = readFormData();
-   
-    $fid = $informationroom->get_familyProfileId();
-    error_log("read data, informationroom->familyProfileID is  $fid");
-    $rid= $informationroom->get_rmhStaffProfileId();
-    error_log("read data, informationroom->rmh staff  is  $rid");
+
     
      $beginDate = new DateTime($informationroom->get_beginDate());
     $endDate = new DateTime($informationroom->get_endDate());
     $formattedBeginDate = $beginDate->format('Y-m-d');
      $formattedEndDate = $endDate->format('Y-m-d');
-     if ($showForm == true)
-         error_log('showForm is true');
-     else
-         error_log('showForm is false');
-
-     if ($showReport == true)
-     {
+   
+if ($showResult)
+{
          error_log("will call updateReservation");
          $ret = updateReservation($informationroom);
-         
-         // display messages based on return value
-     }
-    
+          if ($ret== -1) {
+         echo"Could not update the Room Reservation";
+    }
+    else
+        echo "Update was successful";
+  
+   }
+   else
+   {
+       error_log("the reservation was not updated");
+       echo "The reservation has not been updated. Please correct errors and try again";
+   }
 }   // end form processing
 
 
@@ -174,8 +174,9 @@ function readFormData()
 {
     error_log("in readFormData");
     global $showForm;
-    global $showReport;
+    global $showResult;
     
+    $theReservation = NULL;
     $hasError = false;
     
     $formattedBeginDate="";
@@ -288,6 +289,7 @@ function readFormData()
     } else {
         $message['PatientDiagnosis'] = '<p><font color="red">You must enter the Patient Diagnosis.</font></p>';
         error_log("no patient diagnosis");
+        $newPatientDiagnosis = "";
         $hasError = true;
     }
     
@@ -326,12 +328,14 @@ if ($hasError == true)  // something could not be validated or read
     $showForm = true;
 }
 else
-    $showReport = true;
+
+    $showResult = true;
 
   $theReservation = new Reservation($newReservationKey, $newActivityID, $newReservationRequestID, $newFamilyProfileID,$newParentLastName,
     $newParentFirstName, $newPatientLastName, $newPatientFirstName, 'socialWorkerID','socialWorkerLastName', 'socialWorkerFirstName',$newrmhStaffProfileID, 'rmhStaffLastName', 'rmhStaffFirstName',
     $newSWDateStatusSubmitted, $newRMHDateStatusSubmitted, 'Modify', $newStatus, 
     $formattedBeginDate, $formattedEndDate, $newPatientDiagnosis, $newNotes);
+
   error_log("will return a reservation object");
   return $theReservation;
 }// end function to read and validate data
@@ -388,10 +392,7 @@ function readAndValidateDates(&$formattedBeginDate, &$formattedEndDate,&$message
 function updateReservation(Reservation $informationroom)
 {
      error_log("will do the actual insert to the database");
-   // $newBeginDate = $informationroom->get_beginDate();
-      
-   // $newEndDate = $informationroom->get_endDate();
-          
+
 
     //retrieves the sw, and gets id, firstname and lastname      
     $currentUser = getUserProfileID();
@@ -440,15 +441,10 @@ function updateReservation(Reservation $informationroom)
     // with the same request id but new activity id
     
     $retval = insert_RoomReservationActivity ($informationroom);
-    if ($retval == -1) {
-         echo"Could not update the Room Reservation";
-    }
-    else
-        echo "Update was successful";
+   return $retval;
 } // end updateReservation
 ?>
-</div>
-</div>
+
 
 <?php
 include (ROOT_DIR . '/footer.php');

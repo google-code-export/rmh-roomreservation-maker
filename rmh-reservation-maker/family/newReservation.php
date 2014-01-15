@@ -37,7 +37,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         {
         //TODO: start table with tags
             $table = "\n<table cellpadding='20' style=\"margin-left:250px;\">\n<thead>\n<tr>\n";
-            $table .= "<th>Patient Name</th><th>Parent Name</th><th>Parent City</th><th>Patient Date Of Birth</th><th>Patient Diagnosis</th>\n</tr></thead>";
+            $table .= "<th>Patient Name</th><th>Parent Name</th><th>Parent City</th><th>Patient Date Of Birth</th><th>Patient Notes</th>\n</tr></thead>";
             $numFamilies = 1;
             //create an array, 
         foreach( $families as $family )

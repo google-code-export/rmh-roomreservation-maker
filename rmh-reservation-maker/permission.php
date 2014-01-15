@@ -65,7 +65,7 @@ checkSession(); //check session if it has timed out or not
     $permission_array['profileDetail.php']=1;
     $permission_array['report.php']=1; //reporting
     $permission_array['SearchReservations.php']=1;
-    $permission_array['newReservation.php']=1;
+    $permission_array['DetailedFamilyRecord.php']=1;
     $permission_array['Reservationsearch.php']=1; //Reservation Search help page
     $permission_array['CreatingFamilyProfile.php']=1; //Creating a new family profile help page
     $permission_array['SearchingFamilyProfile.php']=1; //Searching for a family profile
