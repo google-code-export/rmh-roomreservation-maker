@@ -264,9 +264,9 @@ sanitize($_POST['enddate']);
                 $newParentFirstName, $newPatientLastName, $newPatientFirstName, $sw_id, $swLastName, $swFirstName, 'NULL', 'NULL',
                 'NULL', $swDateStatusSubmitted, 'NULL', $ActivityType, $Status, $newBeginDate, $newEndDate,
                 $newPatientDiagnosis, $newNotes);
-        $roomReservationKey= insert_RoomReservationActivity($currentreservation);
+        $roomReservationRequestID= insert_RoomReservationActivity($currentreservation);
          echo '<section class="content">';
-        echo '<p><font color="red">The reservation was made successfully made!</font></p><br/>';
+        echo '<p><font color="red">The reservation request has been posted. It will be final once RMH approves it</font></p><br/>';
         echo "The referral was made by : " .$userId. "<br>";
         echo "The Begin Date is : " .$newBeginDate. "<br>";
         echo "The End Date is : " .$newEndDate. "<br>";
@@ -285,7 +285,7 @@ sanitize($_POST['enddate']);
             <table border = "2" cellspacing = "10" cellpadding = "6">';       
         echo '<thead>
             <tr>
-           <th>Room Reservation Key</th>
+           <th>Room Reservation Request ID</th>
            <th>Status</th>
            <th>Parent Last Name</th>
            <th>Parent First Name</th>
@@ -298,7 +298,7 @@ sanitize($_POST['enddate']);
             <tbody>';
         
         echo '<tr>';
-        echo '<td>'.$roomReservationKey.'</td>';
+        echo '<td>'.$roomReservationRequestID.'</td>';
         echo '<td>'.$Status.'</td>';
         echo '<td>'.$newParentLastName.'</td>';
         echo '<td>'.$newParentFirstName.'</td>';

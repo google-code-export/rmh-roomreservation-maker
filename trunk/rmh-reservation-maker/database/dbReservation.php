@@ -204,7 +204,7 @@ function generateNextRoomReservationID($reservation){ //this will be used for ge
     //Success
     mysql_close();
     //return room reservation key if true;
-    return $roomReservationKey;
+    return $reservation->get_roomReservationRequestID();
 }
     
 /**

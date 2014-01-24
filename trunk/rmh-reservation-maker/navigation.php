@@ -51,17 +51,18 @@ if(!isset($navItem)){
 	{
 	    //Navigation for social workers
 	 ?>
-	    <li data-href="<?php echo BASE_DIR.'/family/FamilyProfileMenu.php';?>" <?php echo ($navItem == "FamilyProfileMenu.php") ? 'class="selected"' : '';?>>Family Profile</li>
+	    <li data-href="<?php echo BASE_DIR.'/family/FamilyProfileMenu.php';?>" <?php echo ($navItem == "FamilyProfileMenu.php") ? 'class="selected"' : '';?>>Family Profile Functions</li>
 	    <li data-href="<?php echo BASE_DIR.'/report.php';?>" <?php echo ($navItem == "report.php") ? 'class="selected"' : '';?>>Report</li> 
-	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>" <?php echo ($navItem == "SearchReservations.php") ? 'class="selected"' : '';?>>Search Reservations</li>
+	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>" <?php echo ($navItem == "SearchReservations.php") ? 'class="selected"' : '';?>>Search and Edit Reservations</li>
 	<?php  
 	}
 	else if($userAccess === 2)
 	{
 	    //Navigation for RMH reservation managers
 	 ?>
-	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>" <?php echo ($navItem == "SearchReservations.php") ? 'class="selected"' : '';?>>Search Reservations</li>
-	    <li data-href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>" <?php echo ($navItem == "searchProfileActivity.php") ? 'class="selected"' : '';?>>Approve Family Profile Changes</li>
+	    <li data-href="<?php echo BASE_DIR.'/reservation/SearchReservations.php';?>" <?php echo ($navItem == "SearchReservations.php") ? 'class="selected"' : '';?>>View and Approve Reservations</li>
+	    <li data-href="<?php echo BASE_DIR.'/report.php';?>" <?php echo ($navItem == "report.php") ? 'class="selected"' : '';?>>Report</li> 
+                      <li data-href="<?php echo BASE_DIR.'/searchProfileActivity.php';?>" <?php echo ($navItem == "searchProfileActivity.php") ? 'class="selected"' : '';?>>View and Approve Family Profiles</li>
 	    
 	<?php  
 	}

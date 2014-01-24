@@ -41,8 +41,8 @@ $showResult = false;
 $message = array();
 
 // the first time the site is visited
-if (isset($_SESSION['RequestID'])) {
-    $idChosen = $_SESSION['RequestID'];
+if (isset($_GET['id'])) {
+    $idChosen = $_GET['id'];
 
     error_log("in editReservation, request id is $idChosen");
 
@@ -64,13 +64,15 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
     
    $informationroom = readFormData();
 
-    
+    error_log('social worker id is '.$informationroom->get_socialWorkerProfileId());
+    error_log('rmh staff id is '.$informationroom->get_rmhStaffProfileId());
      $beginDate = new DateTime($informationroom->get_beginDate());
     $endDate = new DateTime($informationroom->get_endDate());
     $formattedBeginDate = $beginDate->format('Y-m-d');
      $formattedEndDate = $endDate->format('Y-m-d');
    
-if ($showResult)
+//if ($showResult)
+ if (isset($_POST['Submit']))
 {
          error_log("will call updateReservation");
          $ret = updateReservation($informationroom);
@@ -81,9 +83,43 @@ if ($showResult)
         echo "Update was successful";
   
    }
+  else  if (isset($_POST['Cancel']))
+   {
+       error_log("will do a cancel");
+       $ret = cancelReservation($informationroom);
+      if ($ret== -1) {
+         echo"Could not cancel the room reservation";
+       }
+    else
+        echo "Reservation cancellation was submitted";
+  
+   }
+   
+   else if (isset($_POST['Approve']))
+   {
+       error_log("will approve");
+
+         $ret = approveReservation($informationroom);
+          if ($ret== -1) {
+         echo"Could not approve the room reservation";
+    }
+    else
+    {
+        $activityType = $informationroom->get_activityType();
+        if ($activityType == 'Apply')
+            echo 'Room reservation request for '.$informationroom->get_parentFirstName().', '. $informationroom->get_parentLastName(). 
+                ', start date '. $informationroom->get_beginDate().', end date '. $informationroom->get_endDate().'. was approved';
+        if ($activityType == 'Modify')
+            echo 'Room reservation change for '.$informationroom->get_parentFirstName().', '. $informationroom->get_parentLastName(). 
+                ', start date '. $informationroom->get_beginDate().', end date '. $informationroom->get_endDate().'. was approved';
+        if ($activityType=='Cancel')
+         echo 'Room reservation cancellation for '.$informationroom->get_parentFirstName().', '. $informationroom->get_parentLastName(). 
+                ', start date '. $informationroom->get_beginDate().', end date '. $informationroom->get_endDate().'. was approved';
+   }
+   }
    else
    {
-       error_log("the reservation was not updated");
+
        echo "The reservation has not been updated. Please correct errors and try again";
    }
 }   // end form processing
@@ -128,7 +164,8 @@ if ($showForm == true) {
     ?>
 <section class="content">
     <form name ="Edit Reservation" method="POST" action="EditReservation.php">
-    <?php echo generateTokenField(); ?>
+    <?php echo generateTokenField(); 
+        echo makeHeader($informationroom);?>
         <label for="BeginDate">Begin Date:</label>
         <input name="begindate" type="date" value="<?php echo htmlspecialchars($formattedBeginDate); ?>">
         <br><br>
@@ -140,6 +177,7 @@ if ($showForm == true) {
         <input type="hidden" name="reservationRequestID" id="hiddenField" value="<?php echo $informationroom->get_roomReservationRequestID()?>"/>
         <input type="hidden" name="familyProfileID" id="hiddenField" value="<?php echo $informationroom->get_familyProfileId()?>"/>
         <input type="hidden" name="rmhStaffProfileID" id="hiddenField" value="<?php echo $informationroom->get_rmhStaffProfileId()?>"/>
+        <input type="hidden" name="socialWorkerProfileID" id="hiddenField" value="<?php echo $informationroom->get_socialWorkerProfileId()?>"/>
         <input type="hidden" name="swDateStatusSubmitted" id="hiddenField" value="<?php echo $informationroom->get_swDateStatusSubmitted()?>"/>
         <input type="hidden" name="rmhDateStatusSubmitted" id="hiddenField" value="<?php echo $informationroom->get_rmhDateStatusSubmitted()?>"/>
         <input type="hidden" name="status" id="hiddenField" value="<?php echo $informationroom->get_status()?>"/>
@@ -154,16 +192,50 @@ if ($showForm == true) {
         Parent Last Name<br>         
         <input class="formt" id="parentlname" type="text" name="ParentLastName" value="<?php echo htmlspecialchars($informationroom->get_parentLastName()); ?>" readonly="readonly" onfocus="if(this.value == 'ParentLastName'){ this.value = ''; }"/><br>
         Parent First Name<br>         
-        <input class="formt formbottom" id="parentfirstname" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($informationroom->get_parentFirstName()); ?>" readonly="readonly"onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/><br>
+        <input class="formt formbottom" id="parentfirstname" type="text" name="ParentFirstName" value="<?php echo htmlspecialchars($informationroom->get_parentFirstName()); ?>" readonly="readonly" onfocus="if(this.value == 'ParentFirstName'){ this.value = ''; }"/><br>
+        Most recent reservation activity<br>         
+        <input class="formt formbottom" id="activitytype" type="text" name="ActivityType" value="<?php echo htmlspecialchars($informationroom->get_ActivityType()); ?>" readonly="readonly" onfocus="if(this.value == 'ActivityType'){ this.value = ''; }"/><br>
+          Reservation activity status<br>         
+        <input class="formt formbottom" id="status" type="text" name="status" value="<?php echo htmlspecialchars($informationroom->get_status()); ?>" readonly="readonly" onfocus="if(this.value == 'status'){ this.value = ''; }"/><br>
+ <?php  if ($_SESSION['access_level'] > 0)
+       {
+            echo('Hit <input type="submit" value="Make Changes" name="Submit"> to submit these edits.<br /><br />');
+            echo ('Hit <input type="submit" value="Cancel" name="Cancel"> to cancel this reservation. <br />' );
+           if ($_SESSION['access_level'] ==2)
+             echo ('Hit <input type="submit" value="Approve" name="Approve"> to approve this reservation. <br />' );
+             } ?>
 
-
-        <input class="formsubmit"type="submit" value="Save" name="submit" />
     </form>            
 </section>
     <?php
 }   // end displaying the form
 
-
+function makeHeader($informationroom)
+{
+    $headerStr = "Reservation Detail";
+    if (getUserAccessLevel()==1)
+    {
+        $headerStr = 'Reservation to modify or cancel. Remember that changes are not final until approved by RMH';
+    }
+    else
+         if (getUserAccessLevel()==2)
+         {
+             $status = $informationroom->get_status();
+             $activityType = $informationroom->get_ActivityType();
+             if ($status =='Unconfirmed') 
+             {
+                   if ($activityType == 'Apply')
+                     $headerStr = 'Room reservation request: Please approve';
+                 if ($activityType == 'Modify')
+                     $headerStr = 'Room reservation change: Please approve';
+                 if ($activityType == 'Cancel')
+                             $headerStr = 'Room reservation cancellation: Please approve';
+             }
+             else
+                      $headerStr = 'Reservation to modify or cancel';
+         }
+         return $headerStr;
+}
 // This reads and validates the information in the editing form, where the user might have
 // changed some of the information
 // it constructs and returns a new reservation object
@@ -230,7 +302,13 @@ function readFormData()
         // this is not actually an error condition since an unconfirmed reservation will not have
         // a staff approver yet
     }
-    
+      if (isset($_POST['socialWorkerProfileID']) && !empty($_POST['socialWorkerProfileID'])) {
+        $newsocialWorkerProfileID = sanitize($_POST['socialWorkerProfileID']);
+        error_log("posted social worker profile id is $newsocialWorkerProfileID");
+    } else {
+        error_log("no social worker profile id");
+        $newsocialWorkerProfileID = 'NULL';
+    }
     
    if (isset($_POST['swDateStatusSubmitted']) && !empty($_POST['swDateStatusSubmitted'])) {
         $newSWDateStatusSubmitted = sanitize($_POST['swDateStatusSubmitted']);
@@ -252,6 +330,13 @@ function readFormData()
         // this is not actually an error condition since an unconfirmed reservation will not have
         // a staff approver yet
     }
+ if (isset($_POST['ActivityType']) && !empty($_POST['ActivityType'])) {
+        $newActivityType= sanitize($_POST['ActivityType']);
+    } else {
+     //   $message['resevationRequestID'] = '<p><font color="red">Missing reservation request id.</font></p>';
+        error_log("activity typeis missing");
+        $hasError = true;
+    }   
     
  if (isset($_POST['status']) && !empty($_POST['status'])) {
         $newStatus= sanitize($_POST['status']);
@@ -332,8 +417,8 @@ else
     $showResult = true;
 
   $theReservation = new Reservation($newReservationKey, $newActivityID, $newReservationRequestID, $newFamilyProfileID,$newParentLastName,
-    $newParentFirstName, $newPatientLastName, $newPatientFirstName, 'socialWorkerID','socialWorkerLastName', 'socialWorkerFirstName',$newrmhStaffProfileID, 'rmhStaffLastName', 'rmhStaffFirstName',
-    $newSWDateStatusSubmitted, $newRMHDateStatusSubmitted, 'Modify', $newStatus, 
+    $newParentFirstName, $newPatientLastName, $newPatientFirstName, $newsocialWorkerProfileID,'socialWorkerLastName', 'socialWorkerFirstName',$newrmhStaffProfileID, 'rmhStaffLastName', 'rmhStaffFirstName',
+    $newSWDateStatusSubmitted, $newRMHDateStatusSubmitted, $newActivityType, $newStatus, 
     $formattedBeginDate, $formattedEndDate, $newPatientDiagnosis, $newNotes);
 
   error_log("will return a reservation object");
@@ -407,6 +492,7 @@ function updateReservation(Reservation $informationroom)
         $informationroom->set_socialWorkerProfileId($swObject->get_swProfileId());
         $informationroom->set_swFirstName($swObject->get_swFirstName());
         $informationroom->set_swLastName($swObject->get_swLastName());
+          $informationroom->set_swDateStatusSubmitted(date("Y-m-d H:i:s"));
             $informationroom->set_status("Unconfirmed");
     }
     // if the person doing the edit is a RMH staff person, add their name and id to the reservation
@@ -417,13 +503,13 @@ function updateReservation(Reservation $informationroom)
         $informationroom->set_rmhStaffProfileId($rmhStaff->get_rmhStaffProfileId());
         $informationroom->set_rmhStaffFirstName($rmhStaff->get_rmhStaffFirstName());
         $informationroom->set_rmhStaffLastName($rmhStaff->get_rmhStaffLastName());
+         $informationroom->set_rmhDateStatusSubmitted(date("Y-m-d H:i:s"));
             $informationroom->set_status("Confirmed");
     }
         
    
     $informationroom->set_activityType("Modify");
 
-    $informationroom->set_swDateStatusSubmitted(date("Y-m-d H:i:s"));
  //   $userId = sanitize(getCurrentUser());
 
      $fid = $informationroom->get_familyProfileId();
@@ -432,7 +518,7 @@ function updateReservation(Reservation $informationroom)
     error_log("in update, informationroom->rmh staff  is  $rid");
     $begdt= $informationroom->get_beginDate();
     error_log("in update, informationroom->get_beginDate is $begdt");
-
+    error_log("in update, social worker id is".$informationroom->get_socialWorkerProfileId());
    
    
     // insert a new activity record with a Modify status
@@ -443,9 +529,106 @@ function updateReservation(Reservation $informationroom)
     $retval = insert_RoomReservationActivity ($informationroom);
    return $retval;
 } // end updateReservation
+
+function approveReservation(Reservation $informationroom)
+{
+     error_log("will insert a new record with approval");
+
+
+    //retrieves the sw, and gets id, firstname and lastname      
+    $currentUser = getUserProfileID();
+    
+    // if the person doing the edit is a social worker, add their name and id to the reservation 
+    // activity record
+    if (getUserAccessLevel()==1)
+    {
+        error_log("attempt to approve at sw user access level");
+       echo "You do not have permission to approve a reservation";
+    }
+    // if the person doing the edit is a RMH staff person, add their name and id to the reservation
+    // activity record. Will give it a status of Confirmed instead of Unconfirmed
+    else if (getUserAccessLevel()==2)
+    {
+        $rmhStaff = retrieve_UserProfile_RMHApprover_OBJ($currentUser);
+        $informationroom->set_rmhStaffProfileId($rmhStaff->get_rmhStaffProfileId());
+        $informationroom->set_rmhStaffFirstName($rmhStaff->get_rmhStaffFirstName());
+        $informationroom->set_rmhStaffLastName($rmhStaff->get_rmhStaffLastName());
+         $informationroom->set_rmhDateStatusSubmitted(date("Y-m-d H:i:s"));
+        $informationroom->set_status("Confirmed");
+        error_log('activity type is '.$informationroom->get_activityType());
+         // do not set the Activity Type - it should be the same one requested by the
+           // social worker
+    }
+        
+   
+ 
+
+     $fid = $informationroom->get_familyProfileId();
+    error_log("in update, informationroom->familyProfileID is  $fid");
+    $rid= $informationroom->get_rmhStaffProfileId();
+    error_log("in update, informationroom->rmh staff  is  $rid");
+    $begdt= $informationroom->get_beginDate();
+    error_log("in update, informationroom->get_beginDate is $begdt");
+    error_log("in update, social worker id is".$informationroom->get_socialWorkerProfileId());
+   
+   
+    // insert a new activity record with a status of Confirmed
+    // because we keep track of all changes, never update
+    // the current activity record. instead, insert a new one
+    // with the same request id but new activity id
+    
+    $retval = insert_RoomReservationActivity ($informationroom);
+   return $retval;
+} // end approveReservation
+
+
+function cancelReservation(Reservation $informationroom)
+{
+     error_log("will do the actual insert to the database");
+
+
+    //retrieves the sw, and gets id, firstname and lastname      
+    $currentUser = getUserProfileID();
+    
+    // if the person doing the edit is a social worker, add their name and id to the reservation 
+    // activity record
+    if (getUserAccessLevel()==1)
+    {
+        $sw = retrieve_UserProfile_SW($currentUser);
+         $swObject = current($sw);   // there is only one record in the returned array, so get it
+                                                    // consider changing this code
+        $informationroom->set_socialWorkerProfileId($swObject->get_swProfileId());
+        $informationroom->set_swFirstName($swObject->get_swFirstName());
+        $informationroom->set_swLastName($swObject->get_swLastName());
+          $informationroom->set_swDateStatusSubmitted(date("Y-m-d H:i:s"));
+            $informationroom->set_status("Unconfirmed");
+    }
+    // if the person doing the edit is a RMH staff person, add their name and id to the reservation
+    // activity record. Will give it a status of Confirmed instead of Unconfirmed
+    else if (getUserAccessLevel()==2)
+    {
+        $rmhStaff = retrieve_UserProfile_RMHApprover_OBJ($currentUser);
+        $informationroom->set_rmhStaffProfileId($rmhStaff->get_rmhStaffProfileId());
+        $informationroom->set_rmhStaffFirstName($rmhStaff->get_rmhStaffFirstName());
+        $informationroom->set_rmhStaffLastName($rmhStaff->get_rmhStaffLastName());
+         $informationroom->set_rmhDateStatusSubmitted(date("Y-m-d H:i:s"));
+            $informationroom->set_status("Confirmed");
+    }
+        
+   
+    $informationroom->set_activityType("Cancel");
+
+    // insert a new activity record with a Cancel status
+    // because we keep track of all changes, never update
+    // the current activity record. instead, insert a new one
+    // with the same request id but new activity id
+    
+    $retval = insert_RoomReservationActivity ($informationroom);
+   return $retval;
+} // end cancelReservation
 ?>
 
-
+    
 <?php
 include (ROOT_DIR . '/footer.php');
 ?>
