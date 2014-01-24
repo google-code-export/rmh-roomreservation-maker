@@ -1,5 +1,5 @@
 <?php
-
+// this script is DEPRECATED
 session_start();
 session_cache_expire(30);
 
@@ -13,7 +13,7 @@ include(ROOT_DIR . '/database/dbFamilyProfile.php');
 
 if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST['firstName'] ) || isset( $_POST['lastName'] ) ) )
 {
-  //Write a better code to all these validations!!!
+
         $fn = ( (isset( $_POST['firstName'] ) )?sanitize( $_POST['firstName']):""); //if firstName isset, sanitize it, else empty string
         if($fn == "First Name" )
             $fn = "";
@@ -27,10 +27,7 @@ if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST[
         else
             echo("<div style='margin-left:260px; margin-top:30px;'><font color='red'><b>ERROR: Family not found, however, you may <a href='./newProfile.php'>create one.</a></b></font></div>"); //DON'T DIE!! Messes up the layout!!
         
-        //TODO: BAD idea to just output errors wherever you want!!!! Organize this better. Use an error class or something!
-        
-   //     $familyprofileID=NULL; 
-    //     $_SESSION['familyID']= $familyprofileID;
+      
          
         
         if( is_array( $families ) )

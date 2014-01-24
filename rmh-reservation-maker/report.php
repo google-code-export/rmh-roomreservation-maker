@@ -133,7 +133,11 @@ if($showForm == true)
     
     ?>
     <label for="beginMonth">Start Date</label>
-        <select name="beginMonth" id="beginMonth">
+        <input name="begindate" type="date" min="2008-01-01" >
+        <br><br>
+        <label for="endDate">End Date:</label>
+        <input name="enddate" type="date" min="2008-01-01" >
+ <!--       <select name="beginMonth" id="beginMonth">
             <option value="">Month</option>
             <option value="01" <?php if($_POST['beginMonth']=='01') echo "selected='selected'";?> >January</option>
             <option value="02" <?php if($_POST['beginMonth']=='02') echo "selected='selected'";?> > February</option>
@@ -198,7 +202,7 @@ if($showForm == true)
             <option value="2011" <?php if($_POST['beginYear']=='2011') echo "selected='selected'";?> >2011</option>
             <option value="2012" <?php if($_POST['beginYear']=='2012') echo "selected='selected'";?> >2012</option>
             <option value="2013" <?php if($_POST['beginYear']=='2013') echo "selected='selected'";?> >2013</option>
-	    </select>
+	    </select> -->
     </div>
     
     <?php
@@ -387,6 +391,55 @@ else if($showResult == true)
 
         echo '</div>';
 echo '</section>';
+
+function readAndValidateDates(&$formattedBeginDate, &$formattedEndDate,&$message)
+{
+    $bdate = new DateTime();
+    $edate = new DateTime();
+    $hasError = false;
+        //startDate is not set
+    if ((empty($_POST['begindate']))) {
+        $message['BeginningDate'] = '<p><font color="red">You must select a beginning date!</font></p>';
+        error_log('missing begin date');
+        $hasError = true;
+    }
+    //endDate is not set
+    if ((empty($_POST['enddate']))) {
+        $message['EndDate'] = '<p><font color="red">You must select an end date!</font></p>';
+        error_log('missing end date');
+        $hasError = true;
+    }
+    else {
+        //check if dates are valid
+        $currentdate = date("Ymd");
+        $bdate = new DateTime($_POST['begindate']);
+        $edate = new DateTime($_POST['enddate']);
+        $formatbdate = $bdate->format('Ymd');
+        $formatedate = $edate->format('Ymd');
+        //end date before begin date
+        if (($formatedate - $formatbdate) <= 0) {
+            $message['EndAfterBeginDate'] = '<p><font color="red">End date must be after begin date!</font></p>';
+            error_log('end date after begin date');
+            $hasError = true;
+        }
+        //request dates are in the past
+        if ($currentdate - $formatedate >= 0 || $currentdate - $formatbdate > 0) {
+            $message['DatesInThePast'] = '<p><font color="red">Dates cannot be in the past!</font></p>';
+            error_log('request dates are in the past');
+            $hasError = true;
+        } 
+      
+    }
+    if ($hasError)
+      return false;
+ 
+    // no problems with the dates
+      $formattedBeginDate = $bdate->format('Y-m-d');
+
+     $formattedEndDate = $edate->format('Y-m-d');
+     return true;
+   
+} // end readAndValidateDates
 
 include ('footer.php');
 

@@ -94,7 +94,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
 
 
                 echo '<tr>';
-                echo '<td>' . $rmhRequestID . '</td>';
+                echo '<td>'."<a href=EditReservation.php?id=$rmhRequestID> $rmhRequestID"  . '</td>';
                 echo '<td>' . $rmhSocialWorkerName . '</td>';
                 echo '<td>' . $rmhStaffName . '</td>';
                 echo '<td>' . $rmhparentName . '</td>';
@@ -118,7 +118,7 @@ if (isset($_POST['form_token']) && validateTokenField($_POST)) {
             echo '</table>';
             echo '</div>';
             
-            displayChooseRequestIDDropDown($foundReservations);
+       //     displayChooseRequestIDDropDown($foundReservations);
         }
      
 

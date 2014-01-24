@@ -39,7 +39,7 @@ $message = array();  // for error messages
 // retrieve the family info from the database
 if(isset($_POST['form_token']) && validateTokenField($_POST) && ( isset( $_POST['firstName'] ) || isset( $_POST['lastName'] ) ) )
     {
-       //Write a better code to all these validations!!!
+    
         $fn = ( (isset( $_POST['firstName'] ) )?sanitize( $_POST['firstName']):""); //if firstName isset, sanitize it, else empty string
         if($fn == "First Name" )
             $fn = "";
